@@ -30,5 +30,5 @@ Auto-deployed via Cloudflare Pages connected to GitHub.
 
 ## Env variables
 
-NEXT_PUBLIC_API_URL=https://api.vendechat.app
+NEXT_PUBLIC_API_URL=https://api.vendexchat.app
 
