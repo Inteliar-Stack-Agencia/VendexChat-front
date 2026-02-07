@@ -13,7 +13,10 @@ export function useCatalog(slug: string | undefined) {
       typeof window !== "undefined" ? window.location.hostname : undefined;
     const isLocal =
       hostname === "localhost" || hostname === "127.0.0.1";
-    const resolvedSlug = slug ?? (!isLocal ? hostname : undefined);
+    const isCustomDomain =
+      !!hostname && !hostname.endsWith("vendexchat.app") && !isLocal;
+    const resolvedSlug =
+      (isCustomDomain ? hostname : slug) ?? (!isLocal ? hostname : undefined);
 
     if (!resolvedSlug) {
       console.warn("[useCatalog] No slug provided, skipping fetch");
