@@ -35,17 +35,12 @@ function normalizeCatalog(raw: ApiCatalogResponse): CatalogResponse {
 
 export async function fetchCatalog(slug: string): Promise<CatalogResponse> {
   const url = `${API_BASE}/public/store/${slug}/catalog`;
-  console.log("[fetchCatalog] GET", url);
   const res = await fetch(url);
-  console.log("[fetchCatalog] Response status:", res.status);
   if (!res.ok) {
     throw new Error(`Failed to load store: ${res.status}`);
   }
   const raw: ApiCatalogResponse = await res.json();
-  const normalized = normalizeCatalog(raw);
-  console.log("[fetchCatalog] Normalized:", normalized.categories.length, "categories,",
-    normalized.categories.reduce((sum, c) => sum + c.products.length, 0), "products");
-  return normalized;
+  return normalizeCatalog(raw);
 }
 
 export async function createOrder(payload: OrderPayload): Promise<OrderResponse> {
