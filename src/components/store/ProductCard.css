@@ -56,6 +56,18 @@
   gap: 0.5rem;
 }
 
+.product-card__prices {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.product-card__original-price {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
 .product-card__price {
   font-weight: 700;
   color: #111827;
