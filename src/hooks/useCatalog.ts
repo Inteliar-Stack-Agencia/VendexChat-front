@@ -8,7 +8,13 @@ export function useCatalog(slug: string | undefined) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!slug) {
+    const hostname =
+      typeof window !== "undefined" ? window.location.hostname : undefined;
+    const isLocal =
+      hostname === "localhost" || hostname === "127.0.0.1";
+    const resolvedSlug = slug ?? (!isLocal ? hostname : undefined);
+
+    if (!resolvedSlug) {
       console.warn("[useCatalog] No slug provided, skipping fetch");
       setLoading(false);
       setError("No store slug provided");
@@ -19,10 +25,10 @@ export function useCatalog(slug: string | undefined) {
     setLoading(true);
     setError(null);
 
-    const url = `${import.meta.env.VITE_API_URL || "https://api.vendexchat.app"}/public/store/${slug}/catalog`;
+    const url = `${import.meta.env.VITE_API_URL || "https://api.vendexchat.app"}/public/store/${resolvedSlug}/catalog`;
     console.log("[useCatalog] Fetching catalog:", url);
 
-    fetchCatalog(slug)
+    fetchCatalog(resolvedSlug)
       .then((res) => {
         if (!cancelled) {
           console.log("[useCatalog] Catalog loaded:", { store: res?.store?.name, categories: res?.categories?.length });
