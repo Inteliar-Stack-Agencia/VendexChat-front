@@ -7,7 +7,10 @@ interface Props {
 }
 
 export function CategorySection({ category }: Props) {
+  console.log("[CategorySection] category keys:", Object.keys(category));
+  console.log("[CategorySection] category:", JSON.stringify(category, null, 2));
   const products = category.products ?? [];
+  console.log("[CategorySection] products count:", products.length);
   if (products.length === 0) return null;
 
   return (

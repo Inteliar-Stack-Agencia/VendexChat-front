@@ -10,7 +10,14 @@ export async function fetchCatalog(slug: string): Promise<CatalogResponse> {
   if (!res.ok) {
     throw new Error(`Failed to load store: ${res.status}`);
   }
-  return res.json();
+  const json = await res.json();
+  console.log("[fetchCatalog] RAW JSON keys:", Object.keys(json));
+  console.log("[fetchCatalog] RAW JSON:", JSON.stringify(json, null, 2));
+  if (json.categories) {
+    console.log("[fetchCatalog] First category keys:", Object.keys(json.categories[0] || {}));
+    console.log("[fetchCatalog] First category:", JSON.stringify(json.categories[0], null, 2));
+  }
+  return json;
 }
 
 export async function createOrder(payload: OrderPayload): Promise<OrderResponse> {
