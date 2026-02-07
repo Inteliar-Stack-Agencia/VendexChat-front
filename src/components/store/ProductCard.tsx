@@ -1,5 +1,6 @@
 import type { Product } from "../../types";
 import { useCart } from "../../context/CartContext";
+import { formatPrice } from "../../utils/format";
 import "./ProductCard.css";
 
 interface Props {
@@ -11,11 +12,8 @@ export function ProductCard({ product }: Props) {
   const inCart = items.find((i) => i.product.id === product.id);
   const quantity = inCart?.quantity ?? 0;
 
-  const formatPrice = (price: number) =>
-    new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(price);
-
   return (
-    <div className={`product-card ${!product.available ? "product-card--unavailable" : ""}`}>
+    <div className="product-card">
       {product.image_url && (
         <img
           className="product-card__image"
