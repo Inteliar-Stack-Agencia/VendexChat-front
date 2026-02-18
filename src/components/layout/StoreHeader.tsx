@@ -1,5 +1,4 @@
 import type { Store } from "../../types";
-import { useCart } from "../../context/CartContext";
 import "./StoreHeader.css";
 
 interface Props {

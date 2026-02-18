@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useCatalog } from "../hooks/useCatalog";
 import { useCart } from "../context/CartContext";
@@ -22,7 +22,8 @@ export function StorePage() {
 
   const [view, setView] = useState<View>("catalog");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
+  // const [search] = useState("");
   const [orderLoading, setOrderLoading] = useState(false);
   const [orderError, setOrderError] = useState<string | null>(null);
   const [order, setOrder] = useState<OrderResponse | null>(null);
@@ -89,6 +90,7 @@ export function StorePage() {
   }
 
   const categories = data.categories ?? [];
+  /*
   const query = search.trim().toLowerCase();
   const filteredCategories = useMemo(() => {
     return categories.map((category) => {
@@ -102,67 +104,68 @@ export function StorePage() {
       return { ...category, products: filteredProducts };
     });
   }, [categories, query]);
-  const hasResults = filteredCategories.some((category) => (category.products ?? []).length > 0);
+  */
+  // const hasResults = filteredCategories.some((category) => (category.products ?? []).length > 0);
 
   return (
     <div className="store-page">
       <div className="store-page__shell">
         {data.store && <StoreHeader store={data.store} onCartClick={() => setView("cart")} />}
 
-      {view === "catalog" && (
-        <>
-          {categories.length > 0 && (
-            <CategoryNav
-              categories={categories}
-              activeId={activeCategory}
-              onSelect={setActiveCategory}
+        {view === "catalog" && (
+          <>
+            {categories.length > 0 && (
+              <CategoryNav
+                categories={categories}
+                activeId={activeCategory}
+                onSelect={setActiveCategory}
+              />
+            )}
+            <main className="store-page__content">
+              {categories.map((cat) => (
+                <CategorySection key={cat.id} category={cat} />
+              ))}
+            </main>
+            <FloatingCartButton onClick={() => setView("cart")} />
+          </>
+        )}
+
+        {view === "cart" && (
+          <>
+            <div className="store-page__back-bar">
+              <button className="store-page__back" onClick={() => setView("catalog")}>
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+                </svg>
+                Seguir comprando
+              </button>
+            </div>
+            <CartPanel
+              onCheckout={() => setView("checkout")}
+              onContinueShopping={() => setView("catalog")}
             />
-          )}
-          <main className="store-page__content">
-            {categories.map((cat) => (
-              <CategorySection key={cat.id} category={cat} />
-            ))}
-          </main>
-          <FloatingCartButton onClick={() => setView("cart")} />
-        </>
-      )}
+          </>
+        )}
 
-      {view === "cart" && (
-        <>
-          <div className="store-page__back-bar">
-            <button className="store-page__back" onClick={() => setView("catalog")}>
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
-              </svg>
-              Seguir comprando
-            </button>
-          </div>
-          <CartPanel
-            onCheckout={() => setView("checkout")}
-            onContinueShopping={() => setView("catalog")}
-          />
-        </>
-      )}
-
-      {view === "checkout" && (
-        <>
-          <div className="store-page__back-bar">
-            <button className="store-page__back" onClick={() => setView("cart")}>
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
-              </svg>
-              Volver al carrito
-            </button>
-          </div>
-          {orderError && <p className="store-page__order-error">{orderError}</p>}
-          <CheckoutForm
-            items={items}
-            totalPrice={totalPrice}
-            onSubmit={handleCheckout}
-            loading={orderLoading}
-          />
-        </>
-      )}
+        {view === "checkout" && (
+          <>
+            <div className="store-page__back-bar">
+              <button className="store-page__back" onClick={() => setView("cart")}>
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+                </svg>
+                Volver al carrito
+              </button>
+            </div>
+            {orderError && <p className="store-page__order-error">{orderError}</p>}
+            <CheckoutForm
+              items={items}
+              totalPrice={totalPrice}
+              onSubmit={handleCheckout}
+              loading={orderLoading}
+            />
+          </>
+        )}
 
         {view === "confirmation" && order && (
           <OrderConfirmation order={order} onBackToStore={handleBackToStore} />
