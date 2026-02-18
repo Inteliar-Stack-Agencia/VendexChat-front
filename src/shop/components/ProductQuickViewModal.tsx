@@ -1,0 +1,83 @@
+import { X, Plus, Minus } from "lucide-react";
+import type { Product } from "../../types";
+
+interface QuickViewModalProps {
+    product: Product | null;
+    isOpen: boolean;
+    onClose: () => void;
+    quantity: number;
+    onAdd: (p: Product) => void;
+    onUpdate: (id: string | number, delta: number) => void;
+}
+
+export function ProductQuickViewModal({
+    product,
+    isOpen,
+    onClose,
+    quantity,
+    onAdd,
+    onUpdate
+}: QuickViewModalProps) {
+    if (!isOpen || !product) return null;
+
+    return (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-md" onClick={onClose} />
+
+            <div className="relative bg-white w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 z-10 p-2 bg-white/80 backdrop-blur-md rounded-full shadow-md text-slate-500 hover:text-slate-900 transition-colors"
+                >
+                    <X className="w-5 h-5" />
+                </button>
+
+                <div className="flex flex-col md:flex-row h-full max-h-[90vh] overflow-y-auto">
+                    <div className="md:w-1/2 aspect-square bg-slate-100 overflow-hidden">
+                        {product.image_url && (
+                            <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
+                        )}
+                    </div>
+
+                    <div className="md:w-1/2 p-6 flex flex-col">
+                        <h2 className="text-2xl font-bold text-slate-900 mb-2">{product.name}</h2>
+                        <div className="text-2xl font-bold text-emerald-600 mb-4">${product.price.toLocaleString()}</div>
+
+                        <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-1">
+                            {product.description || "Sin descripción disponible."}
+                        </p>
+
+                        <div className="pt-4 border-t border-slate-100">
+                            {quantity > 0 ? (
+                                <div className="flex items-center justify-between gap-4">
+                                    <div className="flex items-center gap-6 bg-slate-100 rounded-full px-4 py-2 flex-1 justify-center">
+                                        <button
+                                            onClick={() => onUpdate(product.id, -1)}
+                                            className="w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-sm text-slate-600 transition-transform active:scale-90"
+                                        >
+                                            <Minus className="w-5 h-5" />
+                                        </button>
+                                        <span className="text-lg font-bold min-w-[30px] text-center">{quantity}</span>
+                                        <button
+                                            onClick={() => onUpdate(product.id, 1)}
+                                            className="w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-sm text-slate-600 transition-transform active:scale-90"
+                                        >
+                                            <Plus className="w-5 h-5" />
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <button
+                                    onClick={() => onAdd(product)}
+                                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-emerald-100 transition-all active:scale-[0.98]"
+                                >
+                                    Agregar al pedido
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
