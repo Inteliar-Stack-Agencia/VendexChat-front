@@ -57,18 +57,7 @@ function Storefront() {
           .eq("is_active", true);
 
         if (productsError) throw productsError;
-
-        if (!productsData || productsData.length === 0) {
-          // Mock data for demo if DB is empty
-          const mockProducts: Product[] = [
-            { id: '1', category_id: 'cat1', name: 'Hamburguesa Premium', description: 'Carne braseada, queso cheddar y panceta.', price: 1800 },
-            { id: '2', category_id: 'cat1', name: 'Papas Fritas XL', description: 'Porción grande con dip de cheddar.', price: 950 },
-            { id: '3', category_id: 'cat2', name: 'Gaseosa 500ml', description: 'Línea Coca-Cola bien fría.', price: 600 },
-          ];
-          setProducts(mockProducts);
-        } else {
-          setProducts(productsData);
-        }
+        setProducts(productsData || []);
       } catch (e: any) {
         setErrorMsg(e.message || "No se pudo encontrar la tienda.");
       } finally {
@@ -180,22 +169,28 @@ function Storefront() {
       ) : (
         <>
           <main className="product-list">
-            {products.map((product) => (
-              <div key={product.id} className="product-card">
-                <h3>{product.name}</h3>
-                <p>{product.description}</p>
-                <div className="price">${product.price.toLocaleString()}</div>
-                <div className="actions">
-                  <button onClick={() => addToCart(product.id)}>Agregar</button>
-                  {cart[product.id] && (
-                    <div className="cart-controls">
-                      <button onClick={() => removeFromCart(product.id)}>-</button>
-                      <span>{cart[product.id]}</span>
-                    </div>
-                  )}
-                </div>
+            {products.length === 0 ? (
+              <div className="empty-state glass-panel" style={{ textAlign: 'center', padding: '3rem', gridColumn: '1 / -1' }}>
+                <p>Esta tienda aún no tiene productos publicados.</p>
               </div>
-            ))}
+            ) : (
+              products.map((product) => (
+                <div key={product.id} className="product-card">
+                  <h3>{product.name}</h3>
+                  <p>{product.description}</p>
+                  <div className="price">${product.price.toLocaleString()}</div>
+                  <div className="actions">
+                    <button onClick={() => addToCart(product.id)}>Agregar</button>
+                    {cart[product.id] && (
+                      <div className="cart-controls">
+                        <button onClick={() => removeFromCart(product.id)}>-</button>
+                        <span>{cart[product.id]}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))
+            )}
           </main>
 
           {Object.keys(cart).length > 0 && (
