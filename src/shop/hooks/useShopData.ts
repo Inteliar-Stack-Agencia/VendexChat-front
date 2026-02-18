@@ -11,14 +11,25 @@ export function useShopData(slug: string | undefined) {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (!slug) return;
+        const hostname = typeof window !== "undefined" ? window.location.hostname : "";
+        const isLocal = hostname === "localhost" || hostname === "127.0.0.1";
+        const isMainDomain = hostname.endsWith("vendexchat.app");
+
+        // Si no es el dominio principal ni local, usamos el hostname como identificador (Dominio Personalizado)
+        const identifier = (isLocal || isMainDomain) ? slug : hostname;
+
+        if (!identifier) {
+            setLoading(false);
+            return;
+        }
 
         setLoading(true);
         setError(null);
 
+        const fetchId = identifier; // Para evitar race conditions si cambiara (aunque poco probable aquí)
         const fetchFn = USE_MOCK ? fetchMockCatalog : fetchCatalog;
 
-        fetchFn(slug)
+        fetchFn(fetchId)
             .then((res) => {
                 setData(res);
                 setLoading(false);

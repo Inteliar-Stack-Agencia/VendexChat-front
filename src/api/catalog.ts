@@ -1,16 +1,16 @@
 import { supabase } from "../lib/supabase";
 import type { CatalogResponse, OrderPayload, OrderResponse } from "../types";
 
-export async function fetchCatalog(slug: string): Promise<CatalogResponse> {
-  // 1. Get store by slug
+export async function fetchCatalog(identifier: string): Promise<CatalogResponse> {
+  // 1. Get store by slug OR custom_domain
   const { data: store, error: storeError } = await supabase
     .from("stores")
-    .select("id, name, slug, logo_url, whatsapp")
-    .eq("slug", slug)
+    .select("id, name, slug, logo_url, whatsapp, custom_domain")
+    .or(`slug.eq.${identifier},custom_domain.eq.${identifier}`)
     .single();
 
   if (storeError || !store) {
-    throw new Error(`Store not found: ${slug}`);
+    throw new Error(`Store not found for identifier: ${identifier}`);
   }
 
   // 2. Get categories for this store

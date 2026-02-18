@@ -22,6 +22,7 @@ export interface Store {
   slug: string;
   logo_url: string | null;
   whatsapp: string;
+  custom_domain?: string | null;
 }
 
 export interface CatalogResponse {
