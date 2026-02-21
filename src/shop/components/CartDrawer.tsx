@@ -1,5 +1,7 @@
-import { X, Plus, Minus, Send, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { X, Plus, Minus, Send, Trash2, Tag, AlertCircle } from "lucide-react";
 import { type CartItem } from "../../types";
+import { validateCoupon } from "../../api/catalog";
 
 interface CartDrawerProps {
     isOpen: boolean;
@@ -9,6 +11,8 @@ interface CartDrawerProps {
     onUpdateQuantity: (id: string | number, delta: number) => void;
     onClear: () => void;
     whatsappNumber: string;
+    storeId: string;
+    couponsEnabled?: boolean;
 }
 
 export function CartDrawer({
@@ -18,14 +22,88 @@ export function CartDrawer({
     totalPrice,
     onUpdateQuantity,
     onClear,
-    whatsappNumber
+    whatsappNumber,
+    storeId,
+    couponsEnabled = true
 }: CartDrawerProps) {
+    const [couponCode, setCouponCode] = useState("");
+    const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
+    const [couponError, setCouponError] = useState("");
+    const [isValidating, setIsValidating] = useState(false);
+
     if (!isOpen) return null;
 
+    const handleApplyCoupon = async () => {
+        if (!couponCode.trim()) return;
+        setIsValidating(true);
+        setCouponError("");
+        try {
+            const coupon = await validateCoupon(couponCode, storeId);
+
+            // Validar monto mínimo
+            if (totalPrice < coupon.min_purchase_amount) {
+                throw new Error(`Este cupón requiere una compra mínima de $${coupon.min_purchase_amount.toLocaleString()}`);
+            }
+
+            setAppliedCoupon(coupon);
+            setCouponCode("");
+        } catch (err: any) {
+            setCouponError(err.message || "Error al validar cupón");
+            setAppliedCoupon(null);
+        } finally {
+            setIsValidating(false);
+        }
+    };
+
+    const calculateDiscount = () => {
+        if (!appliedCoupon) return 0;
+
+        let discount = 0;
+        const { type, value, applicable_products, applicable_categories } = appliedCoupon;
+
+        switch (type) {
+            case 1: // % All
+                discount = totalPrice * (value / 100);
+                break;
+            case 2: // $ All
+                discount = value;
+                break;
+            case 3: // % Selected
+                const items3 = items.filter(i => (applicable_products || []).includes(i.product.id));
+                discount = items3.reduce((acc, i) => acc + (i.product.price * i.quantity), 0) * (value / 100);
+                break;
+            case 4: // $ Selected
+                const items4 = items.filter(i => (applicable_products || []).includes(i.product.id));
+                if (items4.length > 0) discount = value;
+                break;
+            case 5: // % Category
+                const items5 = items.filter(i => (applicable_categories || []).includes(i.product.category_id));
+                discount = items5.reduce((acc, i) => acc + (i.product.price * i.quantity), 0) * (value / 100);
+                break;
+            case 6: // $ Category
+                const items6 = items.filter(i => (applicable_categories || []).includes(i.product.category_id));
+                if (items6.length > 0) discount = value;
+                break;
+        }
+
+        return Math.min(discount, totalPrice);
+    };
+
+    const discount = calculateDiscount();
+    const finalTotal = totalPrice - discount;
+
     const handleSendWhatsApp = () => {
-        const message = `Hola! Quiero hacer este pedido:\n\n` +
-            items.map(i => `- ${i.quantity}x ${i.product.name} — $${(i.product.price * i.quantity).toLocaleString()}`).join('\n') +
-            `\n\n*Total: $${totalPrice.toLocaleString()}*`;
+        let message = `Hola! Quiero hacer este pedido:\n\n` +
+            items.map(i => `- ${i.quantity}x ${i.product.name} — $${(i.product.price * i.quantity).toLocaleString()}`).join('\n');
+
+        if (appliedCoupon) {
+            message += `\n\n------------------\n` +
+                `Subtotal: $${totalPrice.toLocaleString()}\n` +
+                `Cupón: ${appliedCoupon.code} (-$${discount.toLocaleString()})\n` +
+                `*Total con Descuento: $${finalTotal.toLocaleString()}*`;
+        } else {
+            message += `\n\n*Total: $${totalPrice.toLocaleString()}*`;
+        }
 
         const encoded = encodeURIComponent(message);
         window.open(`https://wa.me/${whatsappNumber}?text=${encoded}`, '_blank');
@@ -87,18 +165,80 @@ export function CartDrawer({
                 </div>
 
                 <div className="p-6 border-t border-slate-100 space-y-4 bg-slate-50/50">
-                    <div className="flex items-center justify-between font-bold text-lg">
-                        <span className="text-slate-600">Total</span>
-                        <span className="text-emerald-600">${totalPrice.toLocaleString()}</span>
+                    {/* Sección de Cupones */}
+                    {couponsEnabled && items.length > 0 && (
+                        <div className="space-y-3">
+                            {appliedCoupon ? (
+                                <div className="flex items-center justify-between bg-emerald-50 border border-emerald-100 p-3 rounded-xl animate-in fade-in zoom-in duration-300">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
+                                            <Tag className="w-4 h-4 text-white" />
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">Cupón Aplicado</span>
+                                            <span className="text-sm font-black text-slate-800 uppercase">{appliedCoupon.code}</span>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={() => setAppliedCoupon(null)}
+                                        className="text-[10px] font-black text-emerald-600 uppercase hover:underline"
+                                    >
+                                        Quitar
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="space-y-2">
+                                    <div className="flex gap-2">
+                                        <input
+                                            type="text"
+                                            placeholder="¿Tenés un cupón?"
+                                            value={couponCode}
+                                            onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                                            className="flex-1 px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold uppercase outline-none focus:border-emerald-500 transition-all"
+                                        />
+                                        <button
+                                            onClick={handleApplyCoupon}
+                                            disabled={isValidating || !couponCode.trim()}
+                                            className="bg-slate-900 text-white px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest disabled:opacity-50 transition-all hover:bg-slate-800"
+                                        >
+                                            {isValidating ? '...' : 'Aplicar'}
+                                        </button>
+                                    </div>
+                                    {couponError && (
+                                        <div className="flex items-center gap-1.5 text-rose-500">
+                                            <AlertCircle className="w-3.5 h-3.5" />
+                                            <span className="text-[10px] font-bold">{couponError}</span>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    <div className="space-y-1.5">
+                        <div className="flex items-center justify-between font-bold text-sm text-slate-500">
+                            <span>Subtotal</span>
+                            <span>${totalPrice.toLocaleString()}</span>
+                        </div>
+                        {appliedCoupon && (
+                            <div className="flex items-center justify-between font-bold text-sm text-emerald-600">
+                                <span>Descuento</span>
+                                <span>-${discount.toLocaleString()}</span>
+                            </div>
+                        )}
+                        <div className="flex items-center justify-between font-bold text-xl pt-2 border-t border-slate-200">
+                            <span className="text-slate-900 uppercase tracking-tight">Total</span>
+                            <span className="text-emerald-600">${finalTotal.toLocaleString()}</span>
+                        </div>
                     </div>
 
                     <button
                         disabled={items.length === 0}
                         onClick={handleSendWhatsApp}
-                        className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-[0.98] shadow-lg shadow-emerald-200"
+                        className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white font-black uppercase tracking-widest py-5 rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-[0.98] shadow-lg shadow-emerald-200"
                     >
                         <Send className="w-5 h-5" />
-                        Enviar Pedido por WhatsApp
+                        Pedir por WhatsApp
                     </button>
 
                     {items.length > 0 && (

@@ -23,7 +23,7 @@ const Footer = () => {
             Contacto
           </a>
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} VendexChat. Todos los derechos reservados.
+            © {new Date().getFullYear()} VendexChat. Desarrollado por @InteliarStack. Todos los derechos reservados.
           </p>
         </div>
       </div>

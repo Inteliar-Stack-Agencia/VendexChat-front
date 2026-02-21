@@ -7,6 +7,11 @@ export interface Product {
   price: number;
   offer_price: number | null;
   image_url: string | null;
+  stock: number;
+  unlimited_stock: boolean;
+  is_active: boolean;
+  category_id: string;
+  sort_order: number;
 }
 
 export interface Category {
@@ -21,8 +26,13 @@ export interface Store {
   name: string;
   slug: string;
   logo_url: string | null;
+  banner_url?: string | null;
+  description?: string | null;
   whatsapp: string;
+  address?: string | null;
+  delivery_info?: string | null;
   custom_domain?: string | null;
+  coupons_enabled: boolean;
 }
 
 export interface CatalogResponse {

@@ -5,7 +5,7 @@ export async function fetchCatalog(identifier: string): Promise<CatalogResponse>
   // 1. Get store by slug OR custom_domain
   const { data: store, error: storeError } = await supabase
     .from("stores")
-    .select("id, name, slug, logo_url, whatsapp, custom_domain")
+    .select("id, name, slug, logo_url, banner_url, description, whatsapp, address, delivery_info, custom_domain, coupons_enabled")
     .or(`slug.eq.${identifier},custom_domain.eq.${identifier}`)
     .single();
 
@@ -24,13 +24,14 @@ export async function fetchCatalog(identifier: string): Promise<CatalogResponse>
     throw new Error(`Failed to load categories: ${catError.message}`);
   }
 
-  // 3. Get all products for these categories
+  // 3. Get all products for these categories (Only active ones)
   const categoryIds = (categories ?? []).map((c) => c.id);
 
   const { data: products, error: prodError } = await supabase
     .from("products")
-    .select("id, name, description, price, offer_price, image_url, sort_order, category_id")
+    .select("id, name, description, price, offer_price, image_url, sort_order, category_id, stock, unlimited_stock, is_active")
     .in("category_id", categoryIds)
+    .eq("is_active", true) // Solo productos activos
     .order("sort_order");
 
   if (prodError) {
@@ -38,7 +39,7 @@ export async function fetchCatalog(identifier: string): Promise<CatalogResponse>
   }
 
   // 4. Group products by category and normalize
-  const productsByCategory = new Map<string, typeof products>();
+  const productsByCategory = new Map<string, any[]>();
   for (const p of products ?? []) {
     const list = productsByCategory.get(p.category_id) ?? [];
     list.push(p);
@@ -57,6 +58,11 @@ export async function fetchCatalog(identifier: string): Promise<CatalogResponse>
         price: p.offer_price ?? p.price,
         offer_price: p.offer_price,
         image_url: p.image_url,
+        stock: p.stock,
+        unlimited_stock: p.unlimited_stock,
+        is_active: p.is_active,
+        category_id: p.category_id,
+        sort_order: p.sort_order
       })),
     };
   });
@@ -139,4 +145,34 @@ export async function getOrder(publicId: string): Promise<OrderResponse> {
   }
 
   return data;
+}
+
+export async function validateCoupon(code: string, storeId: string) {
+  const { data: coupon, error } = await supabase
+    .from("coupons")
+    .select("*")
+    .eq("store_id", storeId)
+    .eq("code", code.toUpperCase())
+    .eq("is_active", true)
+    .single();
+
+  if (error || !coupon) {
+    throw new Error("Cupón inválido o inexistente");
+  }
+
+  // 1. Verificar vigencia
+  const now = new Date();
+  if (new Date(coupon.start_date) > now) {
+    throw new Error("Este cupón aún no es válido");
+  }
+  if (coupon.end_date && new Date(coupon.end_date) < now) {
+    throw new Error("Este cupón ha expirado");
+  }
+
+  // 2. Verificar límites de uso
+  if (coupon.usage_limit && coupon.usage_count >= coupon.usage_limit) {
+    throw new Error("Este cupón ya alcanzó el límite de usos");
+  }
+
+  return coupon;
 }
