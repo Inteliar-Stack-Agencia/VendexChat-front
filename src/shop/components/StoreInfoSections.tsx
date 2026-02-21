@@ -49,8 +49,8 @@ export function StoreInfoSections({ description, address, deliveryInfo, storeNam
 
             {/* Footer / Copyright */}
             <div className="pt-12 border-t border-slate-100 text-center space-y-2">
-                <p className="text-xs font-black text-slate-300 uppercase tracking-[0.3em]">Potenciado por VENDEx & @InteliarStack</p>
-                <p className="text-[10px] font-bold text-slate-400">© {new Date().getFullYear()} {storeName}. Desarrollado por @InteliarStack. Todos los derechos reservados.</p>
+                <p className="text-xs font-black text-slate-300 uppercase tracking-[0.3em]">Potenciado por VendexChat</p>
+                <p className="text-[10px] font-bold text-slate-400">© {new Date().getFullYear()} {storeName}. Todos los derechos reservados.</p>
             </div>
         </section>
     );
