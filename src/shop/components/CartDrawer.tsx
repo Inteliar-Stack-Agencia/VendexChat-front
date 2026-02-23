@@ -2,6 +2,7 @@ import { useState } from "react";
 import { X, Plus, Minus, Send, Trash2, Tag, AlertCircle } from "lucide-react";
 import { type CartItem } from "../../types";
 import { validateCoupon } from "../../api/catalog";
+import { sanitizePhoneNumber } from "../../utils/format";
 
 interface CartDrawerProps {
     isOpen: boolean;
@@ -122,7 +123,8 @@ export function CartDrawer({
         if (notes) message += `\n*OBSERVACIONES:*\n${notes}`;
 
         const encoded = encodeURIComponent(message);
-        window.open(`https://wa.me/${whatsappNumber}?text=${encoded}`, '_blank');
+        const cleanPhone = sanitizePhoneNumber(whatsappNumber);
+        window.open(`https://wa.me/${cleanPhone}?text=${encoded}`, '_blank');
     };
 
     return (

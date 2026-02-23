@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Send, X, MessageCircle, Bot } from "lucide-react";
+import { sanitizePhoneNumber } from "../../utils/format";
 
 interface Message {
     id: string;
@@ -171,7 +172,7 @@ export function ChatBotWidget({
             <div className="p-4 bg-white border-t border-slate-100 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] md:pb-4">
                 {whatsappNumber && (
                     <a
-                        href={`https://wa.me/${whatsappNumber}`}
+                        href={`https://wa.me/${sanitizePhoneNumber(whatsappNumber)}`}
                         target="_blank"
                         rel="noreferrer"
                         className="flex items-center justify-center gap-2 w-full py-2 mb-3 bg-emerald-50 text-emerald-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-emerald-100 transition-colors"

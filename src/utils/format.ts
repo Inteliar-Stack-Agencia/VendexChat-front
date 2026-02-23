@@ -24,3 +24,9 @@ export function getSocialLink(handle: string, platform: 'instagram' | 'facebook'
   // Si es solo el usuario, construimos la URL completa
   return `https://${domain}/${handleWithoutAt}`;
 }
+
+export function sanitizePhoneNumber(phone: string): string {
+  if (!phone) return "";
+  // Eliminar todo lo que no sea número
+  return phone.replace(/\D/g, "");
+}
