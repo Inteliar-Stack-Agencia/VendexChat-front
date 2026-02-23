@@ -48,8 +48,11 @@ export function StoreInfoSections({ description, address, whatsapp, instagram, f
 
     return (
         <section className="bg-slate-50 border-t border-slate-100">
-            {/* Banner de Horario de Atención con Degradado */}
-            <div className="bg-gradient-to-r from-primary-dynamic via-primary-dynamic to-primary-dynamic/80 relative overflow-hidden py-6 px-4">
+            {/* Banner de Horario de Atención con Color de Marca y Degradado Sutil */}
+            <div className="bg-primary-dynamic relative overflow-hidden py-6 px-4">
+                {/* Capa de degradado sobre el color de marca */}
+                <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent" />
+
                 <div className="max-w-4xl mx-auto flex flex-col items-center justify-center text-center relative z-10">
                     <h3 className="text-white/70 text-[10px] font-black uppercase tracking-[0.3em] mb-1">Horario de Atención</h3>
                     <div className="flex items-center gap-2.5 text-white">
