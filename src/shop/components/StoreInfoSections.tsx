@@ -16,7 +16,6 @@ export function StoreInfoSections({ description, address, whatsapp, instagram, f
     const getSummarizedSchedule = () => {
         if (!schedule) return "Consultar horarios";
 
-        const daysFull = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
         const daysShort = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
         const dayNames = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
 
@@ -137,18 +136,5 @@ export function StoreInfoSections({ description, address, whatsapp, instagram, f
                 </div>
             </div>
         </section>
-    );
-}
-
-{/* Footer Copyright */ }
-<div className="pt-12 border-t border-slate-200 text-center flex flex-col md:flex-row items-center justify-between gap-4">
-    <p className="text-[10px] font-bold text-slate-400">© {new Date().getFullYear()} {storeName}. Todos los derechos reservados.</p>
-    <div className="flex items-center gap-2">
-        <span className="text-[10px] font-black text-slate-300 uppercase tracking-[0.3em]">Potenciado por</span>
-        <span className="text-sm font-black text-primary-dynamic tracking-tighter">VENDEXCHAT</span>
-    </div>
-</div>
-            </div >
-        </section >
     );
 }
