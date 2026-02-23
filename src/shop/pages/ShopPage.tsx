@@ -89,7 +89,7 @@ export default function ShopPage() {
                 banner={data.store.banner_url || ""}
                 description={data.store.description || ""}
                 address={data.store.address || ""}
-                whatsapp={data.store.whatsapp}
+                whatsapp={data.store.whatsapp || data.store.phone || ""}
                 instagram={data.store.instagram || ""}
                 facebook={data.store.facebook || ""}
                 totalItems={totalItems}
@@ -143,7 +143,7 @@ export default function ShopPage() {
             <StoreInfoSections
                 description={data.store.description}
                 address={data.store.address}
-                whatsapp={data.store.whatsapp}
+                whatsapp={data.store.whatsapp || data.store.phone || ""}
                 instagram={data.store.instagram}
                 facebook={data.store.facebook}
                 schedule={data.store.schedule}
@@ -163,7 +163,7 @@ export default function ShopPage() {
                 totalPrice={totalPrice}
                 onUpdateQuantity={updateQuantity}
                 onClear={clearCart}
-                whatsappNumber={data.store.whatsapp}
+                whatsappNumber={data.store.whatsapp || data.store.phone || ""}
                 storeId={data.store.id}
                 couponsEnabled={data.store.coupons_enabled}
             />
@@ -183,7 +183,7 @@ export default function ShopPage() {
                 storeName={data.store.name}
                 storeDescription={data.store.description || undefined}
                 storeAddress={data.store.address || undefined}
-                whatsappNumber={data.store.whatsapp}
+                whatsappNumber={data.store.whatsapp || data.store.phone || ""}
                 products={data.categories.flatMap(c => c.products || [])}
             />
         </div>
