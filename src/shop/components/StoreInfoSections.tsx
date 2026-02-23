@@ -57,7 +57,7 @@ export function StoreInfoSections({ description, address, whatsapp, instagram, f
                     <h3 className="text-white/70 text-[10px] font-black uppercase tracking-[0.3em] mb-1">Horario de Atención</h3>
                     <div className="flex items-center gap-2.5 text-white">
                         <Clock className="w-4 h-4 flex-shrink-0 opacity-80" />
-                        <span className="text-lg md:text-xl font-black uppercase tracking-tight">
+                        <span className="text-lg md:text-xl font-bold tracking-tight">
                             {getSummarizedSchedule()}
                         </span>
                     </div>
