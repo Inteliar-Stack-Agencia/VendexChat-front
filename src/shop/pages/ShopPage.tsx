@@ -10,6 +10,7 @@ import { CartBar } from "../components/CartBar";
 import { ProductQuickViewModal } from "../components/ProductQuickViewModal";
 import { StoreInfoSections } from "../components/StoreInfoSections";
 import { ChatBotWidget } from "../components/ChatBotWidget";
+import { WeeklyMenuGrid } from "../components/WeeklyMenuGrid";
 import type { Product } from "../../types";
 
 export default function ShopPage() {
@@ -23,6 +24,16 @@ export default function ShopPage() {
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
+    // New: Mode state for Bespoke stores
+    const [viewMode, setViewMode] = useState<'standard' | 'weekly'>('standard');
+
+    // Auto-switch to weekly if enabled in metadata
+    useEffect(() => {
+        if (data?.store?.metadata?.enable_weekly_planning) {
+            setViewMode('weekly');
+        }
+    }, [data]);
+
     const filteredCategories = useMemo(() => {
         if (!data) return [];
 
@@ -34,13 +45,6 @@ export default function ShopPage() {
             })
         })).filter(cat => cat.products.length > 0);
 
-        // Si no hay categoría activa, intentamos poner la primera que tenga productos
-        if (activeCategory === null && allWithFilteredProducts.length > 0) {
-            // Usamos setTimeout o un useEffect separado para evitar warnings de "update during render"
-            // Pero como estamos en useMemo, lo mejor es que el componente lo maneje.
-            // Por ahora, solo filtramos si hay categoría.
-        }
-
         if (activeCategory !== null) {
             return allWithFilteredProducts.filter(cat => String(cat.id) === String(activeCategory));
         }
@@ -48,14 +52,12 @@ export default function ShopPage() {
         return allWithFilteredProducts;
     }, [data, searchTerm, activeCategory]);
 
-    // Efecto para asegurar que siempre haya una categoría seleccionada si no estamos en modo "Search" global
     useEffect(() => {
         if (!activeCategory && data?.categories && data.categories.length > 0 && !searchTerm) {
             setActiveCategory(data.categories[0].id);
         }
     }, [data, activeCategory, searchTerm]);
 
-    // Efecto para inyectar el color primario dinámico de la tienda
     useEffect(() => {
         if (data?.store?.primary_color) {
             document.documentElement.style.setProperty('--primary-color', data.store.primary_color);
@@ -98,14 +100,43 @@ export default function ShopPage() {
                 onCartClick={() => setIsCartOpen(true)}
             />
 
-            <CategoryChips
-                categories={data.categories}
-                activeId={activeCategory}
-                onSelect={setActiveCategory}
-            />
+            {data.store.metadata?.enable_weekly_planning && (
+                <div className="max-w-4xl mx-auto px-4 mt-8 flex justify-center">
+                    <div className="bg-slate-50 p-1.5 rounded-2xl flex gap-1 border border-slate-100">
+                        <button
+                            onClick={() => setViewMode('standard')}
+                            className={`px-6 py-2.5 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${viewMode === 'standard' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-400'
+                                }`}
+                        >
+                            Menú Diario
+                        </button>
+                        <button
+                            onClick={() => setViewMode('weekly')}
+                            className={`px-6 py-2.5 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all ${viewMode === 'weekly' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-400'
+                                }`}
+                        >
+                            Plan Semanal
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {viewMode === 'standard' && (
+                <CategoryChips
+                    categories={data.categories}
+                    activeId={activeCategory}
+                    onSelect={setActiveCategory}
+                />
+            )}
 
             <main className="max-w-4xl mx-auto px-4 py-8">
-                {filteredCategories.length === 0 ? (
+                {viewMode === 'weekly' ? (
+                    <WeeklyMenuGrid
+                        categories={data.categories}
+                        primaryColor={data.store.primary_color}
+                        onItemClick={setQuickViewProduct}
+                    />
+                ) : filteredCategories.length === 0 ? (
                     <div className="text-center py-20 bg-slate-50 rounded-[2rem] border-2 border-dashed border-slate-100">
                         <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">No se encontraron productos</p>
                     </div>
@@ -139,7 +170,6 @@ export default function ShopPage() {
                 )}
             </main>
 
-            {/* Info Sections: Nosotros / Zonas / Horarios */}
             <StoreInfoSections
                 description={data.store.description}
                 address={data.store.address}

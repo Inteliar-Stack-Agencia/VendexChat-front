@@ -101,7 +101,11 @@ export async function createOrder(payload: OrderPayload): Promise<OrderResponse>
       customer_whatsapp: payload.customer_whatsapp,
       delivery_type: payload.delivery_type,
       delivery_address: payload.delivery_address ?? null,
+      customer_notes: payload.customer_notes ?? null,
       total,
+      metadata: {
+        company_name: payload.customer_company ?? null
+      }
     })
     .select("id, public_id, status, total")
     .single();

@@ -54,6 +54,7 @@ export interface CatalogResponse {
 export interface CartItem {
   product: Product;
   quantity: number;
+  delivery_day?: string; // e.g. 'Monday', 'Tuesday', etc.
 }
 
 export type DeliveryType = "pickup" | "delivery";
@@ -62,8 +63,10 @@ export interface OrderPayload {
   store_id: string;
   customer_name: string;
   customer_whatsapp: string;
+  customer_company?: string;
   delivery_type: DeliveryType;
   delivery_address?: string;
+  customer_notes?: string;
   items: { product_id: string; quantity: number }[];
 }
 
