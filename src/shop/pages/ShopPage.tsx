@@ -187,7 +187,7 @@ export default function ShopPage() {
                 storeAddress={data.store.address || undefined}
                 whatsappNumber={data.store.whatsapp || data.store.phone || ""}
                 products={data.categories.flatMap(c => c.products || [])}
-                aiPrompt={data.store.ai_prompt}
+                aiPrompt={data.store.metadata?.ai_prompt || data.store.ai_prompt}
                 welcomeMessage={data.store.welcome_message}
             />
         </div>
