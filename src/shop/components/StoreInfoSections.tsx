@@ -73,7 +73,7 @@ export function StoreInfoSections({ description, address, whatsapp, instagram, f
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
                     <div className="space-y-4">
                         <div className="space-y-1">
-                            <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Nosotros</h2>
+                            <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">{metadata?.about_title || "Nosotros"}</h2>
                             <div className="w-10 h-1 bg-primary-dynamic rounded-full" />
                         </div>
                         <p className="text-slate-500 font-medium leading-relaxed text-base italic border-l-4 border-slate-100 pl-4">
@@ -150,7 +150,7 @@ export function StoreInfoSections({ description, address, whatsapp, instagram, f
                     <div className="pt-10 border-t border-slate-100">
                         <div className="space-y-4 max-w-2xl mx-auto text-center">
                             <div className="space-y-1 flex flex-col items-center">
-                                <h2 className="text-xl font-black text-slate-900 uppercase tracking-tight">Nuestra Historia</h2>
+                                <h2 className="text-xl font-black text-slate-900 uppercase tracking-tight">{metadata?.history_title || "Nuestra Historia"}</h2>
                                 <div className="w-8 h-1 bg-primary-dynamic rounded-full" />
                             </div>
                             <p className="text-slate-500 font-medium leading-relaxed text-sm whitespace-pre-wrap">
