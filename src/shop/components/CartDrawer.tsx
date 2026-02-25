@@ -162,7 +162,7 @@ export function CartDrawer({
             onClear(); onClose();
         } catch (err: any) {
             console.error("Error al crear pedido:", err);
-            alert("Hubo un error al procesar tu pedido.");
+            alert("Error al procesar pedido: " + (err.message || "Error desconocido"));
         } finally {
             setIsSubmitting(false);
         }
