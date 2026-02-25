@@ -10,10 +10,10 @@ export function CartBar({ totalItems, totalPrice, onClick }: CartBarProps) {
     if (totalItems === 0) return null;
 
     return (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[90%] max-w-md animate-in slide-in-from-bottom-10 fade-in duration-500">
+        <div className="fixed bottom-6 right-6 z-40 w-auto max-w-[calc(100vw-3rem)] animate-in slide-in-from-bottom-10 fade-in duration-500">
             <button
                 onClick={onClick}
-                className="w-full bg-primary-dynamic text-white rounded-2xl p-4 flex items-center justify-between shadow-2xl active:scale-[0.98] transition-all"
+                className="w-full bg-primary-dynamic text-white rounded-2xl p-4 flex items-center gap-6 shadow-2xl active:scale-[0.98] transition-all"
             >
                 <div className="flex items-center gap-4">
                     <div className="relative">

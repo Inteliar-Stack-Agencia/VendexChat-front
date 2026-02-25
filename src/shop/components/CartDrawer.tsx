@@ -99,21 +99,28 @@ export function CartDrawer({
         }
         setIsSubmitting(true);
         try {
-            const orderPayload = {
-                store_id: storeId,
-                customer_name: customerName,
-                customer_whatsapp: "",
-                customer_company: customerCompany || undefined,
-                delivery_type: deliveryType === 'envio' ? 'delivery' : 'pickup',
-                delivery_address: deliveryType === 'envio' ? address : undefined,
-                customer_notes: notes || undefined,
-                items: items.map(i => ({
-                    product_id: i.product.id,
-                    quantity: i.quantity,
-                    metadata: i.delivery_day ? { delivery_day: i.delivery_day } : undefined
-                }))
-            };
-            await createOrder(orderPayload as any);
+            // Try to save order to database, but don't block WhatsApp if it fails
+            let dbSaveOk = true;
+            try {
+                const orderPayload = {
+                    store_id: storeId,
+                    customer_name: customerName,
+                    customer_whatsapp: "",
+                    customer_company: customerCompany || undefined,
+                    delivery_type: deliveryType === 'envio' ? 'delivery' : 'pickup',
+                    delivery_address: deliveryType === 'envio' ? address : undefined,
+                    customer_notes: notes || undefined,
+                    items: items.map(i => ({
+                        product_id: i.product.id,
+                        quantity: i.quantity,
+                        metadata: i.delivery_day ? { delivery_day: i.delivery_day } : undefined
+                    }))
+                };
+                await createOrder(orderPayload as any);
+            } catch (dbErr: any) {
+                console.error("Error al guardar pedido en BD:", dbErr);
+                dbSaveOk = false;
+            }
 
             let message = `*NUEVO PEDIDO*\n` + `------------------\n`;
 

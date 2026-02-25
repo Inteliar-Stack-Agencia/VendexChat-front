@@ -11,6 +11,7 @@ import { ProductQuickViewModal } from "../components/ProductQuickViewModal";
 import { StoreInfoSections } from "../components/StoreInfoSections";
 import { ChatBotWidget } from "../components/ChatBotWidget";
 import { WeeklyMenuGrid } from "../components/WeeklyMenuGrid";
+import { GlobalAnnouncement } from "../components/GlobalAnnouncement";
 import type { Product } from "../../types";
 
 export default function ShopPage() {
@@ -85,6 +86,7 @@ export default function ShopPage() {
 
     return (
         <div className="min-h-screen bg-white pb-24">
+            <GlobalAnnouncement />
             <StoreHeader
                 name={data.store.name}
                 logo={data.store.logo_url || ""}

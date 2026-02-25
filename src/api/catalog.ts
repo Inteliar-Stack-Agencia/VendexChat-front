@@ -233,3 +233,15 @@ export async function validateCoupon(code: string, storeId: string) {
 
   return coupon;
 }
+
+export async function getGlobalSettings(): Promise<Record<string, any>> {
+  const { data, error } = await supabase.from('global_settings').select('*');
+  if (error) {
+    console.warn('[getGlobalSettings] Error fetching settings:', error);
+    return {};
+  }
+  return (data || []).reduce((acc: any, curr: any) => {
+    acc[curr.key] = curr.value;
+    return acc;
+  }, {});
+}
