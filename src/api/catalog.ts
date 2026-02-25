@@ -139,11 +139,10 @@ export async function createOrder(payload: OrderPayload): Promise<OrderResponse>
     products.map((p) => [p.id, p.offer_price ?? p.price])
   );
 
-  // 2. Calculate total
-  const total = payload.items.reduce((sum, item) => {
-    const price = priceMap.get(item.product_id) ?? 0;
-    return sum + price * item.quantity;
-  }, 0);
+  // 2. Validate items
+  if (payload.items.length === 0) {
+    throw new Error("Cannot create an empty order");
+  }
 
   // 3. Insert order
   const { data: order, error: orderError } = await supabase
@@ -154,8 +153,14 @@ export async function createOrder(payload: OrderPayload): Promise<OrderResponse>
       customer_whatsapp: payload.customer_whatsapp,
       delivery_type: payload.delivery_type,
       delivery_address: payload.delivery_address ?? null,
+      delivery_zone: payload.delivery_zone ?? null,
+      payment_method: payload.payment_method ?? null,
       customer_notes: payload.customer_notes ?? null,
-      total,
+      subtotal: payload.subtotal,
+      delivery_cost: payload.delivery_cost,
+      total: payload.total,
+      status: 'pending',
+      coupon_id: payload.coupon_id ?? null,
       metadata: {
         company_name: payload.customer_company ?? null
       }
@@ -185,6 +190,7 @@ export async function createOrder(payload: OrderPayload): Promise<OrderResponse>
 
   return {
     public_id: order.public_id,
+    order_number: (order as any).order_number,
     status: order.status,
     total: order.total,
   };

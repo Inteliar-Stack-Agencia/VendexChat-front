@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, Plus, Minus, Send, Trash2, Tag, AlertCircle } from "lucide-react";
+import { X, Plus, Minus, Trash2 } from "lucide-react";
 import { type CartItem } from "../../types";
 import { validateCoupon, createOrder } from "../../api/catalog";
 import { sanitizePhoneNumber } from "../../utils/format";
@@ -14,6 +14,7 @@ interface CartDrawerProps {
     whatsappNumber: string;
     storeId: string;
     couponsEnabled?: boolean;
+    deliveryCost?: number;
 }
 
 export function CartDrawer({
@@ -25,7 +26,8 @@ export function CartDrawer({
     onClear,
     whatsappNumber,
     storeId,
-    couponsEnabled = true
+    couponsEnabled = true,
+    deliveryCost = 0
 }: CartDrawerProps) {
     const [deliveryType, setDeliveryType] = useState<"envio" | "retiro">("envio");
     const [address, setAddress] = useState("");
@@ -90,7 +92,8 @@ export function CartDrawer({
     };
 
     const discount = calculateDiscount();
-    const finalTotal = totalPrice - discount;
+    const currentShipping = deliveryType === 'envio' ? deliveryCost : 0;
+    const finalTotal = totalPrice - discount + currentShipping;
 
     const handleSendWhatsApp = async () => {
         if (!customerName.trim()) {
@@ -105,11 +108,17 @@ export function CartDrawer({
                 const orderPayload = {
                     store_id: storeId,
                     customer_name: customerName,
-                    customer_whatsapp: "",
+                    customer_whatsapp: "", // TODO: Add phone field if needed
                     customer_company: customerCompany || undefined,
                     delivery_type: deliveryType === 'envio' ? 'delivery' : 'pickup',
                     delivery_address: deliveryType === 'envio' ? address : undefined,
+                    delivery_zone: deliveryType === 'envio' ? deliveryZone : undefined,
+                    payment_method: paymentMethod,
                     customer_notes: notes || undefined,
+                    subtotal: totalPrice,
+                    delivery_cost: currentShipping,
+                    total: finalTotal,
+                    coupon_id: appliedCoupon?.id,
                     items: items.map(i => ({
                         product_id: i.product.id,
                         quantity: i.quantity,

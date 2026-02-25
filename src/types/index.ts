@@ -40,6 +40,7 @@ export interface Store {
   custom_domain?: string | null;
   coupons_enabled: boolean;
   primary_color: string;
+  delivery_cost?: number;
   metadata?: any | null;
   ai_prompt?: string | null;
   welcome_message?: string | null;
@@ -67,12 +68,19 @@ export interface OrderPayload {
   customer_company?: string;
   delivery_type: DeliveryType;
   delivery_address?: string;
+  delivery_zone?: string;
+  payment_method?: string;
   customer_notes?: string;
-  items: { product_id: string; quantity: number }[];
+  subtotal: number;
+  delivery_cost: number;
+  total: number;
+  coupon_id?: string;
+  items: { product_id: string; quantity: number; metadata?: any }[];
 }
 
 export interface OrderResponse {
   public_id: string;
+  order_number: string;
   status: string;
   total: number;
 }

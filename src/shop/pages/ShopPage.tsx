@@ -205,6 +205,7 @@ export default function ShopPage() {
                 whatsappNumber={data.store.whatsapp || data.store.phone || ""}
                 storeId={data.store.id}
                 couponsEnabled={data.store.coupons_enabled}
+                deliveryCost={data.store.delivery_cost || 0}
             />
 
             <ProductQuickViewModal
