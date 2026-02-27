@@ -3,23 +3,23 @@ import { Clock, HelpCircle, MessageSquareX, Repeat } from "lucide-react";
 const problems = [
   {
     icon: Clock,
-    title: "Mensajes respondidos tarde",
-    description: "Las respuestas llegan tarde y se pierden ventas.",
+    title: "Carga manual interminable",
+    description: "Subir cientos de productos uno por uno es una pérdida de tiempo total.",
   },
   {
     icon: Repeat,
-    title: "Clientes pidiendo el menú",
-    description: "La misma pregunta en el chat una y otra vez.",
+    title: "Consultas repetitivas",
+    description: "¿Tienen stock? ¿Precio? Respondés lo mismo 50 veces al día.",
   },
   {
     icon: MessageSquareX,
-    title: "Pedidos mezclados en conversaciones",
-    description: "Entre mensajes, fotos y audios se pierde el pedido.",
+    title: "Pedidos perdidos en el chat",
+    description: "Entre audios y texto, el pedido se mezcla y cometés errores.",
   },
   {
     icon: HelpCircle,
-    title: "Tiempo perdido tomando pedidos",
-    description: "Copiar, sumar y confirmar todo manualmente.",
+    title: "Negocio cerrado si no respondés",
+    description: "Si no estás pegado al celular, perdés ventas cada minuto.",
   },
 ];
 

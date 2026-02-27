@@ -1,12 +1,12 @@
 import { ShoppingBag, Tag, ClipboardList, Smartphone, Building2, Ban } from "lucide-react";
 
 const features = [
-  { icon: ShoppingBag, title: "Catálogo online", description: "Tu menú o inventario siempre actualizado y accesible por link." },
-  { icon: Tag, title: "Categorías de productos", description: "Organiza tus productos para que tus clientes encuentren lo que buscan." },
-  { icon: ClipboardList, title: "Gestión de pedidos", description: "Todos los pedidos en un solo lugar, con detalles claros y estado." },
-  { icon: Smartphone, title: "Diseño mobile-first", description: "Tus clientes compran desde el celular con una experiencia perfecta." },
-  { icon: Building2, title: "Multi-negocio", description: "Ideal para franquicias o múltiples locales bajo una misma cuenta." },
-  { icon: Ban, title: "Sin comisiones", description: "No cobramos porcentaje por venta. Tu ganancia es 100% tuya." },
+  { icon: Smartphone, title: "Carga Masiva IA", description: "Subí fotos de tus catálogos o listas infinitas. La IA digitaliza cientos de productos con nombre, precio y categoría en segundos." },
+  { icon: ShoppingBag, title: "Asistente IA 24/7", description: "Atención automática: tu bot inteligente conoce todo tu stock, responde dudas y guía a tus clientes hasta la venta." },
+  { icon: Tag, title: "Organización Automática", description: "La IA clasifica tus productos por categorías lógicas para que tu tienda sea fácil de navegar desde el primer día." },
+  { icon: ClipboardList, title: "Gestión Inteligente", description: "Pedidos centralizados que llegan a WhatsApp listos para despachar, con toda la info procesada por IA." },
+  { icon: Building2, title: "Estadísticas IA", description: "Entendé tus ventas y recibí recomendaciones inteligentes basadas en tendencias reales de tus clientes." },
+  { icon: Ban, title: "Sin Comisiones", description: "Tecnología de punta sin costos ocultos. Tu ganancia es 100% tuya, sin porcentajes por venta." },
 ];
 
 const FeaturesSection = () => {

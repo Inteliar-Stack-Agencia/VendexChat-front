@@ -16,9 +16,9 @@ const SolutionSection = () => {
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-0 max-w-5xl mx-auto">
           {[
-            { icon: ShoppingBag, label: "Cliente visita tu catálogo", color: "bg-primary/10 text-primary" },
-            { icon: List, label: "Selecciona productos", color: "bg-accent text-accent-foreground" },
-            { icon: Send, label: "Pedido llega organizado", color: "bg-secondary text-secondary-foreground" },
+            { icon: ShoppingBag, label: "IA crea tu tienda con una foto", color: "bg-primary/10 text-primary" },
+            { icon: List, label: "IA atiende y vende por vos", color: "bg-accent text-accent-foreground" },
+            { icon: Send, label: "Recibís el pedido organizado", color: "bg-secondary text-secondary-foreground" },
           ].map((step, i) => (
             <div key={i} className="flex items-center gap-4 md:gap-0">
               <div className="flex flex-col items-center gap-3 px-6">

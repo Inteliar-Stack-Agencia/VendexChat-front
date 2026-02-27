@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, Plus, Minus, Trash2 } from "lucide-react";
+import { X, Plus, Minus, Trash2, CheckCircle2 } from "lucide-react";
 import { type CartItem } from "../../types";
 import { validateCoupon, createOrder } from "../../api/catalog";
 import { sanitizePhoneNumber } from "../../utils/format";
@@ -15,6 +15,7 @@ interface CartDrawerProps {
     storeId: string;
     couponsEnabled?: boolean;
     deliveryCost?: number;
+    metadata?: any;
 }
 
 export function CartDrawer({
@@ -27,12 +28,18 @@ export function CartDrawer({
     whatsappNumber,
     storeId,
     couponsEnabled = true,
-    deliveryCost = 0
+    deliveryCost = 0,
+    metadata = {}
 }: CartDrawerProps) {
     const [deliveryType, setDeliveryType] = useState<"envio" | "retiro">("envio");
     const [address, setAddress] = useState("");
     const [deliveryZone, setDeliveryZone] = useState("");
-    const [paymentMethod, setPaymentMethod] = useState("Efectivo");
+
+    // Determine default payment method
+    const enabledMethods = metadata?.payment_methods || { cash: true };
+    const initialMethod = Object.keys(enabledMethods).find(k => enabledMethods[k]) || "Efectivo";
+
+    const [paymentMethod, setPaymentMethod] = useState(initialMethod === "cash" ? "Efectivo" : initialMethod === "transfer" ? "Transferencia" : initialMethod);
     const [notes, setNotes] = useState("");
     const [customerName, setCustomerName] = useState("");
     const [customerWhatsapp, setCustomerWhatsapp] = useState("");
@@ -43,6 +50,8 @@ export function CartDrawer({
     const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
     const [couponError, setCouponError] = useState("");
     const [isValidating, setIsValidating] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [orderInfo, setOrderInfo] = useState<{ number: string, id: string } | null>(null);
 
     if (!isOpen) return null;
 
@@ -192,8 +201,18 @@ export function CartDrawer({
 
             const encoded = encodeURIComponent(message);
             const cleanPhone = sanitizePhoneNumber(whatsappNumber);
-            window.open(`https://wa.me/${cleanPhone}?text=${encoded}`, '_blank');
-            onClear(); onClose();
+
+            setOrderInfo({
+                number: orderResult?.order_number || 'PENDIENTE',
+                id: orderResult?.public_id || ''
+            });
+            setShowSuccess(true);
+            onClear();
+
+            // Open WhatsApp after a brief delay so they see the success screen
+            setTimeout(() => {
+                window.open(`https://wa.me/${cleanPhone}?text=${encoded}`, '_blank');
+            }, 1000);
         } catch (err: any) {
             console.error("Error al crear pedido:", err);
             alert("Error al procesar pedido: " + (err.message || "Error desconocido"));
@@ -213,7 +232,38 @@ export function CartDrawer({
                     </button>
                 </div>
                 <div className="flex-1 overflow-y-auto p-4 space-y-6">
-                    {items.length === 0 ? (
+                    {showSuccess ? (
+                        <div className="h-full flex flex-col items-center justify-center text-center p-6 animate-in fade-in zoom-in duration-500">
+                            <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mb-6">
+                                <CheckCircle2 className="w-10 h-10 text-emerald-500" />
+                            </div>
+                            <h3 className="text-2xl font-black text-slate-900 mb-2">¡Pedido Enviado!</h3>
+                            <p className="text-slate-500 mb-8">Gracias por tu compra. Ya hemos enviado los detalles a la tienda por WhatsApp.</p>
+
+                            <div className="w-full bg-slate-50 rounded-2xl p-6 border border-slate-100 mb-8">
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Tu número de pedido</p>
+                                <p className="text-2xl font-black text-slate-900">#{orderInfo?.number}</p>
+                            </div>
+
+                            <div className="space-y-4 w-full">
+                                <button
+                                    onClick={() => {
+                                        const cleanPhone = sanitizePhoneNumber(whatsappNumber);
+                                        window.open(`https://wa.me/${cleanPhone}`, '_blank');
+                                    }}
+                                    className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-black uppercase tracking-widest py-4 rounded-xl flex items-center justify-center gap-3 transition-all"
+                                >
+                                    Abrir WhatsApp
+                                </button>
+                                <button
+                                    onClick={onClose}
+                                    className="w-full text-slate-400 font-bold text-sm hover:text-slate-600 transition-colors"
+                                >
+                                    Cerrar y seguir navegando
+                                </button>
+                            </div>
+                        </div>
+                    ) : items.length === 0 ? (
                         <div className="h-full flex flex-col items-center justify-center text-slate-400 gap-3">
                             <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center">
                                 <Trash2 className="w-8 h-8" />
@@ -272,10 +322,33 @@ export function CartDrawer({
                             <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Entrega y Pago</h3>
                             <div className="space-y-2">
                                 <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)} className="w-full px-4 py-3 bg-slate-50 border-0 rounded-xl text-sm font-bold text-slate-700 outline-none">
-                                    <option value="Efectivo">Efectivo</option>
-                                    <option value="Transferencia">Transferencia</option>
+                                    {(enabledMethods.cash || !enabledMethods) && <option value="Efectivo">Efectivo / Acordar</option>}
+                                    {enabledMethods.transfer && <option value="Transferencia">Transferencia Bancaria</option>}
+                                    {enabledMethods.yape && <option value="Yape">Yape</option>}
+                                    {enabledMethods.plin && <option value="Plin">Plin</option>}
                                     <option value="Mercado Pago">Mercado Pago</option>
                                 </select>
+
+                                {paymentMethod === "Transferencia" && metadata.transfer_details && (
+                                    <div className="p-3 bg-indigo-50 rounded-xl border border-indigo-100">
+                                        <p className="text-[10px] font-black text-indigo-600 uppercase mb-1">CBU / Alias para transferencia:</p>
+                                        <p className="text-xs font-medium text-slate-700 whitespace-pre-wrap">{metadata.transfer_details}</p>
+                                    </div>
+                                )}
+
+                                {paymentMethod === "Yape" && metadata.yape_details && (
+                                    <div className="p-3 bg-indigo-50 rounded-xl border border-indigo-100">
+                                        <p className="text-[10px] font-black text-indigo-600 uppercase mb-1">Datos para Yape:</p>
+                                        <p className="text-xs font-medium text-slate-700 whitespace-pre-wrap">{metadata.yape_details}</p>
+                                    </div>
+                                )}
+
+                                {paymentMethod === "Plin" && metadata.plin_details && (
+                                    <div className="p-3 bg-indigo-50 rounded-xl border border-indigo-100">
+                                        <p className="text-[10px] font-black text-indigo-600 uppercase mb-1">Datos para Plin:</p>
+                                        <p className="text-xs font-medium text-slate-700 whitespace-pre-wrap">{metadata.plin_details}</p>
+                                    </div>
+                                )}
                                 <select value={deliveryType} onChange={(e) => setDeliveryType(e.target.value as any)} className="w-full px-4 py-3 bg-slate-50 border-0 rounded-xl text-sm font-bold text-slate-700 outline-none">
                                     <option value="envio">Envío a domicilio</option>
                                     <option value="retiro">Retiro en local</option>

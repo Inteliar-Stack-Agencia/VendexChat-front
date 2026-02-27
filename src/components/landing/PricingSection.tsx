@@ -40,7 +40,7 @@ const plans = [
     event: "pricing_advance_click",
   },
   {
-    name: "Premium",
+    name: "Pro",
     price: "USD 9.99 / mes",
     features: [
       "Categorías ilimitadas",
@@ -117,9 +117,8 @@ const PricingSection = () => {
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`relative p-9 rounded-2xl border shadow-soft bg-card ${
-                plan.highlight ? "border-primary/50 bg-secondary shadow-elevated" : "border-border"
-              }`}
+              className={`relative p-9 rounded-2xl border shadow-soft bg-card ${plan.highlight ? "border-primary/50 bg-secondary shadow-elevated" : "border-border"
+                }`}
             >
               {plan.highlight && (
                 <span className="absolute -top-3 left-6 px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold">

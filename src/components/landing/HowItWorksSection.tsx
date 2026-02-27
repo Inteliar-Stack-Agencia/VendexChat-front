@@ -4,26 +4,26 @@ const steps = [
   {
     icon: Store,
     step: "01",
-    title: "Creá tu tienda",
-    description: "Registrate y configurá tu negocio en minutos.",
+    title: "Crea tu cuenta",
+    description: "Configura tu negocio y marca en segundos.",
   },
   {
     icon: Upload,
     step: "02",
-    title: "Subí productos y stock",
-    description: "Cargá productos con fotos y pausá lo que no está disponible.",
+    title: "Importación IA",
+    description: "Sube una foto de tu menú o lista y la IA crea todo tu stock.",
   },
   {
     icon: Share2,
     step: "03",
-    title: "Compartí tu link",
-    description: "WhatsApp, Instagram o un QR para tu local.",
+    title: "Activa tu Asistente IA",
+    description: "Tu bot inteligente empieza a vender y atender 24/7.",
   },
   {
     icon: Bell,
     step: "04",
-    title: "Recibí pedidos ordenados",
-    description: "Te llega todo armado para coordinar pago y entrega, sin confusiones.",
+    title: "Recibí los pedidos",
+    description: "Confirmá pedidos ya organizados que llegan directo a tu WhatsApp.",
   },
 ];
 

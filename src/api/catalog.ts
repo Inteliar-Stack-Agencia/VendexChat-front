@@ -45,40 +45,41 @@ export async function fetchCatalog(identifier: string): Promise<CatalogResponse>
     throw new Error(`Store not found for identifier: ${identifier}`);
   }
 
-  // 2. Get categories for this store
-  const { data: categories, error: catError } = await supabase
-    .from("categories")
-    .select("id, name, sort_order")
-    .eq("store_id", store.id)
-    .order("sort_order");
+  // 2. Fetch categories, products, and settings in parallel
+  const [categoriesResult, productsResult, globalSettingsResult] = await Promise.all([
+    supabase
+      .from("categories")
+      .select("id, name, sort_order")
+      .eq("store_id", store.id)
+      .order("sort_order"),
+    supabase
+      .from("products")
+      .select("id, name, description, price, offer_price, image_url, sort_order, category_id, stock, is_active")
+      .eq("store_id", store.id) // Using store_id directly is often faster than IN (category_ids)
+      .eq("is_active", true)
+      .order("sort_order"),
+    supabase
+      .from("global_settings")
+      .select("key, value")
+      .in("key", ["global_announcement_active", "global_announcement_text"])
+  ]);
 
-  if (catError) {
-    throw new Error(`Failed to load categories: ${catError.message}`);
-  }
+  if (categoriesResult.error) throw new Error(`Failed to load categories: ${categoriesResult.error.message}`);
+  if (productsResult.error) throw new Error(`Failed to load products: ${productsResult.error.message}`);
 
-  // 3. Get all products for these categories (Only active ones)
-  const categoryIds = (categories ?? []).map((c) => c.id);
+  const categories = categoriesResult.data ?? [];
+  const products = productsResult.data ?? [];
+  const globalSettings = globalSettingsResult.data ?? [];
 
-  const { data: products, error: prodError } = await supabase
-    .from("products")
-    .select("id, name, description, price, offer_price, image_url, sort_order, category_id, stock, unlimited_stock, is_active")
-    .in("category_id", categoryIds)
-    .eq("is_active", true)
-    .order("sort_order");
-
-  if (prodError) {
-    throw new Error(`Failed to load products: ${prodError.message}`);
-  }
-
-  // 4. Group products by category and normalize
+  // 3. Group products by category
   const productsByCategory = new Map<string, any[]>();
-  for (const p of products ?? []) {
+  for (const p of products) {
     const list = productsByCategory.get(p.category_id) ?? [];
     list.push(p);
     productsByCategory.set(p.category_id, list);
   }
 
-  const normalizedCategories = (categories ?? []).map((cat) => {
+  const normalizedCategories = categories.map((cat) => {
     const catProducts = productsByCategory.get(cat.id) ?? [];
     return {
       id: cat.id,
@@ -91,7 +92,7 @@ export async function fetchCatalog(identifier: string): Promise<CatalogResponse>
         offer_price: p.offer_price,
         image_url: p.image_url,
         stock: p.stock,
-        unlimited_stock: p.unlimited_stock,
+        unlimited_stock: p.unlimited_stock ?? false,
         is_active: p.is_active,
         category_id: p.category_id,
         sort_order: p.sort_order
@@ -99,22 +100,15 @@ export async function fetchCatalog(identifier: string): Promise<CatalogResponse>
     };
   });
 
-  // 5. Fetch announcement (Store specific overrides Global)
+  // 4. Handle Announcement logic
   const storeMetadata = (store as any).metadata || {};
   const isStoreAnnounceActive = storeMetadata.announcement_active === true || storeMetadata.announcement_active === "true";
 
   let announcement = null;
-
   if (isStoreAnnounceActive && storeMetadata.announcement_text) {
     announcement = storeMetadata.announcement_text;
   } else {
-    // Fallback to global announcement
-    const { data: globalSettings } = await supabase
-      .from("global_settings")
-      .select("key, value")
-      .in("key", ["global_announcement_active", "global_announcement_text"]);
-
-    const settingsMap = (globalSettings ?? []).reduce((acc, curr) => {
+    const settingsMap = globalSettings.reduce((acc, curr) => {
       acc[curr.key] = curr.value;
       return acc;
     }, {} as Record<string, any>);

@@ -5,13 +5,15 @@ import { useCartState } from "../state/useCartStore";
 import { StoreHeader } from "../components/StoreHeader";
 import { CategoryChips } from "../components/CategoryChips";
 import { ProductCard } from "../components/ProductCard";
-import { CartDrawer } from "../components/CartDrawer";
 import { CartBar } from "../components/CartBar";
 import { ProductQuickViewModal } from "../components/ProductQuickViewModal";
-import { StoreInfoSections } from "../components/StoreInfoSections";
-import { ChatBotWidget } from "../components/ChatBotWidget";
 import { WeeklyMenuGrid } from "../components/WeeklyMenuGrid";
 import { GlobalAnnouncement } from "../components/GlobalAnnouncement";
+import { Suspense, lazy } from "react";
+
+const CartDrawer = lazy(() => import("../components/CartDrawer").then(m => ({ default: m.CartDrawer })));
+const StoreInfoSections = lazy(() => import("../components/StoreInfoSections").then(m => ({ default: m.StoreInfoSections })));
+const ChatBotWidget = lazy(() => import("../components/ChatBotWidget").then(m => ({ default: m.ChatBotWidget })));
 import type { Product } from "../../types";
 
 export default function ShopPage() {
@@ -173,21 +175,23 @@ export default function ShopPage() {
                 )}
             </main>
 
-            <StoreInfoSections
-                description={data.store.description}
-                address={data.store.address}
-                whatsapp={data.store.whatsapp || data.store.phone || ""}
-                instagram={data.store.instagram}
-                facebook={data.store.facebook}
-                schedule={(() => {
-                    const phys = data.store.physical_schedule || data.store.schedule;
-                    const hasOpenPhysical = phys && Object.values(phys).some((d: any) => d?.open);
-                    return hasOpenPhysical ? phys : (data.store.online_schedule || phys);
-                })()}
-                storeName={data.store.name}
-                metadata={data.store.metadata}
-                footerMessage={data.store.footer_message}
-            />
+            <Suspense fallback={null}>
+                <StoreInfoSections
+                    description={data.store.description}
+                    address={data.store.address}
+                    whatsapp={data.store.whatsapp || data.store.phone || ""}
+                    instagram={data.store.instagram}
+                    facebook={data.store.facebook}
+                    schedule={(() => {
+                        const phys = data.store.physical_schedule || data.store.schedule;
+                        const hasOpenPhysical = phys && Object.values(phys).some((d: any) => d?.open);
+                        return hasOpenPhysical ? phys : (data.store.online_schedule || phys);
+                    })()}
+                    storeName={data.store.name}
+                    metadata={data.store.metadata}
+                    footerMessage={data.store.footer_message}
+                />
+            </Suspense>
 
             <CartBar
                 totalItems={totalItems}
@@ -195,18 +199,21 @@ export default function ShopPage() {
                 onClick={() => setIsCartOpen(true)}
             />
 
-            <CartDrawer
-                isOpen={isCartOpen}
-                onClose={() => setIsCartOpen(false)}
-                items={items}
-                totalPrice={totalPrice}
-                onUpdateQuantity={updateQuantity}
-                onClear={clearCart}
-                whatsappNumber={data.store.whatsapp || data.store.phone || ""}
-                storeId={data.store.id}
-                couponsEnabled={data.store.coupons_enabled}
-                deliveryCost={data.store.delivery_cost || 0}
-            />
+            <Suspense fallback={null}>
+                <CartDrawer
+                    isOpen={isCartOpen}
+                    onClose={() => setIsCartOpen(false)}
+                    items={items}
+                    totalPrice={totalPrice}
+                    onUpdateQuantity={updateQuantity}
+                    onClear={clearCart}
+                    whatsappNumber={data.store.whatsapp || data.store.phone || ""}
+                    storeId={data.store.id}
+                    couponsEnabled={data.store.coupons_enabled}
+                    deliveryCost={data.store.delivery_cost || 0}
+                    metadata={data.store.metadata}
+                />
+            </Suspense>
 
             <ProductQuickViewModal
                 isOpen={!!quickViewProduct}
@@ -217,17 +224,19 @@ export default function ShopPage() {
                 onUpdate={updateQuantity}
             />
 
-            <ChatBotWidget
-                isOpen={isChatOpen}
-                onClose={() => setIsChatOpen(false)}
-                storeName={data.store.name}
-                storeDescription={data.store.description || undefined}
-                storeAddress={data.store.address || undefined}
-                whatsappNumber={data.store.whatsapp || data.store.phone || ""}
-                products={data.categories.flatMap(c => c.products || [])}
-                aiPrompt={data.store.metadata?.ai_prompt || data.store.ai_prompt}
-                welcomeMessage={data.store.welcome_message}
-            />
+            <Suspense fallback={null}>
+                <ChatBotWidget
+                    isOpen={isChatOpen}
+                    onClose={() => setIsChatOpen(false)}
+                    storeName={data.store.name}
+                    storeDescription={data.store.description || undefined}
+                    storeAddress={data.store.address || undefined}
+                    whatsappNumber={data.store.whatsapp || data.store.phone || ""}
+                    products={data.categories.flatMap(c => c.products || [])}
+                    aiPrompt={data.store.metadata?.ai_prompt || data.store.ai_prompt}
+                    welcomeMessage={data.store.welcome_message}
+                />
+            </Suspense>
         </div>
     );
 }
