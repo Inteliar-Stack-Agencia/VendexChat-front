@@ -54,7 +54,7 @@ export async function fetchCatalog(identifier: string): Promise<CatalogResponse>
       .order("sort_order"),
     supabase
       .from("products")
-      .select("id, name, description, price, offer_price, image_url, sort_order, category_id, stock, is_active")
+      .select("id, name, description, price, offer_price, image_url, sort_order, category_id, stock, unlimited_stock, is_active")
       .eq("store_id", store.id) // Using store_id directly is often faster than IN (category_ids)
       .eq("is_active", true)
       .order("sort_order"),
