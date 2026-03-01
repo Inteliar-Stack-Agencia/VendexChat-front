@@ -8,7 +8,6 @@ import InteractiveAISection from "@/components/landing/InteractiveAISection";
 import BeforeAfterSection from "@/components/landing/BeforeAfterSection";
 import PricingSection from "@/components/landing/PricingSection";
 import DemoSection from "@/components/landing/DemoSection";
-import SEOContentSection from "@/components/landing/SEOContentSection";
 import CTASection from "@/components/landing/CTASection";
 import Footer from "@/components/landing/Footer";
 import WhatsAppFloatingButton from "@/components/landing/WhatsAppFloatingButton";
@@ -26,8 +25,7 @@ export function HomePage() {
       <BeforeAfterSection />
       <PricingSection />
       <DemoSection />
-      <SEOContentSection />
-      <CTASection />
+<CTASection />
       <Footer />
       <WhatsAppFloatingButton />
     </div>
