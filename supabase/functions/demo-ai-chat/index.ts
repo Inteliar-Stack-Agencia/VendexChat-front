@@ -56,36 +56,37 @@ Deno.serve(async (req) => {
       });
     }
 
-    const apiKey = Deno.env.get("ANTHROPIC_API_KEY");
+    const apiKey = Deno.env.get("OPENAI_API_KEY");
     if (!apiKey) {
-      throw new Error("ANTHROPIC_API_KEY not configured");
+      throw new Error("OPENAI_API_KEY not configured");
     }
 
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-        "content-type": "application/json",
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "claude-haiku-4-5-20251001",
+        model: "gpt-4o-mini",
         max_tokens: 256,
-        system: SYSTEM_PROMPT,
-        messages: messages.map((m: { role: string; text: string }) => ({
-          role: m.role === "user" ? "user" : "assistant",
-          content: m.text,
-        })),
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          ...messages.map((m: { role: string; text: string }) => ({
+            role: m.role === "user" ? "user" : "assistant",
+            content: m.text,
+          })),
+        ],
       }),
     });
 
     if (!response.ok) {
       const err = await response.text();
-      throw new Error(`Anthropic API error: ${err}`);
+      throw new Error(`OpenAI API error: ${err}`);
     }
 
     const data = await response.json();
-    const reply = data.content?.[0]?.text ?? "No pude procesar tu mensaje, probá de nuevo.";
+    const reply = data.choices?.[0]?.message?.content ?? "No pude procesar tu mensaje, probá de nuevo.";
 
     return new Response(JSON.stringify({ reply }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
