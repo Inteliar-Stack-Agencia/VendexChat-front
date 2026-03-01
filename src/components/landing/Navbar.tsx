@@ -1,9 +1,37 @@
 import { Bot, ExternalLink } from "lucide-react";
 
+const NAV_LINKS = [
+  {
+    label: "Para el cliente",
+    href: "#cliente",
+    color: "text-violet-500 hover:text-violet-400",
+    dot: "bg-violet-500",
+  },
+  {
+    label: "Gestión de tienda",
+    href: "#gestion",
+    color: "text-blue-500 hover:text-blue-400",
+    dot: "bg-blue-500",
+  },
+  {
+    label: "Inteligencia IA",
+    href: "#ia",
+    color: "text-pink-500 hover:text-pink-400",
+    dot: "bg-pink-500",
+  },
+  {
+    label: "Precios",
+    href: "#pricing",
+    color: "text-muted-foreground hover:text-foreground",
+    dot: null,
+  },
+];
+
 const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass shadow-soft">
       <div className="container mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+        {/* Logo */}
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
             <Bot className="w-4 h-4 text-primary-foreground" />
@@ -12,13 +40,24 @@ const Navbar = () => {
             VENDEx<span className="text-slate-400">Chat</span><span className="text-violet-600">.IA</span>
           </span>
         </div>
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
-          <a href="#problema" className="hover:text-foreground transition-colors">Problema</a>
-          <a href="#solucion" className="hover:text-foreground transition-colors">Solución</a>
-          <a href="#como-funciona" className="hover:text-foreground transition-colors">Cómo funciona</a>
-          <a href="#funcionalidades" className="hover:text-foreground transition-colors">Funcionalidades</a>
-          <a href="#pricing" className="hover:text-foreground transition-colors">Precios</a>
+
+        {/* Links */}
+        <div className="hidden md:flex items-center gap-7">
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className={`flex items-center gap-1.5 text-sm font-semibold transition-colors ${link.color}`}
+            >
+              {link.dot && (
+                <span className={`w-1.5 h-1.5 rounded-full ${link.dot} opacity-80`} />
+              )}
+              {link.label}
+            </a>
+          ))}
         </div>
+
+        {/* CTA */}
         <div className="flex items-center gap-3">
           <a
             href="/morfi-demo"

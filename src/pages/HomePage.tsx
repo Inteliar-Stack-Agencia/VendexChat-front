@@ -1,14 +1,9 @@
 import Navbar from "@/components/landing/Navbar";
 import HeroSection from "@/components/landing/HeroSection";
-import ProblemSection from "@/components/landing/ProblemSection";
-import SolutionSection from "@/components/landing/SolutionSection";
-import HowItWorksSection from "@/components/landing/HowItWorksSection";
-import FeaturesSection from "@/components/landing/FeaturesSection";
-import ModuleDemosSection from "@/components/landing/ModuleDemosSection";
 import InteractiveAISection from "@/components/landing/InteractiveAISection";
-import BeforeAfterSection from "@/components/landing/BeforeAfterSection";
+import HowItWorksSection from "@/components/landing/HowItWorksSection";
+import ModuleDemosSection from "@/components/landing/ModuleDemosSection";
 import PricingSection from "@/components/landing/PricingSection";
-import DemoSection from "@/components/landing/DemoSection";
 import CTASection from "@/components/landing/CTASection";
 import Footer from "@/components/landing/Footer";
 import WhatsAppFloatingButton from "@/components/landing/WhatsAppFloatingButton";
@@ -18,16 +13,14 @@ export function HomePage() {
     <div className="min-h-screen bg-background">
       <Navbar />
       <HeroSection />
+      {/* BLOQUE 1: Para el cliente */}
       <InteractiveAISection />
-      <ProblemSection />
-      <SolutionSection />
+      {/* BLOQUE 2: Gestión de tienda */}
       <HowItWorksSection />
-      <FeaturesSection />
+      {/* BLOQUE 3: Inteligencia IA (tabs: Cliente / Gestión / IA) */}
       <ModuleDemosSection />
-      <BeforeAfterSection />
       <PricingSection />
-      <DemoSection />
-<CTASection />
+      <CTASection />
       <Footer />
       <WhatsAppFloatingButton />
     </div>
