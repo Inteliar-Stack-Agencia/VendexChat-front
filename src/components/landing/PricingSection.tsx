@@ -106,7 +106,7 @@ const PricingSection = () => {
   return (
     <section id="pricing" className="relative py-24 md:py-32 overflow-hidden scroll-mt-20">
       <div className="absolute inset-0 bg-slate-50/50 -z-20" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-indigo-50/50 rounded-full blur-[120px] -z-10 -translate-x-1/2 translate-y-1/2" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-violet-50/50 rounded-full blur-[120px] -z-10 -translate-x-1/2 translate-y-1/2" />
 
       <div className="container mx-auto px-4 sm:px-6 relative">
         <div className="max-w-4xl mx-auto text-center mb-20">
@@ -140,7 +140,7 @@ const PricingSection = () => {
                 className={`
                   group relative p-10 rounded-[2.5rem] transition-all duration-500 hover:-translate-y-2
                   ${isPro
-                    ? 'bg-slate-900 text-white shadow-2xl shadow-slate-900/30 scale-105 z-10'
+                    ? 'bg-violet-900 text-white shadow-2xl shadow-violet-900/40 scale-105 z-10'
                     : 'bg-white border border-slate-100 shadow-xl shadow-slate-200/40 hover:border-primary-dynamic/20'
                   }
                 `}
@@ -152,28 +152,28 @@ const PricingSection = () => {
                 )}
 
                 {plan.hasAI && !isPro && (
-                  <div className="absolute -top-3 right-6 flex items-center gap-1 px-3 py-1 bg-indigo-600 text-[8px] font-black text-white uppercase tracking-wider rounded-full">
+                  <div className="absolute -top-3 right-6 flex items-center gap-1 px-3 py-1 bg-violet-600 text-[8px] font-black text-white uppercase tracking-wider rounded-full">
                     <Bot className="w-2.5 h-2.5" /> IA incluida
                   </div>
                 )}
 
                 <div className="text-center mb-10">
-                  <h3 className={`text-xl font-black mb-1 uppercase tracking-tighter ${isPro ? 'text-white' : 'text-slate-900'}`}>{plan.name}</h3>
+                  <h3 className={`text-xl font-black mb-1 uppercase tracking-tighter ${isPro ? 'text-violet-100' : 'text-slate-900'}`}>{plan.name}</h3>
                   <div className="h-1 w-10 bg-primary-dynamic mx-auto rounded-full mb-4 opacity-50" />
-                  <p className={`text-2xl font-black ${isPro ? 'text-white' : 'text-slate-900'}`}>{plan.price}</p>
+                  <p className={`text-2xl font-black ${isPro ? 'text-violet-100' : 'text-slate-900'}`}>{plan.price}</p>
                 </div>
 
                 {/* AI Features block */}
                 {plan.aiFeatures && (
-                  <div className={`mb-6 p-4 rounded-2xl ${isPro ? 'bg-primary-dynamic/20 border border-primary-dynamic/30' : 'bg-indigo-50 border border-indigo-100'}`}>
-                    <div className={`flex items-center gap-1.5 mb-3 text-[9px] font-black uppercase tracking-widest ${isPro ? 'text-primary-dynamic' : 'text-indigo-600'}`}>
+                  <div className={`mb-6 p-4 rounded-2xl ${isPro ? 'bg-primary-dynamic/20 border border-primary-dynamic/30' : 'bg-violet-50 border border-violet-100'}`}>
+                    <div className={`flex items-center gap-1.5 mb-3 text-[9px] font-black uppercase tracking-widest ${isPro ? 'text-primary-dynamic' : 'text-violet-600'}`}>
                       <Bot className="w-3 h-3" /> Funciones IA
                     </div>
                     <ul className="space-y-2">
                       {plan.aiFeatures.map((f, idx) => (
                         <li key={idx} className="flex items-start gap-2">
-                          <Check className={`w-3 h-3 mt-0.5 flex-shrink-0 ${isPro ? 'text-primary-dynamic' : 'text-indigo-500'}`} />
-                          <span className={`text-[10px] font-bold leading-tight ${isPro ? 'text-slate-200' : 'text-indigo-700'}`}>{f}</span>
+                          <Check className={`w-3 h-3 mt-0.5 flex-shrink-0 ${isPro ? 'text-primary-dynamic' : 'text-violet-500'}`} />
+                          <span className={`text-[10px] font-bold leading-tight ${isPro ? 'text-violet-100' : 'text-violet-700'}`}>{f}</span>
                         </li>
                       ))}
                     </ul>
@@ -186,7 +186,7 @@ const PricingSection = () => {
                       <div className={`mt-1 flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center ${isPro ? 'bg-primary-dynamic/20 text-primary-dynamic' : 'bg-slate-50 text-slate-400'}`}>
                         <Check className="w-2.5 h-2.5" />
                       </div>
-                      <span className={`text-[11px] font-medium leading-tight ${isPro ? 'text-slate-300' : 'text-slate-500'}`}>{feature}</span>
+                      <span className={`text-[11px] font-medium leading-tight ${isPro ? 'text-violet-200' : 'text-slate-500'}`}>{feature}</span>
                     </li>
                   ))}
                 </ul>

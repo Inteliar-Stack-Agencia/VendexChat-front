@@ -45,7 +45,7 @@ const HeroSection = () => {
       {/* Premium Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full -z-20">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary-dynamic/10 rounded-full blur-[120px] animate-pulse-subtle" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-indigo-100/30 rounded-full blur-[150px] animate-pulse-subtle delay-1000" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-violet-100/30 rounded-full blur-[150px] animate-pulse-subtle delay-1000" />
         <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-emerald-50/40 rounded-full blur-[100px] animate-pulse-subtle delay-700" />
       </div>
 
@@ -56,7 +56,7 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 sm:px-6 w-full relative">
         <div className="grid lg:grid-cols-[1.1fr_1fr] gap-16 items-center">
           <div className="text-center lg:text-left order-2 lg:order-1">
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-slate-900 text-white text-[10px] font-black uppercase tracking-[0.2em] mb-8 animate-fade-up shadow-xl shadow-slate-900/20">
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-violet-900 text-white text-[10px] font-black uppercase tracking-[0.2em] mb-8 animate-fade-up shadow-xl shadow-violet-900/30">
               <span className="w-2 h-2 rounded-full bg-primary-dynamic animate-pulse" />
               La Revolución del Inbox con IA
             </div>
@@ -66,7 +66,7 @@ const HeroSection = () => {
               style={{ animationDelay: "0.1s" }}
             >
               Vende más <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-dynamic via-indigo-600 to-emerald-500">sin estar ahí</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-dynamic via-violet-500 to-indigo-400">sin estar ahí</span>
             </h1>
 
             <p

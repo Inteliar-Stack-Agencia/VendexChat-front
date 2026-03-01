@@ -24,7 +24,7 @@ const SolutionSection = () => {
           {[
             { icon: Brain, label: "IA digitaliza tu catálogo en segundos", color: "bg-indigo-600 text-white shadow-indigo-100" },
             { icon: Zap, label: "IA atiende, responde y cierra ventas", color: "bg-primary-dynamic text-white shadow-emerald-100" },
-            { icon: TrendingUp, label: "IA analiza y te dice cómo crecer", color: "bg-slate-900 text-white shadow-slate-100" },
+            { icon: TrendingUp, label: "IA analiza y te dice cómo crecer", color: "bg-violet-700 text-white shadow-violet-100" },
           ].map((step, i) => (
             <div key={i} className="flex items-center gap-4 md:gap-8 flex-col md:flex-row group">
               <div className="flex flex-col items-center gap-6 px-4 transition-transform duration-500 group-hover:scale-105">
@@ -45,7 +45,7 @@ const SolutionSection = () => {
         </div>
 
         <div className="max-w-5xl mx-auto relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-primary-dynamic to-indigo-600 rounded-[3rem] blur opacity-10 group-hover:opacity-20 transition duration-1000" />
+          <div className="absolute -inset-1 bg-gradient-to-r from-primary-dynamic to-violet-600 rounded-[3rem] blur opacity-10 group-hover:opacity-20 transition duration-1000" />
           <div className="relative rounded-[3rem] bg-white border border-slate-100 p-12 md:p-16 shadow-2xl shadow-slate-200/50">
             <div className="grid md:grid-cols-3 gap-12 text-center divide-y md:divide-y-0 md:divide-x divide-slate-100">
               <div className="pt-8 md:pt-0">
@@ -57,7 +57,7 @@ const SolutionSection = () => {
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">IA vendiendo por vos</p>
               </div>
               <div className="pt-12 md:pt-0 md:pl-8">
-                <div className="text-5xl font-black text-indigo-600 mb-2 tracking-tighter">~2min</div>
+                <div className="text-5xl font-black text-violet-600 mb-2 tracking-tighter">~2min</div>
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Setup express con IA</p>
               </div>
             </div>
