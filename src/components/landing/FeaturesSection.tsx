@@ -17,10 +17,10 @@ const FeaturesSection = () => {
 
       <div className="container mx-auto px-4 sm:px-6 relative">
         <div className="max-w-3xl mx-auto text-center mb-20 animate-in fade-in slide-in-from-bottom-4 duration-700">
-          <p className="text-[10px] font-black text-indigo-600 uppercase tracking-[0.3em] mb-4">Potencia tu Negocio</p>
+          <p className="text-[10px] font-black text-violet-600 uppercase tracking-[0.3em] mb-4">Potencia tu Negocio</p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-6 leading-tight">
             Todo lo necesario para <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-dynamic to-indigo-600">vender sin límites</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-dynamic to-violet-600">vender sin límites</span>
           </h2>
           <div className="w-16 h-1 bg-slate-200 mx-auto rounded-full" />
         </div>

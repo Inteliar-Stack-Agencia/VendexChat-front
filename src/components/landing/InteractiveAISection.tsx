@@ -92,12 +92,12 @@ const InteractiveAISection = () => {
     };
 
     return (
-        <section id="ia-demo" className="relative py-24 md:py-32 bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 overflow-hidden scroll-mt-20">
+        <section id="ia-demo" className="relative py-24 md:py-32 bg-gradient-to-br from-violet-950 via-indigo-950 to-emerald-950 overflow-hidden scroll-mt-20">
             {/* Top accent border */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 via-primary-dynamic to-emerald-400" />
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full -z-10">
                 <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[120px]" />
-                <div className="absolute bottom-1/4 left-0 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[120px]" />
+                <div className="absolute bottom-1/4 left-0 w-[600px] h-[600px] bg-violet-500/10 rounded-full blur-[120px]" />
             </div>
 
             <div className="container mx-auto px-4 sm:px-6 relative">
@@ -111,14 +111,14 @@ const InteractiveAISection = () => {
                             Asistente IA que <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-primary-dynamic">ayuda a vender</span>
                         </h2>
-                        <p className="text-lg text-slate-300 font-medium mb-12 max-w-xl">
+                        <p className="text-lg text-violet-200 font-medium mb-12 max-w-xl">
                             Guía al cliente en el proceso de compra y resuelve sus dudas al instante.
                             <span className="text-white font-bold"> Sin que vos tengas que estar.</span>
                         </p>
 
                         {/* Store selector */}
                         <div className="mb-10">
-                            <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Elegí un rubro para probarlo:</p>
+                            <p className="text-xs font-black text-violet-300 uppercase tracking-widest mb-3">Elegí un rubro para probarlo:</p>
                             <div className="flex flex-wrap gap-3">
                                 {STORES.map(store => (
                                     <button
@@ -126,7 +126,7 @@ const InteractiveAISection = () => {
                                         onClick={() => handleStoreChange(store.id)}
                                         className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all border ${
                                             selectedStore === store.id
-                                                ? "bg-slate-900 text-white border-slate-900 shadow-lg"
+                                                ? "bg-violet-800 text-white border-violet-800 shadow-lg"
                                                 : "bg-white text-slate-500 border-slate-200 hover:border-slate-400 hover:text-slate-900"
                                         }`}
                                     >
@@ -148,7 +148,7 @@ const InteractiveAISection = () => {
                                     </div>
                                     <div>
                                         <h4 className="text-sm font-black text-white uppercase tracking-wider mb-1">{item.title}</h4>
-                                        <p className="text-xs text-slate-400 font-medium leading-relaxed">{item.text}</p>
+                                        <p className="text-xs text-violet-300 font-medium leading-relaxed">{item.text}</p>
                                     </div>
                                 </div>
                             ))}
@@ -157,7 +157,7 @@ const InteractiveAISection = () => {
 
                     <div className="relative">
                         {/* Device Mockup */}
-                        <div className="relative mx-auto w-full max-w-[400px] h-[600px] rounded-[3rem] bg-slate-900 p-3 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] ring-1 ring-slate-800">
+                        <div className="relative mx-auto w-full max-w-[400px] h-[600px] rounded-[3rem] bg-violet-900 p-3 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] ring-1 ring-violet-700">
                             <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-white flex flex-col">
                                 {/* Chat Header */}
                                 <div className="p-5 border-b border-slate-100 flex items-center gap-3 bg-white">
@@ -178,7 +178,7 @@ const InteractiveAISection = () => {
                                     {messages.map((msg, i) => (
                                         <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`}>
                                             <div className={`max-w-[85%] p-4 rounded-2xl text-xs font-medium leading-relaxed shadow-sm ${msg.role === 'user'
-                                                ? 'bg-slate-900 text-white rounded-tr-none'
+                                                ? 'bg-violet-700 text-white rounded-tr-none'
                                                 : 'bg-white border border-slate-100 text-slate-700 rounded-tl-none'
                                                 }`}>
                                                 {msg.text}

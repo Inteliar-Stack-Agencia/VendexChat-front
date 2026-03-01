@@ -5,8 +5,8 @@ const CTASection = () => {
   return (
     <section id="cta" className="relative py-24 md:py-32 overflow-hidden scroll-mt-20">
       {/* Intense gradient background */}
-      <div className="absolute inset-0 bg-slate-900 -z-20" />
-      <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_20%,rgba(16,185,129,0.15),transparent)] -z-10" />
+      <div className="absolute inset-0 bg-gradient-to-br from-violet-950 via-indigo-950 to-violet-950 -z-20" />
+      <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_20%,rgba(167,139,250,0.12),transparent)] -z-10" />
 
       <div className="container mx-auto px-4 sm:px-6 relative">
         <div className="max-w-5xl mx-auto">
@@ -22,7 +22,7 @@ const CTASection = () => {
                 </div>
                 <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-8 leading-[0.95] tracking-tighter">
                   Activá tu IA y <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-dynamic to-indigo-600">dejá de perder ventas</span> hoy
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-dynamic to-violet-400">dejá de perder ventas</span> hoy
                 </h2>
                 <p className="text-lg text-slate-500 font-medium mb-10 max-w-xl mx-auto lg:mx-0">
                   En minutos tenés tu catálogo cargado por IA, tu asistente listo para atender y tus estadísticas corriendo. Sin tarjeta, sin complicaciones.

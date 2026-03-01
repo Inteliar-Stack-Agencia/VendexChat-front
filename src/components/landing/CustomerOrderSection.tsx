@@ -27,8 +27,8 @@ const CustomerOrderSection = () => {
   return (
     <section className="relative py-20 md:py-32 overflow-hidden">
       {/* Decorative background elements */}
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-indigo-50/50 via-white to-emerald-50/30 -z-10" />
-      <div className="absolute top-1/4 -left-20 w-80 h-80 bg-indigo-100/50 rounded-full blur-[100px] -z-10" />
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-violet-50/50 via-white to-emerald-50/30 -z-10" />
+      <div className="absolute top-1/4 -left-20 w-80 h-80 bg-violet-100/50 rounded-full blur-[100px] -z-10" />
       <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-emerald-100/40 rounded-full blur-[100px] -z-10" />
 
       <div className="container mx-auto px-4 sm:px-6 relative">
@@ -36,7 +36,7 @@ const CustomerOrderSection = () => {
           <p className="text-[10px] font-black text-primary-dynamic uppercase tracking-[0.3em] mb-4">Proceso de Venta</p>
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-6 leading-[1.1]">
             Un flujo simple que <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-dynamic to-indigo-600">entienden al instante</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-dynamic to-violet-600">entienden al instante</span>
           </h2>
           <div className="w-20 h-1.5 bg-primary-dynamic/20 mx-auto rounded-full" />
         </div>

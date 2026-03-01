@@ -19,14 +19,14 @@ const vendexItems = [
 const BeforeAfterSection = () => {
   return (
     <section className="relative py-24 md:py-32 bg-slate-50/50 overflow-hidden scroll-mt-20">
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-indigo-50/50 rounded-full blur-[120px] -z-10 translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-violet-50/50 rounded-full blur-[120px] -z-10 translate-x-1/2 -translate-y-1/2" />
 
       <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-3xl mx-auto text-center mb-20">
-          <p className="text-[10px] font-black text-indigo-600 uppercase tracking-[0.3em] mb-4">Por qué cambiarse</p>
+          <p className="text-[10px] font-black text-violet-600 uppercase tracking-[0.3em] mb-4">Por qué cambiarse</p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-6 leading-tight">
             ¿Ya usás otra herramienta? <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-dynamic to-indigo-600">Esto cambia todo</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-dynamic to-violet-500">Esto cambia todo</span>
           </h2>
           <p className="text-slate-500 text-lg font-medium max-w-2xl mx-auto">
             La mayoría de las herramientas solo ordenan pedidos. VendexChat los <span className="text-slate-900 font-bold">genera y cierra con IA</span>.
