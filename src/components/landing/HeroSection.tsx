@@ -82,17 +82,6 @@ const HeroSection = () => {
             </a>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-8 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
-            <div className="flex items-center gap-2 font-black text-xs text-slate-900 uppercase tracking-tighter italic">
-              <span className="text-primary-dynamic not-italic">★</span> Multi-Tenant ready
-            </div>
-            <div className="flex items-center gap-2 font-black text-xs text-slate-900 uppercase tracking-tighter italic">
-              <span className="text-primary-dynamic not-italic">★</span> WhatsApp API
-            </div>
-            <div className="flex items-center gap-2 font-black text-xs text-slate-900 uppercase tracking-tighter italic">
-              <span className="text-primary-dynamic not-italic">★</span> Supabase Cloud
-            </div>
-          </div>
         </div>
 
         {/* Steps */}
