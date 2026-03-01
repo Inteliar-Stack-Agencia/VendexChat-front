@@ -1,7 +1,11 @@
 import { useState, useRef, useEffect } from "react";
-import { Bot, FileUp, Users, Truck, Brain, BarChart2, Send, Sparkles, ChevronRight } from "lucide-react";
+import {
+  Bot, FileUp, Users, Truck, Brain, BarChart2,
+  Send, Sparkles, ChevronRight, ShoppingCart, Store, Cpu
+} from "lucide-react";
 
 type ModuleId = "bot" | "importador" | "crm" | "logistica" | "inteligencia" | "estadisticas";
+type TabId = "cliente" | "gestion" | "ia";
 
 interface Command {
   prompt: string;
@@ -10,8 +14,8 @@ interface Command {
 
 interface Module {
   id: ModuleId;
+  tab: TabId;
   label: string;
-  badge: "VIP" | "PRO";
   icon: React.ElementType;
   accentBg: string;
   accentText: string;
@@ -21,11 +25,32 @@ interface Module {
   commands: Command[];
 }
 
+const TABS: { id: TabId; label: string; icon: React.ElementType; description: string }[] = [
+  {
+    id: "cliente",
+    label: "Para el cliente",
+    icon: ShoppingCart,
+    description: "Lo que vive el comprador al interactuar con tu tienda",
+  },
+  {
+    id: "gestion",
+    label: "Gestión de tienda",
+    icon: Store,
+    description: "Todo lo que manejás internamente como comerciante",
+  },
+  {
+    id: "ia",
+    label: "Inteligencia IA",
+    icon: Cpu,
+    description: "La IA analizando y potenciando cada decisión de tu negocio",
+  },
+];
+
 const MODULES: Module[] = [
   {
     id: "bot",
+    tab: "cliente",
     label: "VENDEx Bot",
-    badge: "VIP",
     icon: Bot,
     accentBg: "bg-violet-500",
     accentText: "text-violet-400",
@@ -49,8 +74,8 @@ const MODULES: Module[] = [
   },
   {
     id: "importador",
+    tab: "gestion",
     label: "Importador IA",
-    badge: "VIP",
     icon: FileUp,
     accentBg: "bg-blue-500",
     accentText: "text-blue-400",
@@ -74,8 +99,8 @@ const MODULES: Module[] = [
   },
   {
     id: "crm",
+    tab: "gestion",
     label: "CRM IA",
-    badge: "VIP",
     icon: Users,
     accentBg: "bg-emerald-500",
     accentText: "text-emerald-400",
@@ -99,8 +124,8 @@ const MODULES: Module[] = [
   },
   {
     id: "logistica",
+    tab: "gestion",
     label: "Logística",
-    badge: "VIP",
     icon: Truck,
     accentBg: "bg-amber-500",
     accentText: "text-amber-400",
@@ -124,8 +149,8 @@ const MODULES: Module[] = [
   },
   {
     id: "inteligencia",
+    tab: "ia",
     label: "AI Inteligencia",
-    badge: "VIP",
     icon: Brain,
     accentBg: "bg-pink-500",
     accentText: "text-pink-400",
@@ -149,8 +174,8 @@ const MODULES: Module[] = [
   },
   {
     id: "estadisticas",
+    tab: "ia",
     label: "Estadísticas",
-    badge: "PRO",
     icon: BarChart2,
     accentBg: "bg-cyan-500",
     accentText: "text-cyan-400",
@@ -180,13 +205,24 @@ interface Message {
 }
 
 const ModuleDemosSection = () => {
+  const [activeTab, setActiveTab] = useState<TabId>("cliente");
   const [activeModule, setActiveModule] = useState<ModuleId>("bot");
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [userInput, setUserInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  const tabModules = MODULES.filter((m) => m.tab === activeTab);
   const mod = MODULES.find((m) => m.id === activeModule)!;
+  const currentTab = TABS.find((t) => t.id === activeTab)!;
+
+  // When switching tab, select first module of that tab
+  const handleTabChange = (tabId: TabId) => {
+    if (tabId === activeTab) return;
+    setActiveTab(tabId);
+    const firstModule = MODULES.find((m) => m.tab === tabId);
+    if (firstModule) setActiveModule(firstModule.id);
+  };
 
   useEffect(() => {
     setMessages([]);
@@ -239,32 +275,73 @@ const ModuleDemosSection = () => {
         <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[120px]" />
         <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[120px]" />
       </div>
-      {/* Top accent line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/50 to-transparent" />
 
       <div className="container mx-auto px-4 sm:px-6 relative">
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-12">
           <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-violet-500/10 text-violet-400 text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-violet-500/20">
             <Sparkles className="w-3 h-3" />
             Demos Interactivas
           </div>
           <h2 className="text-4xl md:text-5xl font-black text-white leading-tight tracking-tighter mb-4">
-            Probá cada módulo{" "}
+            Todo lo que puede hacer{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">
-              en vivo
+              VENDExChat.IA
             </span>
           </h2>
           <p className="text-slate-400 font-medium text-lg">
-            Escribí o elegí un comando y mirá lo que hace la IA en cada área de tu negocio.
+            Explorá cada área — desde la experiencia del cliente hasta la inteligencia de tu negocio.
           </p>
         </div>
 
-        {/* Layout */}
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-[260px_1fr] gap-6 items-start">
-          {/* Module tabs */}
+        {/* Top tabs */}
+        <div className="max-w-6xl mx-auto mb-8">
+          <div className="flex flex-col sm:flex-row gap-3">
+            {TABS.map((tab, i) => {
+              const active = tab.id === activeTab;
+              const colors = [
+                { active: "bg-violet-600 border-violet-600 text-white", dot: "bg-violet-400", num: "bg-violet-500/20 text-violet-300" },
+                { active: "bg-blue-600 border-blue-600 text-white", dot: "bg-blue-400", num: "bg-blue-500/20 text-blue-300" },
+                { active: "bg-pink-600 border-pink-600 text-white", dot: "bg-pink-400", num: "bg-pink-500/20 text-pink-300" },
+              ][i];
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => handleTabChange(tab.id)}
+                  className={`flex-1 flex items-center gap-4 px-6 py-4 rounded-2xl border transition-all duration-300 text-left ${
+                    active
+                      ? colors.active + " shadow-lg"
+                      : "border-white/10 bg-white/5 text-slate-400 hover:bg-white/10 hover:text-slate-200"
+                  }`}
+                >
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                    active ? "bg-white/20" : "bg-white/5"
+                  }`}>
+                    <tab.icon className="w-5 h-5" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-black uppercase tracking-wider">{tab.label}</div>
+                    <div className={`text-[11px] font-medium mt-0.5 leading-tight ${active ? "text-white/70" : "text-slate-500"}`}>
+                      {tab.description}
+                    </div>
+                  </div>
+                  <span className={`text-[10px] font-black px-2 py-1 rounded-lg flex-shrink-0 ${
+                    active ? "bg-white/20 text-white" : colors.num
+                  }`}>
+                    0{i + 1}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Layout: sidebar + chat */}
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-[220px_1fr] gap-6 items-start">
+          {/* Module list */}
           <div className="flex lg:flex-col gap-2 flex-wrap">
-            {MODULES.map((m) => {
+            {tabModules.map((m) => {
               const active = m.id === activeModule;
               return (
                 <button
@@ -284,19 +361,8 @@ const ModuleDemosSection = () => {
                     <m.icon className="w-4 h-4" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs font-black uppercase tracking-wider truncate">
-                      {m.label}
-                    </div>
+                    <div className="text-xs font-black uppercase tracking-wider truncate">{m.label}</div>
                   </div>
-                  <span
-                    className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full flex-shrink-0 ${
-                      m.badge === "VIP"
-                        ? "bg-violet-500/20 text-violet-400"
-                        : "bg-cyan-500/20 text-cyan-400"
-                    }`}
-                  >
-                    {m.badge}
-                  </span>
                   {active && <ChevronRight className="w-3 h-3 text-slate-500 flex-shrink-0 hidden lg:block" />}
                 </button>
               );
@@ -318,6 +384,12 @@ const ModuleDemosSection = () => {
                     IA activa · {mod.description.slice(0, 42)}…
                   </span>
                 </div>
+              </div>
+              {/* Tab badge */}
+              <div className="ml-auto">
+                <span className="text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full bg-white/5 text-slate-500 border border-white/10">
+                  {currentTab.label}
+                </span>
               </div>
             </div>
 
