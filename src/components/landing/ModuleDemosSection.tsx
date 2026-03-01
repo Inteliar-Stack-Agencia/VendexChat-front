@@ -267,7 +267,7 @@ const ModuleDemosSection = () => {
 
   return (
     <section
-      id="modulos-demo"
+      id="ia"
       className="relative py-24 md:py-32 bg-slate-950 overflow-hidden scroll-mt-28"
     >
       {/* Background glows */}
