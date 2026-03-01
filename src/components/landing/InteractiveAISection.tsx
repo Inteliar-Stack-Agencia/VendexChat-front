@@ -110,12 +110,12 @@ const InteractiveAISection = () => {
                             Experiencia Viva
                         </div>
                         <h2 className="text-4xl md:text-6xl font-black text-white mb-8 leading-[0.95] tracking-tighter">
-                            No lo contes, <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-primary-dynamic">demostralo</span>
+                            Asistente IA que <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-primary-dynamic">ayuda a vender</span>
                         </h2>
                         <p className="text-lg text-slate-300 font-medium mb-12 max-w-xl">
-                            Tus clientes no quieren esperar a que les respondas. Quieren respuestas instantáneas, precisas y amigables.
-                            <span className="text-white font-bold"> Nuestra IA lo hace posible 24/7.</span>
+                            Guía al cliente en el proceso de compra y resuelve sus dudas al instante.
+                            <span className="text-white font-bold"> Sin que vos tengas que estar.</span>
                         </p>
 
                         {/* Store selector */}
