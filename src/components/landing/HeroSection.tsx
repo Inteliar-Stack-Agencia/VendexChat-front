@@ -53,11 +53,10 @@ const HeroSection = () => {
           </h1>
 
           <p
-            className="text-base md:text-lg text-slate-500 max-w-xl mx-auto mb-6 animate-fade-up font-medium leading-snug"
+            className="text-base md:text-lg text-slate-500 mx-auto mb-6 animate-fade-up font-medium leading-snug whitespace-nowrap"
             style={{ animationDelay: "0.2s" }}
           >
-            Transformamos tu WhatsApp en una <span className="text-slate-900 font-bold">terminal de ventas inteligente</span>.{" "}
-            Desde digitalizar menús hasta cerrar ventas 24/7.
+            Transformamos tu WhatsApp en una <span className="text-slate-900 font-bold">terminal de ventas inteligente</span>. Desde digitalizar menús hasta cerrar ventas 24/7.
           </p>
 
           <div
