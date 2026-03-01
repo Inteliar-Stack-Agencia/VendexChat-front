@@ -104,16 +104,14 @@ const plans = [
 
 const PricingSection = () => {
   return (
-    <section id="pricing" className="relative py-24 md:py-32 overflow-hidden scroll-mt-28">
+    <section id="pricing" className="relative py-10 md:py-14 overflow-hidden scroll-mt-28">
       <div className="absolute inset-0 bg-slate-50/50 -z-20" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-violet-50/50 rounded-full blur-[120px] -z-10 -translate-x-1/2 translate-y-1/2" />
 
       <div className="container mx-auto px-4 sm:px-6 relative">
-        <div className="max-w-4xl mx-auto text-center mb-20">
-          <p className="text-[10px] font-black text-primary-dynamic uppercase tracking-[0.3em] mb-4">Planes y Precios</p>
+        <div className="max-w-4xl mx-auto text-center mb-10">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-6 leading-tight">
-            Planes que escalan <br />
-            <span className="text-primary-dynamic text-gradient">con tu negocio</span>
+            Planes que escalan <span className="text-primary-dynamic text-gradient">con tu negocio</span>
           </h2>
           <p className="text-slate-500 text-lg font-medium max-w-2xl mx-auto">
             Empezá gratis. Sumá IA cuando tu negocio lo pida.
