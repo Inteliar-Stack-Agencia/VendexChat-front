@@ -4,13 +4,15 @@ import { supabase } from "@/supabaseClient";
 
 type StoreType = "hamburgueseria" | "bebidas" | "libreria";
 
+const PURCHASE_FLOW = "El proceso es simple: elegís los productos, los agregás al carrito y confirmás el pedido por WhatsApp. Luego la tienda se pone en contacto para coordinar la entrega y el pago 🛒✅";
+
 const STORES: { id: StoreType; label: string; icon: React.ElementType; name: string; greeting: string; color: string }[] = [
     {
         id: "hamburgueseria",
         label: "Hamburguesería",
         icon: UtensilsCrossed,
         name: "Don Bruno Burgers",
-        greeting: "¡Hola! Soy el asistente IA de Don Bruno Burgers 🍔 ¿Qué se te antoja hoy? Tenemos hamburguesas clásicas, dobles y combos.",
+        greeting: `¡Hola! Soy el asistente IA de Don Bruno Burgers 🍔 ¿Qué se te antoja hoy? Tenemos hamburguesas clásicas, dobles y combos. ${PURCHASE_FLOW}`,
         color: "bg-amber-500",
     },
     {
@@ -18,7 +20,7 @@ const STORES: { id: StoreType; label: string; icon: React.ElementType; name: str
         label: "Vinoteca",
         icon: Wine,
         name: "La Vinoteca de Marta",
-        greeting: "¡Bienvenido/a! Soy el asistente de La Vinoteca de Marta 🍷 ¿Buscás vinos, cervezas o algo especial para una ocasión?",
+        greeting: `¡Bienvenido/a! Soy el asistente de La Vinoteca de Marta 🍷 ¿Buscás vinos, cervezas o algo especial para una ocasión? ${PURCHASE_FLOW}`,
         color: "bg-purple-500",
     },
     {
@@ -26,7 +28,7 @@ const STORES: { id: StoreType; label: string; icon: React.ElementType; name: str
         label: "Librería",
         icon: BookOpen,
         name: "El Rincón del Saber",
-        greeting: "¡Hola! Soy el asistente de El Rincón del Saber 📚 ¿Buscás un libro, útiles escolares o algo de papelería?",
+        greeting: `¡Hola! Soy el asistente de El Rincón del Saber 📚 ¿Buscás un libro, útiles escolares o algo de papelería? ${PURCHASE_FLOW}`,
         color: "bg-emerald-500",
     },
 ];
@@ -108,12 +110,12 @@ const InteractiveAISection = () => {
                             Experiencia Viva
                         </div>
                         <h2 className="text-4xl md:text-6xl font-black text-white mb-8 leading-[0.95] tracking-tighter">
-                            No lo contes, <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-primary-dynamic">demostralo</span>
+                            Asistente IA que <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-primary-dynamic">ayuda a vender</span>
                         </h2>
                         <p className="text-lg text-slate-300 font-medium mb-12 max-w-xl">
-                            Tus clientes no quieren esperar a que les respondas. Quieren respuestas instantáneas, precisas y amigables.
-                            <span className="text-white font-bold"> Nuestra IA lo hace posible 24/7.</span>
+                            Guía al cliente en el proceso de compra y resuelve sus dudas al instante.
+                            <span className="text-white font-bold"> Sin que vos tengas que estar.</span>
                         </p>
 
                         {/* Store selector */}
@@ -221,7 +223,7 @@ const InteractiveAISection = () => {
                                     RESPUESTA IA
                                 </div>
                             </div>
-                            <div className="absolute -left-12 bottom-1/4 p-4 rounded-2xl bg-white shadow-xl -rotate-6 border border-slate-100 animate-float delay-700 hidden md:block">
+                            <div className="absolute -left-20 bottom-10 p-4 rounded-2xl bg-white shadow-xl -rotate-3 border border-slate-100 animate-float delay-700 hidden md:block">
                                 <div className="flex items-center gap-2 text-[10px] font-black text-slate-900">
                                     <Zap className="w-4 h-4 text-amber-500" />
                                     VENTA CERRADA
