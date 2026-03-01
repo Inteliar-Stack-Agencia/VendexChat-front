@@ -1,6 +1,3 @@
-[project]
-project_id = "vendexchat"
-
 [api]
 enabled = true
 port = 54321
