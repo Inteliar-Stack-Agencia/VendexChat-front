@@ -21,7 +21,7 @@ const steps = [
   {
     icon: MessageCircle,
     title: "El pedido llega listo a WhatsApp",
-    description: "Vos confirmás el pedido, no lo armás.",
+    description: "Te llega el pedido por WhatsApp y coordinás los detalles finales con el comprador.",
   },
 ];
 
