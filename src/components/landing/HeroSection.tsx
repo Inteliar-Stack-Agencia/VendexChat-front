@@ -1,6 +1,6 @@
 import { ArrowRight, Play, Zap, Link, ShoppingCart, MessageCircle, Bot } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
-import heroMockup from "@/assets/hero-mockup.png";
+import HeroMockup from "@/components/landing/HeroMockup";
 
 const steps = [
   {
@@ -90,11 +90,7 @@ const HeroSection = () => {
 
           {/* Right: mockup */}
           <div className="flex-1 flex justify-center lg:justify-end animate-fade-up" style={{ animationDelay: "0.4s" }}>
-            <img
-              src={heroMockup}
-              alt="VendexChat demo en celular"
-              className="w-full max-w-md lg:max-w-lg drop-shadow-2xl"
-            />
+            <HeroMockup />
           </div>
         </div>
 
