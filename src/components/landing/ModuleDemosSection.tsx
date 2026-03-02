@@ -268,7 +268,7 @@ const ModuleDemosSection = () => {
   return (
     <section
       id="ia"
-      className="relative py-10 md:py-14 min-h-screen bg-gradient-to-br from-violet-600 via-purple-700 to-indigo-800 overflow-hidden"
+      className="relative py-6 md:py-10 min-h-screen bg-gradient-to-br from-violet-600 via-purple-700 to-indigo-800 overflow-hidden"
     >
       {/* Background glows */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -279,7 +279,7 @@ const ModuleDemosSection = () => {
 
       <div className="container mx-auto px-4 sm:px-6 relative">
         {/* Header */}
-        <div className="max-w-5xl mx-auto text-center mb-12">
+        <div className="max-w-5xl mx-auto text-center mb-5">
           <h2 className="text-4xl md:text-5xl font-black leading-tight tracking-tighter whitespace-nowrap">
             <span className="text-white">Todo lo que puede hacer </span>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">VENDExChat.IA</span>
@@ -287,7 +287,7 @@ const ModuleDemosSection = () => {
         </div>
 
         {/* Top tabs */}
-        <div className="max-w-6xl mx-auto mb-8">
+        <div className="max-w-6xl mx-auto mb-4">
           <div className="flex flex-col sm:flex-row gap-3">
             {TABS.map((tab, i) => {
               const active = tab.id === activeTab;
@@ -406,7 +406,7 @@ const ModuleDemosSection = () => {
             {/* Messages */}
             <div
               ref={scrollRef}
-              className="flex-1 min-h-[320px] max-h-[380px] overflow-y-auto p-5 space-y-3"
+              className="flex-1 min-h-[180px] max-h-[230px] overflow-y-auto p-5 space-y-3"
             >
               {messages.length === 0 && (
                 <div className="flex items-center justify-center h-full">
