@@ -311,7 +311,7 @@ const HowItWorksSection = () => {
         {/* Interactive dashboard mockup */}
         <div className="max-w-5xl mx-auto">
           <div className="rounded-2xl overflow-x-auto shadow-2xl shadow-slate-300/40 border border-slate-200 bg-white">
-          <div className="min-w-[700px]">
+          <div className="min-w-[320px] sm:min-w-[700px]">
 
             {/* Browser chrome */}
             <div className="flex items-center gap-2 px-5 py-3 bg-slate-100 border-b border-slate-200">
@@ -329,7 +329,7 @@ const HowItWorksSection = () => {
             <div className="flex" style={{ minHeight: "480px" }}>
 
               {/* Sidebar */}
-              <div className="w-44 flex-shrink-0 bg-slate-900 flex flex-col py-4">
+              <div className="hidden sm:flex w-44 flex-shrink-0 bg-slate-900 flex-col py-4">
                 {/* Logo in sidebar */}
                 <div className="px-4 mb-6">
                   <span className="text-xs font-black text-white">VENDEx<span className="text-violet-400">.IA</span></span>
