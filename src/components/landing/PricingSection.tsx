@@ -110,7 +110,7 @@ const PricingSection = () => {
 
       <div className="container mx-auto px-4 sm:px-6 relative">
         <div className="max-w-4xl mx-auto text-center mb-10">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-6 leading-tight whitespace-nowrap">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-6 leading-tight">
             Planes que escalan <span className="text-primary-dynamic text-gradient">con tu negocio</span>
           </h2>
           <p className="text-slate-500 text-lg font-medium max-w-2xl mx-auto">
@@ -138,7 +138,7 @@ const PricingSection = () => {
                 className={`
                   group relative p-10 rounded-[2.5rem] transition-all duration-500 hover:-translate-y-2
                   ${isPro
-                    ? 'bg-violet-900 text-white shadow-2xl shadow-violet-900/40 scale-105 z-10'
+                    ? 'bg-violet-900 text-white shadow-2xl shadow-violet-900/40 md:scale-105 z-10'
                     : 'bg-white border border-slate-100 shadow-xl shadow-slate-200/40 hover:border-primary-dynamic/20'
                   }
                 `}

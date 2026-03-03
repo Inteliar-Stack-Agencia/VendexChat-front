@@ -280,7 +280,7 @@ const ModuleDemosSection = () => {
       <div className="container mx-auto px-4 sm:px-6 relative">
         {/* Header */}
         <div className="max-w-5xl mx-auto text-center mb-5">
-          <h2 className="text-4xl md:text-5xl font-black leading-tight tracking-tighter whitespace-nowrap">
+          <h2 className="text-4xl md:text-5xl font-black leading-tight tracking-tighter">
             <span className="text-white">Todo lo que puede hacer </span>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">VENDExChat.IA</span>
           </h2>
