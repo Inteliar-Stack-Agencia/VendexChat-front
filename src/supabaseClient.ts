@@ -6,8 +6,11 @@ const fallbackSupabaseUrl = 'https://placeholder.supabase.co'
 const fallbackSupabaseAnonKey = 'placeholder-anon-key'
 
 if (!supabaseUrl || !supabaseAnonKey) {
-    console.error('Supabase URL or Anon Key is missing in environment variables.')
+  console.error('Supabase URL or Anon Key is missing in environment variables.')
 }
+
+const fallbackSupabaseUrl = 'https://placeholder.supabase.co'
+const fallbackSupabaseAnonKey = 'placeholder-anon-key'
 
 export const supabase = createClient(
   supabaseUrl || fallbackSupabaseUrl,
