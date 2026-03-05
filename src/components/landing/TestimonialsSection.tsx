@@ -73,9 +73,6 @@ const TestimonialsSection = () => {
             Negocios reales,{" "}
             <span className="text-primary-dynamic text-gradient">resultados reales</span>
           </h2>
-          <p className="text-slate-500 text-lg font-medium">
-            Cinco clientes activos de distintos rubros que ya operan con VendexChat.
-          </p>
         </div>
 
         {/* Grid */}
