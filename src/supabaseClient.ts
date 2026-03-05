@@ -4,7 +4,13 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 if (!supabaseUrl || !supabaseAnonKey) {
-    console.error('Supabase URL or Anon Key is missing in environment variables.')
+  console.error('Supabase URL or Anon Key is missing in environment variables.')
 }
 
-export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '')
+const fallbackSupabaseUrl = 'https://placeholder.supabase.co'
+const fallbackSupabaseAnonKey = 'placeholder-anon-key'
+
+export const supabase = createClient(
+  supabaseUrl || fallbackSupabaseUrl,
+  supabaseAnonKey || fallbackSupabaseAnonKey
+)
