@@ -73,7 +73,7 @@ const FAQSection = () => {
             <span className="w-1.5 h-1.5 rounded-full bg-primary-dynamic" />
             Preguntas frecuentes
           </div>
-          <h2 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 leading-tight mb-4 md:whitespace-nowrap">
             ¿Tenés dudas?{" "}
             <span className="text-primary-dynamic text-gradient">Las respondemos</span>
           </h2>

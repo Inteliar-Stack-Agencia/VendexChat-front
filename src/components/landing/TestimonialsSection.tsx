@@ -69,7 +69,7 @@ const TestimonialsSection = () => {
             <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
             Lo que dicen nuestros clientes
           </div>
-          <h2 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 leading-tight mb-4 md:whitespace-nowrap">
             Negocios reales,{" "}
             <span className="text-primary-dynamic text-gradient">resultados reales</span>
           </h2>
