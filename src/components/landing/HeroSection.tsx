@@ -45,7 +45,7 @@ const HeroSection = () => {
           <div className="flex-1 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold mb-5 animate-fade-up border border-emerald-100">
               <Zap className="w-4 h-4" />
-              Automatización real para negocios
+              Tu negocio organizado con herramientas de IA, tu tiempo es lo más valioso
             </div>
 
             <h1
