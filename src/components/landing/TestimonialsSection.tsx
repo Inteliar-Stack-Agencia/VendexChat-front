@@ -51,6 +51,28 @@ const Stars = ({ count }: { count: number }) => (
   </div>
 );
 
+const TestimonialCard = ({ t }: { t: typeof testimonials[number] }) => (
+  <div className="group relative bg-white rounded-3xl p-7 border border-slate-100 shadow-lg shadow-slate-100/80 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-300">
+    <span className="absolute top-5 right-6 text-5xl font-black text-slate-100 leading-none select-none">"</span>
+    <Stars count={t.stars} />
+    <p className="mt-4 text-slate-600 text-sm leading-relaxed">
+      "{t.text}"
+    </p>
+    <div className="mt-6 flex items-center gap-3">
+      <img
+        src={t.logoSrc}
+        alt={`Logo ${t.name}`}
+        className="w-10 h-10 rounded-full object-cover border border-slate-200 flex-shrink-0"
+        loading="lazy"
+      />
+      <div>
+        <p className="text-sm font-bold text-slate-900">{t.name}</p>
+        <p className="text-xs text-slate-400 font-medium">{t.role} · {t.location}</p>
+      </div>
+    </div>
+  </div>
+);
+
 const TestimonialsSection = () => {
   return (
     <section id="testimonios" className="relative py-16 md:py-24 overflow-hidden scroll-mt-28">
@@ -70,50 +92,32 @@ const TestimonialsSection = () => {
           </h2>
         </div>
 
-        {/* Grid */}
+        {/* Top row – first 3 testimonials */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
-          {testimonials.map((t) => (
-            <div
-              key={t.name}
-              className="group relative bg-white rounded-3xl p-7 border border-slate-100 shadow-lg shadow-slate-100/80 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-300"
-            >
-              {/* Quote mark */}
-              <span className="absolute top-5 right-6 text-5xl font-black text-slate-100 leading-none select-none">"</span>
-
-              <Stars count={t.stars} />
-
-              <p className="mt-4 text-slate-600 text-sm leading-relaxed">
-                "{t.text}"
-              </p>
-
-              <div className="mt-6 flex items-center gap-3">
-                <img
-                  src={t.logoSrc}
-                  alt={`Logo ${t.name}`}
-                  className="w-10 h-10 rounded-full object-cover border border-slate-200 flex-shrink-0"
-                  loading="lazy"
-                />
-                <div>
-                  <p className="text-sm font-bold text-slate-900">{t.name}</p>
-                  <p className="text-xs text-slate-400 font-medium">{t.role} · {t.location}</p>
-                </div>
-              </div>
-            </div>
+          {testimonials.slice(0, 3).map((t) => (
+            <TestimonialCard key={t.name} t={t} />
           ))}
         </div>
 
-        {/* Bottom trust bar */}
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-center">
-          {[
-            { value: "Casos reales", label: "de rubros distintos" },
-            { value: "Implementación simple", label: "sin fricción operativa" },
-            { value: "Soporte cercano", label: "en cada etapa" },
-          ].map((stat) => (
-            <div key={stat.label}>
-              <p className="text-sm md:text-base font-black text-slate-900 flex items-center gap-1 justify-center"><BadgeCheck className="w-4 h-4 text-primary-dynamic" />{stat.value}</p>
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{stat.label}</p>
-            </div>
-          ))}
+        {/* Bottom row – Humahuaca | Trust bar | Era para vos */}
+        <div className="grid lg:grid-cols-3 gap-5 max-w-6xl mx-auto mt-5">
+          <TestimonialCard t={testimonials[3]} />
+
+          {/* Trust bar in center */}
+          <div className="flex flex-col items-center justify-center gap-4 text-center py-6">
+            {[
+              { value: "Casos reales", label: "de rubros distintos" },
+              { value: "Implementación simple", label: "sin fricción operativa" },
+              { value: "Soporte cercano", label: "en cada etapa" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <p className="text-sm md:text-base font-black text-slate-900 flex items-center gap-1 justify-center"><BadgeCheck className="w-4 h-4 text-primary-dynamic" />{stat.value}</p>
+                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+
+          <TestimonialCard t={testimonials[4]} />
         </div>
       </div>
     </section>
