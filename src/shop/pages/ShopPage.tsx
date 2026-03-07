@@ -19,7 +19,7 @@ import type { Product } from "../../types";
 
 export default function ShopPage() {
     const { slug } = useParams<{ slug: string }>();
-    const { data, loading, error } = useShopData(slug);
+    const { data, loading, slow, error } = useShopData(slug);
     const { items, addItem, updateQuantity, clearCart, totalItems, totalPrice, getItemQuantity } = useCartState();
 
     const [activeCategory, setActiveCategory] = useState<string | number | null>(null);
@@ -102,6 +102,11 @@ export default function ShopPage() {
                         <div key={i} className="h-8 w-20 bg-slate-100 rounded-full flex-shrink-0" />
                     ))}
                 </div>
+                {slow && (
+                    <p className="text-center text-xs text-slate-400 font-medium pb-2 animate-pulse">
+                        Estamos cargando la tienda, un momento...
+                    </p>
+                )}
                 {/* Product cards skeleton */}
                 <div className="max-w-4xl mx-auto px-4 py-4">
                     <div className="h-4 w-32 bg-slate-100 rounded mb-4" />
