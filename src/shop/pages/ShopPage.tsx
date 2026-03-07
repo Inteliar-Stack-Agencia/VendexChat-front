@@ -132,7 +132,7 @@ export default function ShopPage() {
             <div className="h-screen flex flex-col items-center justify-center p-6 text-center bg-slate-50">
                 <div className="text-slate-300 mb-4 text-6xl">⚠️</div>
                 <h2 className="text-2xl font-bold text-slate-900 mb-2">Tienda no encontrada</h2>
-                <p className="text-slate-400 font-medium max-w-sm">No pudimos encontrar la tienda <span className="text-slate-900 font-bold">"{slug}"</span>. Verifica que la URL sea correcta.</p>
+                <p className="text-slate-600 font-medium max-w-sm">No pudimos encontrar la tienda <span className="text-slate-900 font-bold">"{slug}"</span>. Verifica que la URL sea correcta.</p>
             </div>
         );
     }
