@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchMockCatalog } from "../data/mockAdapter";
-import { fetchCatalog } from "../../api/catalog";
+import { fetchFreshCatalog, getCachedEntry } from "../../api/catalog";
 import type { CatalogResponse } from "../../types";
 
 const USE_MOCK = false; // Switch manual para desarrollo
@@ -24,31 +24,50 @@ export function useShopData(slug: string | undefined) {
             return;
         }
 
-        setLoading(true);
-        setSlow(false);
         setError(null);
 
-        const fetchFn = USE_MOCK ? fetchMockCatalog : fetchCatalog;
+        // ── Stale-While-Revalidate ──────────────────────────────────────────────
+        // Si hay caché (aunque sea viejo) lo mostramos de inmediato.
+        // Luego refrescamos en background para la próxima visita o actualizar datos.
+        const cached = getCachedEntry(identifier);
+        if (cached) {
+            setData(cached.data);
+            setLoading(false);
+            setSlow(false);
 
-        // Mostrar aviso de "tardando" a los 6 segundos
+            if (!cached.isStale) return; // caché fresco: no necesitamos refrescar
+
+            // Caché viejo: actualizar silenciosamente en background
+            if (!USE_MOCK) {
+                fetchFreshCatalog(identifier)
+                    .then(fresh => setData(fresh))
+                    .catch(() => { /* falla silenciosa: el usuario ya tiene datos */ });
+            }
+            return;
+        }
+
+        // ── Sin caché: mostrar skeleton y cargar ───────────────────────────────
+        setLoading(true);
+        setSlow(false);
+
+        if (USE_MOCK) {
+            fetchMockCatalog(identifier)
+                .then(res => { setData(res); setLoading(false); setSlow(false); })
+                .catch(err => { setError(err instanceof Error ? err.message : String(err)); setLoading(false); setSlow(false); });
+            return;
+        }
+
+        // Mostrar aviso "tardando" a los 6 segundos
         const slowTimer = setTimeout(() => setSlow(true), 6_000);
 
-        // Timeout total de 90 segundos (Supabase cold start puede tardar ~40s)
+        // Timeout de 90 segundos (incluye hasta 3 intentos con retry de 3s+6s cada uno)
         const timeoutPromise = new Promise<never>((_, reject) =>
             setTimeout(() => reject(new Error("No pudimos cargar la tienda. Revisá tu conexión e intentá de nuevo.")), 90_000)
         );
 
-        Promise.race([fetchFn(identifier), timeoutPromise])
-            .then((res) => {
-                setData(res);
-                setLoading(false);
-                setSlow(false);
-            })
-            .catch((err) => {
-                setError(err instanceof Error ? err.message : String(err));
-                setLoading(false);
-                setSlow(false);
-            })
+        Promise.race([fetchFreshCatalog(identifier), timeoutPromise])
+            .then(res => { setData(res); setLoading(false); setSlow(false); })
+            .catch(err => { setError(err instanceof Error ? err.message : String(err)); setLoading(false); setSlow(false); })
             .finally(() => clearTimeout(slowTimer));
     }, [slug]);
 

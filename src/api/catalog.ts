@@ -5,16 +5,15 @@ import type { CatalogResponse, OrderPayload, OrderResponse } from "../types";
 const CATALOG_CACHE_TTL = 60 * 60 * 1000; // 1 hora
 const CACHE_KEY_PREFIX = "vdx_catalog_";
 
-function getCachedCatalog(identifier: string): CatalogResponse | null {
+export function getCachedEntry(identifier: string): { data: CatalogResponse; isStale: boolean } | null {
   try {
     const raw = localStorage.getItem(`${CACHE_KEY_PREFIX}${identifier}`);
     if (!raw) return null;
     const cached = JSON.parse(raw);
-    if (Date.now() - cached.timestamp > CATALOG_CACHE_TTL) {
-      localStorage.removeItem(`${CACHE_KEY_PREFIX}${identifier}`);
-      return null;
-    }
-    return cached.data;
+    return {
+      data: cached.data,
+      isStale: Date.now() - cached.timestamp > CATALOG_CACHE_TTL,
+    };
   } catch {
     return null;
   }
@@ -31,30 +30,15 @@ function setCachedCatalog(identifier: string, data: CatalogResponse) {
   }
 }
 
-export async function fetchCatalog(identifier: string): Promise<CatalogResponse> {
-  // Servir desde caché si existe (localStorage persiste entre sesiones)
-  const cached = getCachedCatalog(identifier);
-  if (cached) return cached;
-
-  // Una sola llamada RPC que devuelve store + categorías + productos + anuncio global.
-  // Elimina el waterfall de 2 round-trips (store → categories+products).
-  const { data, error } = await supabase.rpc("get_catalog", { p_identifier: identifier });
-
-  if (error || !data) {
-    throw new Error(`Store not found for identifier: ${identifier}`);
-  }
-
+function processRpcResult(data: any): CatalogResponse {
   const { store, categories: rawCategories, global_settings: globalSettings } = data as {
     store: any;
     categories: any[];
     global_settings: Record<string, any>;
   };
 
-  if (!store) {
-    throw new Error(`Store not found for identifier: ${identifier}`);
-  }
+  if (!store) throw new Error("Store not found");
 
-  // Handle Announcement logic
   const storeMetadata = store.metadata || {};
   const isStoreAnnounceActive =
     storeMetadata.announcement_active === true || storeMetadata.announcement_active === "true";
@@ -69,14 +53,41 @@ export async function fetchCatalog(identifier: string): Promise<CatalogResponse>
     announcement = globalSettings?.global_announcement_text ?? null;
   }
 
-  const result: CatalogResponse = {
-    store,
-    categories: rawCategories ?? [],
-    announcement,
-  };
+  return { store, categories: rawCategories ?? [], announcement };
+}
 
-  setCachedCatalog(identifier, result);
-  return result;
+// Llama a Supabase con hasta `maxAttempts` reintentos (útil para cold starts).
+export async function fetchFreshCatalog(identifier: string, maxAttempts = 3): Promise<CatalogResponse> {
+  let lastError: Error = new Error(`Store not found for identifier: ${identifier}`);
+
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    if (attempt > 0) {
+      await new Promise(r => setTimeout(r, attempt * 3_000)); // 3s, 6s
+    }
+
+    const { data, error } = await supabase.rpc("get_catalog", { p_identifier: identifier });
+
+    if (!error && data) {
+      try {
+        const result = processRpcResult(data);
+        setCachedCatalog(identifier, result);
+        return result;
+      } catch (e) {
+        lastError = e as Error;
+        break; // store no encontrada: no tiene sentido reintentar
+      }
+    }
+
+    lastError = new Error(`Store not found for identifier: ${identifier}`);
+  }
+
+  throw lastError;
+}
+
+export async function fetchCatalog(identifier: string): Promise<CatalogResponse> {
+  const cached = getCachedEntry(identifier);
+  if (cached && !cached.isStale) return cached.data;
+  return fetchFreshCatalog(identifier);
 }
 
 
