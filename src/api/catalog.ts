@@ -56,6 +56,23 @@ function processRpcResult(data: any): CatalogResponse {
   return { store, categories: rawCategories ?? [], announcement };
 }
 
+// Fetch liviano: solo info de la tienda (sin productos/categorías).
+// Permite mostrar el header real mientras el catálogo completo carga.
+export async function fetchStorePreview(identifier: string): Promise<import("../types").Store | null> {
+  try {
+    const { data, error } = await supabase
+      .from("stores")
+      .select("id,name,slug,logo_url,banner_url,description,whatsapp,phone,address,instagram,primary_color,metadata,custom_domain,delivery_cost,coupons_enabled,delivery_info,schedule,physical_schedule,online_schedule,facebook,ai_prompt,welcome_message,footer_message")
+      .or(`slug.eq.${identifier},custom_domain.eq.${identifier}`)
+      .limit(1)
+      .single();
+    if (error || !data) return null;
+    return data as import("../types").Store;
+  } catch {
+    return null;
+  }
+}
+
 // Llama a Supabase con hasta `maxAttempts` reintentos (útil para cold starts).
 export async function fetchFreshCatalog(identifier: string, maxAttempts = 3): Promise<CatalogResponse> {
   let lastError: Error = new Error(`Store not found for identifier: ${identifier}`);

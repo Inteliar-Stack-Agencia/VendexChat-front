@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { fetchMockCatalog } from "../data/mockAdapter";
-import { fetchFreshCatalog, getCachedEntry } from "../../api/catalog";
-import type { CatalogResponse } from "../../types";
+import { fetchFreshCatalog, fetchStorePreview, getCachedEntry } from "../../api/catalog";
+import type { CatalogResponse, Store } from "../../types";
 
 const USE_MOCK = false; // Switch manual para desarrollo
 
 export function useShopData(slug: string | undefined) {
     const [data, setData] = useState<CatalogResponse | null>(null);
+    const [storePreview, setStorePreview] = useState<Store | null>(null);
     const [loading, setLoading] = useState(true);
     const [slow, setSlow] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -27,15 +28,13 @@ export function useShopData(slug: string | undefined) {
         setError(null);
 
         // ── Stale-While-Revalidate ──────────────────────────────────────────────
-        // Si hay caché (aunque sea viejo) lo mostramos de inmediato.
-        // Luego refrescamos en background para la próxima visita o actualizar datos.
         const cached = getCachedEntry(identifier);
         if (cached) {
             setData(cached.data);
             setLoading(false);
             setSlow(false);
 
-            if (!cached.isStale) return; // caché fresco: no necesitamos refrescar
+            if (!cached.isStale) return;
 
             // Caché viejo: actualizar silenciosamente en background
             if (!USE_MOCK) {
@@ -46,9 +45,10 @@ export function useShopData(slug: string | undefined) {
             return;
         }
 
-        // ── Sin caché: mostrar skeleton y cargar ───────────────────────────────
+        // ── Sin caché: carga progresiva ────────────────────────────────────────
         setLoading(true);
         setSlow(false);
+        setStorePreview(null);
 
         if (USE_MOCK) {
             fetchMockCatalog(identifier)
@@ -57,19 +57,25 @@ export function useShopData(slug: string | undefined) {
             return;
         }
 
+        // Fase 1: query liviana a stores → muestra header real mientras carga el catálogo
+        fetchStorePreview(identifier).then(preview => {
+            if (preview) setStorePreview(preview);
+        });
+
         // Mostrar aviso "tardando" a los 6 segundos
         const slowTimer = setTimeout(() => setSlow(true), 6_000);
 
-        // Timeout de 90 segundos (incluye hasta 3 intentos con retry de 3s+6s cada uno)
+        // Timeout de 90 segundos
         const timeoutPromise = new Promise<never>((_, reject) =>
             setTimeout(() => reject(new Error("No pudimos cargar la tienda. Revisá tu conexión e intentá de nuevo.")), 90_000)
         );
 
+        // Fase 2: catálogo completo con productos
         Promise.race([fetchFreshCatalog(identifier), timeoutPromise])
-            .then(res => { setData(res); setLoading(false); setSlow(false); })
+            .then(res => { setData(res); setLoading(false); setSlow(false); setStorePreview(null); })
             .catch(err => { setError(err instanceof Error ? err.message : String(err)); setLoading(false); setSlow(false); })
             .finally(() => clearTimeout(slowTimer));
     }, [slug]);
 
-    return { data, loading, slow, error };
+    return { data, loading, slow, error, storePreview };
 }

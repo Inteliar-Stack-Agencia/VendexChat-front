@@ -19,7 +19,7 @@ import type { Product } from "../../types";
 
 export default function ShopPage() {
     const { slug } = useParams<{ slug: string }>();
-    const { data, loading, slow, error } = useShopData(slug);
+    const { data, loading, slow, error, storePreview } = useShopData(slug);
     const { items, addItem, updateQuantity, clearCart, totalItems, totalPrice, getItemQuantity } = useCartState();
 
     const [activeCategory, setActiveCategory] = useState<string | number | null>(null);
@@ -76,6 +76,57 @@ export default function ShopPage() {
     }, [data]);
 
     if (loading) {
+        // Si ya tenemos info de la tienda, mostramos el header real con skeleton de productos
+        if (storePreview) {
+            return (
+                <div className="min-h-screen bg-white pb-24">
+                    <StoreHeader
+                        name={storePreview.name}
+                        logo={storePreview.logo_url || ""}
+                        banner={storePreview.banner_url || ""}
+                        description={storePreview.description || ""}
+                        address={storePreview.address || ""}
+                        whatsapp={storePreview.whatsapp || storePreview.phone || ""}
+                        instagram={storePreview.instagram || ""}
+                        facebook={storePreview.facebook || ""}
+                        totalItems={0}
+                        announcement={null}
+                        onSearch={() => {}}
+                        onChatClick={() => {}}
+                        onCartClick={() => {}}
+                    />
+                    {/* Category chips skeleton */}
+                    <div className="flex gap-2 px-4 py-4 overflow-hidden animate-pulse">
+                        {[1,2,3,4].map(i => (
+                            <div key={i} className="h-8 w-20 bg-slate-100 rounded-full flex-shrink-0" />
+                        ))}
+                    </div>
+                    {slow && (
+                        <p className="text-center text-xs text-slate-400 font-medium pb-2 animate-pulse">
+                            Estamos cargando los productos, un momento...
+                        </p>
+                    )}
+                    {/* Product cards skeleton */}
+                    <div className="max-w-4xl mx-auto px-4 py-4 animate-pulse">
+                        <div className="h-4 w-32 bg-slate-100 rounded mb-4" />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {[1,2,3,4,5,6].map(i => (
+                                <div key={i} className="flex h-28 rounded-2xl border border-slate-100 overflow-hidden">
+                                    <div className="w-24 bg-slate-100 flex-shrink-0" />
+                                    <div className="flex-1 p-3 space-y-2">
+                                        <div className="h-3 w-3/4 bg-slate-100 rounded" />
+                                        <div className="h-3 w-1/2 bg-slate-100 rounded" />
+                                        <div className="h-4 w-12 bg-slate-100 rounded mt-auto" />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Sin preview: skeleton completo
         return (
             <div className="min-h-screen bg-white animate-pulse">
                 {/* Sticky nav bar skeleton */}
