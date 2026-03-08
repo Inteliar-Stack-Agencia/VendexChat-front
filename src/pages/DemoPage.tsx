@@ -14,7 +14,8 @@ import {
   CheckCircle2,
   ChevronRight,
   Settings,
-  Sparkles
+  Sparkles,
+  Bot
 } from "lucide-react";
 import { StoreHeader } from "@/shop/components/StoreHeader";
 import { CategoryChips } from "@/shop/components/CategoryChips";
