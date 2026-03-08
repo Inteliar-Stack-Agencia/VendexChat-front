@@ -214,13 +214,15 @@ export default function DemoPage() {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   // Flatten products for IA
-  const allProducts = useMemo(() => categories.flatMap(c => c.products), [categories]);
+  const allProducts = useMemo(() => categories.flatMap(c => c.products || []), [categories]);
 
   // Sync admin price to first product
   useEffect(() => {
+    if (!categories[0]?.products?.[0]) return;
     const currentPrice = categories[0].products[0].price;
     if (currentPrice !== adminPriceInput) {
       setCategories(prev => {
+        if (!prev[0]?.products?.[0]) return prev;
         const next = [...prev];
         const prod = next[0].products[0];
         next[0].products[0] = { ...prod, price: adminPriceInput };
@@ -245,12 +247,12 @@ export default function DemoPage() {
     });
   };
 
-  const totalItems = Object.values(cart).reduce((s, q) => s + q, 0);
+  const totalItems = Object.values(cart).reduce((s, q) => Number(s) + Number(q), 0);
   const totalPrice = useMemo(() => {
     let sum = 0;
     categories.forEach(c => {
-      c.products.forEach(p => {
-        if (cart[p.id]) sum += (p.offer_price || p.price) * cart[p.id];
+      (c.products || []).forEach(p => {
+        if (cart[p.id]) sum += (Number(p.offer_price || p.price) || 0) * (Number(cart[p.id]) || 0);
       });
     });
     return sum;
