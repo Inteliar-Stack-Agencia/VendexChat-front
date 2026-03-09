@@ -19,11 +19,12 @@ import type { Product } from "../../types";
 
 export default function ShopPage() {
     const { slug } = useParams<{ slug: string }>();
-    const { data, loading, error } = useShopData(slug);
+    const { data, loading, slow, error, storePreview } = useShopData(slug);
     const { items, addItem, updateQuantity, clearCart, totalItems, totalPrice, getItemQuantity } = useCartState();
 
     const [activeCategory, setActiveCategory] = useState<string | number | null>(null);
     const [searchTerm, setSearchTerm] = useState("");
+    const [expandedCategories, setExpandedCategories] = useState<Set<string | number>>(new Set());
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [chatInitialMessage, setChatInitialMessage] = useState<string | null>(null);
@@ -44,6 +45,11 @@ export default function ShopPage() {
         }
     }, [data]);
 
+    const effectiveActiveCategory = useMemo(() => {
+        if (!data) return null;
+        return activeCategory ?? data.categories[0]?.id ?? null;
+    }, [data, activeCategory]);
+
     const filteredCategories = useMemo(() => {
         if (!data) return [];
 
@@ -55,18 +61,13 @@ export default function ShopPage() {
             })
         })).filter(cat => cat.products.length > 0);
 
-        if (activeCategory !== null) {
-            return allWithFilteredProducts.filter(cat => String(cat.id) === String(activeCategory));
+        // When no search term, filter to active category (default to first)
+        if (!searchTerm && effectiveActiveCategory !== null) {
+            return allWithFilteredProducts.filter(cat => String(cat.id) === String(effectiveActiveCategory));
         }
 
         return allWithFilteredProducts;
-    }, [data, searchTerm, activeCategory]);
-
-    useEffect(() => {
-        if (!activeCategory && data?.categories && data.categories.length > 0 && !searchTerm) {
-            setActiveCategory(data.categories[0].id);
-        }
-    }, [data, activeCategory, searchTerm]);
+    }, [data, searchTerm, effectiveActiveCategory]);
 
     useEffect(() => {
         if (data?.store?.primary_color) {
@@ -75,20 +76,130 @@ export default function ShopPage() {
     }, [data]);
 
     if (loading) {
+        // Si ya tenemos info de la tienda, mostramos el header real con skeleton de productos
+        if (storePreview) {
+            return (
+                <div className="min-h-screen bg-white pb-24">
+                    <StoreHeader
+                        name={storePreview.name}
+                        logo={storePreview.logo_url || ""}
+                        banner={storePreview.banner_url || ""}
+                        description={storePreview.description || ""}
+                        address={storePreview.address || ""}
+                        whatsapp={storePreview.whatsapp || storePreview.phone || ""}
+                        instagram={storePreview.instagram || ""}
+                        facebook={storePreview.facebook || ""}
+                        totalItems={0}
+                        announcement={null}
+                        onSearch={() => {}}
+                        onChatClick={() => {}}
+                        onCartClick={() => {}}
+                    />
+                    {/* Category chips skeleton */}
+                    <div className="flex gap-2 px-4 py-4 overflow-hidden animate-pulse">
+                        {[1,2,3,4].map(i => (
+                            <div key={i} className="h-8 w-20 bg-slate-100 rounded-full flex-shrink-0" />
+                        ))}
+                    </div>
+                    {slow && (
+                        <p className="text-center text-xs text-slate-400 font-medium pb-2 animate-pulse">
+                            Estamos cargando los productos, un momento...
+                        </p>
+                    )}
+                    {/* Product cards skeleton */}
+                    <div className="max-w-4xl mx-auto px-4 py-4 animate-pulse">
+                        <div className="h-4 w-32 bg-slate-100 rounded mb-4" />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {[1,2,3,4,5,6].map(i => (
+                                <div key={i} className="flex h-28 rounded-2xl border border-slate-100 overflow-hidden">
+                                    <div className="w-24 bg-slate-100 flex-shrink-0" />
+                                    <div className="flex-1 p-3 space-y-2">
+                                        <div className="h-3 w-3/4 bg-slate-100 rounded" />
+                                        <div className="h-3 w-1/2 bg-slate-100 rounded" />
+                                        <div className="h-4 w-12 bg-slate-100 rounded mt-auto" />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Sin preview: skeleton completo
         return (
-            <div className="h-screen flex flex-col items-center justify-center gap-4 bg-slate-50">
-                <div className="w-12 h-12 border-4 border-primary-dynamic border-t-transparent rounded-full animate-spin" />
-                <p className="text-slate-500 font-medium animate-pulse">Cargando tienda...</p>
+            <div className="min-h-screen bg-white animate-pulse">
+                {/* Sticky nav bar skeleton */}
+                <div className="sticky top-0 z-50 bg-white border-b border-slate-50 px-4 py-3 shadow-sm">
+                    <div className="max-w-4xl mx-auto flex items-center gap-3">
+                        <div className="flex-1 h-10 bg-slate-100 rounded-2xl" />
+                        <div className="w-10 h-10 bg-slate-100 rounded-xl" />
+                        <div className="w-20 h-10 bg-slate-100 rounded-xl" />
+                    </div>
+                </div>
+                {/* Banner skeleton */}
+                <div className="relative h-40 md:h-56 bg-slate-100 overflow-hidden">
+                    <div className="absolute bottom-4 left-4 flex items-end gap-4">
+                        <div className="w-20 h-20 md:w-24 md:h-24 bg-slate-200 rounded-2xl" />
+                        <div className="space-y-2 pb-1">
+                            <div className="h-5 w-36 bg-slate-200 rounded-lg" />
+                            <div className="h-3 w-24 bg-slate-200 rounded-lg" />
+                        </div>
+                    </div>
+                </div>
+                {/* Category chips skeleton */}
+                <div className="flex gap-2 px-4 py-4 overflow-hidden">
+                    {[1,2,3,4].map(i => (
+                        <div key={i} className="h-8 w-20 bg-slate-100 rounded-full flex-shrink-0" />
+                    ))}
+                </div>
+                {slow && (
+                    <p className="text-center text-xs text-slate-400 font-medium pb-2 animate-pulse">
+                        Estamos cargando la tienda, un momento...
+                    </p>
+                )}
+                {/* Product cards skeleton */}
+                <div className="max-w-4xl mx-auto px-4 py-4">
+                    <div className="h-4 w-32 bg-slate-100 rounded mb-4" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {[1,2,3,4,5,6].map(i => (
+                            <div key={i} className="flex h-28 rounded-2xl border border-slate-100 overflow-hidden">
+                                <div className="w-24 bg-slate-100 flex-shrink-0" />
+                                <div className="flex-1 p-3 space-y-2">
+                                    <div className="h-3 w-3/4 bg-slate-100 rounded" />
+                                    <div className="h-3 w-1/2 bg-slate-100 rounded" />
+                                    <div className="h-4 w-12 bg-slate-100 rounded mt-auto" />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         );
     }
 
     if (error || !data) {
+        const isNotFound = !error || error.startsWith("STORE_NOT_FOUND:");
         return (
             <div className="h-screen flex flex-col items-center justify-center p-6 text-center bg-slate-50">
                 <div className="text-slate-300 mb-4 text-6xl">⚠️</div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-2">Tienda no encontrada</h2>
-                <p className="text-slate-400 font-medium max-w-sm">No pudimos encontrar la tienda <span className="text-slate-900 font-bold">"{slug}"</span>. Verifica que la URL sea correcta.</p>
+                {isNotFound ? (
+                    <>
+                        <h2 className="text-2xl font-bold text-slate-900 mb-2">Tienda no encontrada</h2>
+                        <p className="text-slate-600 font-medium max-w-sm">No pudimos encontrar la tienda <span className="text-slate-900 font-bold">"{slug}"</span>. Verifica que la URL sea correcta.</p>
+                    </>
+                ) : (
+                    <>
+                        <h2 className="text-2xl font-bold text-slate-900 mb-2">Error al cargar la tienda</h2>
+                        <p className="text-slate-600 font-medium max-w-sm mb-6">No pudimos cargar la tienda <span className="text-slate-900 font-bold">"{slug}"</span>. Revisá tu conexión e intentá de nuevo.</p>
+                        <button
+                            onClick={() => window.location.reload()}
+                            className="px-6 py-3 bg-slate-900 text-white text-sm font-bold rounded-2xl hover:bg-slate-700 transition-colors"
+                        >
+                            Reintentar
+                        </button>
+                    </>
+                )}
             </div>
         );
     }
@@ -136,7 +247,7 @@ export default function ShopPage() {
             {viewMode === 'standard' && (
                 <CategoryChips
                     categories={data.categories}
-                    activeId={activeCategory}
+                    activeId={effectiveActiveCategory}
                     onSelect={setActiveCategory}
                 />
             )}
@@ -153,32 +264,47 @@ export default function ShopPage() {
                         <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">No se encontraron productos</p>
                     </div>
                 ) : (
-                    filteredCategories.map((cat) => (
-                        <section key={cat.id} className="mb-12">
-                            <div className="flex items-center gap-4 mb-6">
-                                <h2 className="text-sm md:text-lg font-black text-slate-900 uppercase tracking-tight">
-                                    {cat.name}
-                                </h2>
-                                <div className="h-[1px] flex-1 bg-slate-100" />
-                                <span className="text-[9px] font-black bg-slate-50 text-slate-400 px-3 py-1 rounded-full uppercase tracking-tighter">
-                                    {cat.products.length} Items
-                                </span>
-                            </div>
+                    filteredCategories.map((cat) => {
+                        const PAGE_SIZE = 12;
+                        const isExpanded = expandedCategories.has(cat.id);
+                        const visibleProducts = isExpanded ? cat.products : cat.products.slice(0, PAGE_SIZE);
+                        const remaining = cat.products.length - PAGE_SIZE;
+                        return (
+                            <section key={cat.id} className="mb-12">
+                                <div className="flex items-center gap-4 mb-6">
+                                    <h2 className="text-sm md:text-lg font-black text-slate-900 uppercase tracking-tight">
+                                        {cat.name}
+                                    </h2>
+                                    <div className="h-[1px] flex-1 bg-slate-100" />
+                                    <span className="text-[9px] font-black bg-slate-50 text-slate-400 px-3 py-1 rounded-full uppercase tracking-tighter">
+                                        {cat.products.length} Items
+                                    </span>
+                                </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
-                                {cat.products.map((p) => (
-                                    <div key={p.id} onClick={() => !getItemQuantity(p.id) && setQuickViewProduct(p)} className="cursor-pointer">
-                                        <ProductCard
-                                            product={p}
-                                            quantity={getItemQuantity(p.id)}
-                                            onAdd={(prod) => addItem(prod)}
-                                            onUpdate={updateQuantity}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        </section>
-                    ))
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
+                                    {visibleProducts.map((p) => (
+                                        <div key={p.id} onClick={() => !getItemQuantity(p.id) && setQuickViewProduct(p)} className="cursor-pointer">
+                                            <ProductCard
+                                                product={p}
+                                                quantity={getItemQuantity(p.id)}
+                                                onAdd={(prod) => addItem(prod)}
+                                                onUpdate={updateQuantity}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {!isExpanded && remaining > 0 && (
+                                    <button
+                                        onClick={() => setExpandedCategories(prev => new Set(prev).add(cat.id))}
+                                        className="mt-4 w-full py-3 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-700 border border-dashed border-slate-200 hover:border-slate-400 rounded-2xl transition-all"
+                                    >
+                                        Ver {remaining} productos más
+                                    </button>
+                                )}
+                            </section>
+                        );
+                    })
                 )}
             </main>
 
