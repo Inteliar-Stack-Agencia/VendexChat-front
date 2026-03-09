@@ -27,7 +27,6 @@ const plans = [
     icon: Zap,
     iconBg: "bg-indigo-100",
     iconColor: "text-indigo-600",
-    highlight: "RECOMENDADO",
     features: [
       "Categorías Ilimitadas",
       "Productos Ilimitados",
@@ -35,8 +34,9 @@ const plans = [
       "Estadísticas de Venta",
       "Exportar a Excel",
     ],
-    cta: null,
-    href: null,
+    cta: "SUSCRIBIRSE",
+    ctaStyle: "bg-indigo-600 hover:bg-indigo-700 text-white",
+    href: "https://admin.vendexchat.app/register",
     event: "pricing_premium_click",
   },
   {
@@ -46,6 +46,7 @@ const plans = [
     icon: Crown,
     iconBg: "bg-yellow-100",
     iconColor: "text-yellow-500",
+    highlight: "RECOMENDADO",
     features: [
       "Todo lo anterior Pro",
       "VENDEx Bot (Beta)",
