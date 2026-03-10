@@ -23,6 +23,42 @@ interface Props {
 
 const PEXELS_API_KEY = import.meta.env.VITE_PEXELS_API_KEY as string | undefined;
 
+/** Limpia números, unidades y traduce términos comunes al inglés para mejorar resultados en Pexels */
+function buildPexelsQuery(raw: string): string {
+  const unitPattern = /\b\d+(\.\d+)?\s*(cc|ml|l|lt|g|gr|kg|mg|oz|lb|latas?|botellas?|paquetes?|unidades?|u|x\d+)\b/gi;
+  let q = raw
+    .replace(unitPattern, "")
+    .replace(/\b\d+\b/g, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+
+  const dict: Record<string, string> = {
+    cerveza: "beer", gaseosa: "soda", agua: "water", jugo: "juice", vino: "wine",
+    leche: "milk", cafe: "coffee", café: "coffee", mate: "yerba mate",
+    pan: "bread", queso: "cheese", yogur: "yogurt", yogurt: "yogurt",
+    pollo: "chicken", carne: "meat", pescado: "fish", arroz: "rice",
+    pasta: "pasta", fideos: "noodles", aceite: "oil", azucar: "sugar",
+    azúcar: "sugar", sal: "salt", harina: "flour", chocolate: "chocolate",
+    galletitas: "cookies", galletas: "cookies", manteca: "butter",
+    crema: "cream", helado: "ice cream", dulce: "jam", mermelada: "jam",
+    mayonesa: "mayonnaise", ketchup: "ketchup", salsa: "sauce",
+    tomate: "tomato", papa: "potato", papas: "potatoes",
+    zanahoria: "carrot", cebolla: "onion", manzana: "apple",
+    banana: "banana", naranja: "orange", limón: "lemon", limon: "lemon",
+    frutilla: "strawberry", uva: "grape", pera: "pear", durazno: "peach",
+    lata: "can", botella: "bottle", paquete: "package",
+  };
+
+  const translated = q
+    .toLowerCase()
+    .split(/\s+/)
+    .map((w) => dict[w] ?? w)
+    .join(" ")
+    .trim();
+
+  return translated || raw;
+}
+
 export function PexelsImageSuggestions({ productName, productId, onSelect, onClose }: Props) {
   const [query, setQuery] = useState(productName);
   const [photos, setPhotos] = useState<PexelsPhoto[]>([]);
@@ -40,8 +76,9 @@ export function PexelsImageSuggestions({ productName, productId, onSelect, onClo
     setError(null);
     setPhotos([]);
     try {
+      const pexelsQuery = buildPexelsQuery(query);
       const res = await fetch(
-        `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=4&orientation=landscape`,
+        `https://api.pexels.com/v1/search?query=${encodeURIComponent(pexelsQuery)}&per_page=6&orientation=landscape`,
         { headers: { Authorization: PEXELS_API_KEY } }
       );
       if (!res.ok) throw new Error(`Error ${res.status}`);
@@ -122,7 +159,7 @@ export function PexelsImageSuggestions({ productName, productId, onSelect, onClo
         <div className="px-8 py-6 min-h-[260px]">
           {loading && (
             <div className="grid grid-cols-2 gap-4">
-              {[1, 2, 3, 4].map((i) => (
+              {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="aspect-video bg-slate-100 rounded-2xl animate-pulse" />
               ))}
             </div>
