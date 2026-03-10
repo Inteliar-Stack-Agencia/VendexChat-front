@@ -286,7 +286,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                                     </span>
                                 </div>
 
-                                <div className={`grid grid-cols-1 ${cat.products.length > 20 ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-3 md:gap-6`}>
+                                <div className={`grid grid-cols-1 ${cat.products.length > 20 ? 'md:grid-cols-3' : 'md:grid-cols-2 max-w-4xl mx-auto'} gap-3 md:gap-6`}>
                                     {visibleProducts.map((p) => (
                                         <div key={p.id} onClick={() => !getItemQuantity(p.id) && setQuickViewProduct(p)} className="cursor-pointer">
                                             <ProductCard
