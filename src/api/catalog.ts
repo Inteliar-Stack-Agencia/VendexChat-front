@@ -53,7 +53,20 @@ function processRpcResult(data: any): CatalogResponse {
     announcement = globalSettings?.global_announcement_text ?? null;
   }
 
-  return { store, categories: rawCategories ?? [], announcement };
+  const sortedCategories = (rawCategories ?? []).map(cat => ({
+    ...cat,
+    products: (cat.products || []).sort((a: any, b: any) => {
+      // Primary sort: Manual sort_order from Admin
+      const orderA = a.sort_order ?? 0;
+      const orderB = b.sort_order ?? 0;
+      if (orderA !== orderB) return orderA - orderB;
+
+      // Secondary sort: Alphabetical by name
+      return a.name.localeCompare(b.name);
+    })
+  }));
+
+  return { store, categories: sortedCategories, announcement };
 }
 
 // Fetch liviano: solo info de la tienda (sin productos/categorías).
