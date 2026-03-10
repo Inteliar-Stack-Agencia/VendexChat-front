@@ -1,0 +1,69 @@
+.category-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  display: none; /* Hidden by default, shown via media queries */
+}
+
+@media (min-width: 1024px) {
+  .category-sidebar {
+    display: block;
+  }
+}
+
+.category-sidebar__sticky {
+  position: sticky;
+  top: 2rem;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+}
+
+.category-sidebar__title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #9CA3AF;
+  margin-bottom: 1rem;
+  padding-left: 0.75rem;
+}
+
+.category-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.category-sidebar__item {
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #4B5563;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: normal;
+  line-height: 1.25;
+}
+
+.category-sidebar__item:hover {
+  background: #F3F4F6;
+  color: #111827;
+}
+
+.category-sidebar__item--active {
+  background: #F0FDF4; /* Light green background */
+  color: #25D366; /* WhatsApp green */
+  font-weight: 700;
+}
+
+.category-sidebar__item--active:hover {
+  background: #DCFCE7;
+}

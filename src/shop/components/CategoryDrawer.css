@@ -1,0 +1,24 @@
+.category-drawer-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    color: #64748b;
+    font-weight: 700;
+    transition: all 0.2s ease;
+}
+
+.category-drawer-trigger:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #1e293b;
+}
+
+.category-drawer-trigger--active {
+    background: var(--primary-color, #10b981);
+    border-color: var(--primary-color, #10b981);
+    color: white;
+}

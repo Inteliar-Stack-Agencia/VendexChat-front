@@ -5,6 +5,7 @@ import { useCart } from "../context/CartContext";
 import { createOrder } from "../api/catalog";
 import { StoreHeader } from "../components/layout/StoreHeader";
 import { CategoryNav } from "../components/store/CategoryNav";
+import { CategorySidebar } from "../components/store/CategorySidebar";
 import { CategorySection } from "../components/store/CategorySection";
 import { FloatingCartButton } from "../components/cart/FloatingCartButton";
 import { CartPanel } from "../components/cart/CartPanel";
@@ -42,6 +43,9 @@ export function StorePage() {
         const res = await createOrder({
           store_id: data.store.id,
           ...formData,
+          subtotal: totalPrice,
+          delivery_cost: 0,
+          total: totalPrice,
           items: items.map((i) => ({
             product_id: i.product.id,
             quantity: i.quantity,
@@ -95,7 +99,7 @@ export function StorePage() {
   const hasSidebar = sidebarCategories.length > 0;
 
   return (
-    <div className="store-page">
+    <div className={`store-page${hasSidebar ? " store-page--with-sidebar" : ""}`}>
       <div className="store-page__shell">
         {data.store && <StoreHeader store={data.store} onCartClick={() => setView("cart")} />}
 

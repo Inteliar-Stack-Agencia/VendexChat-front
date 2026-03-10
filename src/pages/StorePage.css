@@ -4,6 +4,16 @@
   padding-bottom: 5rem;
 }
 
+.store-page--with-sidebar {
+  background: #F9FAFB;
+}
+
+.store-page__shell {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
 .store-page__content {
   display: flex;
   flex-direction: column;
@@ -199,5 +209,36 @@
   .store-page__shell {
     border-radius: 0;
     box-shadow: none;
+  }
+}
+
+/* Layout for Sidebar */
+.store-page__layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .store-page__layout {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .store-page__layout .store-page__content {
+    flex: 1;
+    max-width: 800px;
+  }
+}
+
+/* Utils */
+.md\:hidden {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .md\:hidden {
+    display: none;
   }
 }

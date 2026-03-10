@@ -1,3 +1,5 @@
+import { Menu } from "lucide-react";
+
 interface Category {
     id: string | number;
     name: string;
@@ -7,13 +9,29 @@ interface CategoryChipsProps {
     categories: Category[];
     activeId: string | number | null;
     onSelect: (id: string | number | null) => void;
+    onMenuClick: () => void;
 }
 
-export function CategoryChips({ categories, activeId, onSelect }: CategoryChipsProps) {
+export function CategoryChips({ categories, activeId, onSelect, onMenuClick }: CategoryChipsProps) {
+    const showMenu = categories.length > 6;
+    const displayCategories = showMenu ? categories.slice(0, 5) : categories;
+
     return (
         <div className="bg-white border-b border-slate-100 overflow-x-auto no-scrollbar flex items-center shadow-sm">
             <div className="flex px-4 mx-auto divide-x divide-slate-100">
-                {categories.map((cat) => (
+                {showMenu && (
+                    <button
+                        onClick={onMenuClick}
+                        className="flex flex-col items-center justify-center px-6 py-4 text-[10px] md:text-xs font-black uppercase tracking-widest transition-all text-slate-400 hover:text-primary-dynamic hover:bg-slate-50/50 group"
+                    >
+                        <div className="flex items-center gap-2">
+                            <Menu size={14} className="group-hover:scale-110 transition-transform" />
+                            <span>Menu</span>
+                        </div>
+                    </button>
+                )}
+
+                {displayCategories.map((cat) => (
                     <button
                         key={cat.id}
                         onClick={() => onSelect(cat.id)}
@@ -32,3 +50,4 @@ export function CategoryChips({ categories, activeId, onSelect }: CategoryChipsP
         </div>
     );
 }
+

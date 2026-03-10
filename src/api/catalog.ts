@@ -2,7 +2,7 @@ import { supabase } from "../lib/supabase";
 import type { CatalogResponse, OrderPayload, OrderResponse } from "../types";
 
 // localStorage persiste entre pestañas y recargas (a diferencia de sessionStorage)
-const CATALOG_CACHE_TTL = 60 * 60 * 1000; // 1 hora
+const CATALOG_CACHE_TTL = 5 * 1000; // 5 segundos para desarrollo fluido
 const CACHE_KEY_PREFIX = "vdx_catalog_";
 
 export function getCachedEntry(identifier: string): { data: CatalogResponse; isStale: boolean } | null {

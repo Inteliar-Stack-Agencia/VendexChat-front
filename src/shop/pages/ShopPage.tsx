@@ -14,19 +14,21 @@ import { PexelsImageSuggestions } from "@/components/store/PexelsImageSuggestion
 import { Suspense, lazy } from "react";
 
 const CartDrawer = lazy(() => import("../components/CartDrawer").then(m => ({ default: m.CartDrawer })));
+const CategoryDrawer = lazy(() => import("../components/CategoryDrawer").then(m => ({ default: m.CategoryDrawer })));
 const StoreInfoSections = lazy(() => import("../components/StoreInfoSections").then(m => ({ default: m.StoreInfoSections })));
 const ChatBotWidget = lazy(() => import("../components/ChatBotWidget").then(m => ({ default: m.ChatBotWidget })));
 import type { Product } from "../../types";
 
-export default function ShopPage() {
+export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
     const { slug } = useParams<{ slug: string }>();
-    const { data, loading, slow, error, storePreview } = useShopData(slug);
+    const { data, loading, slow, error, storePreview } = useShopData(slug, isDemo);
     const { items, addItem, updateQuantity, clearCart, totalItems, totalPrice, getItemQuantity } = useCartState();
 
     const [activeCategory, setActiveCategory] = useState<string | number | null>(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [expandedCategories, setExpandedCategories] = useState<Set<string | number>>(new Set());
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const [isCategoryDrawerOpen, setIsCategoryDrawerOpen] = useState(false);
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [chatInitialMessage, setChatInitialMessage] = useState<string | null>(null);
     const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
@@ -93,13 +95,13 @@ export default function ShopPage() {
                         facebook={storePreview.facebook || ""}
                         totalItems={0}
                         announcement={null}
-                        onSearch={() => {}}
-                        onChatClick={() => {}}
-                        onCartClick={() => {}}
+                        onSearch={() => { }}
+                        onChatClick={() => { }}
+                        onCartClick={() => { }}
                     />
                     {/* Category chips skeleton */}
                     <div className="flex gap-2 px-4 py-4 overflow-hidden animate-pulse">
-                        {[1,2,3,4].map(i => (
+                        {[1, 2, 3, 4].map(i => (
                             <div key={i} className="h-8 w-20 bg-slate-100 rounded-full flex-shrink-0" />
                         ))}
                     </div>
@@ -112,7 +114,7 @@ export default function ShopPage() {
                     <div className="max-w-4xl mx-auto px-4 py-4 animate-pulse">
                         <div className="h-4 w-32 bg-slate-100 rounded mb-4" />
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            {[1,2,3,4,5,6].map(i => (
+                            {[1, 2, 3, 4, 5, 6].map(i => (
                                 <div key={i} className="flex h-28 rounded-2xl border border-slate-100 overflow-hidden">
                                     <div className="w-24 bg-slate-100 flex-shrink-0" />
                                     <div className="flex-1 p-3 space-y-2">
@@ -151,7 +153,7 @@ export default function ShopPage() {
                 </div>
                 {/* Category chips skeleton */}
                 <div className="flex gap-2 px-4 py-4 overflow-hidden">
-                    {[1,2,3,4].map(i => (
+                    {[1, 2, 3, 4].map(i => (
                         <div key={i} className="h-8 w-20 bg-slate-100 rounded-full flex-shrink-0" />
                     ))}
                 </div>
@@ -164,7 +166,7 @@ export default function ShopPage() {
                 <div className="max-w-4xl mx-auto px-4 py-4">
                     <div className="h-4 w-32 bg-slate-100 rounded mb-4" />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {[1,2,3,4,5,6].map(i => (
+                        {[1, 2, 3, 4, 5, 6].map(i => (
                             <div key={i} className="flex h-28 rounded-2xl border border-slate-100 overflow-hidden">
                                 <div className="w-24 bg-slate-100 flex-shrink-0" />
                                 <div className="flex-1 p-3 space-y-2">
@@ -251,6 +253,7 @@ export default function ShopPage() {
                     categories={data.categories}
                     activeId={effectiveActiveCategory}
                     onSelect={setActiveCategory}
+                    onMenuClick={() => setIsCategoryDrawerOpen(true)}
                 />
             )}
 
@@ -309,6 +312,7 @@ export default function ShopPage() {
                     })
                 )}
             </main>
+
 
             <Suspense fallback={null}>
                 <StoreInfoSections
@@ -389,6 +393,17 @@ export default function ShopPage() {
                 onClick={() => openChat()}
                 isOpen={isChatOpen}
             />
-        </div>
+
+            <Suspense fallback={null}>
+                <CategoryDrawer
+                    isOpen={isCategoryDrawerOpen}
+                    onClose={() => setIsCategoryDrawerOpen(false)}
+                    categories={data.categories}
+                    activeId={activeCategory}
+                    onSelect={setActiveCategory}
+                />
+            </Suspense>
+        </div >
+
     );
 }

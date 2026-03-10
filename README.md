@@ -1,92 +1,52 @@
-# React + TypeScript + Vite
+# 🤖 VendexChat - Front-end Multitenant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bienvenido al repositorio oficial de la tienda online inteligente de **VendexChat**. Este proyecto es un motor de tiendas multitenant escalable que genera catálogos dinámicos con integración de Inteligencia Artificial y pedidos automáticos vía WhatsApp.
 
-Currently, two official plugins are available:
+## 🏎️ Resumen Rápido
+- **URL Principal**: [vendexchat.app](https://vendexchat.app)
+- **Modo Sandbox VIP**: `/demo` (Entorno de pruebas seguro).
+- **Tecnología**: React + Vite + Supabase + Cloudflare.
 
-# Vendechat Front
+---
 
-Public storefront for Vendechat.
+## 🏛️ Arquitectura Multitenant
+El sistema utiliza una arquitectura de **"Motor Único"**:
+1. El archivo `src/shop/pages/ShopPage.tsx` es responsable de renderizar TODAS las tiendas.
+2. Identifica la tienda mediante el **slug** en la URL (ej: `vendexchat.app/tienda-pepe`) o mediante el dominio personalizado.
+3. Consume una única función RPC en Supabase (`get_catalog`) que descarga todo lo necesario de un solo golpe.
 
-Customer-facing website where users:
-- browse products
-- add to cart
-- checkout
-- send orders directly to WhatsApp
+---
 
-## Stack
-- Vite (React + TypeScript)
-- Supabase (Backend & Database)
-- CSS Vanilla
+## 🏗️ Flujo de Trabajo y Consistencia (IMPORTANTE)
 
-## Local development
+Para mantener el orden y no afectar a clientes reales durante el desarrollo, seguimos estas reglas:
 
-1. `npm install`
-2. Create `.env` file from `.env.example` and add your Supabase credentials.
-3. `npm run dev`
+### 1. Zona de Pruebas (Sandbox VIP)
+La página **`/demo`** es nuestro laboratorio oficial.
+- **Datos Seguros**: Usa el archivo `src/shop/data/mockAdapter.ts`. No toca la base de datos real.
+- **Experiencia Completa**: Tiene todos los módulos premium desbloqueados (Plan Semanal, Cupones, IA).
+- **Motor Real**: Cualquier cambio que hagas aquí se verá igual en las tiendas de los clientes.
 
-## Supabase Setup
+### 2. Sincronización e Inconsistencias
+- Hemos configurado un **caché de 5 segundos** en `src/api/catalog.ts`. 
+- Si haces un cambio en el administrador y no lo ves en la tienda, espera 5 segundos y recarga la página. Esto evita que los cambios "desaparezcan".
 
-Run the SQL migrations found in the `supabase/migrations` folder in your Supabase SQL Editor.
+### 3. Personalización por Cliente
+Si un cliente necesita un cambio específico (ej: un color o botón único):
+1. No se toca el código global.
+2. Se añade una configuración en el campo `metadata` de su tienda en la base de datos.
+3. El código lee esa metadata y se adapta condicionalmente.
 
-## Build
+---
 
-`npm run build`
-he configuration to enable type-aware lint rules:
+## 🚀 Despliegue
+El proyecto se despliega automáticamente en **Cloudflare Pages**. Cada cambio genera una **Preview URL** para que puedas probar antes de pasar a producción.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Comandos Útiles
+- `npm run dev`: Iniciar desarrollo local.
+- `npm run build`: Generar versión de producción.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📄 Notas de Versión
+Este proyecto ha sido optimizado para la consistencia global y la escalabilidad masiva, eliminando código duplicado y centralizando la lógica de negocio en componentes reutilizables.
