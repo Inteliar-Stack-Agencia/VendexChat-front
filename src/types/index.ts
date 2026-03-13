@@ -21,6 +21,13 @@ export interface Category {
   items?: Product[];
 }
 
+export interface Popup {
+  id: string;
+  title: string;
+  message: string;
+  active: boolean;
+}
+
 export interface Store {
   id: string;
   name: string;
@@ -45,6 +52,7 @@ export interface Store {
   ai_prompt?: string | null;
   welcome_message?: string | null;
   footer_message?: string | null;
+  popups?: Popup[] | null;
 }
 
 export interface CatalogResponse {

@@ -10,8 +10,10 @@ import { ProductQuickViewModal } from "../components/ProductQuickViewModal";
 import { WeeklyMenuGrid } from "../components/WeeklyMenuGrid";
 import { GlobalAnnouncement } from "../components/GlobalAnnouncement";
 import FloatingAiAssistant from "../components/FloatingAiAssistant";
+import PopupModal from "../components/PopupModal";
 import { PexelsImageSuggestions } from "@/components/store/PexelsImageSuggestions";
 import { Suspense, lazy } from "react";
+import type { Popup } from "../../types";
 
 const CartDrawer = lazy(() => import("../components/CartDrawer").then(m => ({ default: m.CartDrawer })));
 const CategoryDrawer = lazy(() => import("../components/CategoryDrawer").then(m => ({ default: m.CategoryDrawer })));
@@ -33,6 +35,13 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
     const [chatInitialMessage, setChatInitialMessage] = useState<string | null>(null);
     const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
     const [pexelsProduct, setPexelsProduct] = useState<Product | null>(null);
+    const [activePopups, setActivePopups] = useState<Popup[]>([]);
+
+    useEffect(() => {
+        if (data?.store?.popups) {
+            setActivePopups(data.store.popups.filter(p => p.active));
+        }
+    }, [data]);
 
     const openChat = (initialMsg?: string) => {
         setChatInitialMessage(initialMsg || null);
@@ -404,6 +413,13 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                     onSelect={setActiveCategory}
                 />
             </Suspense>
+
+            {activePopups.length > 0 && (
+                <PopupModal
+                    popup={activePopups[0]}
+                    onClose={() => setActivePopups(prev => prev.slice(1))}
+                />
+            )}
         </div >
 
     );
