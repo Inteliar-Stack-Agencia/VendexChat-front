@@ -67,14 +67,14 @@ export function ProductQuickViewModal({
                                 <div className="flex items-center justify-between gap-4">
                                     <div className="flex items-center gap-6 bg-slate-100 rounded-full px-4 py-2 flex-1 justify-center">
                                         <button
-                                            onClick={() => onUpdate(product.id, -1)}
+                                            onClick={() => onUpdate(product.id, quantity - 1)}
                                             className="w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-sm text-slate-600 transition-transform active:scale-90"
                                         >
                                             <Minus className="w-5 h-5" />
                                         </button>
                                         <span className="text-lg font-bold min-w-[30px] text-center">{quantity}</span>
                                         <button
-                                            onClick={() => onUpdate(product.id, 1)}
+                                            onClick={() => onUpdate(product.id, quantity + 1)}
                                             className="w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-sm text-slate-600 transition-transform active:scale-90"
                                         >
                                             <Plus className="w-5 h-5" />
