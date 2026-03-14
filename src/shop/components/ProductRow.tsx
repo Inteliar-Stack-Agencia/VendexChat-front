@@ -5,7 +5,7 @@ interface ProductRowProps {
     product: Product;
     quantity: number;
     onAdd: (p: Product) => void;
-    onUpdate: (id: string | number, delta: number) => void;
+    onUpdate: (id: string | number, quantity: number) => void;
 }
 
 export function ProductRow({ product, quantity, onAdd, onUpdate }: ProductRowProps) {
@@ -29,14 +29,14 @@ export function ProductRow({ product, quantity, onAdd, onUpdate }: ProductRowPro
                 {quantity > 0 ? (
                     <div className="flex items-center gap-3 bg-slate-100 rounded-full px-2 py-1">
                         <button
-                            onClick={() => onUpdate(product.id, -1)}
+                            onClick={() => onUpdate(product.id, quantity - 1)}
                             className="w-8 h-8 flex items-center justify-center rounded-full bg-white shadow-sm text-slate-600"
                         >
                             <Minus className="w-4 h-4" />
                         </button>
                         <span className="text-sm font-bold min-w-[20px] text-center">{quantity}</span>
                         <button
-                            onClick={() => onUpdate(product.id, 1)}
+                            onClick={() => onUpdate(product.id, quantity + 1)}
                             className="w-8 h-8 flex items-center justify-center rounded-full bg-white shadow-sm text-slate-600"
                         >
                             <Plus className="w-4 h-4" />

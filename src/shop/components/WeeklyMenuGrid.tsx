@@ -100,14 +100,14 @@ export function WeeklyMenuGrid({ categories, primaryColor }: WeeklyMenuGridProps
                                             {qty > 0 ? (
                                                 <>
                                                     <button
-                                                        onClick={() => updateQuantity(p.id, -1, activeDay)}
+                                                        onClick={(e) => { e.stopPropagation(); updateQuantity(p.id, qty - 1, activeDay); }}
                                                         className="w-8 h-8 flex items-center justify-center bg-white rounded-xl text-slate-400 hover:text-rose-500 transition-colors shadow-sm"
                                                     >
                                                         <Minus className="w-4 h-4" />
                                                     </button>
                                                     <span className="text-xs font-black text-slate-900 w-4 text-center">{qty}</span>
                                                     <button
-                                                        onClick={() => updateQuantity(p.id, 1, activeDay)}
+                                                        onClick={(e) => { e.stopPropagation(); updateQuantity(p.id, qty + 1, activeDay); }}
                                                         className="w-8 h-8 flex items-center justify-center bg-slate-900 rounded-xl text-white shadow-lg shadow-slate-200"
                                                     >
                                                         <Plus className="w-4 h-4" />
@@ -115,7 +115,7 @@ export function WeeklyMenuGrid({ categories, primaryColor }: WeeklyMenuGridProps
                                                 </>
                                             ) : (
                                                 <button
-                                                    onClick={() => addItem(p, activeDay)}
+                                                    onClick={(e) => { e.stopPropagation(); addItem(p, activeDay); }}
                                                     className="px-4 py-2 bg-white text-slate-900 text-[10px] font-black uppercase tracking-widest rounded-xl border border-slate-200 hover:border-slate-900 transition-all flex items-center gap-2"
                                                 >
                                                     <Plus className="w-3 h-3" /> Agregar
