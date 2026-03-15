@@ -62,7 +62,7 @@ const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="relative pt-6 pb-24 md:pt-10 md:pb-36 overflow-x-hidden">
+    <section id="faq" className="relative pt-6 pb-16 md:pt-10 md:pb-20">
       <div className="absolute inset-0 bg-slate-50/60 -z-20" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-violet-50/70 rounded-full blur-[100px] -z-10 -translate-x-1/3 translate-y-1/3" />
 
