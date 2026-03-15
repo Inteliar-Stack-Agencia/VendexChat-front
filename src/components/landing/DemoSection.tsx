@@ -1,7 +1,6 @@
 import {
   ExternalLink,
   ShoppingCart,
-  Bot,
   BarChart2,
   Users,
   Truck,
@@ -10,11 +9,12 @@ import {
   TrendingUp,
   Package,
 } from "lucide-react";
+import AssistantIcon from "../icons/AssistantIcon";
 import { trackEvent } from "@/lib/analytics";
 
 const dashboardModules = [
   {
-    icon: Bot,
+    icon: AssistantIcon,
     label: "VENDEx Bot",
     stat: "24/7 activo",
     color: "bg-violet-500",

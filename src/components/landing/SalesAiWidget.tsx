@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, X, Bot, Sparkles, ArrowRight } from "lucide-react";
+import { Send, X, Sparkles, ArrowRight } from "lucide-react";
+import AssistantIcon from "../icons/AssistantIcon";
 import { trackEvent } from "@/lib/analytics";
 
 const REGISTER_URL = "https://admin.vendexchat.app/register";
@@ -266,7 +267,7 @@ const SalesAiWidget = () => {
           <div className="p-4 bg-gradient-to-r from-violet-600 to-indigo-600 text-white flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-md">
-                <Bot className="w-6 h-6" />
+                <AssistantIcon className="w-6 h-6" />
               </div>
               <div>
                 <h3 className="font-black text-sm tracking-tight">

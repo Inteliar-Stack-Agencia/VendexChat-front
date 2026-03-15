@@ -1,4 +1,5 @@
-import { Link, ShoppingCart, MessageCircle, Bot } from "lucide-react";
+import { Link, ShoppingCart, MessageCircle } from "lucide-react";
+import AssistantIcon from "../icons/AssistantIcon";
 
 const steps = [
   {
@@ -12,7 +13,7 @@ const steps = [
     description: "Elige ítems, cantidades y extras por su cuenta.",
   },
   {
-    icon: Bot,
+    icon: AssistantIcon,
     title: "Asistente IA lo ayuda a elegir",
     description: "Tu bot inteligente responde dudas y sugiere productos en tiempo real.",
   },

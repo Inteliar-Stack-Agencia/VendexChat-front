@@ -1,4 +1,5 @@
-import { X, Plus, Minus, Bot } from "lucide-react";
+import { X, Plus, Minus } from "lucide-react";
+import AssistantIcon from "../../components/icons/AssistantIcon";
 import type { Product } from "../../types";
 
 interface QuickViewModalProps {
@@ -56,7 +57,7 @@ export function ProductQuickViewModal({
                                     onClick={() => onAskAI(product)}
                                     className="flex items-center gap-2 text-primary-dynamic bg-primary-dynamic/10 px-3 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-primary-dynamic/20 transition-all mb-4"
                                 >
-                                    <Bot className="w-4 h-4" />
+                                    <AssistantIcon className="w-4 h-4" />
                                     Consultar con IA
                                 </button>
                             )}

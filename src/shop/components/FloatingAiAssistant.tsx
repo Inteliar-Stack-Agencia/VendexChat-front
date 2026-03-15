@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Bot, X, MessageCircle } from 'lucide-react';
+import { X, MessageCircle } from 'lucide-react';
+import AssistantIcon from '../../components/icons/AssistantIcon';
 
 interface FloatingAiAssistantProps {
     onClick: () => void;
@@ -61,7 +62,7 @@ export default function FloatingAiAssistant({ onClick, isOpen, isCartOpen }: Flo
                 `}
             >
                 <div className="absolute inset-0 rounded-full bg-primary-dynamic animate-ping opacity-20 group-hover:hidden" />
-                <Bot className="w-7 h-7 relative z-10" />
+                <AssistantIcon className="w-7 h-7 relative z-10" />
 
                 {/* Indicador de "Ayuda" */}
                 {!showBubble && !hasBounced && (

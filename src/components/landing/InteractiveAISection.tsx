@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { Send, Bot, Sparkles, ShoppingBag, Zap, UtensilsCrossed, Wine, BookOpen } from "lucide-react";
+import { Send, Sparkles, ShoppingBag, Zap, UtensilsCrossed, Wine, BookOpen } from "lucide-react";
+import AssistantIcon from "../icons/AssistantIcon";
 import { supabase } from "@/supabaseClient";
 
 type StoreType = "hamburgueseria" | "bebidas" | "libreria";
@@ -221,7 +222,7 @@ const InteractiveAISection = () => {
                             {/* Decorative labels */}
                             <div className="absolute -right-8 top-1/4 p-4 rounded-2xl bg-white shadow-xl rotate-6 border border-slate-100 animate-float hidden md:block">
                                 <div className="flex items-center gap-2 text-[10px] font-black text-slate-900">
-                                    <Bot className="w-4 h-4 text-primary-dynamic" />
+                                    <AssistantIcon className="w-4 h-4" />
                                     RESPUESTA IA
                                 </div>
                             </div>
