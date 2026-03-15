@@ -1,4 +1,4 @@
-import { Bot, CheckCircle2, LayoutDashboard, PackageSearch, ShoppingBag, Sparkles, TrendingUp, Zap } from "lucide-react";
+import { Bot, CheckCircle2, LayoutDashboard, PackageSearch, ShoppingBag, Sparkles, TrendingUp, Users, Zap } from "lucide-react";
 
 const products = [
   { emoji: "🍔", name: "Burger clásica", price: "$2.700", hot: true },
@@ -160,6 +160,28 @@ const HeroMockup = () => {
         <div>
           <p className="text-xs font-black text-slate-800 leading-none">+12 pedidos nuevos</p>
           <p className="text-[10px] text-slate-400 font-medium">hoy · sin intervención</p>
+        </div>
+      </div>
+
+      {/* Bottom center-left: AI importer */}
+      <div className="absolute left-[30%] bottom-[22%] rounded-2xl bg-white/95 px-3 py-2 shadow-xl border border-slate-100 flex items-center gap-2">
+        <div className="w-6 h-6 rounded-xl bg-violet-100 flex items-center justify-center">
+          <Sparkles className="w-3.5 h-3.5 text-violet-600" />
+        </div>
+        <div>
+          <p className="text-xs font-black text-slate-800 leading-none">Importador IA</p>
+          <p className="text-[10px] text-slate-400 font-medium">15 productos en 2 min</p>
+        </div>
+      </div>
+
+      {/* Bottom center-right: CRM */}
+      <div className="absolute left-[44%] bottom-[5%] rounded-2xl bg-white/95 px-3 py-2 shadow-xl border border-slate-100 flex items-center gap-2">
+        <div className="w-6 h-6 rounded-xl bg-cyan-100 flex items-center justify-center">
+          <Users className="w-3.5 h-3.5 text-cyan-600" />
+        </div>
+        <div>
+          <p className="text-xs font-black text-slate-800 leading-none">CRM activo</p>
+          <p className="text-[10px] text-slate-400 font-medium">3 clientes reactivados</p>
         </div>
       </div>
     </div>
