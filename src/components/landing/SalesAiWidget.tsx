@@ -66,6 +66,9 @@ const QUICK_QUESTIONS = [
   "Mi negocio es de electrónica",
 ];
 
+const FAREWELL_REGEX = /^(chau|adiós|adios|hasta luego|nos vemos|bye|gracias,?\s*chau|gracias,?\s*adios|gracias,?\s*adiós)/i;
+const RESET_DELAY = 2 * 60 * 1000; // 2 minutes
+
 const SalesAiWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -76,6 +79,17 @@ const SalesAiWidget = () => {
   const [showBubble, setShowBubble] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const inactivityTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const resetConversation = () => {
+    setMessages([{ id: "welcome", role: "assistant", content: WELCOME_MESSAGE }]);
+    setInput("");
+  };
+
+  const resetInactivityTimer = () => {
+    if (inactivityTimer.current) clearTimeout(inactivityTimer.current);
+    inactivityTimer.current = setTimeout(resetConversation, RESET_DELAY);
+  };
 
   // Show proactive bubble after 4 seconds
   useEffect(() => {
@@ -93,9 +107,29 @@ const SalesAiWidget = () => {
     if (isOpen) inputRef.current?.focus();
   }, [isOpen]);
 
+  // Clear inactivity timer when widget closes
+  useEffect(() => {
+    if (!isOpen && inactivityTimer.current) {
+      clearTimeout(inactivityTimer.current);
+    }
+  }, [isOpen]);
+
   const handleSend = async (overrideInput?: string) => {
     const text = (overrideInput || input).trim();
     if (!text || isLoading) return;
+
+    // Reset conversation if user says goodbye
+    if (FAREWELL_REGEX.test(text)) {
+      const farewellMsg: Message = {
+        id: Date.now().toString(),
+        role: "user",
+        content: text,
+      };
+      setMessages((prev) => [...prev, farewellMsg]);
+      if (!overrideInput) setInput("");
+      setTimeout(resetConversation, 2000);
+      return;
+    }
 
     const userMsg: Message = {
       id: Date.now().toString(),
@@ -105,6 +139,7 @@ const SalesAiWidget = () => {
     setMessages((prev) => [...prev, userMsg]);
     if (!overrideInput) setInput("");
     setIsLoading(true);
+    resetInactivityTimer();
 
     trackEvent("sales_ai_message_sent");
 
