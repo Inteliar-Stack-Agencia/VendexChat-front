@@ -124,7 +124,7 @@ export default function DemoPage() {
               </div>
 
               {/* Contenido de la tienda (Motor REAL Unificado) */}
-              <div className="bg-white relative overflow-hidden h-[800px] border-b border-slate-100">
+              <div className="bg-white relative overflow-hidden h-[500px] md:h-[700px] xl:h-[800px] border-b border-slate-100">
                 <ShopPage isDemo={true} />
               </div>
             </div>

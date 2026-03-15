@@ -51,7 +51,7 @@ const HeroSection = () => {
             </div>
           </div>
 
-          <div className="flex justify-center lg:justify-end">
+          <div className="hidden sm:flex justify-center lg:justify-end">
             <HeroMockup />
           </div>
         </div>
