@@ -16,13 +16,23 @@ PRIORIDAD #1 - RESPONDER LO QUE PREGUNTAN:
 Si preguntan cómo funciona, explicá cómo funciona. Si preguntan precios, dá los precios. Si preguntan algo técnico, respondé con claridad. NUNCA esquives una pregunta para meter una demo o empujar a registrarse.
 
 INFORMACIÓN DE VENDEXCHAT:
-- Qué es: Plataforma para que comercios tengan su tienda online con catálogo digital y un bot IA que atiende clientes 24/7.
-- Cómo funciona: Te registrás, cargás tus productos (se puede hacer con IA, sin saber código), configurás tu bot, y listo. En 5 minutos tenés tu tienda armada con link propio.
-- Funciones: Catálogo digital con link propio, Bot IA para WhatsApp que atiende 24/7, Gestión de pedidos y stock, Analíticas de ventas, Integración con MercadoPago, Carga masiva de productos por IA.
-- Planes: Free (gratis para siempre, 15 productos, 1 categoría), Starter ($14.999/mes, 80 productos, 5 categorías, bot IA WhatsApp), Pro ($24.999/mes, 500 productos, categorías ilimitadas, IA avanzada, analíticas), Enterprise (a medida, contactar).
+- Qué es: Con VENDExChat podés crear tu catálogo digital y tener tu propia tienda online con un link que le enviás a tus clientes. Es tu página web lista en minutos, sin saber código.
+- Cómo funciona paso a paso:
+  1. Te registrás en la plataforma.
+  2. Con el usuario y contraseña que usaste para el registro, ingresás al Administrador de tu tienda.
+  3. Configurás los datos de tu tienda (nombre, logo, descripción, etc.).
+  4. Cargás tus productos. Podés usar nuestro Importador IA que con un click carga todos los productos automáticamente.
+  5. Tu tienda queda lista con un link propio que podés compartir con tus clientes.
+  6. Tu web tiene un asistente bot IA que ayuda a tus clientes con consultas en general y hasta puede cerrar ventas, trabajando 24/7 para vos.
+  7. Nuestro equipo siempre va a estar disponible para ayudarte.
+- PLANES (precios en USD):
+  * FREE: Gratis para siempre. 2 categorías, 10 productos por categoría. Menú digital QR, pedidos por WhatsApp. Ideal para validar tu idea y captar tus primeros pedidos sin costo.
+  * PRO: USD $13.99/mes (o USD $11.66/mes si pagás anual, total USD $139.9/año — ahorrás USD $27.98). Categorías ilimitadas, productos ilimitados, dominios personalizados, estadísticas de venta. INCLUYE: Importador masivo con IA (con un click cargás todos los productos) y Asistente de Ventas IA.
+  * VIP (RECOMENDADO): USD $19.99/mes (o USD $16.66/mes si pagás anual, total USD $199.9/año — ahorrás USD $39.98). Todo lo del plan Pro más: VENDEx Bot con IA, Logística Integrada, CRM con IA & Analítica, Soporte Prioritario. Diferencial: seguimiento postventa y reactivación de clientes desde CRM IA, bot + logística + soporte prioritario en un solo plan. El CRM con IA funciona como un chat inteligente: podés pedirle informes completos sobre tus ventas, clientes, entregas, productos más vendidos, etc., como si le estuvieras hablando a una persona.
+  * ULTRA: Precio a medida. Desarrollo a medida, web & hosting propio, bots & automatizaciones, consultoría estratégica, soporte 24/7 VIP.
+- AHORRO PLAN ANUAL: Con el plan anual ahorrás un 15% (equivale a 2 meses gratis por año). Recomendado para quienes ya saben que lo van a usar.
+- MONEDA DE PAGO: Los precios están expresados en USD, pero el cobro se puede realizar en dólares o en la moneda local del país del cliente.
 - Rubros: Funciona para cualquier comercio: comida, bebidas, ropa, electrónica, perfumería, ferretería, etc.
-- Más de 200 comercios ya lo usan.
-- El plan Free es gratis para siempre, sin tarjeta de crédito.
 
 MODO DEMO (solo si el visitante cuenta qué vende o pide una demo):
 Si el visitante te dice su rubro, podés hacer una mini demo actuando como el bot IA de su negocio. Inventá 4-5 productos realistas con precios creíbles. Pero solo hacé esto si el visitante lo pide o lo inicia, no lo fuerces.
@@ -50,11 +60,14 @@ const WELCOME_MESSAGE = "Hola! Soy el asistente de VENDExChat. Te puedo ayudar c
 const QUICK_QUESTIONS = [
   "Cómo funciona?",
   "Cuánto sale?",
-  "Qué incluye el plan Free?",
+  "Es difícil de usar?",
   "Tengo una hamburguesería",
   "Vendo ropa online",
   "Mi negocio es de electrónica",
 ];
+
+const FAREWELL_REGEX = /^(chau|adiós|adios|hasta luego|nos vemos|bye|gracias,?\s*chau|gracias,?\s*adios|gracias,?\s*adiós)/i;
+const RESET_DELAY = 2 * 60 * 1000; // 2 minutes
 
 const SalesAiWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,6 +79,17 @@ const SalesAiWidget = () => {
   const [showBubble, setShowBubble] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const inactivityTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const resetConversation = () => {
+    setMessages([{ id: "welcome", role: "assistant", content: WELCOME_MESSAGE }]);
+    setInput("");
+  };
+
+  const resetInactivityTimer = () => {
+    if (inactivityTimer.current) clearTimeout(inactivityTimer.current);
+    inactivityTimer.current = setTimeout(resetConversation, RESET_DELAY);
+  };
 
   // Show proactive bubble after 4 seconds
   useEffect(() => {
@@ -83,9 +107,29 @@ const SalesAiWidget = () => {
     if (isOpen) inputRef.current?.focus();
   }, [isOpen]);
 
+  // Clear inactivity timer when widget closes
+  useEffect(() => {
+    if (!isOpen && inactivityTimer.current) {
+      clearTimeout(inactivityTimer.current);
+    }
+  }, [isOpen]);
+
   const handleSend = async (overrideInput?: string) => {
     const text = (overrideInput || input).trim();
     if (!text || isLoading) return;
+
+    // Reset conversation if user says goodbye
+    if (FAREWELL_REGEX.test(text)) {
+      const farewellMsg: Message = {
+        id: Date.now().toString(),
+        role: "user",
+        content: text,
+      };
+      setMessages((prev) => [...prev, farewellMsg]);
+      if (!overrideInput) setInput("");
+      setTimeout(resetConversation, 2000);
+      return;
+    }
 
     const userMsg: Message = {
       id: Date.now().toString(),
@@ -95,6 +139,7 @@ const SalesAiWidget = () => {
     setMessages((prev) => [...prev, userMsg]);
     if (!overrideInput) setInput("");
     setIsLoading(true);
+    resetInactivityTimer();
 
     trackEvent("sales_ai_message_sent");
 
