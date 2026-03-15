@@ -11,7 +11,7 @@ const products = [
 
 const HeroMockup = () => {
   return (
-    <div className="relative w-full max-w-[580px] h-[460px] sm:h-[500px]">
+    <div className="relative w-full max-w-[580px] h-[500px] sm:h-[540px]">
       {/* Background glow */}
       <div className="absolute inset-0 -z-10 flex items-center justify-center">
         <div className="h-[26rem] w-[26rem] rounded-full bg-gradient-to-br from-emerald-300/50 via-cyan-200/40 to-violet-400/50 blur-3xl" />
@@ -152,36 +152,36 @@ const HeroMockup = () => {
         <span className="text-xs font-black text-amber-600">Ventas 24/7</span>
       </div>
 
-      {/* Bottom left: new orders */}
-      <div className="absolute left-0 bottom-4 rounded-2xl bg-white/95 px-3 py-2 shadow-xl border border-slate-100 flex items-center gap-2">
-        <div className="w-6 h-6 rounded-xl bg-emerald-100 flex items-center justify-center">
-          <ShoppingBag className="w-3.5 h-3.5 text-emerald-600" />
+      {/* Bottom row: 3 badges aligned */}
+      <div className="absolute bottom-0 left-0 right-[160px] sm:right-[180px] flex items-center gap-2">
+        <div className="rounded-2xl bg-white/95 px-3 py-2 shadow-xl border border-slate-100 flex items-center gap-2">
+          <div className="w-6 h-6 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
+            <ShoppingBag className="w-3.5 h-3.5 text-emerald-600" />
+          </div>
+          <div>
+            <p className="text-xs font-black text-slate-800 leading-none whitespace-nowrap">+12 pedidos nuevos</p>
+            <p className="text-[10px] text-slate-400 font-medium">hoy · sin intervención</p>
+          </div>
         </div>
-        <div>
-          <p className="text-xs font-black text-slate-800 leading-none">+12 pedidos nuevos</p>
-          <p className="text-[10px] text-slate-400 font-medium">hoy · sin intervención</p>
-        </div>
-      </div>
 
-      {/* Bottom center-left: AI importer */}
-      <div className="absolute left-[30%] bottom-[22%] rounded-2xl bg-white/95 px-3 py-2 shadow-xl border border-slate-100 flex items-center gap-2">
-        <div className="w-6 h-6 rounded-xl bg-violet-100 flex items-center justify-center">
-          <Sparkles className="w-3.5 h-3.5 text-violet-600" />
+        <div className="rounded-2xl bg-white/95 px-3 py-2 shadow-xl border border-slate-100 flex items-center gap-2">
+          <div className="w-6 h-6 rounded-xl bg-violet-100 flex items-center justify-center flex-shrink-0">
+            <Sparkles className="w-3.5 h-3.5 text-violet-600" />
+          </div>
+          <div>
+            <p className="text-xs font-black text-slate-800 leading-none whitespace-nowrap">Importador IA</p>
+            <p className="text-[10px] text-slate-400 font-medium">15 productos en 2 min</p>
+          </div>
         </div>
-        <div>
-          <p className="text-xs font-black text-slate-800 leading-none">Importador IA</p>
-          <p className="text-[10px] text-slate-400 font-medium">15 productos en 2 min</p>
-        </div>
-      </div>
 
-      {/* Bottom center-right: CRM */}
-      <div className="absolute left-[44%] bottom-[5%] rounded-2xl bg-white/95 px-3 py-2 shadow-xl border border-slate-100 flex items-center gap-2">
-        <div className="w-6 h-6 rounded-xl bg-cyan-100 flex items-center justify-center">
-          <Users className="w-3.5 h-3.5 text-cyan-600" />
-        </div>
-        <div>
-          <p className="text-xs font-black text-slate-800 leading-none">CRM activo</p>
-          <p className="text-[10px] text-slate-400 font-medium">3 clientes reactivados</p>
+        <div className="rounded-2xl bg-white/95 px-3 py-2 shadow-xl border border-slate-100 flex items-center gap-2">
+          <div className="w-6 h-6 rounded-xl bg-cyan-100 flex items-center justify-center flex-shrink-0">
+            <Users className="w-3.5 h-3.5 text-cyan-600" />
+          </div>
+          <div>
+            <p className="text-xs font-black text-slate-800 leading-none whitespace-nowrap">CRM activo</p>
+            <p className="text-[10px] text-slate-400 font-medium">3 clientes reactivados</p>
+          </div>
         </div>
       </div>
     </div>
