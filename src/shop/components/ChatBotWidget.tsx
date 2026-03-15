@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from "react";
-import { Send, X, MessageCircle, Bot } from "lucide-react";
+import { Send, X, MessageCircle } from "lucide-react";
+import AssistantIcon from "../../components/icons/AssistantIcon";
 import { sanitizePhoneNumber } from "../../utils/format";
 
 interface Message {
@@ -157,7 +158,7 @@ export function ChatBotWidget({
             <div className="p-4 bg-primary-dynamic text-white flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-md">
-                        <Bot className="w-6 h-6" />
+                        <AssistantIcon className="w-6 h-6" />
                     </div>
                     <div>
                         <h3 className="font-black text-sm uppercase tracking-tight">Chat de ayuda</h3>

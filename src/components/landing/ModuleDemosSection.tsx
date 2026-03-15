@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import {
-  Bot, Users, Truck, Brain, BarChart2,
+  Users, Truck, Brain, BarChart2,
   Send, Sparkles, ChevronRight, ShoppingCart, Store, Cpu
 } from "lucide-react";
+import AssistantIcon from "../icons/AssistantIcon";
 
 type ModuleId = "bot" | "crm" | "logistica" | "inteligencia" | "estadisticas";
 type TabId = "cliente" | "gestion" | "ia";
@@ -51,7 +52,7 @@ const MODULES: Module[] = [
     id: "bot",
     tab: "cliente",
     label: "VENDEx Bot",
-    icon: Bot,
+    icon: AssistantIcon,
     accentBg: "bg-violet-500",
     accentText: "text-violet-400",
     accentRing: "ring-violet-500/40",

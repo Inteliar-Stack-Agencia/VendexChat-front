@@ -1,4 +1,5 @@
-import { Search, MapPin, Instagram, Facebook, Bot, ShoppingCart } from "lucide-react";
+import { Search, MapPin, Instagram, Facebook, ShoppingCart } from "lucide-react";
+import AssistantIcon from "../../components/icons/AssistantIcon";
 import { getSocialLink } from "../../utils/format";
 
 interface StoreHeaderProps {
@@ -27,7 +28,7 @@ export function StoreHeader({
                 <div className="bg-indigo-600 text-white px-4 py-2.5 text-center relative overflow-hidden group">
                     <div className="max-w-[1440px] mx-auto flex items-center justify-center gap-3 relative z-10">
                         <div className="p-1 bg-white/20 rounded-lg">
-                            <Bot className="w-3.5 h-3.5 text-white animate-pulse" />
+                            <AssistantIcon className="w-3.5 h-3.5 animate-pulse" />
                         </div>
                         <p className="text-[10px] md:text-xs font-black uppercase tracking-widest leading-none drop-shadow-sm">
                             {announcement}
@@ -58,7 +59,7 @@ export function StoreHeader({
                                 onClick={onChatClick}
                                 className="h-10 px-3 md:px-4 flex items-center gap-2 bg-primary-dynamic text-white rounded-xl transition-all shadow-lg shadow-primary-dynamic/20 hover:scale-105 active:scale-95"
                             >
-                                <Bot className="w-5 h-5" />
+                                <AssistantIcon className="w-5 h-5" />
                                 <span className="text-[10px] font-black uppercase tracking-widest">Asistente IA</span>
                             </button>
                         )}

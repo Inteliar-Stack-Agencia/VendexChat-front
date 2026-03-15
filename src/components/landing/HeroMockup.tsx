@@ -1,4 +1,5 @@
-import { Bot, CheckCircle2, LayoutDashboard, PackageSearch, ShoppingBag, Sparkles, TrendingUp, Users, Zap } from "lucide-react";
+import { CheckCircle2, LayoutDashboard, PackageSearch, ShoppingBag, Sparkles, TrendingUp, Users, Zap } from "lucide-react";
+import AssistantIcon from "../icons/AssistantIcon";
 
 const products = [
   { emoji: "🍔", name: "Burger clásica", price: "$2.700", hot: true },
@@ -88,7 +89,7 @@ const HeroMockup = () => {
           <div className="bg-white border-b border-slate-100 px-3 py-2">
             <div className="flex items-center gap-1.5">
               <div className="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center">
-                <Bot className="w-3 h-3 text-white" />
+                <AssistantIcon className="w-3 h-3" />
               </div>
               <div>
                 <p className="text-[9px] text-slate-400 font-semibold leading-none">Asistente IA · en línea</p>
