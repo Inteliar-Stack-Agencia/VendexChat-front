@@ -57,17 +57,15 @@ export default function FloatingAiAssistant({ onClick, isOpen, isCartOpen }: Flo
             <button
                 onClick={onClick}
                 className={`
-                    group pointer-events-auto relative w-14 h-14 rounded-full bg-primary-dynamic text-white shadow-2xl flex items-center justify-center transition-all duration-500 hover:scale-110 active:scale-90
+                    group pointer-events-auto relative w-14 h-14 rounded-full overflow-hidden shadow-2xl flex items-center justify-center transition-all duration-500 hover:scale-110 active:scale-90
                     ${showBubble ? 'animate-float' : 'animate-pulse-subtle'}
                 `}
             >
                 <div className="absolute inset-0 rounded-full bg-primary-dynamic animate-ping opacity-20 group-hover:hidden" />
-                <AssistantIcon className="w-7 h-7 relative z-10" />
+                <AssistantIcon className="w-full h-full relative z-10" />
 
-                {/* Indicador de "Ayuda" */}
-                {!showBubble && !hasBounced && (
-                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 rounded-full border-2 border-white animate-bounce" />
-                )}
+                {/* Indicador online */}
+                <div className="absolute top-0 right-0 w-3.5 h-3.5 bg-emerald-400 rounded-full border-2 border-white z-20" />
             </button>
         </div>
     );
