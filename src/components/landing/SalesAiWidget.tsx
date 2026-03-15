@@ -181,7 +181,7 @@ const SalesAiWidget = () => {
     <>
       {/* Floating trigger button */}
       {!isOpen && (
-        <div className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 flex flex-col items-end gap-3">
+        <div className="fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] right-6 md:bottom-[calc(2rem+env(safe-area-inset-bottom,0px))] md:right-8 z-50 flex flex-col items-end gap-3">
           {/* Proactive bubble */}
           {showBubble && (
             <button
