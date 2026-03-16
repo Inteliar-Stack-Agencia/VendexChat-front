@@ -57,11 +57,11 @@ export default function FloatingAiAssistant({ onClick, isOpen, isCartOpen }: Flo
             <button
                 onClick={onClick}
                 className={`
-                    group pointer-events-auto relative w-14 h-14 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center transition-all duration-500 hover:scale-110 active:scale-90
+                    group pointer-events-auto relative w-14 h-14 rounded-2xl overflow-hidden bg-emerald-600 shadow-2xl shadow-emerald-600/50 flex items-center justify-center transition-all duration-500 hover:scale-110 hover:bg-emerald-500 active:scale-90
                     ${showBubble ? 'animate-float' : 'animate-pulse-subtle'}
                 `}
             >
-                <div className="absolute inset-0 rounded-2xl bg-primary-dynamic animate-ping opacity-20 group-hover:hidden" />
+                <div className="absolute inset-0 rounded-2xl bg-emerald-500 animate-ping opacity-30 group-hover:hidden" />
                 <img
                     src="/logosinfondo.png"
                     alt="VendexChat"
