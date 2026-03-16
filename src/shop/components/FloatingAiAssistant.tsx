@@ -65,7 +65,8 @@ export default function FloatingAiAssistant({ onClick, isOpen, isCartOpen }: Flo
                 <img
                     src="/iconoVendexchat.png"
                     alt="VendexChat"
-                    className="w-full h-full object-cover z-10"
+                    className="z-10"
+                    style={{ width: '120%', height: '120%', marginLeft: '-10%', marginTop: '-10%', objectFit: 'cover', flexShrink: 0 }}
                 />
 
                 {/* Indicador online */}
