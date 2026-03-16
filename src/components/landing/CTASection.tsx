@@ -158,7 +158,7 @@ const CTASection = () => {
 
                   {/* Center icon */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <img src="/iconoVendexchat.png" alt="VendexChat" className="w-52 h-52 object-contain" />
+                    <img src="/logosinfondo.png" alt="VendexChat" className="w-52 h-52 object-contain" />
                   </div>
 
                   {/* Orbiting dots */}
