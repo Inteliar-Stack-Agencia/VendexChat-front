@@ -17,6 +17,7 @@ import {
   Crown,
   Sparkles,
 } from "lucide-react";
+import { REGISTER_URL } from "@/lib/constants";
 
 interface Feature {
   icon: React.ElementType;
@@ -32,6 +33,8 @@ const PLAN_STYLES: Record<Feature["plan"], { label: string; bg: string; text: st
   VIP:   { label: "VIP",   bg: "bg-yellow-100",  text: "text-yellow-600", dot: "bg-yellow-500" },
   ULTRA: { label: "ULTRA", bg: "bg-violet-100",  text: "text-violet-600", dot: "bg-violet-500" },
 };
+
+const PLAN_ORDER: Feature["plan"][] = ["FREE", "PRO", "VIP", "ULTRA"];
 
 const features: Feature[] = [
   {
@@ -158,7 +161,7 @@ const FeaturesSection = () => {
 
         {/* Plan legend */}
         <div className="flex flex-wrap justify-center gap-3 mb-14">
-          {(Object.keys(PLAN_STYLES) as Feature["plan"][]).map((plan) => {
+          {PLAN_ORDER.map((plan) => {
             const s = PLAN_STYLES[plan];
             return (
               <span key={plan} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-black tracking-widest ${s.bg} ${s.text}`}>
@@ -214,7 +217,7 @@ const FeaturesSection = () => {
         {/* Bottom CTA */}
         <div className="text-center mt-16">
           <a
-            href="https://admin.vendexchat.app/register"
+            href={REGISTER_URL}
             className="inline-flex items-center gap-3 bg-emerald-600 hover:bg-emerald-500 text-white font-black px-8 py-4 rounded-2xl shadow-xl shadow-emerald-600/30 transition-all duration-300 hover:scale-105 hover:-translate-y-0.5 text-sm tracking-wide uppercase"
           >
             <Crown className="w-5 h-5" />
