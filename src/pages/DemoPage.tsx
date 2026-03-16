@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   TrendingUp,
   Package,
-  MessageCircle,
   Users,
   CheckCircle2,
   ChevronRight,
@@ -307,7 +306,7 @@ export default function DemoPage() {
         {/* ── Dashboard Admin mockup ── */}
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-violet-600 rounded-2xl shadow-lg shadow-violet-200">
+            <div className="p-2.5 bg-emerald-600 rounded-2xl shadow-lg shadow-emerald-200">
               <Settings className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -321,127 +320,196 @@ export default function DemoPage() {
           </div>
 
           <div className="rounded-[2.5rem] border border-slate-200 shadow-2xl overflow-hidden bg-white ring-1 ring-slate-100">
-            <div className="bg-slate-900 border-b border-slate-800 px-8 py-5 flex items-center gap-4">
+            {/* Browser chrome */}
+            <div className="bg-slate-100 border-b border-slate-200 px-8 py-5 flex items-center gap-4">
               <div className="flex gap-2">
                 <div className="w-3.5 h-3.5 rounded-full bg-red-400 shadow-sm" />
                 <div className="w-3.5 h-3.5 rounded-full bg-amber-400 shadow-sm" />
                 <div className="w-3.5 h-3.5 rounded-full bg-green-400 shadow-sm" />
               </div>
-              <div className="flex-1 bg-slate-800 rounded-2xl px-5 py-2.5 text-sm text-slate-400 font-bold border border-slate-700 flex items-center gap-3 shadow-inner">
-                <span className="text-slate-600">🔒</span>
+              <div className="flex-1 bg-white rounded-2xl px-5 py-2.5 text-sm text-slate-400 font-bold border border-slate-200 flex items-center gap-3 shadow-inner">
+                <span className="text-slate-300">🔒</span>
                 admin.vendexchat.app/dashboard
               </div>
             </div>
 
-            <div className="bg-slate-50 p-8 md:p-12">
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {/* Dashboard layout */}
+            <div className="flex bg-white overflow-hidden" style={{ minHeight: 620 }}>
+
+              {/* ── Sidebar ── */}
+              <aside className="w-52 flex-shrink-0 border-r border-slate-100 bg-white flex flex-col py-4 select-none">
+                {/* Logo */}
+                <div className="flex items-center gap-2 px-4 pb-5">
+                  <div className="w-8 h-8 bg-emerald-600 rounded-xl flex items-center justify-center">
+                    <Sparkles className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="text-sm font-black text-slate-900 tracking-tight">VENDExChat</span>
+                </div>
+
+                {/* OPERACIÓN */}
+                <p className="px-4 text-[9px] font-black text-slate-400 uppercase tracking-[0.18em] mb-1">Operación</p>
                 {[
-                  {
-                    label: "Ventas hoy",
-                    value: "$127.400",
-                    icon: TrendingUp,
-                    change: "+18%",
-                    color: "text-emerald-500",
-                  },
-                  {
-                    label: "Pedidos",
-                    value: "48",
-                    icon: Package,
-                    change: "+12",
-                    color: "text-blue-500",
-                  },
-                  {
-                    label: "Mensajes IA",
-                    value: "234",
-                    icon: MessageCircle,
-                    change: "activo",
-                    color: "text-violet-500",
-                  },
-                  {
-                    label: "Clientes nuevos",
-                    value: "9",
-                    icon: Sparkles,
-                    change: "+3",
-                    color: "text-pink-500",
-                  },
-                ].map((stat) => (
+                  { label: "Dashboard", active: true },
+                  { label: "POS", badge: "NUEVO", badgeColor: "bg-emerald-100 text-emerald-700" },
+                  { label: "Pedidos" },
+                  { label: "Productos" },
+                  { label: "Categorías" },
+                  { label: "Clientes", badge: "PRO", badgeColor: "bg-slate-100 text-slate-500" },
+                  { label: "Estadísticas", badge: "PRO", badgeColor: "bg-slate-100 text-slate-500" },
+                  { label: "Importador IA", badge: "PRO", badgeColor: "bg-slate-100 text-slate-500" },
+                ].map((item) => (
                   <div
-                    key={stat.label}
-                    className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all group"
+                    key={item.label}
+                    className={`mx-2 px-3 py-2 rounded-xl flex items-center justify-between mb-0.5 cursor-default ${
+                      item.active ? "bg-emerald-50 text-emerald-700" : "text-slate-600 hover:bg-slate-50"
+                    }`}
                   >
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-[11px] font-black text-slate-400 uppercase tracking-[0.15em]">
-                        {stat.label}
+                    <span className={`text-[11px] font-bold ${item.active ? "font-black" : ""}`}>{item.label}</span>
+                    {item.badge && (
+                      <span className={`text-[8px] font-black px-1.5 py-0.5 rounded-full ${item.badgeColor}`}>
+                        {item.badge}
                       </span>
-                      <stat.icon
-                        className={`w-5 h-5 ${stat.color} group-hover:scale-110 transition-transform`}
-                      />
-                    </div>
-                    <div className="text-3xl font-black text-slate-900 tracking-tighter">
-                      {stat.value}
-                    </div>
-                    <div className="mt-2 flex items-center gap-1">
-                      <span
-                        className={`text-[11px] font-black ${stat.color}`}
-                      >
-                        {stat.change}
-                      </span>
-                      <span className="text-[10px] text-slate-300 font-bold">
-                        vs ayer
-                      </span>
-                    </div>
+                    )}
                   </div>
                 ))}
-              </div>
 
-              <div className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600">
-                    <Settings className="w-5 h-5" />
+                {/* MÓDULOS VIP */}
+                <p className="px-4 text-[9px] font-black text-slate-400 uppercase tracking-[0.18em] mt-4 mb-1">Módulos VIP</p>
+                {[
+                  { label: "CRM IA" },
+                  { label: "Logística" },
+                  { label: "Asistente Tienda" },
+                ].map((item) => (
+                  <div key={item.label} className="mx-2 px-3 py-2 rounded-xl flex items-center justify-between mb-0.5 cursor-default text-slate-600">
+                    <span className="text-[11px] font-bold">{item.label}</span>
+                    <span className="text-[8px] font-black px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700">VIP</span>
                   </div>
-                  <h3 className="font-black text-slate-800 uppercase tracking-tight">
-                    Gestión en Vivo
-                  </h3>
+                ))}
+
+                {/* MÓDULOS ULTRA */}
+                <p className="px-4 text-[9px] font-black text-slate-400 uppercase tracking-[0.18em] mt-4 mb-1">Módulos Ultra</p>
+                {[
+                  { label: "Inteligencia IA" },
+                  { label: "Estadísticas IA" },
+                  { label: "Bot WhatsApp" },
+                ].map((item) => (
+                  <div key={item.label} className="mx-2 px-3 py-2 rounded-xl flex items-center justify-between mb-0.5 cursor-default text-slate-600">
+                    <span className="text-[11px] font-bold">{item.label}</span>
+                    <span className="text-[8px] font-black px-1.5 py-0.5 rounded-full bg-violet-100 text-violet-700">ULTRA</span>
+                  </div>
+                ))}
+              </aside>
+
+              {/* ── Main content ── */}
+              <div className="flex-1 overflow-hidden flex flex-col">
+
+                {/* Top bar */}
+                <div className="border-b border-slate-100 px-6 py-3 flex items-center justify-between bg-white">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-black text-slate-900">Mi Tienda Demo</span>
+                    <span className="text-[9px] font-black px-2 py-0.5 bg-slate-100 text-slate-500 rounded-full uppercase tracking-widest">Buenos Aires</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 border border-emerald-600 text-emerald-600 rounded-lg text-[10px] font-black uppercase tracking-widest">
+                      <span>↗</span> Ver mi tienda
+                    </button>
+                    <div className="w-7 h-7 bg-emerald-100 rounded-full flex items-center justify-center">
+                      <Users className="w-3.5 h-3.5 text-emerald-700" />
+                    </div>
+                  </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="space-y-4">
-                    <h4 className="font-black text-slate-700 text-xs uppercase tracking-widest">
-                      Estado del Sistema
-                    </h4>
-                    <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl">
-                      <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
-                      <span className="text-sm font-bold text-slate-600">
-                        Motor de Tiendas Online
-                      </span>
+
+                {/* Scrollable body */}
+                <div className="flex-1 overflow-y-auto bg-slate-50/40 p-5">
+
+                  {/* Trial banner */}
+                  <div className="bg-emerald-600 rounded-2xl p-4 flex items-center justify-between mb-5">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center">
+                        <TrendingUp className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-white font-black text-sm leading-none">Período de Prueba PRO Activo</p>
+                        <p className="text-emerald-100 text-[10px] font-medium mt-0.5">
+                          Te quedan <span className="font-black text-white">18 DÍAS</span> para disfrutar de todas las funciones premium.
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                      <span className="text-sm font-bold text-slate-600">
-                        Asistente IA Activo
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                      <span className="text-sm font-bold text-slate-600">
-                        Carrito y Pedidos Sincronizados
-                      </span>
-                    </div>
+                    <button className="bg-white text-emerald-700 text-[9px] font-black uppercase tracking-widest px-3 py-2 rounded-lg flex-shrink-0">
+                      Activar Suscripción
+                    </button>
                   </div>
-                  <div className="flex flex-col justify-center items-center p-8 bg-indigo-50 rounded-[2rem] text-center">
-                    <Sparkles className="w-8 h-8 text-indigo-600 mb-4" />
-                    <p className="text-sm text-indigo-900 font-bold mb-4">
-                      Gestioná productos, pedidos y clientes desde un solo
-                      lugar.
+
+                  {/* Page header */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h2 className="text-lg font-black text-slate-900">Dashboard</h2>
+                      <p className="text-[10px] text-slate-400 font-medium">Bienvenido de nuevo a tu panel de control.</p>
+                    </div>
+                    <button className="flex items-center gap-1.5 bg-emerald-600 text-white px-3 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest">
+                      <span className="text-base leading-none">+</span> Nuevo Producto
+                    </button>
+                  </div>
+
+                  {/* Stats */}
+                  <div className="grid grid-cols-3 gap-3 mb-5">
+                    {[
+                      { label: "Pedidos de hoy", value: "0", icon: ShoppingCart },
+                      { label: "Ventas hoy", value: "$ 0", icon: TrendingUp },
+                      { label: "Productos activos", value: "224", icon: Package },
+                    ].map((s) => (
+                      <div key={s.label} className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex items-center gap-3">
+                        <div className="w-9 h-9 bg-emerald-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                          <s.icon className="w-4 h-4 text-emerald-600" />
+                        </div>
+                        <div>
+                          <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider leading-none mb-1">{s.label}</p>
+                          <p className="text-xl font-black text-slate-900 leading-none">{s.value}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Acceso rápido */}
+                  <p className="text-[11px] font-black text-slate-900 uppercase tracking-[0.15em] mb-3">Acceso Rápido</p>
+                  <div className="grid grid-cols-6 gap-2 mb-3">
+                    {["Mi Tienda", "Ayuda", "Sliders", "Horarios", "Métodos de Cobro", "Envío / Retiro"].map((name) => (
+                      <div key={name} className="bg-white border border-slate-100 rounded-2xl p-3 flex flex-col items-center justify-center gap-2 cursor-default hover:border-emerald-200 transition-colors">
+                        <div className="w-7 h-7 rounded-full border-2 border-emerald-200 flex items-center justify-center">
+                          <Sparkles className="w-3 h-3 text-emerald-600" />
+                        </div>
+                        <span className="text-[8px] font-black text-slate-600 uppercase tracking-wider text-center leading-tight">{name}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-4 gap-2 mb-5">
+                    {["Menú QR", "Cupones", "Popups", "Editor Precios"].map((name) => (
+                      <div key={name} className="bg-white border border-slate-100 rounded-2xl p-3 flex flex-col items-center justify-center gap-2 cursor-default hover:border-emerald-200 transition-colors">
+                        <div className="w-7 h-7 rounded-full border-2 border-emerald-200 flex items-center justify-center">
+                          <Settings className="w-3 h-3 text-emerald-600" />
+                        </div>
+                        <span className="text-[8px] font-black text-slate-600 uppercase tracking-wider text-center leading-tight">{name}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Asistente IA */}
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-violet-500" />
+                      <span className="text-[11px] font-black text-slate-900 uppercase tracking-[0.12em]">Asistente de Ventas IA</span>
+                    </div>
+                    <button className="flex items-center gap-1 text-[9px] font-black text-slate-500 uppercase tracking-widest border border-slate-200 px-2 py-1 rounded-lg">
+                      ✏️ Editar
+                    </button>
+                  </div>
+                  <div className="bg-white rounded-2xl border border-slate-100 p-4">
+                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Instrucciones actuales del asistente</p>
+                    <p className="text-[11px] text-slate-600 font-medium leading-relaxed line-clamp-2">
+                      Sos el asistente de ventas de "Mi Tienda Demo", una tienda especializada. Ayudá a los clientes a encontrar productos, resolver dudas y completar sus pedidos de forma rápida y amigable.
                     </p>
-                    <a
-                      href="https://admin.vendexchat.app/register"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="px-6 py-3 bg-indigo-600 text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-indigo-700 transition-all"
-                    >
-                      Crear mi tienda
-                    </a>
                   </div>
+
                 </div>
               </div>
             </div>
