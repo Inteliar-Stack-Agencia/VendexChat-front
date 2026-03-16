@@ -20,10 +20,9 @@ const HeroSection = () => {
             </div>
 
             <h1 className="mb-6 text-4xl font-black leading-[1.1] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-              Crea tu catálogo,{" "}
-              automatizá tu tienda{" "}
+              Vendé por WhatsApp{" "}
               <span className="bg-gradient-to-r from-emerald-500 to-violet-600 bg-clip-text text-transparent">
-                y vendé 24/7 con IA
+                con catálogo y asistente IA integrado
               </span>
             </h1>
 
