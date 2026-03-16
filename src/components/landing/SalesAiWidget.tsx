@@ -242,7 +242,7 @@ const SalesAiWidget = () => {
           {/* Button */}
           <button
             onClick={handleOpen}
-            className="relative h-14 w-14 rounded-full shadow-elevated hover:shadow-card hover:scale-105 active:scale-95 transition-all flex items-center justify-center overflow-hidden"
+            className="relative h-14 w-14 rounded-xl shadow-elevated hover:shadow-card hover:scale-105 active:scale-95 transition-all flex items-center justify-center overflow-hidden"
             aria-label="Abrir asistente de ventas"
           >
             <AssistantIcon className="w-14 h-14" />
