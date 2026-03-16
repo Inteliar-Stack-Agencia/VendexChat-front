@@ -3,7 +3,7 @@ import type { SVGProps } from "react";
 export default function ChatBubbleRobotIcon({ className, ...props }: SVGProps<SVGSVGElement> & { className?: string }) {
   return (
     <svg
-      viewBox="0 0 100 112"
+      viewBox="-4 0 108 115"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
@@ -11,8 +11,8 @@ export default function ChatBubbleRobotIcon({ className, ...props }: SVGProps<SV
     >
       {/* WhatsApp-style bubble in emerald */}
       <rect x="0" y="0" width="100" height="100" rx="24" fill="#10b981" />
-      {/* Tail / colita bottom-left */}
-      <path d="M28 95 Q18 105 5 110 Q22 108 32 100 Z" fill="#10b981" />
+      {/* WhatsApp-style tail / colita bottom-left */}
+      <path d="M0 78 L0 100 C0 100 -4 112 -2 112 C2 112 18 102 24 98 L24 100 Q0 100 0 78 Z" fill="#10b981" />
 
       {/* Robot (scaled and centered) */}
       <g transform="translate(15, 10) scale(0.70)">
