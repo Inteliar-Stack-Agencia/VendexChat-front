@@ -59,8 +59,8 @@ export function StoreHeader({
                                 onClick={onChatClick}
                                 className="h-10 px-3 md:px-4 flex items-center gap-2 bg-primary-dynamic text-white rounded-xl transition-all shadow-lg shadow-primary-dynamic/20 hover:scale-105 active:scale-95"
                             >
-                                <span className="relative inline-flex w-5 h-5 overflow-hidden rounded-md">
-                                    <img src="/iconoVendexchat.png" alt="" className="absolute inset-0 w-full h-full object-cover scale-[1.45]" />
+                                <span className="relative inline-flex w-6 h-6 overflow-hidden rounded-xl">
+                                    <img src="/iconoVendexchat.png" alt="" className="absolute inset-0 w-full h-full object-contain" />
                                 </span>
                                 <span className="text-[10px] font-black uppercase tracking-widest">Asistente IA</span>
                             </button>

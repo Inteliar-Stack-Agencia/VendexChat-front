@@ -57,15 +57,15 @@ export default function FloatingAiAssistant({ onClick, isOpen, isCartOpen }: Flo
             <button
                 onClick={onClick}
                 className={`
-                    group pointer-events-auto relative w-14 h-14 rounded-full overflow-hidden shadow-2xl flex items-center justify-center transition-all duration-500 hover:scale-110 active:scale-90
+                    group pointer-events-auto relative w-14 h-14 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center transition-all duration-500 hover:scale-110 active:scale-90
                     ${showBubble ? 'animate-float' : 'animate-pulse-subtle'}
                 `}
             >
-                <div className="absolute inset-0 rounded-full bg-primary-dynamic animate-ping opacity-20 group-hover:hidden" />
+                <div className="absolute inset-0 rounded-2xl bg-primary-dynamic animate-ping opacity-20 group-hover:hidden" />
                 <img
                     src="/iconoVendexchat.png"
                     alt="VendexChat"
-                    className="absolute inset-0 w-full h-full object-cover scale-[1.20] z-10"
+                    className="absolute inset-0 w-full h-full object-contain z-10"
                 />
 
                 {/* Indicador online */}
