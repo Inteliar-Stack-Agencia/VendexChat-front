@@ -38,14 +38,12 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
     useEffect(() => {
         if (data?.store?.popups) {
             const storeId = data.store.id;
-            const sessionKey = `vdx_popups_shown_${storeId}`;
-            // Solo mostrar popups una vez por sesión
-            if (sessionStorage.getItem(sessionKey)) return;
+            const sessionKey = `vdx_popups_seen_${storeId}`;
+            const seenIds: string[] = JSON.parse(sessionStorage.getItem(sessionKey) || '[]');
 
-            const active = data.store.popups.filter(p => p.active);
-            if (active.length > 0) {
-                setActivePopups(active);
-                sessionStorage.setItem(sessionKey, '1');
+            const unseen = data.store.popups.filter(p => p.active && !seenIds.includes(String(p.id)));
+            if (unseen.length > 0) {
+                setActivePopups(unseen);
             }
         }
     }, [data]);
@@ -434,8 +432,18 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
 
             {activePopups.length > 0 && (
                 <PopupModal
+                    key={activePopups[0].id}
                     popup={activePopups[0]}
-                    onClose={() => setActivePopups(prev => prev.slice(1))}
+                    onClose={() => setActivePopups(prev => {
+                        const closed = prev[0];
+                        if (closed && data?.store?.id) {
+                            const sessionKey = `vdx_popups_seen_${data.store.id}`;
+                            const seenIds: string[] = JSON.parse(sessionStorage.getItem(sessionKey) || '[]');
+                            seenIds.push(String(closed.id));
+                            sessionStorage.setItem(sessionKey, JSON.stringify(seenIds));
+                        }
+                        return prev.slice(1);
+                    })}
                 />
             )}
         </div >
