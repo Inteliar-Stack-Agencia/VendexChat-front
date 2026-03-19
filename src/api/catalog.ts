@@ -76,10 +76,11 @@ async function fetchStorePopups(storeId: string): Promise<Popup[]> {
 }
 
 function processRpcResult(data: any): CatalogResponse {
-  const { store, categories: rawCategories, global_settings: globalSettings } = data as {
+  const { store, categories: rawCategories, global_settings: globalSettings, products: flatProducts } = data as {
     store: any;
     categories: any[];
     global_settings: Record<string, any>;
+    products?: any[];
   };
 
   if (!store) throw new Error("Store not found");
@@ -102,18 +103,32 @@ function processRpcResult(data: any): CatalogResponse {
     ? store.popups.map(normalizePopup).filter(popup => popup.title || popup.message)
     : getMetadataPopups(store.metadata);
 
-  const sortedCategories = (rawCategories ?? []).map(cat => ({
-    ...cat,
-    products: (cat.products || []).sort((a: any, b: any) => {
-      // Primary sort: Manual sort_order from Admin
-      const orderA = a.sort_order ?? 0;
-      const orderB = b.sort_order ?? 0;
-      if (orderA !== orderB) return orderA - orderB;
+  // Support both response formats:
+  // - New format: products nested inside each category object (categories[].products)
+  // - Legacy format: flat products array at top level, grouped by category_id
+  const productsByCategory = Array.isArray(flatProducts) && flatProducts.length > 0
+    ? flatProducts.reduce((acc: Record<string, any[]>, p: any) => {
+        const key = String(p.category_id);
+        if (!acc[key]) acc[key] = [];
+        acc[key].push(p);
+        return acc;
+      }, {})
+    : null;
 
-      // Secondary sort: Alphabetical by name
-      return a.name.localeCompare(b.name);
-    })
-  }));
+  const sortedCategories = (rawCategories ?? []).map(cat => {
+    const rawProducts = productsByCategory
+      ? (productsByCategory[String(cat.id)] || [])
+      : (cat.products || []);
+    return {
+      ...cat,
+      products: rawProducts.sort((a: any, b: any) => {
+        const orderA = a.sort_order ?? 0;
+        const orderB = b.sort_order ?? 0;
+        if (orderA !== orderB) return orderA - orderB;
+        return a.name.localeCompare(b.name);
+      })
+    };
+  });
 
   return {
     store: {
