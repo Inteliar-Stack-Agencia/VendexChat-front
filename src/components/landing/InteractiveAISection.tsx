@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Send, Sparkles, ShoppingBag, Zap, UtensilsCrossed, Wine, BookOpen } from "lucide-react";
-import AssistantIcon from "../icons/AssistantIcon";
+import { Send, Sparkles, ShoppingBag, Zap, UtensilsCrossed, Wine, BookOpen, X } from "lucide-react";
 import { supabase } from "@/supabaseClient";
 
 type StoreType = "hamburgueseria" | "bebidas" | "libreria";
@@ -37,6 +36,7 @@ const InteractiveAISection = () => {
     const [messages, setMessages] = useState<any[]>([]);
     const [userInput, setUserInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
 
     const currentStore = STORES.find(s => s.id === selectedStore)!;
@@ -157,15 +157,88 @@ const InteractiveAISection = () => {
                     </div>
 
                     <div className="relative">
-                        {/* Device Mockup */}
-                        <div className="relative mx-auto w-full max-w-[400px] h-[600px] rounded-[3rem] bg-violet-900 p-3 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] ring-1 ring-violet-700">
+                        {/* Mobile: fullscreen overlay */}
+                        {isOpen && (
+                            <div className="fixed inset-x-0 top-0 z-50 flex flex-col bg-white lg:hidden h-screen" style={{ height: '100dvh' }}>
+                                {/* Chat Header */}
+                                <div className="p-5 border-b border-slate-100 flex items-center gap-3 bg-white flex-shrink-0">
+                                    <div className={`w-10 h-10 rounded-full ${currentStore.color} flex items-center justify-center text-white transition-colors duration-300`}>
+                                        <currentStore.icon className="w-5 h-5" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <div className="text-sm font-black text-slate-900">{currentStore.name}</div>
+                                        <div className="flex items-center gap-1.5">
+                                            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Asistente IA · En línea</span>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={() => setIsOpen(false)}
+                                        className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition-all"
+                                    >
+                                        <X className="w-4 h-4" />
+                                    </button>
+                                </div>
+                                {/* Chat Body */}
+                                <div ref={scrollRef} className="flex-1 p-5 overflow-y-auto space-y-4 bg-slate-50/50">
+                                    {messages.map((msg, i) => (
+                                        <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`}>
+                                            <div className={`max-w-[85%] p-4 rounded-2xl text-xs font-medium leading-relaxed shadow-sm ${msg.role === 'user'
+                                                ? 'bg-violet-700 text-white rounded-tr-none'
+                                                : 'bg-white border border-slate-100 text-slate-700 rounded-tl-none'
+                                                }`}>
+                                                {msg.text}
+                                            </div>
+                                        </div>
+                                    ))}
+                                    {isTyping && (
+                                        <div className="flex justify-start animate-pulse">
+                                            <div className="bg-white border border-slate-100 p-4 rounded-2xl rounded-tl-none flex gap-1">
+                                                <span className="w-1 h-1 bg-slate-300 rounded-full animate-bounce" />
+                                                <span className="w-1 h-1 bg-slate-300 rounded-full animate-bounce delay-100" />
+                                                <span className="w-1 h-1 bg-slate-300 rounded-full animate-bounce delay-200" />
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                                {/* Chat Input */}
+                                <form onSubmit={handleSend} className="p-4 bg-white border-t border-slate-100 flex gap-2 items-center flex-shrink-0">
+                                    <input
+                                        type="text"
+                                        value={userInput}
+                                        onChange={(e) => setUserInput(e.target.value)}
+                                        placeholder="Escribí algo..."
+                                        className="flex-1 bg-slate-50 border-none rounded-xl px-4 py-3 text-xs font-medium focus:ring-2 focus:ring-primary-dynamic transition-all"
+                                    />
+                                    <button
+                                        type="submit"
+                                        className="w-10 h-10 rounded-xl bg-primary-dynamic text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary-dynamic/20"
+                                    >
+                                        <Send className="w-4 h-4" />
+                                    </button>
+                                </form>
+                            </div>
+                        )}
+
+                        {/* Mobile: button to open chat */}
+                        <div className="flex justify-center py-8 lg:hidden">
+                            <button
+                                onClick={() => setIsOpen(true)}
+                                className="px-6 py-3 rounded-xl bg-primary-dynamic text-white text-sm font-black uppercase tracking-wide hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary-dynamic/20"
+                            >
+                                Probar el asistente
+                            </button>
+                        </div>
+
+                        {/* Desktop: Device Mockup */}
+                        <div className="hidden lg:block relative mx-auto w-full max-w-[400px] h-[600px] rounded-[3rem] bg-violet-900 p-3 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] ring-1 ring-violet-700">
                             <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] bg-white flex flex-col">
                                 {/* Chat Header */}
                                 <div className="p-5 border-b border-slate-100 flex items-center gap-3 bg-white">
                                     <div className={`w-10 h-10 rounded-full ${currentStore.color} flex items-center justify-center text-white transition-colors duration-300`}>
                                         <currentStore.icon className="w-5 h-5" />
                                     </div>
-                                    <div>
+                                    <div className="flex-1">
                                         <div className="text-sm font-black text-slate-900">{currentStore.name}</div>
                                         <div className="flex items-center gap-1.5">
                                             <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
@@ -212,19 +285,7 @@ const InteractiveAISection = () => {
                                     >
                                         <Send className="w-4 h-4" />
                                     </button>
-                                    <div className="flex items-center gap-1 px-2 py-1.5 rounded-xl bg-emerald-500 shadow-md animate-float delay-700 flex-shrink-0">
-                                        <Zap className="w-3 h-3 text-white" />
-                                        <span className="text-[8px] font-black text-white uppercase tracking-wide whitespace-nowrap">Venta<br/>cerrada</span>
-                                    </div>
                                 </form>
-                            </div>
-
-                            {/* Decorative labels */}
-                            <div className="absolute -right-8 top-1/4 p-4 rounded-2xl bg-white shadow-xl rotate-6 border border-slate-100 animate-float hidden md:block">
-                                <div className="flex items-center gap-2 text-[10px] font-black text-slate-900">
-                                    <AssistantIcon className="w-4 h-4" />
-                                    RESPUESTA IA
-                                </div>
                             </div>
                         </div>
                     </div>
