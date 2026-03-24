@@ -113,23 +113,19 @@ export function ChatBotWidget({
             const chatHistory = messages.filter(m => m.id !== '1').map(m => ({ role: m.role, content: m.content }));
             chatHistory.push({ role: "user", content: textToSend.trim() });
 
-            // Llamada a Pollinations AI (Text)
-            const response = await fetch(`https://text.pollinations.ai/`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    messages: [
-                        { role: "system", content: systemPrompt },
-                        ...chatHistory
-                    ],
-                    model: "openai",
-                    seed: 42
-                })
-            });
+            const response = await fetch(
+                `https://pjrhfbhqdbyoljactdkj.supabase.co/functions/v1/store-ai-chat`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ messages: chatHistory, systemPrompt })
+                }
+            );
 
             if (!response.ok) throw new Error("Error en la respuesta de la IA");
 
-            const aiText = await response.text();
+            const data = await response.json();
+            const aiText = data.reply;
 
             const aiMessage: Message = {
                 id: (Date.now() + 1).toString(),
