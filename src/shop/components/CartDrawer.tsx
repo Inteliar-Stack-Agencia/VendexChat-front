@@ -62,6 +62,7 @@ export function CartDrawer({
     const [isValidating, setIsValidating] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [orderInfo, setOrderInfo] = useState<{ number: string, id: string } | null>(null);
+    const [whatsappUrl, setWhatsappUrl] = useState<string>("");
 
     if (!isOpen) return null;
 
@@ -233,7 +234,9 @@ export function CartDrawer({
 
             const encoded = encodeURIComponent(message);
             const cleanPhone = sanitizePhoneNumber(whatsappNumber);
+            const url = `https://wa.me/${cleanPhone}?text=${encoded}`;
 
+            setWhatsappUrl(url);
             setOrderInfo({
                 number: orderResult?.order_number || 'PENDIENTE',
                 id: orderResult?.public_id || ''
@@ -241,10 +244,7 @@ export function CartDrawer({
             setShowSuccess(true);
             onClear();
 
-            // Open WhatsApp after a brief delay so they see the success screen
-            setTimeout(() => {
-                window.open(`https://wa.me/${cleanPhone}?text=${encoded}`, '_blank');
-            }, 1000);
+            window.open(url, '_blank');
         } catch (err: any) {
             console.error("Error al crear pedido:", err);
             alert("Error al procesar pedido: " + (err.message || "Error desconocido"));
@@ -279,10 +279,7 @@ export function CartDrawer({
 
                             <div className="space-y-4 w-full">
                                 <button
-                                    onClick={() => {
-                                        const cleanPhone = sanitizePhoneNumber(whatsappNumber);
-                                        window.open(`https://wa.me/${cleanPhone}`, '_blank');
-                                    }}
+                                    onClick={() => window.open(whatsappUrl, '_blank')}
                                     className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-black uppercase tracking-widest py-4 rounded-xl flex items-center justify-center gap-3 transition-all"
                                 >
                                     Abrir WhatsApp
