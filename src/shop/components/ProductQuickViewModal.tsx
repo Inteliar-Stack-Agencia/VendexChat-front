@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { X, Plus, Minus } from "lucide-react";
 import AssistantIcon from "../../components/icons/AssistantIcon";
 import type { Product } from "../../types";
@@ -22,6 +23,8 @@ export function ProductQuickViewModal({
     onUpdate,
     onAskAI,
 }: QuickViewModalProps) {
+    const [imgError, setImgError] = useState(false);
+
     if (!isOpen || !product) return null;
 
     return (
@@ -37,11 +40,12 @@ export function ProductQuickViewModal({
                 </button>
 
                 <div className="flex flex-col md:flex-row h-full max-h-[92vh] overflow-y-auto">
-                    <div className="md:w-1/2 min-h-[280px] md:min-h-[460px] bg-slate-100 overflow-hidden relative">
-                        {product.image_url && (
-                            <img src={getProductImageUrl(product.image_url, 800)} alt={product.name} className="w-full h-full object-cover" loading="eager" decoding="async" width={800} height={600} />
+                    <div className="md:w-1/2 min-h-[280px] md:min-h-[460px] bg-slate-100 overflow-hidden relative flex items-center justify-center">
+                        {product.image_url && !imgError ? (
+                            <img src={getProductImageUrl(product.image_url, 800)} alt={product.name} className="w-full h-full object-cover" loading="eager" decoding="async" width={800} height={600} onError={() => setImgError(true)} />
+                        ) : (
+                            <span className="text-slate-300 font-black text-6xl uppercase">{product.name.charAt(0)}</span>
                         )}
-                        
                     </div>
 
                     <div className="md:w-2/5 lg:w-1/3 p-6 flex flex-col">

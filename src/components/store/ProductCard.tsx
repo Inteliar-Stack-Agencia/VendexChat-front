@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Product } from "../../types";
 import { useCart } from "../../context/CartContext";
 import { formatPrice } from "../../utils/format";
@@ -12,13 +13,14 @@ export function ProductCard({ product }: Props) {
   const { addItem, updateQuantity, items } = useCart();
   const cartItem = items.find((i) => i.product.id === product.id);
   const quantity = cartItem?.quantity ?? 0;
+  const [imgError, setImgError] = useState(false);
 
   const hasOffer = product.offer_price != null && product.offer_price < product.price;
 
   return (
     <div className="product-card">
       <div className="product-card__image-wrap">
-        {product.image_url ? (
+        {product.image_url && !imgError ? (
           <img
             className="product-card__image"
             src={getProductImageUrl(product.image_url, 256)}
@@ -27,6 +29,7 @@ export function ProductCard({ product }: Props) {
             decoding="async"
             width={256}
             height={256}
+            onError={() => setImgError(true)}
           />
         ) : (
           <div className="product-card__placeholder">
