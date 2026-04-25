@@ -56,7 +56,7 @@ export function CategoryDrawer({ isOpen, onClose, categories, activeId, onSelect
                             <nav className="flex flex-col gap-1">
                                 <button
                                     onClick={() => handleSelect(null)}
-                                    className={`flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all group ${activeId === null
+                                    className={`flex items-center justify-between text-left px-4 py-3.5 rounded-2xl transition-all group ${activeId === null
                                             ? "bg-primary-dynamic/10 text-primary-dynamic"
                                             : "text-slate-600 hover:bg-slate-50"
                                         }`}
@@ -67,11 +67,11 @@ export function CategoryDrawer({ isOpen, onClose, categories, activeId, onSelect
                                     <ChevronRight size={16} className={activeId === null ? "opacity-100" : "opacity-0 group-hover:opacity-100 transition-opacity"} />
                                 </button>
 
-                                {categories.map((cat) => (
+                                {[...categories].sort((a, b) => a.name.localeCompare(b.name)).map((cat) => (
                                     <button
                                         key={cat.id}
                                         onClick={() => handleSelect(cat.id)}
-                                        className={`flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all group ${String(activeId) === String(cat.id)
+                                        className={`flex items-center justify-between text-left px-4 py-3.5 rounded-2xl transition-all group ${String(activeId) === String(cat.id)
                                                 ? "bg-primary-dynamic/10 text-primary-dynamic"
                                                 : "text-slate-600 hover:bg-slate-50"
                                             }`}
