@@ -7,11 +7,12 @@ import { formatPrice } from "../../utils/format";
 interface ProductCardProps {
     product: Product;
     quantity: number;
-    onAdd: (p: Product) => void;
-    onUpdate: (id: string, q: number) => void;
+    onAdd: (p: Product, deliveryDay?: string) => void;
+    onUpdate: (id: string, q: number, deliveryDay?: string) => void;
+    isMorfiEmpresas?: boolean;
 }
 
-export const ProductCard = memo(function ProductCard({ product, quantity, onAdd, onUpdate }: ProductCardProps) {
+export const ProductCard = memo(function ProductCard({ product, quantity, onAdd, onUpdate, isMorfiEmpresas }: ProductCardProps) {
     const hasOffer = product.offer_price !== null;
     const isOutOfStock = !product.unlimited_stock && product.stock <= 0;
     const [imgError, setImgError] = useState(false);
@@ -39,9 +40,15 @@ export const ProductCard = memo(function ProductCard({ product, quantity, onAdd,
                     </div>
                 )}
 
-                {hasOffer && (
+                {hasOffer && !isMorfiEmpresas && (
                     <div className="absolute top-1.5 left-1.5 bg-amber-500 text-white text-[8px] font-black uppercase px-1.5 py-0.5 rounded-full tracking-tighter shadow-sm z-10">
                         OFF
+                    </div>
+                )}
+
+                {isMorfiEmpresas && quantity > 0 && (
+                    <div className="absolute top-1.5 right-1.5 bg-slate-900 text-white text-[9px] font-black min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center z-10">
+                        {quantity}
                     </div>
                 )}
             </div>
@@ -58,14 +65,25 @@ export const ProductCard = memo(function ProductCard({ product, quantity, onAdd,
                 </div>
 
                 <div className="space-y-2 mt-auto">
-                    <div className="flex flex-col">
-                        <span className="text-xs md:text-base font-black text-primary-dynamic tracking-tighter">
-                            {formatPrice(hasOffer ? product.offer_price! : product.price)}
-                        </span>
-                    </div>
+                    {!isMorfiEmpresas && (
+                        <div className="flex flex-col">
+                            <span className="text-xs md:text-base font-black text-primary-dynamic tracking-tighter">
+                                {formatPrice(hasOffer ? product.offer_price! : product.price)}
+                            </span>
+                        </div>
+                    )}
 
                     {isOutOfStock ? (
                         <div className="text-[8px] font-black text-slate-300 uppercase tracking-tighter">Agotado</div>
+                    ) : isMorfiEmpresas ? (
+                        <div
+                            onClick={(e) => { e.stopPropagation(); onAdd(product); }}
+                            className="flex items-center gap-1 bg-white border border-primary-dynamic text-primary-dynamic px-2 py-1 rounded-lg w-fit hover:bg-primary-dynamic hover:text-white transition-all cursor-pointer shadow-sm"
+                        >
+                            <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest">
+                                {quantity > 0 ? 'Agregar más' : 'Agregar'}
+                            </span>
+                        </div>
                     ) : quantity > 0 ? (
                         <div className="flex items-center gap-1.5 bg-slate-100 p-0.5 rounded-lg w-fit">
                             <button
