@@ -5,7 +5,7 @@ import type { Product } from "../../types";
 import { getProductImageUrl } from "../../utils/imageUrl";
 import { formatPrice } from "../../utils/format";
 
-const MORFI_DELIVERY_DAYS = ['Pack Semanal', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'] as const;
+const MORFI_DELIVERY_DAYS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'] as const;
 
 interface QuickViewModalProps {
     product: Product | null;
@@ -168,7 +168,7 @@ export function ProductQuickViewModal({
                                     <button
                                         onClick={handleMorfiAdd}
                                         disabled={!selectedDay}
-                                        className="w-full bg-primary-dynamic hover:opacity-90 disabled:bg-slate-200 disabled:text-slate-400 text-white font-bold py-4 rounded-2xl shadow-lg shadow-primary-dynamic/20 transition-all active:scale-[0.98] disabled:shadow-none"
+                                        className="w-full bg-primary-dynamic hover:opacity-90 disabled:opacity-50 text-white font-bold py-4 rounded-2xl shadow-lg shadow-primary-dynamic/20 transition-all active:scale-[0.98] disabled:shadow-none"
                                     >
                                         {selectedDay ? 'Agregar al pedido' : 'Elegí un día primero'}
                                     </button>

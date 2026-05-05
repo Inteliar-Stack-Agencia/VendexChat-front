@@ -147,7 +147,7 @@ export function CartDrawer({
             }
         }
 
-        if (deliveryType === "envio") {
+        if (!isMorfiEmpresas && deliveryType === "envio") {
             if (!address.trim()) {
                 alert("Por favor, ingresa tu dirección para el envío.");
                 return;
