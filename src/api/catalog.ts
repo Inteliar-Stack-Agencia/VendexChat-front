@@ -276,6 +276,7 @@ export async function createOrder(payload: OrderPayload): Promise<OrderResponse>
     };
   });
 
+  console.log("[createOrder] orderItems a insertar:", JSON.stringify(orderItems, null, 2));
   const { error: itemsError } = await supabase
     .from("order_items")
     .insert(orderItems);
