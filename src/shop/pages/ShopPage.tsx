@@ -430,7 +430,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
             />
 
 
-            {hasBotAccess && (
+            {hasBotAccess && !isMorfiEmpresas && (
                 <Suspense fallback={null}>
                     <ChatBotWidget
                         isOpen={isChatOpen}
@@ -442,7 +442,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 </Suspense>
             )}
 
-            {hasBotAccess && (
+            {hasBotAccess && !isMorfiEmpresas && (
                 <FloatingAiAssistant
                     onClick={() => openChat()}
                     isOpen={isChatOpen}
