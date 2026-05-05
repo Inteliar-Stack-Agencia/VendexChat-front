@@ -82,7 +82,9 @@ export function ChatBotWidget({
         setIsLoading(true);
 
         try {
-            const chatHistory = messages.filter(m => m.id !== '1').map(m => ({ role: m.role, content: m.content }));
+            const chatHistory = messages
+                .filter(m => m.id !== '1' && m.role !== 'system' && m.content?.trim())
+                .map(m => ({ role: m.role as 'user' | 'assistant', content: m.content }));
             chatHistory.push({ role: "user", content: textToSend.trim() });
 
             const response = await fetch(EDGE_FN, {
@@ -94,7 +96,7 @@ export function ChatBotWidget({
             if (!response.ok) throw new Error("Error en la respuesta de la IA");
 
             const data = await response.json();
-            const aiText = data.reply;
+            const aiText = data.reply?.trim() || "Uy, no pude responder. ¿Podés intentar de nuevo?";
 
             const aiMessage: Message = {
                 id: (Date.now() + 1).toString(),
