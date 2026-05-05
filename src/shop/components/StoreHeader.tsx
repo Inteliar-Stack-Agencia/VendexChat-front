@@ -24,10 +24,11 @@ interface StoreHeaderProps {
     onSearch: (q: string) => void;
     onChatClick: () => void;
     onCartClick: () => void;
+    hideChatButton?: boolean;
 }
 
 export function StoreHeader({
-    name, logo, banner, description, address, whatsapp, instagram, facebook, totalItems, announcement, onSearch, onChatClick, onCartClick
+    name, logo, banner, description, address, whatsapp, instagram, facebook, totalItems, announcement, onSearch, onChatClick, onCartClick, hideChatButton
 }: StoreHeaderProps) {
     return (
         <header className="bg-white">
@@ -62,7 +63,7 @@ export function StoreHeader({
 
                     {/* Action Icons */}
                     <div className="flex items-center gap-1.5">
-                        {whatsapp && (
+                        {whatsapp && !hideChatButton && (
                             <button
                                 onClick={onChatClick}
                                 className="h-10 px-3 md:px-4 flex items-center gap-2 bg-primary-dynamic text-white rounded-xl transition-all shadow-lg shadow-primary-dynamic/20 hover:scale-105 active:scale-95"

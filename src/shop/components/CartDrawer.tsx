@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, Plus, Minus, Trash2, CheckCircle2 } from "lucide-react";
 import { type CartItem } from "../../types";
 import { validateCoupon, createOrder } from "../../api/catalog";
@@ -66,6 +66,15 @@ export function CartDrawer({
     const [isValidating, setIsValidating] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [orderInfo, setOrderInfo] = useState<{ number: string, id: string } | null>(null);
+    const [morfiAddress, setMorfiAddress] = useState("");
+
+    // Reset success state when drawer closes so user can start a new order
+    useEffect(() => {
+        if (!isOpen) {
+            setShowSuccess(false);
+            setOrderInfo(null);
+        }
+    }, [isOpen]);
 
     if (!isOpen) return null;
 
@@ -232,6 +241,7 @@ export function CartDrawer({
                 `- Nombre: ${customerName}\n` +
                 `- WhatsApp: ${customerWhatsapp}\n`;
             if (customerCompany) message += `- Empresa: ${customerCompany}\n`;
+            if (isMorfiEmpresas && morfiAddress) message += `- Dirección: ${morfiAddress}\n`;
             if (!isMorfiEmpresas) {
                 message += `\n*DETALLES DE ENTREGA*\n` + `- Tipo: ${deliveryType === 'envio' ? 'Envío a domicilio' : 'Retiro en local'}\n`;
                 if (deliveryType === 'envio') {
@@ -366,13 +376,22 @@ export function CartDrawer({
                                 <input type="text" placeholder="Tu Nombre (Obligatorio) *" value={customerName} onChange={(e) => setCustomerName(e.target.value)} className={`w-full px-4 py-3 bg-slate-50 border ${!customerName.trim() && isSubmitting ? 'border-red-500' : 'border-0'} rounded-xl text-sm font-bold text-slate-700 outline-none`} />
                                 <input type="tel" placeholder="Tu WhatsApp (Obligatorio) *" value={customerWhatsapp} onChange={(e) => setCustomerWhatsapp(e.target.value)} className={`w-full px-4 py-3 bg-slate-50 border ${!customerWhatsapp.trim() && isSubmitting ? 'border-red-500' : 'border-0'} rounded-xl text-sm font-bold text-slate-700 outline-none`} />
                                 {isMorfiEmpresas ? (
-                                    <input
-                                        type="text"
-                                        placeholder="Empresa (Obligatorio) *"
-                                        value={customerCompany}
-                                        onChange={(e) => setCustomerCompany(e.target.value)}
-                                        className={`w-full px-4 py-3 bg-slate-50 border ${!customerCompany.trim() && isSubmitting ? 'border-red-500' : 'border-0'} rounded-xl text-sm font-bold text-slate-700 outline-none`}
-                                    />
+                                    <>
+                                        <input
+                                            type="text"
+                                            placeholder="Empresa (Obligatorio) *"
+                                            value={customerCompany}
+                                            onChange={(e) => setCustomerCompany(e.target.value)}
+                                            className={`w-full px-4 py-3 bg-slate-50 border ${!customerCompany.trim() && isSubmitting ? 'border-red-500' : 'border-0'} rounded-xl text-sm font-bold text-slate-700 outline-none`}
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Dirección de entrega (Opcional)"
+                                            value={morfiAddress}
+                                            onChange={(e) => setMorfiAddress(e.target.value)}
+                                            className="w-full px-4 py-3 bg-slate-50 border-0 rounded-xl text-sm font-bold text-slate-700 outline-none"
+                                        />
+                                    </>
                                 ) : requiresCustomerType ? (
                                     <>
                                         <select

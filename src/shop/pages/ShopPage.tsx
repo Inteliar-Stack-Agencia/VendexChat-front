@@ -267,6 +267,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 onSearch={setSearchTerm}
                 onChatClick={hasBotAccess ? () => openChat() : () => {}}
                 onCartClick={() => setIsCartOpen(true)}
+                hideChatButton={isMorfiEmpresas}
             />
 
             {data.store.metadata?.enable_weekly_planning && (
