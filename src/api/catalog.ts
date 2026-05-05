@@ -272,6 +272,7 @@ export async function createOrder(payload: OrderPayload): Promise<OrderResponse>
       price: price,      // From new schema
       name: prodName,
       subtotal: price * item.quantity,
+      notes: item.metadata?.delivery_day || null,
     };
   });
 
