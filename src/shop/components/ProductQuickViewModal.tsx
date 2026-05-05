@@ -1,18 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, Plus, Minus } from "lucide-react";
 import AssistantIcon from "../../components/icons/AssistantIcon";
 import type { Product } from "../../types";
 import { getProductImageUrl } from "../../utils/imageUrl";
 import { formatPrice } from "../../utils/format";
 
+const MORFI_DELIVERY_DAYS = ['Pack Semanal', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'] as const;
+
 interface QuickViewModalProps {
     product: Product | null;
     isOpen: boolean;
     onClose: () => void;
     quantity: number;
-    onAdd: (p: Product) => void;
-    onUpdate: (id: string | number, delta: number) => void;
+    onAdd: (p: Product, deliveryDay?: string) => void;
+    onUpdate: (id: string | number, delta: number, deliveryDay?: string) => void;
     onAskAI?: (p: Product) => void;
+    isMorfiEmpresas?: boolean;
+    getQuantityForDay?: (day: string) => number;
 }
 
 export function ProductQuickViewModal({
@@ -23,11 +27,41 @@ export function ProductQuickViewModal({
     onAdd,
     onUpdate,
     onAskAI,
+    isMorfiEmpresas,
+    getQuantityForDay,
 }: QuickViewModalProps) {
     const [imgError, setImgError] = useState(false);
     const [imgLoaded, setImgLoaded] = useState(false);
+    const [selectedDay, setSelectedDay] = useState<string>('');
+    const [localQty, setLocalQty] = useState(1);
+
+    // Reset state when modal opens or product changes
+    useEffect(() => {
+        if (isOpen) {
+            setSelectedDay('');
+            setLocalQty(1);
+            setImgError(false);
+            setImgLoaded(false);
+        }
+    }, [isOpen, product?.id]);
 
     if (!isOpen || !product) return null;
+
+    const handleMorfiAdd = () => {
+        if (!selectedDay) return;
+        const existingQty = getQuantityForDay ? getQuantityForDay(selectedDay) : 0;
+        if (existingQty === 0) {
+            // Item doesn't exist for this day yet — add it, then set desired qty
+            onAdd(product, selectedDay);
+            if (localQty > 1) {
+                onUpdate(product.id, localQty, selectedDay);
+            }
+        } else {
+            // Item already exists — increase by localQty
+            onUpdate(product.id, existingQty + localQty, selectedDay);
+        }
+        onClose();
+    };
 
     return (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
@@ -53,13 +87,16 @@ export function ProductQuickViewModal({
                     <div className="md:w-2/5 lg:w-1/3 p-6 flex flex-col">
                         <div className="flex-1">
                             <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-2 leading-tight break-words">{product.name}</h2>
-                            <div className="text-2xl font-bold text-primary-dynamic mb-4">{formatPrice(product.price)}</div>
+
+                            {!isMorfiEmpresas && (
+                                <div className="text-2xl font-bold text-primary-dynamic mb-4">{formatPrice(product.price)}</div>
+                            )}
 
                             <p className="text-slate-600 text-sm leading-relaxed mb-4">
                                 {product.description || "Sin descripción disponible."}
                             </p>
 
-                            {onAskAI && (
+                            {!isMorfiEmpresas && onAskAI && (
                                 <button
                                     onClick={() => onAskAI(product)}
                                     className="flex items-center gap-2 text-primary-dynamic bg-primary-dynamic/10 px-3 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-primary-dynamic/20 transition-all mb-4"
@@ -68,10 +105,75 @@ export function ProductQuickViewModal({
                                     Consultar con IA
                                 </button>
                             )}
+
+                            {isMorfiEmpresas && (
+                                <div className="mb-4">
+                                    <p className="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-3">Día de entrega:</p>
+                                    <div className="space-y-2">
+                                        {MORFI_DELIVERY_DAYS.map(day => {
+                                            const dayQty = getQuantityForDay ? getQuantityForDay(day) : 0;
+                                            return (
+                                                <label
+                                                    key={day}
+                                                    className={`flex items-center justify-between gap-3 px-3 py-2 rounded-xl cursor-pointer transition-all border ${selectedDay === day ? 'border-slate-900 bg-slate-50' : 'border-transparent hover:bg-slate-50'}`}
+                                                >
+                                                    <div className="flex items-center gap-3">
+                                                        <input
+                                                            type="radio"
+                                                            name="delivery_day"
+                                                            value={day}
+                                                            checked={selectedDay === day}
+                                                            onChange={() => {
+                                                                setSelectedDay(day);
+                                                                setLocalQty(1);
+                                                            }}
+                                                            className="accent-slate-900 w-4 h-4"
+                                                        />
+                                                        <span className="text-sm font-semibold text-slate-700">{day}</span>
+                                                    </div>
+                                                    {dayQty > 0 && (
+                                                        <span className="text-[9px] font-black bg-slate-900 text-white px-2 py-0.5 rounded-full">
+                                                            {dayQty} en pedido
+                                                        </span>
+                                                    )}
+                                                </label>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         <div className="pt-4 border-t border-slate-100">
-                            {quantity > 0 ? (
+                            {isMorfiEmpresas ? (
+                                <div className="space-y-3">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-[11px] font-black text-slate-500 uppercase tracking-widest">Cantidad:</span>
+                                        <div className="flex items-center gap-4 bg-slate-100 rounded-full px-4 py-2">
+                                            <button
+                                                onClick={() => setLocalQty(q => Math.max(1, q - 1))}
+                                                className="w-8 h-8 flex items-center justify-center rounded-full bg-white shadow-sm text-slate-600 transition-transform active:scale-90"
+                                            >
+                                                <Minus className="w-4 h-4" />
+                                            </button>
+                                            <span className="text-base font-bold min-w-[24px] text-center">{localQty}</span>
+                                            <button
+                                                onClick={() => setLocalQty(q => q + 1)}
+                                                className="w-8 h-8 flex items-center justify-center rounded-full bg-white shadow-sm text-slate-600 transition-transform active:scale-90"
+                                            >
+                                                <Plus className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={handleMorfiAdd}
+                                        disabled={!selectedDay}
+                                        className="w-full bg-primary-dynamic hover:opacity-90 disabled:bg-slate-200 disabled:text-slate-400 text-white font-bold py-4 rounded-2xl shadow-lg shadow-primary-dynamic/20 transition-all active:scale-[0.98] disabled:shadow-none"
+                                    >
+                                        {selectedDay ? 'Agregar al pedido' : 'Elegí un día primero'}
+                                    </button>
+                                </div>
+                            ) : quantity > 0 ? (
                                 <div className="flex items-center justify-between gap-4">
                                     <div className="flex items-center gap-6 bg-slate-100 rounded-full px-4 py-2 flex-1 justify-center">
                                         <button

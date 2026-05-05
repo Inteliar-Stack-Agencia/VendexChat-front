@@ -5,9 +5,10 @@ interface CartBarProps {
     totalItems: number;
     totalPrice: number;
     onClick: () => void;
+    hidePrice?: boolean;
 }
 
-export function CartBar({ totalItems, totalPrice, onClick }: CartBarProps) {
+export function CartBar({ totalItems, totalPrice, onClick, hidePrice }: CartBarProps) {
     if (totalItems === 0) return null;
 
     return (
@@ -25,7 +26,9 @@ export function CartBar({ totalItems, totalPrice, onClick }: CartBarProps) {
                     </div>
                     <div className="text-left">
                         <p className="text-[10px] uppercase tracking-wider font-bold opacity-80">Tu pedido</p>
-                        <p className="font-bold text-lg leading-tight">{formatPrice(totalPrice)}</p>
+                        {!hidePrice && (
+                            <p className="font-bold text-lg leading-tight">{formatPrice(totalPrice)}</p>
+                        )}
                     </div>
                 </div>
 

@@ -38,6 +38,8 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
     const [planType, setPlanType] = useState<string | null>(null);
     const planFetchedFor = useRef<string | null>(null);
 
+    const isMorfiEmpresas = data?.store?.slug === 'morfi-empresas';
+
     useEffect(() => {
         if (data?.store?.popups) {
             const storeId = data.store.id;
@@ -328,12 +330,17 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
 
                                 <div className={`grid grid-cols-1 ${cat.products.length > 20 ? 'md:grid-cols-3' : 'md:grid-cols-2 max-w-4xl mx-auto'} gap-3 md:gap-6`}>
                                     {visibleProducts.map((p) => (
-                                        <div key={p.id} onClick={() => !getItemQuantity(p.id) && setQuickViewProduct(p)} className="cursor-pointer">
+                                        <div
+                                            key={p.id}
+                                            onClick={() => isMorfiEmpresas ? setQuickViewProduct(p) : (!getItemQuantity(p.id) && setQuickViewProduct(p))}
+                                            className="cursor-pointer"
+                                        >
                                             <ProductCard
                                                 product={p}
                                                 quantity={getItemQuantity(p.id)}
-                                                onAdd={(prod) => addItem(prod)}
+                                                onAdd={isMorfiEmpresas ? () => setQuickViewProduct(p) : (prod) => addItem(prod)}
                                                 onUpdate={updateQuantity}
+                                                isMorfiEmpresas={isMorfiEmpresas}
                                             />
                                         </div>
                                     ))}
@@ -388,6 +395,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 totalItems={totalItems}
                 totalPrice={totalPrice}
                 onClick={() => setIsCartOpen(true)}
+                hidePrice={isMorfiEmpresas}
             />
 
             <Suspense fallback={null}>
@@ -415,6 +423,10 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 onAdd={addItem}
                 onUpdate={updateQuantity}
                 onAskAI={(p) => openChat(`Hola 👋, me gustaría saber más sobre el producto: **${p.name}**`)}
+                isMorfiEmpresas={isMorfiEmpresas}
+                getQuantityForDay={isMorfiEmpresas && quickViewProduct
+                    ? (day) => getItemQuantity(quickViewProduct.id, day)
+                    : undefined}
             />
 
 

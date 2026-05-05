@@ -9,6 +9,8 @@ import { getProductImageUrl } from "../../utils/imageUrl";
 // Agregar nuevos slugs aquí para habilitarlo en más tiendas.
 const CUSTOMER_TYPE_STORES: readonly string[] = ["morfiviandas", "morfilaplata"];
 
+const MORFI_EMPRESAS_SLUG = "morfi-empresas";
+
 interface CartDrawerProps {
     isOpen: boolean;
     onClose: () => void;
@@ -56,6 +58,7 @@ export function CartDrawer({
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const requiresCustomerType = CUSTOMER_TYPE_STORES.includes(storeSlug);
+    const isMorfiEmpresas = storeSlug === MORFI_EMPRESAS_SLUG;
 
     const [couponCode, setCouponCode] = useState("");
     const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
@@ -173,12 +176,12 @@ export function CartDrawer({
                     delivery_type: deliveryType === 'envio' ? 'delivery' : 'pickup',
                     delivery_address: deliveryType === 'envio' ? address : undefined,
                     delivery_zone: deliveryType === 'envio' ? deliveryZone : undefined,
-                    payment_method: paymentMethod,
+                    payment_method: isMorfiEmpresas ? undefined : paymentMethod,
                     customer_notes: notes || undefined,
-                    subtotal: totalPrice,
-                    delivery_cost: currentShipping,
-                    total: finalTotal,
-                    coupon_id: appliedCoupon?.id,
+                    subtotal: isMorfiEmpresas ? 0 : totalPrice,
+                    delivery_cost: isMorfiEmpresas ? 0 : currentShipping,
+                    total: isMorfiEmpresas ? 0 : finalTotal,
+                    coupon_id: isMorfiEmpresas ? undefined : appliedCoupon?.id,
                     items: items.map(i => ({
                         product_id: i.product.id,
                         quantity: i.quantity,
@@ -193,7 +196,6 @@ export function CartDrawer({
 
             let message = `*NUEVO PEDIDO ${orderResult?.order_number || ''}*\n`.trim() + `\n` + `------------------\n`;
 
-
             // Agrupar por día para el mensaje
             const grouped = items.reduce((acc, item) => {
                 const day = item.delivery_day || 'Pedido General';
@@ -205,31 +207,39 @@ export function CartDrawer({
             Object.entries(grouped).forEach(([day, dayItems]) => {
                 if (day !== 'Pedido General') message += `\n*ENTREGA: ${day.toUpperCase()}*\n`;
                 dayItems.forEach(i => {
-                    message += `- ${i.quantity}x ${i.product.name} — ${formatPrice(i.product.price * i.quantity)}\n`;
+                    if (isMorfiEmpresas) {
+                        message += `- ${i.quantity}x ${i.product.name}\n`;
+                    } else {
+                        message += `- ${i.quantity}x ${i.product.name} — ${formatPrice(i.product.price * i.quantity)}\n`;
+                    }
                 });
             });
 
-            if (appliedCoupon) {
-                message += `\nSubtotal: ${formatPrice(totalPrice)}\n` +
-                    `Cupón: ${appliedCoupon.code} (-${formatPrice(discount)})\n`;
+            if (!isMorfiEmpresas) {
+                if (appliedCoupon) {
+                    message += `\nSubtotal: ${formatPrice(totalPrice)}\n` +
+                        `Cupón: ${appliedCoupon.code} (-${formatPrice(discount)})\n`;
+                }
+                message += `\n*TOTAL: ${formatPrice(finalTotal)}*\n`;
             }
 
             if (!dbSaveOk) {
                 message += `\n⚠️ *AVISO: El pedido no se sincronizó con el panel. Usar estos detalles para procesar.*\n`;
             }
 
-            message += `\n*TOTAL: ${formatPrice(finalTotal)}*\n` +
-                `------------------\n\n` +
+            message += `------------------\n\n` +
                 `*DETALLES DEL CLIENTE*\n` +
                 `- Nombre: ${customerName}\n` +
                 `- WhatsApp: ${customerWhatsapp}\n`;
             if (customerCompany) message += `- Empresa: ${customerCompany}\n`;
-            message += `\n*DETALLES DE ENTREGA*\n` + `- Tipo: ${deliveryType === 'envio' ? 'Envío a domicilio' : 'Retiro en local'}\n`;
-            if (deliveryType === 'envio') {
-                message += `- Dirección: ${address}\n`;
-                if (deliveryZone) message += `- Zona: ${deliveryZone}\n`;
+            if (!isMorfiEmpresas) {
+                message += `\n*DETALLES DE ENTREGA*\n` + `- Tipo: ${deliveryType === 'envio' ? 'Envío a domicilio' : 'Retiro en local'}\n`;
+                if (deliveryType === 'envio') {
+                    message += `- Dirección: ${address}\n`;
+                    if (deliveryZone) message += `- Zona: ${deliveryZone}\n`;
+                }
+                message += `- Pago: ${paymentMethod}\n`;
             }
-            message += `- Pago: ${paymentMethod}\n`;
             if (notes) message += `\n*OBSERVACIONES:*\n${notes}`;
 
             const encoded = encodeURIComponent(message);
@@ -332,7 +342,7 @@ export function CartDrawer({
                                                         <span className="shrink-0 text-[9px] font-black uppercase bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-full">Promo</span>
                                                     )}
                                                 </div>
-                                                <p className="text-slate-400 font-bold text-[10px]">{formatPrice(item.product.price)}</p>
+                                                {!isMorfiEmpresas && <p className="text-slate-400 font-bold text-[10px]">{formatPrice(item.product.price)}</p>}
                                             </div>
                                             <div className="flex items-center gap-2 bg-slate-50 rounded-xl p-1">
                                                 <button onClick={() => onUpdateQuantity(item.product.id, -1, item.delivery_day)} className="w-6 h-6 flex items-center justify-center rounded-lg bg-white shadow-sm text-slate-400">
@@ -355,7 +365,15 @@ export function CartDrawer({
                             <div className="space-y-2">
                                 <input type="text" placeholder="Tu Nombre (Obligatorio) *" value={customerName} onChange={(e) => setCustomerName(e.target.value)} className={`w-full px-4 py-3 bg-slate-50 border ${!customerName.trim() && isSubmitting ? 'border-red-500' : 'border-0'} rounded-xl text-sm font-bold text-slate-700 outline-none`} />
                                 <input type="tel" placeholder="Tu WhatsApp (Obligatorio) *" value={customerWhatsapp} onChange={(e) => setCustomerWhatsapp(e.target.value)} className={`w-full px-4 py-3 bg-slate-50 border ${!customerWhatsapp.trim() && isSubmitting ? 'border-red-500' : 'border-0'} rounded-xl text-sm font-bold text-slate-700 outline-none`} />
-                                {requiresCustomerType ? (
+                                {isMorfiEmpresas ? (
+                                    <input
+                                        type="text"
+                                        placeholder="Empresa (Obligatorio) *"
+                                        value={customerCompany}
+                                        onChange={(e) => setCustomerCompany(e.target.value)}
+                                        className={`w-full px-4 py-3 bg-slate-50 border ${!customerCompany.trim() && isSubmitting ? 'border-red-500' : 'border-0'} rounded-xl text-sm font-bold text-slate-700 outline-none`}
+                                    />
+                                ) : requiresCustomerType ? (
                                     <>
                                         <select
                                             value={customerType}
@@ -383,59 +401,66 @@ export function CartDrawer({
                                     <input type="text" placeholder="Empresa (Opcional)" value={customerCompany} onChange={(e) => setCustomerCompany(e.target.value)} className="w-full px-4 py-3 bg-slate-50 border-0 rounded-xl text-sm font-bold text-slate-700 outline-none" />
                                 )}
                             </div>
-                            <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Entrega y Pago</h3>
-                            <div className="space-y-2">
-                                <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)} className="w-full px-4 py-3 bg-slate-50 border-0 rounded-xl text-sm font-bold text-slate-700 outline-none">
-                                    {(enabledMethods.cash || !enabledMethods) && <option value="Efectivo">Efectivo / Acordar</option>}
-                                    {enabledMethods.transfer && <option value="Transferencia">Transferencia Bancaria</option>}
-                                    {enabledMethods.yape && <option value="Yape">Yape</option>}
-                                    {enabledMethods.plin && <option value="Plin">Plin</option>}
-                                    <option value="Mercado Pago">Mercado Pago</option>
-                                </select>
-
-                                {paymentMethod === "Transferencia" && metadata.transfer_details && (
-                                    <div className="p-3 bg-indigo-50 rounded-xl border border-indigo-100">
-                                        <p className="text-[10px] font-black text-indigo-600 uppercase mb-1">CBU / Alias para transferencia:</p>
-                                        <p className="text-xs font-medium text-slate-700 whitespace-pre-wrap">{metadata.transfer_details}</p>
-                                    </div>
-                                )}
-
-                                {paymentMethod === "Yape" && metadata.yape_details && (
-                                    <div className="p-3 bg-indigo-50 rounded-xl border border-indigo-100">
-                                        <p className="text-[10px] font-black text-indigo-600 uppercase mb-1">Datos para Yape:</p>
-                                        <p className="text-xs font-medium text-slate-700 whitespace-pre-wrap">{metadata.yape_details}</p>
-                                    </div>
-                                )}
-
-                                {paymentMethod === "Plin" && metadata.plin_details && (
-                                    <div className="p-3 bg-indigo-50 rounded-xl border border-indigo-100">
-                                        <p className="text-[10px] font-black text-indigo-600 uppercase mb-1">Datos para Plin:</p>
-                                        <p className="text-xs font-medium text-slate-700 whitespace-pre-wrap">{metadata.plin_details}</p>
-                                    </div>
-                                )}
-                                <select value={deliveryType} onChange={(e) => setDeliveryType(e.target.value as any)} className="w-full px-4 py-3 bg-slate-50 border-0 rounded-xl text-sm font-bold text-slate-700 outline-none">
-                                    <option value="envio">Envío a domicilio</option>
-                                    <option value="retiro">Retiro en local</option>
-                                </select>
-                                {deliveryType === "envio" && (
-                                    <>
-                                        <input type="text" placeholder="Dirección (Obligatorio) *" value={address} onChange={(e) => setAddress(e.target.value)} className={`w-full px-4 py-3 bg-slate-50 border ${!address.trim() && isSubmitting ? 'border-red-500' : 'border-0'} rounded-xl text-sm font-bold text-slate-700 outline-none`} />
-                                        <select value={deliveryZone} onChange={(e) => setDeliveryZone(e.target.value)} className={`w-full px-4 py-3 bg-slate-50 border ${!deliveryZone && isSubmitting ? 'border-red-500' : 'border-0'} rounded-xl text-sm font-bold text-slate-700 outline-none`}>
-                                            <option value="">Zona de Entrega (Obligatorio) *</option>
-                                            <option value="CABA">CABA</option>
-                                            <option value="Zona Norte">Zona Norte</option>
-                                            <option value="Zona Sur">Zona Sur</option>
-                                            <option value="Zona Oeste">Zona Oeste</option>
+                            {!isMorfiEmpresas && (
+                                <>
+                                    <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Entrega y Pago</h3>
+                                    <div className="space-y-2">
+                                        <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)} className="w-full px-4 py-3 bg-slate-50 border-0 rounded-xl text-sm font-bold text-slate-700 outline-none">
+                                            {(enabledMethods.cash || !enabledMethods) && <option value="Efectivo">Efectivo / Acordar</option>}
+                                            {enabledMethods.transfer && <option value="Transferencia">Transferencia Bancaria</option>}
+                                            {enabledMethods.yape && <option value="Yape">Yape</option>}
+                                            {enabledMethods.plin && <option value="Plin">Plin</option>}
+                                            <option value="Mercado Pago">Mercado Pago</option>
                                         </select>
-                                    </>
-                                )}
+
+                                        {paymentMethod === "Transferencia" && metadata.transfer_details && (
+                                            <div className="p-3 bg-indigo-50 rounded-xl border border-indigo-100">
+                                                <p className="text-[10px] font-black text-indigo-600 uppercase mb-1">CBU / Alias para transferencia:</p>
+                                                <p className="text-xs font-medium text-slate-700 whitespace-pre-wrap">{metadata.transfer_details}</p>
+                                            </div>
+                                        )}
+
+                                        {paymentMethod === "Yape" && metadata.yape_details && (
+                                            <div className="p-3 bg-indigo-50 rounded-xl border border-indigo-100">
+                                                <p className="text-[10px] font-black text-indigo-600 uppercase mb-1">Datos para Yape:</p>
+                                                <p className="text-xs font-medium text-slate-700 whitespace-pre-wrap">{metadata.yape_details}</p>
+                                            </div>
+                                        )}
+
+                                        {paymentMethod === "Plin" && metadata.plin_details && (
+                                            <div className="p-3 bg-indigo-50 rounded-xl border border-indigo-100">
+                                                <p className="text-[10px] font-black text-indigo-600 uppercase mb-1">Datos para Plin:</p>
+                                                <p className="text-xs font-medium text-slate-700 whitespace-pre-wrap">{metadata.plin_details}</p>
+                                            </div>
+                                        )}
+                                        <select value={deliveryType} onChange={(e) => setDeliveryType(e.target.value as any)} className="w-full px-4 py-3 bg-slate-50 border-0 rounded-xl text-sm font-bold text-slate-700 outline-none">
+                                            <option value="envio">Envío a domicilio</option>
+                                            <option value="retiro">Retiro en local</option>
+                                        </select>
+                                        {deliveryType === "envio" && (
+                                            <>
+                                                <input type="text" placeholder="Dirección (Obligatorio) *" value={address} onChange={(e) => setAddress(e.target.value)} className={`w-full px-4 py-3 bg-slate-50 border ${!address.trim() && isSubmitting ? 'border-red-500' : 'border-0'} rounded-xl text-sm font-bold text-slate-700 outline-none`} />
+                                                <select value={deliveryZone} onChange={(e) => setDeliveryZone(e.target.value)} className={`w-full px-4 py-3 bg-slate-50 border ${!deliveryZone && isSubmitting ? 'border-red-500' : 'border-0'} rounded-xl text-sm font-bold text-slate-700 outline-none`}>
+                                                    <option value="">Zona de Entrega (Obligatorio) *</option>
+                                                    <option value="CABA">CABA</option>
+                                                    <option value="Zona Norte">Zona Norte</option>
+                                                    <option value="Zona Sur">Zona Sur</option>
+                                                    <option value="Zona Oeste">Zona Oeste</option>
+                                                </select>
+                                            </>
+                                        )}
+                                        <textarea placeholder="¿Alguna observación?" value={notes} onChange={(e) => setNotes(e.target.value)} rows={2} className="w-full px-4 py-3 bg-slate-50 border-0 rounded-xl text-sm font-bold text-slate-700 outline-none resize-none" />
+                                    </div>
+                                </>
+                            )}
+                            {isMorfiEmpresas && (
                                 <textarea placeholder="¿Alguna observación?" value={notes} onChange={(e) => setNotes(e.target.value)} rows={2} className="w-full px-4 py-3 bg-slate-50 border-0 rounded-xl text-sm font-bold text-slate-700 outline-none resize-none" />
-                            </div>
+                            )}
                         </div>
                     )}
                 </div>
                 <div className="p-6 border-t border-slate-100 space-y-4 bg-slate-50/50">
-                    {couponsEnabled && items.length > 0 && (
+                    {couponsEnabled && !isMorfiEmpresas && items.length > 0 && (
                         <div className="space-y-2">
                             {!appliedCoupon ? (
                                 <div className="flex gap-2">
@@ -461,6 +486,7 @@ export function CartDrawer({
                             {couponError && <p className="text-[10px] text-rose-500 font-bold">{couponError}</p>}
                         </div>
                     )}
+                    {!isMorfiEmpresas && (
                     <div className="space-y-1">
                         {(discount > 0 || currentShipping > 0) && (
                             <>
@@ -475,16 +501,18 @@ export function CartDrawer({
                         )}
                         <div className="flex justify-between font-bold text-xs text-slate-500"><span>TOTAL</span><span className="text-lg text-slate-900">{formatPrice(finalTotal)}</span></div>
                     </div>
+                    )}
                     <button
                         disabled={
                             items.length === 0 ||
                             isSubmitting ||
-                            (requiresCustomerType && customerType === "empresa" && !customerCompany.trim())
+                            (requiresCustomerType && customerType === "empresa" && !customerCompany.trim()) ||
+                            (isMorfiEmpresas && !customerCompany.trim())
                         }
                         onClick={handleSendWhatsApp}
                         className="w-full bg-[#25D366] hover:bg-[#1ebe5d] disabled:bg-slate-300 text-white font-black uppercase tracking-widest py-4 rounded-xl flex items-center justify-center gap-3 transition-all active:scale-[0.98] shadow-xl shadow-green-200"
                     >
-                        {isSubmitting ? 'Procesando...' : 'Pedir por WhatsApp'}
+                        {isSubmitting ? 'Procesando...' : 'Confirmar pedido por WhatsApp'}
                     </button>
                 </div>
             </div>
