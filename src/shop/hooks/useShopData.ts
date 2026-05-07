@@ -17,8 +17,10 @@ export function useShopData(slug: string | undefined, isDemo?: boolean) {
         const isLocal = hostname === "localhost" || hostname === "127.0.0.1";
         const isMainDomain = hostname.endsWith("vendexchat.app");
 
-        // Si es demo, forzamos un identificador conocido
-        const identifier = isDemo ? "demo-store" : ((isLocal || isMainDomain) ? slug : hostname);
+        // Si es demo, forzamos un identificador conocido.
+        // En dominios custom con sub-rutas (/laplata, /empresas), el slug del path ya
+        // fue resuelto por el domain proxy — usarlo directo en vez del hostname.
+        const identifier = isDemo ? "demo-store" : ((isLocal || isMainDomain || slug) ? slug : hostname);
 
         if (!identifier) {
             setLoading(false);
