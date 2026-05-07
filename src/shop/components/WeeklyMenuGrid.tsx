@@ -11,6 +11,7 @@ interface WeeklyMenuGridProps {
 }
 
 const DAYS = [
+    { id: 'Semanal', label: 'Semanal' },
     { id: 'Lunes', label: 'Lunes' },
     { id: 'Martes', label: 'Martes' },
     { id: 'Miércoles', label: 'Miércoles' },

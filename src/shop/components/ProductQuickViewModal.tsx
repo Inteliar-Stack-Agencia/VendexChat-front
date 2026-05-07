@@ -5,7 +5,7 @@ import type { Product } from "../../types";
 import { getProductImageUrl } from "../../utils/imageUrl";
 import { formatPrice } from "../../utils/format";
 
-const MORFI_DELIVERY_DAYS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'] as const;
+const MORFI_DELIVERY_DAYS = ['Semanal', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'] as const;
 
 interface QuickViewModalProps {
     product: Product | null;
