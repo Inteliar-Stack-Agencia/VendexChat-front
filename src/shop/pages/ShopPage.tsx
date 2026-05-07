@@ -38,7 +38,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
     const [planType, setPlanType] = useState<string | null>(null);
     const planFetchedFor = useRef<string | null>(null);
 
-    const isMorfiEmpresas = data?.store?.slug === 'morfi-empresas';
+    const isMorfiEmpresas = data?.store?.slug === 'empresas';
 
     useEffect(() => {
         if (data?.store?.popups) {

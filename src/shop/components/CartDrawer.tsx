@@ -7,9 +7,9 @@ import { getProductImageUrl } from "../../utils/imageUrl";
 
 // Tiendas que requieren selección explícita de tipo de cliente (Particular / Empresa).
 // Agregar nuevos slugs aquí para habilitarlo en más tiendas.
-const CUSTOMER_TYPE_STORES: readonly string[] = ["morfiviandas", "morfilaplata"];
+const CUSTOMER_TYPE_STORES: readonly string[] = ["caba", "laplata"];
 
-const MORFI_EMPRESAS_SLUG = "morfi-empresas";
+const MORFI_EMPRESAS_SLUG = "empresas";
 
 interface CartDrawerProps {
     isOpen: boolean;
