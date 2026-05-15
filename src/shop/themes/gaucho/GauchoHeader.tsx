@@ -1,4 +1,4 @@
-import { Search, MapPin, Instagram, Facebook, ShoppingCart } from "lucide-react";
+import { Search, Instagram, Facebook, ShoppingCart, Leaf, Truck, Check, Shield, Heart } from "lucide-react";
 import AssistantIcon from "../../../components/icons/AssistantIcon";
 import { getSocialLink } from "../../../utils/format";
 
@@ -6,6 +6,8 @@ const G_GREEN = '#2D5F34';
 const G_GOLDEN = '#D4A574';
 const G_CREAM = '#F5F1EB';
 const G_WARM_WHITE = '#FFFDF8';
+const G_MINT = '#EDF5EC';
+const G_BROWN = '#6A3E24';
 
 function WhatsAppIcon({ className }: { className?: string }) {
     return (
@@ -18,15 +20,296 @@ function WhatsAppIcon({ className }: { className?: string }) {
 function PawIcon({ className }: { className?: string }) {
     return (
         <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1 15l-4-4 1.5-1.5L11 13.1l6.5-6.5L19 8l-8 9z" />
-            <circle cx="7" cy="9" r="1.5" />
-            <circle cx="10" cy="6" r="1.5" />
-            <circle cx="14" cy="6" r="1.5" />
-            <circle cx="17" cy="9" r="1.5" />
-            <path d="M12 11c-2 0-4 1.5-4 4s1.5 3 4 3 4-1 4-3-2-4-4-4z" />
+            <circle cx="7" cy="9" r="1.8" />
+            <circle cx="10.5" cy="6" r="1.8" />
+            <circle cx="14" cy="6" r="1.8" />
+            <circle cx="17" cy="9" r="1.8" />
+            <path d="M12 11.5c-2.5 0-5 1.8-5 4.5 0 2 1.5 3 5 3s5-1 5-3c0-2.7-2.5-4.5-5-4.5z" />
         </svg>
     );
 }
+
+/* ── Hero Section ───────────────────────────────────────────────────────── */
+
+function HeroSection({ name, logo, address, whatsapp }: {
+    name: string; logo?: string; address?: string; whatsapp?: string;
+}) {
+    const waLink = whatsapp
+        ? `https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hola! Quiero hacer un pedido de Gaucho Natural Pet 🐾')}`
+        : '#';
+
+    return (
+        <section
+            className="relative overflow-hidden"
+            style={{ background: `linear-gradient(135deg, ${G_MINT} 0%, ${G_CREAM} 65%, ${G_WARM_WHITE} 100%)` }}
+        >
+            <div className="max-w-6xl mx-auto px-4 py-12 md:py-20 flex flex-col md:flex-row items-center gap-10 md:gap-16">
+
+                {/* Left: Text content */}
+                <div className="flex-1 text-center md:text-left">
+                    {/* Label pill */}
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full mb-5"
+                        style={{ backgroundColor: 'rgba(212,165,116,0.15)', border: '1px solid rgba(212,165,116,0.35)' }}>
+                        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: G_GOLDEN }} />
+                        <span className="gaucho-body text-[10px] font-black uppercase tracking-widest" style={{ color: G_GOLDEN }}>
+                            Alimento 100% Natural
+                        </span>
+                    </div>
+
+                    {/* Main heading */}
+                    <h1 className="gaucho-title text-5xl md:text-7xl leading-[0.92] mb-5" style={{ color: G_GREEN }}>
+                        Cuidá a tu<br />Mascota<br />con Lo Mejor
+                    </h1>
+
+                    {/* Subtitle */}
+                    <p className="gaucho-body text-sm md:text-base leading-relaxed max-w-xs md:max-w-sm mb-8"
+                        style={{ color: G_BROWN }}>
+                        Comida real, sin cereales ni aditivos. Para perros y gatos que merecen vivir mejor.
+                    </p>
+
+                    {/* CTA Buttons */}
+                    <div className="flex flex-wrap gap-3 justify-center md:justify-start mb-5">
+                        <a
+                            href="#productos"
+                            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl font-bold transition-all hover:opacity-90 active:scale-95 shadow-lg gaucho-body text-[11px] uppercase tracking-widest"
+                            style={{ backgroundColor: G_GOLDEN, color: G_GREEN }}
+                        >
+                            Ver Productos
+                        </a>
+                        {whatsapp && (
+                            <a
+                                href={waLink}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl font-bold transition-all hover:opacity-80 gaucho-body text-[11px] uppercase tracking-widest"
+                                style={{ border: `2px solid ${G_GREEN}`, color: G_GREEN, backgroundColor: 'transparent' }}
+                            >
+                                <WhatsAppIcon className="w-4 h-4" />
+                                Pedir Ahora
+                            </a>
+                        )}
+                    </div>
+
+                    {/* Address badge */}
+                    {address && (
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full"
+                            style={{ backgroundColor: 'rgba(45,95,52,0.07)', border: '1px solid rgba(45,95,52,0.14)' }}>
+                            <span className="text-xs">📍</span>
+                            <span className="gaucho-body text-[10px] font-semibold" style={{ color: G_GREEN }}>{address}</span>
+                        </div>
+                    )}
+                </div>
+
+                {/* Right: Decorative circular area */}
+                <div className="relative flex-shrink-0 flex items-center justify-center w-56 h-56 md:w-72 md:h-72">
+                    {/* Outer dashed ring */}
+                    <div className="absolute inset-0 rounded-full"
+                        style={{ border: `2px dashed ${G_GOLDEN}45` }} />
+                    {/* Main golden circle */}
+                    <div className="w-44 h-44 md:w-60 md:h-60 rounded-full overflow-hidden flex items-center justify-center relative z-10"
+                        style={{ backgroundColor: `${G_GOLDEN}30`, border: `3px solid ${G_GOLDEN}55` }}>
+                        {logo ? (
+                            <img src={logo} alt={name} className="w-32 h-32 md:w-44 md:h-44 object-contain" />
+                        ) : (
+                            <div className="text-center">
+                                <div className="text-5xl mb-1">🐾</div>
+                                <p className="gaucho-title text-3xl" style={{ color: G_GREEN }}>{name.charAt(0)}</p>
+                            </div>
+                        )}
+                    </div>
+                    {/* Floating: dog */}
+                    <div className="absolute -top-1 -right-1 md:top-0 md:right-0 w-12 h-12 rounded-full flex items-center justify-center shadow-lg z-20"
+                        style={{ backgroundColor: G_GREEN }}>
+                        <span className="text-xl">🐕</span>
+                    </div>
+                    {/* Floating: cat */}
+                    <div className="absolute -bottom-2 -left-2 w-10 h-10 rounded-full flex items-center justify-center shadow-md z-20"
+                        style={{ backgroundColor: G_CREAM, border: `2px solid ${G_GOLDEN}` }}>
+                        <span className="text-lg">🐈</span>
+                    </div>
+                    {/* Floating: leaf */}
+                    <div className="absolute bottom-6 -right-4 w-9 h-9 rounded-full flex items-center justify-center shadow-sm z-20"
+                        style={{ backgroundColor: G_WARM_WHITE, border: `2px solid rgba(45,95,52,0.2)`, color: G_GREEN }}>
+                        <Leaf className="w-4 h-4" />
+                    </div>
+                </div>
+            </div>
+
+            {/* Wave divider */}
+            <div className="overflow-hidden" style={{ height: '40px', marginTop: '-1px' }}>
+                <svg viewBox="0 0 1440 40" className="w-full" preserveAspectRatio="none" style={{ height: '40px', display: 'block' }}>
+                    <path d="M0,20 C240,40 480,0 720,20 C960,40 1200,0 1440,20 L1440,40 L0,40 Z" fill={G_WARM_WHITE} />
+                </svg>
+            </div>
+        </section>
+    );
+}
+
+/* ── Feature Cards Strip ────────────────────────────────────────────────── */
+
+function FeatureCardsStrip() {
+    return (
+        <div style={{ backgroundColor: G_WARM_WHITE }} className="py-10 px-4">
+            <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
+                {[
+                    {
+                        iconBg: 'rgba(212,165,116,0.14)',
+                        el: <Leaf className="w-5 h-5" style={{ color: G_GOLDEN }} />,
+                        title: 'Alimento Natural',
+                        desc: 'Ingredientes reales sin cereales ni aditivos artificiales.',
+                    },
+                    {
+                        iconBg: 'rgba(45,95,52,0.1)',
+                        el: <Truck className="w-5 h-5" style={{ color: G_GREEN }} />,
+                        title: 'Entregas en CABA',
+                        desc: 'Martes y viernes. Pedís cualquier día de la semana.',
+                    },
+                    {
+                        iconBg: 'rgba(106,62,36,0.1)',
+                        el: <div style={{ color: G_BROWN }}><PawIcon className="w-5 h-5" /></div>,
+                        title: 'Perros & Gatos',
+                        desc: 'Líneas especiales formuladas para cada especie y etapa.',
+                    },
+                ].map(f => (
+                    <div key={f.title} className="rounded-2xl p-5 flex items-start gap-4"
+                        style={{ backgroundColor: '#fff', border: '1px solid rgba(45,95,52,0.08)', boxShadow: '0 2px 12px rgba(45,95,52,0.06)' }}>
+                        <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                            style={{ backgroundColor: f.iconBg }}>
+                            {f.el}
+                        </div>
+                        <div>
+                            <h3 className="gaucho-body font-extrabold text-sm mb-1" style={{ color: G_GREEN }}>{f.title}</h3>
+                            <p className="gaucho-body text-xs leading-relaxed" style={{ color: G_BROWN }}>{f.desc}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+/* ── "We Care" Two-Column Section ───────────────────────────────────────── */
+
+function WeCareSection() {
+    const bullets = [
+        'Sin cereales, sin soja — menos inflamación y mejor digestión',
+        'Sin colorantes ni conservantes artificiales',
+        'Ingredientes trazables de producción local argentina',
+        'Formulado para todas las etapas de vida',
+    ];
+
+    return (
+        <section style={{ backgroundColor: G_CREAM }} className="py-16 px-4">
+            <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+
+                {/* Left: text */}
+                <div>
+                    <p className="gaucho-subtitle text-base mb-2" style={{ color: G_GOLDEN }}>
+                        Calidad que se nota
+                    </p>
+                    <h2 className="gaucho-title text-4xl md:text-5xl mb-6" style={{ color: G_GREEN }}>
+                        Nos importa la salud de tu mascota
+                    </h2>
+                    <div className="flex flex-col gap-3.5">
+                        {bullets.map(b => (
+                            <div key={b} className="flex items-start gap-3">
+                                <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                                    style={{ backgroundColor: G_GREEN }}>
+                                    <Check className="w-3.5 h-3.5 text-white" />
+                                </div>
+                                <p className="gaucho-body text-sm leading-relaxed" style={{ color: G_BROWN }}>{b}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Right: decorative green panel */}
+                <div className="rounded-3xl overflow-hidden h-64 md:h-80 relative"
+                    style={{ backgroundColor: G_GREEN }}>
+                    {/* Leaf pattern overlay */}
+                    <svg className="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <pattern id="we-care-leaves" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+                                <path d="M30 5 C22 15, 8 24, 10 38 C13 50, 30 52, 30 52 C30 52, 47 50, 50 38 C52 24, 38 15, 30 5Z" fill="#F5F1EB" opacity="0.7" />
+                            </pattern>
+                        </defs>
+                        <rect width="100%" height="100%" fill="url(#we-care-leaves)" />
+                    </svg>
+
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6">
+                        <div className="flex gap-3 text-5xl">
+                            <span>🐶</span>
+                            <span>🐱</span>
+                        </div>
+                        <p className="gaucho-title text-2xl md:text-3xl text-center leading-tight"
+                            style={{ color: G_WARM_WHITE }}>
+                            Comida Real Para<br />una Vida Más Sana
+                        </p>
+                        <div className="flex flex-wrap gap-2 justify-center mt-2">
+                            {['100% Natural', 'Sin Cereales', 'Marca Argentina'].map(tag => (
+                                <span key={tag}
+                                    className="gaucho-body text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"
+                                    style={{ backgroundColor: 'rgba(212,165,116,0.2)', color: G_GOLDEN, border: '1px solid rgba(212,165,116,0.3)' }}>
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/* ── Services / "What We Offer" Section ─────────────────────────────────── */
+
+function ServicesSection() {
+    const services = [
+        { emoji: '🥩', label: 'Alimento Natural', bg: 'rgba(212,165,116,0.15)', border: 'rgba(212,165,116,0.3)' },
+        { emoji: '🐕', label: 'Para Perros',       bg: 'rgba(45,95,52,0.1)',    border: 'rgba(45,95,52,0.2)' },
+        { emoji: '🐈', label: 'Para Gatos',        bg: 'rgba(106,62,36,0.1)',   border: 'rgba(106,62,36,0.2)' },
+        { emoji: '🌿', label: 'Sin Cereales',       bg: 'rgba(85,139,47,0.1)',   border: 'rgba(85,139,47,0.2)' },
+        { emoji: '🚚', label: 'Envíos CABA',        bg: 'rgba(21,101,192,0.08)', border: 'rgba(21,101,192,0.2)' },
+    ];
+
+    return (
+        <section style={{ backgroundColor: G_WARM_WHITE }} className="py-16 px-4">
+            <div className="max-w-4xl mx-auto">
+                <div className="text-center mb-10">
+                    <p className="gaucho-subtitle text-base mb-2" style={{ color: G_GOLDEN }}>
+                        Para toda la familia peluda
+                    </p>
+                    <h2 className="gaucho-title text-4xl md:text-5xl" style={{ color: G_GREEN }}>
+                        Lo Que Ofrecemos
+                    </h2>
+                </div>
+
+                <div className="flex flex-wrap justify-center gap-6 md:gap-10 mb-10">
+                    {services.map(s => (
+                        <div key={s.label} className="flex flex-col items-center gap-2.5 w-20">
+                            <div className="w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-sm transition-transform hover:scale-105"
+                                style={{ backgroundColor: s.bg, border: `2px solid ${s.border}` }}>
+                                {s.emoji}
+                            </div>
+                            <p className="gaucho-body text-[9px] font-black uppercase tracking-widest text-center leading-tight"
+                                style={{ color: G_GREEN }}>{s.label}</p>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="text-center">
+                    <a href="#productos"
+                        className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl font-bold transition-all hover:opacity-90 active:scale-95 shadow-md gaucho-body text-[11px] uppercase tracking-widest"
+                        style={{ backgroundColor: G_GOLDEN, color: G_GREEN }}>
+                        Ver Todos los Productos
+                    </a>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/* ── Main GauchoHeader ──────────────────────────────────────────────────── */
 
 export interface GauchoHeaderProps {
     name: string;
@@ -46,7 +329,7 @@ export interface GauchoHeaderProps {
 }
 
 export function GauchoHeader({
-    name, logo, banner, description, address, whatsapp, instagram, facebook,
+    name, logo, address, whatsapp, instagram, facebook,
     totalItems, announcement, onSearch, onChatClick, onCartClick, hideChatButton
 }: GauchoHeaderProps) {
     return (
@@ -70,8 +353,13 @@ export function GauchoHeader({
                         </div>
                     )}
 
+                    {/* Store name (desktop) */}
+                    <span className="hidden md:block gaucho-title text-base leading-none flex-shrink-0" style={{ color: G_GOLDEN }}>
+                        {name}
+                    </span>
+
                     {/* Search */}
-                    <div className="relative flex-1 max-w-sm">
+                    <div className="relative flex-1 max-w-sm mx-auto">
                         <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: G_GREEN }} />
                         <input
                             type="text"
@@ -93,7 +381,7 @@ export function GauchoHeader({
                             <button
                                 onClick={onChatClick}
                                 className="h-10 px-3 md:px-4 flex items-center gap-2 rounded-xl transition-all hover:opacity-90 active:scale-95"
-                                style={{ backgroundColor: 'rgba(212,165,116,0.2)', color: G_GOLDEN, border: `1px solid rgba(212,165,116,0.4)` }}
+                                style={{ backgroundColor: 'rgba(212,165,116,0.2)', color: G_GOLDEN, border: '1px solid rgba(212,165,116,0.4)' }}
                             >
                                 <AssistantIcon className="w-5 h-5" />
                                 <span className="hidden md:inline gaucho-body text-[10px] font-black uppercase tracking-widest">Asistente IA</span>
@@ -123,7 +411,7 @@ export function GauchoHeader({
                         )}
                     </div>
 
-                    {/* Cart button — golden CTA */}
+                    {/* Cart button */}
                     <button
                         onClick={onCartClick}
                         className="relative ml-auto h-10 px-3 md:px-5 flex items-center gap-2 rounded-xl transition-all hover:opacity-90 active:scale-95 shadow-lg"
@@ -141,101 +429,11 @@ export function GauchoHeader({
                 </div>
             </div>
 
-            {/* Hero Banner */}
-            <div className="relative h-56 md:h-72 overflow-hidden" style={{ backgroundColor: G_GREEN }}>
-                {banner ? (
-                    <img src={banner} alt={name} className="w-full h-full object-cover" loading="eager" decoding="async" />
-                ) : (
-                    /* Decorative leaf pattern fallback */
-                    <div className="w-full h-full" style={{ backgroundColor: G_GREEN }}>
-                        <svg className="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <pattern id="gaucho-leaves" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
-                                    <path d="M40 8 C28 20, 10 32, 14 52 C18 68, 40 70, 40 70 C40 70, 62 68, 66 52 C70 32, 52 20, 40 8Z" fill="#F5F1EB" opacity="0.7" />
-                                    <circle cx="40" cy="70" r="3" fill="#D4A574" opacity="0.5" />
-                                </pattern>
-                            </defs>
-                            <rect width="100%" height="100%" fill="url(#gaucho-leaves)" />
-                        </svg>
-                    </div>
-                )}
-
-                {/* Gradient overlay — bottom to top green fade */}
-                <div className="absolute inset-0" style={{ background: `linear-gradient(to top, ${G_GREEN}CC 0%, ${G_GREEN}55 45%, transparent 100%)` }} />
-
-                {/* Store profile overlay */}
-                <div className="absolute bottom-0 left-0 right-0 px-4 pb-5">
-                    <div className="max-w-[1440px] mx-auto flex items-end gap-4">
-                        {/* Logo — round with golden border */}
-                        <div className="w-20 h-20 md:w-24 md:h-24 rounded-full flex-shrink-0 overflow-hidden shadow-2xl border-4" style={{ borderColor: G_GOLDEN, backgroundColor: G_CREAM }}>
-                            {logo ? (
-                                <img src={logo} alt={name} className="w-full h-full object-cover" loading="eager" decoding="async" />
-                            ) : (
-                                <div className="w-full h-full flex items-center justify-center gaucho-title text-3xl uppercase" style={{ color: G_GREEN }}>
-                                    {name.charAt(0)}
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="flex-1 pb-1">
-                            <h1 className="gaucho-title text-3xl md:text-5xl leading-none drop-shadow-md" style={{ color: G_WARM_WHITE }}>
-                                {name}
-                            </h1>
-                            <p className="gaucho-subtitle text-sm md:text-base mt-1 drop-shadow" style={{ color: G_GOLDEN }}>
-                                Comida real para una vida más sana y feliz
-                            </p>
-                            <div className="flex items-center gap-2 mt-2 flex-wrap">
-                                {address && (
-                                    <span className="gaucho-body flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider" style={{ color: G_WARM_WHITE, opacity: 0.85 }}>
-                                        <MapPin className="w-3 h-3 flex-shrink-0" />
-                                        {address}
-                                    </span>
-                                )}
-                                <span className="gaucho-body text-[9px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full flex items-center gap-1"
-                                    style={{ backgroundColor: 'rgba(212,165,116,0.2)', color: G_GOLDEN, border: '1px solid rgba(212,165,116,0.4)' }}>
-                                    <PawIcon className="w-3 h-3" />
-                                    Perros & Gatos
-                                </span>
-                                <span className="gaucho-body text-[9px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full"
-                                    style={{ backgroundColor: 'rgba(245,241,235,0.15)', color: G_WARM_WHITE, border: '1px solid rgba(245,241,235,0.3)' }}>
-                                    🚚 Martes y Viernes · CABA
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Desktop description */}
-            {description && (
-                <div className="max-w-[1440px] mx-auto px-4 pt-4 pb-2 hidden md:block" style={{ backgroundColor: G_CREAM }}>
-                    <p className="gaucho-body text-sm font-medium max-w-2xl pl-4 py-1 italic" style={{ color: '#6A3E24', borderLeft: `4px solid ${G_GOLDEN}` }}>
-                        {description}
-                    </p>
-                </div>
-            )}
-
-            {/* Section navigation strip */}
-            <div className="overflow-x-auto no-scrollbar" style={{ backgroundColor: G_CREAM, borderBottom: '2px solid rgba(45,95,52,0.1)' }}>
-                <div className="flex items-center max-w-[1440px] mx-auto w-max md:w-full md:justify-center px-2">
-                    {[
-                        { label: 'Productos', href: '#productos' },
-                        { label: 'Guía de Pesos', href: '#guia-pesos' },
-                        { label: 'Tips', href: '#tips' },
-                        { label: 'Preguntas', href: '#faq' },
-                        { label: 'Testimonios', href: '#testimonios' },
-                        { label: 'Envíos', href: '#envios' },
-                    ].map(item => (
-                        <a
-                            key={item.href}
-                            href={item.href}
-                            className="px-4 md:px-5 py-3 gaucho-body text-[10px] font-black uppercase tracking-widest whitespace-nowrap transition-all hover:opacity-60 flex-shrink-0"
-                            style={{ color: G_GREEN }}>
-                            {item.label}
-                        </a>
-                    ))}
-                </div>
-            </div>
+            {/* Landing sections */}
+            <HeroSection name={name} logo={logo} address={address} whatsapp={whatsapp} />
+            <FeatureCardsStrip />
+            <WeCareSection />
+            <ServicesSection />
         </header>
     );
 }

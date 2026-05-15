@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, ChevronUp, Leaf, ShieldCheck, Zap, Heart, Package, Truck, MessageCircle, Star } from "lucide-react";
+import { ChevronDown, ChevronUp, Leaf, ShieldCheck, Zap, Heart, Package, Truck, MessageCircle, Star, ArrowRight } from "lucide-react";
 
 const G_GREEN = '#2D5F34';
 const G_GOLDEN = '#D4A574';
@@ -195,6 +195,78 @@ function WeightGuide() {
     );
 }
 
+/* ─── CTA Banner ────────────────────────────────────────────────────────── */
+function CTABanner({ whatsapp }: { whatsapp?: string }) {
+    const waLink = whatsapp
+        ? `https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hola! Quiero hacer un pedido de Gaucho Natural Pet 🐾')}`
+        : '#';
+
+    return (
+        <section className="relative overflow-hidden" style={{ backgroundColor: '#1A3D20' }}>
+            {/* Decorative background pattern */}
+            <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="cta-dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <circle cx="20" cy="20" r="3" fill="#D4A574" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#cta-dots)" />
+            </svg>
+
+            <div className="relative max-w-5xl mx-auto px-4 py-16 md:py-20 flex flex-col md:flex-row items-center gap-10">
+                {/* Left: text */}
+                <div className="flex-1 text-center md:text-left">
+                    <p className="gaucho-subtitle text-base mb-3" style={{ color: G_GOLDEN }}>
+                        Martes y viernes en CABA
+                    </p>
+                    <h2 className="gaucho-title text-4xl md:text-6xl leading-none mb-5" style={{ color: G_WARM_WHITE }}>
+                        Hacé tu Pedido<br />Hoy
+                    </h2>
+                    <p className="gaucho-body text-sm leading-relaxed max-w-sm mb-8"
+                        style={{ color: 'rgba(245,241,235,0.75)' }}>
+                        Comida natural entregada en tu puerta. Pedís cuando querés y coordinamos el próximo día de reparto.
+                    </p>
+                    {whatsapp && (
+                        <a href={waLink} target="_blank" rel="noreferrer"
+                            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl font-bold transition-all hover:opacity-90 active:scale-95 shadow-xl gaucho-body text-sm uppercase tracking-widest"
+                            style={{ backgroundColor: G_GOLDEN, color: G_GREEN }}>
+                            <MessageCircle className="w-5 h-5" />
+                            Pedir por WhatsApp
+                            <ArrowRight className="w-4 h-4" />
+                        </a>
+                    )}
+                </div>
+
+                {/* Right: decorative circles with pets */}
+                <div className="relative flex-shrink-0 flex items-center justify-center w-52 h-52 md:w-64 md:h-64">
+                    <div className="absolute inset-0 rounded-full opacity-20"
+                        style={{ border: `2px dashed ${G_GOLDEN}` }} />
+                    <div className="w-40 h-40 md:w-52 md:h-52 rounded-full flex flex-col items-center justify-center gap-2"
+                        style={{ backgroundColor: 'rgba(212,165,116,0.15)', border: `2px solid rgba(212,165,116,0.25)` }}>
+                        <div className="flex gap-2 text-5xl">
+                            <span>🐶</span>
+                            <span>🐱</span>
+                        </div>
+                        <p className="gaucho-body text-[9px] font-black uppercase tracking-widest text-center px-4"
+                            style={{ color: G_GOLDEN }}>
+                            Comida Real
+                        </p>
+                    </div>
+                    {/* Floating badge */}
+                    <div className="absolute -top-2 -right-2 w-12 h-12 rounded-full flex items-center justify-center shadow-lg"
+                        style={{ backgroundColor: G_GOLDEN }}>
+                        <span className="text-xl">🌿</span>
+                    </div>
+                    <div className="absolute -bottom-2 -left-2 w-10 h-10 rounded-full flex items-center justify-center shadow-md"
+                        style={{ backgroundColor: 'rgba(245,241,235,0.1)', border: '1px solid rgba(212,165,116,0.3)' }}>
+                        <span className="text-lg">🚚</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}
+
 /* ─── Main component ────────────────────────────────────────────────────── */
 interface GauchoInfoSectionsProps {
     whatsapp?: string;
@@ -207,6 +279,9 @@ export function GauchoInfoSections({ whatsapp }: GauchoInfoSectionsProps) {
 
     return (
         <div className="w-full">
+
+            {/* ── CTA Banner ────────────────────────────────────────────── */}
+            <CTABanner whatsapp={whatsapp} />
 
             {/* ── Credentials strip ─────────────────────────────────────── */}
             <div className="py-4 px-4 overflow-x-auto no-scrollbar" style={{ backgroundColor: G_GREEN }}>
