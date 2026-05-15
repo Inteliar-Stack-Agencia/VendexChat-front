@@ -312,7 +312,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 />
             )}
 
-            <main className="max-w-[1440px] mx-auto px-4 py-8">
+            <main id="productos" className="max-w-[1440px] mx-auto px-4 py-8">
                 {viewMode === 'weekly' ? (
                     <WeeklyMenuGrid
                         categories={data.categories}
@@ -352,7 +352,10 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                                     </span>
                                 </div>
 
-                                <div className={`grid grid-cols-1 ${cat.products.length > 20 ? 'md:grid-cols-3' : 'md:grid-cols-2 max-w-4xl mx-auto'} gap-3 md:gap-6`}>
+                                <div className={isGaucho
+                                    ? `grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 max-w-4xl mx-auto`
+                                    : `grid grid-cols-1 ${cat.products.length > 20 ? 'md:grid-cols-3' : 'md:grid-cols-2 max-w-4xl mx-auto'} gap-3 md:gap-6`
+                                }>
                                     {visibleProducts.map((p) => (
                                         <div
                                             key={p.id}

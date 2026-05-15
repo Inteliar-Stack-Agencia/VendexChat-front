@@ -206,7 +206,7 @@ export function GauchoHeader({
                 </div>
             </div>
 
-            {/* Desktop description strip */}
+            {/* Desktop description */}
             {description && (
                 <div className="max-w-[1440px] mx-auto px-4 pt-4 pb-2 hidden md:block" style={{ backgroundColor: G_CREAM }}>
                     <p className="gaucho-body text-sm font-medium max-w-2xl pl-4 py-1 italic" style={{ color: '#6A3E24', borderLeft: `4px solid ${G_GOLDEN}` }}>
@@ -214,6 +214,28 @@ export function GauchoHeader({
                     </p>
                 </div>
             )}
+
+            {/* Section navigation strip */}
+            <div className="overflow-x-auto no-scrollbar" style={{ backgroundColor: G_CREAM, borderBottom: '2px solid rgba(45,95,52,0.1)' }}>
+                <div className="flex items-center max-w-[1440px] mx-auto w-max md:w-full md:justify-center px-2">
+                    {[
+                        { label: 'Productos', href: '#productos' },
+                        { label: 'Guía de Pesos', href: '#guia-pesos' },
+                        { label: 'Tips', href: '#tips' },
+                        { label: 'Preguntas', href: '#faq' },
+                        { label: 'Testimonios', href: '#testimonios' },
+                        { label: 'Envíos', href: '#envios' },
+                    ].map(item => (
+                        <a
+                            key={item.href}
+                            href={item.href}
+                            className="px-4 md:px-5 py-3 gaucho-body text-[10px] font-black uppercase tracking-widest whitespace-nowrap transition-all hover:opacity-60 flex-shrink-0"
+                            style={{ color: G_GREEN }}>
+                            {item.label}
+                        </a>
+                    ))}
+                </div>
+            </div>
         </header>
     );
 }

@@ -29,40 +29,37 @@ export const GauchoProductCard = memo(function GauchoProductCard({
 
     return (
         <div
-            className={`group relative overflow-hidden rounded-2xl flex h-28 md:h-32 transition-all duration-300 hover:shadow-lg ${isOutOfStock ? 'opacity-60' : ''}`}
+            className={`group relative overflow-hidden rounded-2xl flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 ${isOutOfStock ? 'opacity-60' : ''}`}
             style={{
                 backgroundColor: G_WARM_WHITE,
-                border: `1px solid rgba(45,95,52,0.13)`,
-                boxShadow: '0 2px 10px rgba(45,95,52,0.07)',
+                border: `1px solid rgba(45,95,52,0.12)`,
+                boxShadow: '0 4px 16px rgba(45,95,52,0.08)',
             }}
         >
-            {/* Left accent bar */}
-            <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl" style={{ backgroundColor: G_GREEN }} />
-
-            {/* Product image */}
-            <div className="relative w-24 md:w-32 h-full flex-shrink-0 ml-1 overflow-hidden">
+            {/* Product image — top, aspect-square */}
+            <div className="relative aspect-square w-full overflow-hidden flex-shrink-0" style={{ backgroundColor: G_CREAM }}>
                 {product.image_url && !imgError ? (
                     <img
-                        src={getProductImageUrl(product.image_url, 256)}
+                        src={getProductImageUrl(product.image_url, 512)}
                         alt={product.name}
                         className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
                         loading="lazy"
                         decoding="async"
-                        width={256}
-                        height={256}
+                        width={512}
+                        height={512}
                         onLoad={() => setImgLoaded(true)}
                         onError={() => setImgError(true)}
                     />
                 ) : (
-                    <div className="w-full h-full flex items-center justify-center gaucho-title text-3xl uppercase"
-                        style={{ backgroundColor: G_CREAM, color: G_GREEN }}>
+                    <div className="w-full h-full flex items-center justify-center gaucho-title text-6xl uppercase"
+                        style={{ color: G_GREEN, backgroundColor: G_CREAM }}>
                         {product.name.charAt(0)}
                     </div>
                 )}
 
                 {/* Offer badge */}
                 {hasOffer && !isMorfiEmpresas && (
-                    <div className="absolute top-2 left-2 text-white text-[8px] font-black uppercase px-2 py-0.5 rounded-full tracking-tighter shadow-sm z-10 gaucho-body"
+                    <div className="absolute top-3 right-3 text-white text-[9px] font-black uppercase px-2.5 py-1 rounded-full tracking-wider shadow-md gaucho-body"
                         style={{ backgroundColor: G_RED }}>
                         OFERTA
                     </div>
@@ -70,58 +67,65 @@ export const GauchoProductCard = memo(function GauchoProductCard({
 
                 {/* Morfi qty badge */}
                 {isMorfiEmpresas && quantity > 0 && (
-                    <div className="absolute top-1.5 right-1.5 text-white text-[9px] font-black min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center z-10"
+                    <div className="absolute top-3 right-3 text-white text-xs font-black min-w-[24px] h-6 px-1.5 rounded-full flex items-center justify-center shadow-md"
                         style={{ backgroundColor: G_GREEN }}>
                         {quantity}
                     </div>
                 )}
+
+                {/* Natural badge — bottom left of image */}
+                <div className="absolute bottom-2 left-2">
+                    <span className="gaucho-body text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full"
+                        style={{ backgroundColor: 'rgba(45,95,52,0.85)', color: '#FFFDF8' }}>
+                        100% Natural
+                    </span>
+                </div>
             </div>
 
-            {/* Content */}
-            <div className="flex-1 p-2.5 md:p-3 flex flex-col justify-between min-w-0">
-                <div className="space-y-0.5">
-                    <h3 className="gaucho-body font-extrabold text-[10px] md:text-sm line-clamp-2 leading-tight uppercase tracking-tight"
+            {/* Content — below image */}
+            <div className="flex flex-col gap-2 p-3 md:p-4 flex-1">
+                <div>
+                    <h3 className="gaucho-body font-extrabold text-sm md:text-base leading-tight uppercase tracking-tight line-clamp-2"
                         style={{ color: G_GREEN }}>
                         {product.name}
                     </h3>
                     {product.description && (
-                        <p className="gaucho-body text-[8px] md:text-[10px] line-clamp-2 leading-tight font-medium"
+                        <p className="gaucho-body text-[10px] md:text-xs mt-1 leading-relaxed line-clamp-2"
                             style={{ color: G_BROWN }}>
                             {product.description}
                         </p>
                     )}
                 </div>
 
-                <div className="flex items-center justify-between mt-auto gap-2">
-                    {/* Price */}
+                {/* Price + controls */}
+                <div className="flex items-center justify-between mt-auto pt-1 border-t" style={{ borderColor: 'rgba(45,95,52,0.08)' }}>
                     {!isMorfiEmpresas && (
                         <div className="flex flex-col leading-none">
                             {hasOffer && (
-                                <span className="gaucho-body text-[8px] line-through font-medium"
-                                    style={{ color: G_BROWN, opacity: 0.45 }}>
+                                <span className="gaucho-body text-[9px] line-through font-medium"
+                                    style={{ color: G_BROWN, opacity: 0.4 }}>
                                     {formatPrice(product.price)}
                                 </span>
                             )}
-                            <span className="gaucho-body text-xs md:text-sm font-extrabold tracking-tight"
+                            <span className="gaucho-body text-sm md:text-base font-extrabold tracking-tight"
                                 style={{ color: G_GOLDEN }}>
                                 {formatPrice(hasOffer ? product.offer_price! : product.price)}
                             </span>
                         </div>
                     )}
 
-                    {/* Add to cart controls */}
                     <div className="ml-auto flex-shrink-0">
                         {isOutOfStock ? (
-                            <span className="gaucho-body text-[8px] font-bold uppercase tracking-wider"
-                                style={{ color: G_BROWN, opacity: 0.45 }}>
+                            <span className="gaucho-body text-[9px] font-bold uppercase tracking-wider"
+                                style={{ color: G_BROWN, opacity: 0.4 }}>
                                 Agotado
                             </span>
                         ) : isMorfiEmpresas ? (
                             <button
                                 onClick={(e) => { e.stopPropagation(); onAdd(product); }}
-                                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg transition-all hover:opacity-85 active:scale-95 shadow-sm"
+                                className="flex items-center gap-1 px-3 py-1.5 rounded-lg transition-all hover:opacity-85 active:scale-95"
                                 style={{ backgroundColor: G_GREEN, color: G_WARM_WHITE }}>
-                                <span className="gaucho-body text-[8px] md:text-[10px] font-bold uppercase tracking-widest">
+                                <span className="gaucho-body text-[10px] font-bold uppercase tracking-widest">
                                     {quantity > 0 ? 'Más' : 'Agregar'}
                                 </span>
                             </button>
@@ -130,28 +134,28 @@ export const GauchoProductCard = memo(function GauchoProductCard({
                                 style={{ backgroundColor: G_CREAM }}>
                                 <button
                                     onClick={(e) => { e.stopPropagation(); onUpdate(product.id, quantity - 1); }}
-                                    className="w-6 h-6 md:w-7 md:h-7 rounded-lg flex items-center justify-center transition-all active:scale-90 shadow-sm"
+                                    className="w-7 h-7 rounded-lg flex items-center justify-center transition-all active:scale-90 shadow-sm"
                                     style={{ backgroundColor: G_WARM_WHITE, color: G_GREEN }}>
-                                    <Minus className="w-3 h-3" />
+                                    <Minus className="w-3.5 h-3.5" />
                                 </button>
-                                <span className="gaucho-body text-[10px] md:text-xs font-extrabold w-4 text-center"
+                                <span className="gaucho-body text-xs font-extrabold w-5 text-center"
                                     style={{ color: G_GREEN }}>
                                     {quantity}
                                 </span>
                                 <button
                                     onClick={(e) => { e.stopPropagation(); onUpdate(product.id, quantity + 1); }}
-                                    className="w-6 h-6 md:w-7 md:h-7 rounded-lg flex items-center justify-center transition-all active:scale-90"
+                                    className="w-7 h-7 rounded-lg flex items-center justify-center transition-all active:scale-90"
                                     style={{ backgroundColor: G_GREEN, color: G_WARM_WHITE }}>
-                                    <Plus className="w-3 h-3" />
+                                    <Plus className="w-3.5 h-3.5" />
                                 </button>
                             </div>
                         ) : (
                             <button
                                 onClick={(e) => { e.stopPropagation(); onAdd(product); }}
-                                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg transition-all hover:opacity-85 active:scale-95 shadow-sm"
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all hover:opacity-85 active:scale-95 shadow-sm"
                                 style={{ backgroundColor: G_GREEN, color: G_WARM_WHITE }}>
-                                <Plus className="w-3 h-3" />
-                                <span className="gaucho-body text-[8px] md:text-[10px] font-bold uppercase tracking-widest">Agregar</span>
+                                <Plus className="w-3.5 h-3.5" />
+                                <span className="gaucho-body text-[10px] font-bold uppercase tracking-widest">Agregar</span>
                             </button>
                         )}
                     </div>
