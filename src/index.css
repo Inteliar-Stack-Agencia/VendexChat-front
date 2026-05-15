@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital@1&family=Montserrat:wght@400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 @config "../tailwind.config.ts";
 
@@ -169,4 +170,17 @@ select {
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
+}
+
+/* Gaucho Natural Pet — typography utilities */
+.gaucho-title {
+  font-family: 'Bebas Neue', 'Anton', Impact, sans-serif;
+  letter-spacing: 0.03em;
+}
+.gaucho-subtitle {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-style: italic;
+}
+.gaucho-body {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
 }

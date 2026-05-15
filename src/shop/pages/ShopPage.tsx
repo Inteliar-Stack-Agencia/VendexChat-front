@@ -14,6 +14,11 @@ import FloatingAiAssistant from "../components/FloatingAiAssistant";
 import PopupModal from "../components/PopupModal";
 import { Suspense, lazy } from "react";
 import type { Popup } from "../../types";
+import { GauchoHeader } from "../themes/gaucho/GauchoHeader";
+import { GauchoProductCard } from "../themes/gaucho/GauchoProductCard";
+import { GauchoCategoryChips } from "../themes/gaucho/GauchoCategoryChips";
+
+const GAUCHO_SLUG = 'gauchopet';
 
 const CartDrawer = lazy(() => import("../components/CartDrawer").then(m => ({ default: m.CartDrawer })));
 const CategoryDrawer = lazy(() => import("../components/CategoryDrawer").then(m => ({ default: m.CategoryDrawer })));
@@ -39,6 +44,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
     const planFetchedFor = useRef<string | null>(null);
 
     const isMorfiEmpresas = data?.store?.slug === 'empresas';
+    const isGaucho = slug === GAUCHO_SLUG;
 
     useEffect(() => {
         if (data?.store?.popups) {
@@ -124,9 +130,10 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
     if (loading) {
         // Si ya tenemos info de la tienda, mostramos el header real con skeleton de productos
         if (storePreview) {
+            const HeaderComponent = isGaucho ? GauchoHeader : StoreHeader;
             return (
-                <div className="min-h-screen bg-white pb-24">
-                    <StoreHeader
+                <div className={`min-h-screen pb-24 ${isGaucho ? 'bg-[#F5F1EB]' : 'bg-white'}`}>
+                    <HeaderComponent
                         name={storePreview.name}
                         logo={storePreview.logo_url || ""}
                         banner={storePreview.banner_url || ""}
@@ -250,10 +257,14 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
         );
     }
 
+    const ActiveHeader = isGaucho ? GauchoHeader : StoreHeader;
+    const ActiveProductCard = isGaucho ? GauchoProductCard : ProductCard;
+    const ActiveCategoryChips = isGaucho ? GauchoCategoryChips : CategoryChips;
+
     return (
-        <div className="min-h-screen bg-white pb-24">
-            <GlobalAnnouncement announcement={data.announcement} />
-            <StoreHeader
+        <div className={`min-h-screen pb-24 ${isGaucho ? 'bg-[#F5F1EB]' : 'bg-white'}`}>
+            {!isGaucho && <GlobalAnnouncement announcement={data.announcement} />}
+            <ActiveHeader
                 name={data.store.name}
                 logo={data.store.logo_url || ""}
                 banner={data.store.banner_url || ""}
@@ -292,7 +303,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
             )}
 
             {viewMode === 'standard' && (
-                <CategoryChips
+                <ActiveCategoryChips
                     categories={data.categories}
                     activeId={effectiveActiveCategory}
                     onSelect={setActiveCategory}
@@ -308,8 +319,12 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                         onItemClick={setQuickViewProduct}
                     />
                 ) : filteredCategories.length === 0 ? (
-                    <div className="text-center py-20 bg-slate-50 rounded-[2rem] border-2 border-dashed border-slate-100">
-                        <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">No se encontraron productos</p>
+                    <div className="text-center py-20 rounded-[2rem] border-2 border-dashed"
+                        style={isGaucho ? { backgroundColor: 'rgba(245,241,235,0.7)', borderColor: 'rgba(45,95,52,0.2)' } : { backgroundColor: '#f8fafc', borderColor: '#f1f5f9' }}>
+                        <p className={`font-bold uppercase tracking-widest text-xs ${isGaucho ? 'gaucho-body' : ''}`}
+                            style={isGaucho ? { color: 'rgba(45,95,52,0.5)' } : { color: '#94a3b8' }}>
+                            No se encontraron productos
+                        </p>
                     </div>
                 ) : (
                     filteredCategories.map((cat) => {
@@ -320,12 +335,19 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                         return (
                             <section key={cat.id} className="mb-12">
                                 <div className="flex items-center gap-4 mb-6">
-                                    <h2 className="text-sm md:text-lg font-black text-slate-900 uppercase tracking-tight">
-                                        {cat.name}
-                                    </h2>
-                                    <div className="h-[1px] flex-1 bg-slate-100" />
-                                    <span className="text-[9px] font-black bg-slate-50 text-slate-400 px-3 py-1 rounded-full uppercase tracking-tighter">
-                                        {cat.products.length} Items
+                                    {isGaucho ? (
+                                        <h2 className="gaucho-title text-2xl md:text-3xl leading-none" style={{ color: '#2D5F34' }}>
+                                            {cat.name}
+                                        </h2>
+                                    ) : (
+                                        <h2 className="text-sm md:text-lg font-black text-slate-900 uppercase tracking-tight">
+                                            {cat.name}
+                                        </h2>
+                                    )}
+                                    <div className="h-[1px] flex-1" style={{ backgroundColor: isGaucho ? 'rgba(212,165,116,0.4)' : '#f1f5f9' }} />
+                                    <span className={`text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-tighter ${isGaucho ? 'gaucho-body' : ''}`}
+                                        style={isGaucho ? { backgroundColor: 'rgba(45,95,52,0.08)', color: '#2D5F34' } : {}}>
+                                        {isGaucho ? '' : ''}{cat.products.length} Items
                                     </span>
                                 </div>
 
@@ -336,7 +358,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                                             onClick={() => isMorfiEmpresas ? setQuickViewProduct(p) : (!getItemQuantity(p.id) && setQuickViewProduct(p))}
                                             className="cursor-pointer"
                                         >
-                                            <ProductCard
+                                            <ActiveProductCard
                                                 product={p}
                                                 quantity={getItemQuantity(p.id)}
                                                 onAdd={isMorfiEmpresas ? () => setQuickViewProduct(p) : (prod) => addItem(prod)}
@@ -350,7 +372,11 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                                 {!isExpanded && remaining > 0 && (
                                     <button
                                         onClick={() => setExpandedCategories(prev => new Set(prev).add(cat.id))}
-                                        className="mt-4 w-full py-3 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-700 border border-dashed border-slate-200 hover:border-slate-400 rounded-2xl transition-all"
+                                        className={`mt-4 w-full py-3 text-[10px] font-black uppercase tracking-widest rounded-2xl transition-all border border-dashed ${isGaucho ? 'gaucho-body' : ''}`}
+                                        style={isGaucho ? {
+                                            color: '#2D5F34',
+                                            borderColor: 'rgba(45,95,52,0.3)',
+                                        } : {}}
                                     >
                                         Ver {remaining} productos más
                                     </button>
