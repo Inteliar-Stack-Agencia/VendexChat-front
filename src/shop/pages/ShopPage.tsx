@@ -17,6 +17,7 @@ import type { Popup } from "../../types";
 import { GauchoHeader } from "../themes/gaucho/GauchoHeader";
 import { GauchoProductCard } from "../themes/gaucho/GauchoProductCard";
 import { GauchoCategoryChips } from "../themes/gaucho/GauchoCategoryChips";
+import { GauchoInfoSections } from "../themes/gaucho/GauchoInfoSections";
 
 const GAUCHO_SLUG = 'gauchopet';
 
@@ -387,6 +388,12 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 )}
             </main>
 
+
+            {isGaucho && (
+                <GauchoInfoSections
+                    whatsapp={data.store.whatsapp || data.store.phone || ""}
+                />
+            )}
 
             <Suspense fallback={null}>
                 <StoreInfoSections
