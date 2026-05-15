@@ -237,29 +237,25 @@ function CTABanner({ whatsapp }: { whatsapp?: string }) {
                     )}
                 </div>
 
-                {/* Right: decorative circles with pets */}
+                {/* Right: real pet photo in circle */}
                 <div className="relative flex-shrink-0 flex items-center justify-center w-52 h-52 md:w-64 md:h-64">
-                    <div className="absolute inset-0 rounded-full opacity-20"
-                        style={{ border: `2px dashed ${G_GOLDEN}` }} />
-                    <div className="w-40 h-40 md:w-52 md:h-52 rounded-full flex flex-col items-center justify-center gap-2"
-                        style={{ backgroundColor: 'rgba(212,165,116,0.15)', border: `2px solid rgba(212,165,116,0.25)` }}>
-                        <div className="flex gap-2 text-5xl">
-                            <span>🐶</span>
-                            <span>🐱</span>
-                        </div>
-                        <p className="gaucho-body text-[9px] font-black uppercase tracking-widest text-center px-4"
-                            style={{ color: G_GOLDEN }}>
-                            Comida Real
-                        </p>
+                    <div className="absolute inset-0 rounded-full"
+                        style={{ border: `2px dashed rgba(212,165,116,0.4)` }} />
+                    <div className="w-40 h-40 md:w-52 md:h-52 rounded-full overflow-hidden relative z-10"
+                        style={{ border: `3px solid rgba(212,165,116,0.5)` }}>
+                        <img
+                            src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=512&h=512&fit=crop&q=80"
+                            alt="Golden retriever feliz"
+                            className="w-full h-full object-cover"
+                        />
                     </div>
-                    {/* Floating badge */}
-                    <div className="absolute -top-2 -right-2 w-12 h-12 rounded-full flex items-center justify-center shadow-lg"
-                        style={{ backgroundColor: G_GOLDEN }}>
-                        <span className="text-xl">🌿</span>
-                    </div>
-                    <div className="absolute -bottom-2 -left-2 w-10 h-10 rounded-full flex items-center justify-center shadow-md"
-                        style={{ backgroundColor: 'rgba(245,241,235,0.1)', border: '1px solid rgba(212,165,116,0.3)' }}>
-                        <span className="text-lg">🚚</span>
+                    <div className="absolute -top-2 -right-2 w-11 h-11 rounded-full overflow-hidden shadow-lg z-20"
+                        style={{ border: `2px solid ${G_GOLDEN}` }}>
+                        <img
+                            src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=88&h=88&fit=crop&q=80"
+                            alt="Gato"
+                            className="w-full h-full object-cover"
+                        />
                     </div>
                 </div>
             </div>

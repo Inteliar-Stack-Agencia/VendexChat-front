@@ -398,23 +398,25 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 />
             )}
 
-            <Suspense fallback={null}>
-                <StoreInfoSections
-                    description={data.store.description}
-                    address={data.store.address}
-                    whatsapp={data.store.whatsapp || data.store.phone || ""}
-                    instagram={data.store.instagram}
-                    facebook={data.store.facebook}
-                    schedule={(() => {
-                        const phys = data.store.physical_schedule || data.store.schedule;
-                        const hasOpenPhysical = phys && Object.values(phys).some((d: any) => d?.open);
-                        return hasOpenPhysical ? phys : (data.store.online_schedule || phys);
-                    })()}
-                    storeName={data.store.name}
-                    metadata={data.store.metadata}
-                    footerMessage={data.store.footer_message}
-                />
-            </Suspense>
+            {!isGaucho && (
+                <Suspense fallback={null}>
+                    <StoreInfoSections
+                        description={data.store.description}
+                        address={data.store.address}
+                        whatsapp={data.store.whatsapp || data.store.phone || ""}
+                        instagram={data.store.instagram}
+                        facebook={data.store.facebook}
+                        schedule={(() => {
+                            const phys = data.store.physical_schedule || data.store.schedule;
+                            const hasOpenPhysical = phys && Object.values(phys).some((d: any) => d?.open);
+                            return hasOpenPhysical ? phys : (data.store.online_schedule || phys);
+                        })()}
+                        storeName={data.store.name}
+                        metadata={data.store.metadata}
+                        footerMessage={data.store.footer_message}
+                    />
+                </Suspense>
+            )}
 
             {/* Powered by */}
             <div className="py-4 text-center">

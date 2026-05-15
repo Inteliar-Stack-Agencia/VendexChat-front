@@ -100,37 +100,33 @@ function HeroSection({ name, logo, address, whatsapp }: {
                     )}
                 </div>
 
-                {/* Right: Decorative circular area */}
+                {/* Right: Pet photos */}
                 <div className="relative flex-shrink-0 flex items-center justify-center w-56 h-56 md:w-72 md:h-72">
                     {/* Outer dashed ring */}
                     <div className="absolute inset-0 rounded-full"
                         style={{ border: `2px dashed ${G_GOLDEN}45` }} />
-                    {/* Main golden circle */}
-                    <div className="w-44 h-44 md:w-60 md:h-60 rounded-full overflow-hidden flex items-center justify-center relative z-10"
-                        style={{ backgroundColor: `${G_GOLDEN}30`, border: `3px solid ${G_GOLDEN}55` }}>
-                        {logo ? (
-                            <img src={logo} alt={name} className="w-32 h-32 md:w-44 md:h-44 object-contain" />
-                        ) : (
-                            <div className="text-center">
-                                <div className="text-5xl mb-1">🐾</div>
-                                <p className="gaucho-title text-3xl" style={{ color: G_GREEN }}>{name.charAt(0)}</p>
-                            </div>
-                        )}
+                    {/* Main circle — dog photo */}
+                    <div className="w-44 h-44 md:w-60 md:h-60 rounded-full overflow-hidden relative z-10"
+                        style={{ border: `3px solid ${G_GOLDEN}55` }}>
+                        <img
+                            src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=480&h=480&fit=crop&q=80"
+                            alt="Perro feliz con alimento natural"
+                            className="w-full h-full object-cover"
+                        />
                     </div>
-                    {/* Floating: dog */}
-                    <div className="absolute -top-1 -right-1 md:top-0 md:right-0 w-12 h-12 rounded-full flex items-center justify-center shadow-lg z-20"
-                        style={{ backgroundColor: G_GREEN }}>
-                        <span className="text-xl">🐕</span>
+                    {/* Floating: cat photo */}
+                    <div className="absolute -bottom-2 -left-2 w-14 h-14 rounded-full overflow-hidden shadow-md z-20"
+                        style={{ border: `2px solid ${G_GOLDEN}` }}>
+                        <img
+                            src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=112&h=112&fit=crop&q=80"
+                            alt="Gato"
+                            className="w-full h-full object-cover"
+                        />
                     </div>
-                    {/* Floating: cat */}
-                    <div className="absolute -bottom-2 -left-2 w-10 h-10 rounded-full flex items-center justify-center shadow-md z-20"
-                        style={{ backgroundColor: G_CREAM, border: `2px solid ${G_GOLDEN}` }}>
-                        <span className="text-lg">🐈</span>
-                    </div>
-                    {/* Floating: leaf */}
-                    <div className="absolute bottom-6 -right-4 w-9 h-9 rounded-full flex items-center justify-center shadow-sm z-20"
-                        style={{ backgroundColor: G_WARM_WHITE, border: `2px solid rgba(45,95,52,0.2)`, color: G_GREEN }}>
-                        <Leaf className="w-4 h-4" />
+                    {/* Floating: leaf badge */}
+                    <div className="absolute top-0 -right-2 w-11 h-11 rounded-full flex items-center justify-center shadow-lg z-20"
+                        style={{ backgroundColor: G_GREEN, color: G_GOLDEN }}>
+                        <Leaf className="w-5 h-5" />
                     </div>
                 </div>
             </div>
@@ -223,29 +219,21 @@ function WeCareSection() {
                     </div>
                 </div>
 
-                {/* Right: decorative green panel */}
-                <div className="rounded-3xl overflow-hidden h-64 md:h-80 relative"
-                    style={{ backgroundColor: G_GREEN }}>
-                    {/* Leaf pattern overlay */}
-                    <svg className="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <pattern id="we-care-leaves" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-                                <path d="M30 5 C22 15, 8 24, 10 38 C13 50, 30 52, 30 52 C30 52, 47 50, 50 38 C52 24, 38 15, 30 5Z" fill="#F5F1EB" opacity="0.7" />
-                            </pattern>
-                        </defs>
-                        <rect width="100%" height="100%" fill="url(#we-care-leaves)" />
-                    </svg>
-
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6">
-                        <div className="flex gap-3 text-5xl">
-                            <span>🐶</span>
-                            <span>🐱</span>
-                        </div>
-                        <p className="gaucho-title text-2xl md:text-3xl text-center leading-tight"
+                {/* Right: real pet photo with overlay */}
+                <div className="rounded-3xl overflow-hidden h-64 md:h-80 relative shadow-xl">
+                    <img
+                        src="https://images.unsplash.com/photo-1601758174493-9c2d3f2baff?w=800&h=600&fit=crop&q=80"
+                        alt="Persona cuidando a su mascota"
+                        className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0"
+                        style={{ background: `linear-gradient(to top, ${G_GREEN}E0 0%, ${G_GREEN}60 45%, transparent 100%)` }} />
+                    <div className="absolute bottom-0 left-0 right-0 p-5 text-center">
+                        <p className="gaucho-title text-xl md:text-2xl leading-tight mb-3"
                             style={{ color: G_WARM_WHITE }}>
                             Comida Real Para<br />una Vida Más Sana
                         </p>
-                        <div className="flex flex-wrap gap-2 justify-center mt-2">
+                        <div className="flex flex-wrap gap-2 justify-center">
                             {['100% Natural', 'Sin Cereales', 'Marca Argentina'].map(tag => (
                                 <span key={tag}
                                     className="gaucho-body text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"
