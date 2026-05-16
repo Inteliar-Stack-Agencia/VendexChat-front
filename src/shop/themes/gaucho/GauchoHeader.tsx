@@ -1,4 +1,4 @@
-import { Search, Instagram, ShoppingCart } from "lucide-react";
+import { Search, Instagram, ShoppingCart, Package, Heart, Leaf } from "lucide-react";
 import AssistantIcon from "../../../components/icons/AssistantIcon";
 import { getSocialLink } from "../../../utils/format";
 
@@ -210,6 +210,30 @@ export interface GauchoHeaderProps {
     hideChatButton?: boolean;
 }
 
+function NavHighlight({ href, icon: Icon, label }: { href: string; icon: React.ElementType; label: string }) {
+    return (
+        <a href={href} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, textDecoration: 'none' }}>
+            <div style={{
+                width: 46, height: 46, borderRadius: '50%',
+                background: `linear-gradient(135deg, ${G_CORAL} 0%, ${G_GOLDEN} 100%)`,
+                padding: 2.5, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+                <div style={{
+                    width: '100%', height: '100%', borderRadius: '50%',
+                    backgroundColor: G_GREEN,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    transition: 'background-color 0.2s',
+                }}
+                    onMouseEnter={e => ((e.currentTarget as HTMLElement).style.backgroundColor = G_DARK)}
+                    onMouseLeave={e => ((e.currentTarget as HTMLElement).style.backgroundColor = G_GREEN)}>
+                    <Icon size={18} color="white" />
+                </div>
+            </div>
+            <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: 10, fontWeight: 600, letterSpacing: '0.04em', fontFamily: 'inherit' }}>{label}</span>
+        </a>
+    );
+}
+
 export function GauchoHeader({
     name, logo, address, whatsapp, instagram, facebook,
     totalItems, announcement, onSearch, onChatClick, onCartClick, hideChatButton
@@ -222,36 +246,31 @@ export function GauchoHeader({
                 </div>
             )}
 
-            {/* ── Nav — blanco, acorde al banner crema ── */}
+            {/* ── Nav — verde ── */}
             <div className="sticky top-0 z-50"
-                style={{ backgroundColor: 'rgba(255,255,255,0.97)', backdropFilter: 'blur(14px)', boxShadow: '0 2px 12px rgba(0,0,0,0.07)' }}>
-                <div className="max-w-7xl mx-auto px-5 py-3.5 flex items-center gap-4">
+                style={{ backgroundColor: `rgba(45,95,52,0.97)`, backdropFilter: 'blur(14px)', boxShadow: '0 2px 16px rgba(0,0,0,0.18)' }}>
+                <div className="max-w-7xl mx-auto px-5 py-2 flex items-center gap-4">
                     <div className="flex items-center gap-2 flex-shrink-0">
-                        <div className="w-8 h-8 rounded-full overflow-hidden" style={{ border: `2px solid ${G_GREEN}50` }}>
+                        <div className="w-8 h-8 rounded-full overflow-hidden" style={{ border: '2px solid rgba(255,255,255,0.3)' }}>
                             <img src={logo || '/gaucho/logo.png.png'} alt={name} className="w-full h-full object-contain p-0.5" />
                         </div>
-                        <span className="hidden md:block gaucho-subtitle font-bold text-base" style={{ color: G_DARK }}>{name}</span>
+                        <span className="hidden md:block gaucho-subtitle font-bold text-base" style={{ color: 'white' }}>{name}</span>
                     </div>
 
-                    <nav className="hidden md:flex items-center gap-6 ml-4">
-                        {[['#productos', 'Productos'], ['#beneficios', 'Beneficios'], ['#nosotros', 'Nosotros']].map(([href, label]) => (
-                            <a key={href} href={href} className="gaucho-body text-sm font-medium"
-                                style={{ color: '#555', textDecoration: 'none', transition: 'color 0.2s' }}
-                                onMouseEnter={e => (e.currentTarget.style.color = G_GREEN)}
-                                onMouseLeave={e => (e.currentTarget.style.color = '#555')}>
-                                {label}
-                            </a>
-                        ))}
+                    <nav className="hidden md:flex items-center gap-5 ml-4">
+                        <NavHighlight href="#productos" icon={Package} label="Productos" />
+                        <NavHighlight href="#beneficios" icon={Heart} label="Beneficios" />
+                        <NavHighlight href="#nosotros" icon={Leaf} label="Nosotros" />
                     </nav>
 
                     <div className="relative flex-1 max-w-xs mx-auto md:mx-4">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#aaa' }} />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(255,255,255,0.5)' }} />
                         <input
                             type="text"
                             placeholder="Buscar..."
                             onChange={(e) => onSearch(e.target.value)}
                             className="w-full rounded-full py-2 pl-9 pr-4 text-sm focus:outline-none"
-                            style={{ backgroundColor: G_CREAM, color: G_DARK, fontFamily: 'inherit', border: `1px solid ${G_BEIGE}` }}
+                            style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', fontFamily: 'inherit', border: '1px solid rgba(255,255,255,0.2)' }}
                         />
                     </div>
 
@@ -259,7 +278,7 @@ export function GauchoHeader({
                         {whatsapp && !hideChatButton && (
                             <button onClick={onChatClick}
                                 className="h-9 px-3 flex items-center gap-1.5 rounded-full hover:opacity-80"
-                                style={{ backgroundColor: `${G_CORAL}15`, color: G_CORAL, transition: 'opacity 0.2s' }}>
+                                style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', transition: 'opacity 0.2s' }}>
                                 <AssistantIcon className="w-4 h-4" />
                                 <span className="hidden lg:inline gaucho-body text-[10px] font-bold uppercase tracking-widest">IA</span>
                             </button>
@@ -267,14 +286,14 @@ export function GauchoHeader({
                         {instagram && (
                             <a href={getSocialLink(instagram, 'instagram')} target="_blank" rel="noreferrer"
                                 className="w-9 h-9 flex items-center justify-center rounded-full hover:opacity-60"
-                                style={{ color: '#555' }}>
+                                style={{ color: 'rgba(255,255,255,0.8)' }}>
                                 <Instagram className="w-4 h-4" />
                             </a>
                         )}
                         {whatsapp && (
                             <a href={`https://wa.me/${whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noreferrer"
                                 className="w-9 h-9 flex items-center justify-center rounded-full hover:opacity-60"
-                                style={{ color: '#555' }} aria-label="WhatsApp">
+                                style={{ color: 'rgba(255,255,255,0.8)' }} aria-label="WhatsApp">
                                 <WhatsAppIcon className="w-4 h-4" />
                             </a>
                         )}
@@ -284,7 +303,7 @@ export function GauchoHeader({
                             <ShoppingCart className="w-5 h-5 text-white" />
                             {totalItems > 0 && (
                                 <span className="absolute -top-1 -right-1 text-white text-[9px] font-black w-5 h-5 flex items-center justify-center rounded-full"
-                                    style={{ backgroundColor: G_GREEN }}>
+                                    style={{ backgroundColor: G_CREAM, color: G_DARK }}>
                                     {totalItems}
                                 </span>
                             )}
