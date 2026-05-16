@@ -63,9 +63,9 @@ function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
             <a href={waLink} target={whatsapp ? '_blank' : undefined} rel={whatsapp ? 'noreferrer' : undefined}
                 style={{ display: 'block', lineHeight: 0 }}>
                 <picture>
-                    <source media="(max-width: 768px)" srcSet="/gaucho/gaucho_banner_mobile_780x1360.jpg" />
+                    <source media="(max-width: 768px)" srcSet="/gaucho/gaucho_cta_mobile_square_780x1360.png" />
                     <img
-                        src="/gaucho/gaucho_banner_desktop_2880x1240.jpg"
+                        src="/gaucho/gaucho_desktop_2080x1240.png"
                         alt="Gaucho Natural Pet — Comida real, vida real."
                         style={{ width: '100%', height: 'auto', display: 'block' }}
                     />
