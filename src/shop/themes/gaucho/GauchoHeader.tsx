@@ -1,4 +1,4 @@
-import { Search, Instagram, ShoppingCart, Package, Heart, Leaf, Lightbulb, ArrowRightLeft, Calculator, Truck, Zap, Shield, Dna } from "lucide-react";
+import { Search, Instagram, ShoppingCart, Package, Heart, Leaf, Lightbulb, ArrowRightLeft, Calculator, Truck, Zap } from "lucide-react";
 import AssistantIcon from "../../../components/icons/AssistantIcon";
 import { getSocialLink } from "../../../utils/format";
 
@@ -18,36 +18,6 @@ function WhatsAppIcon({ className }: { className?: string }) {
         <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
         </svg>
-    );
-}
-
-function LeafSVG({ style }: { style: React.CSSProperties }) {
-    return (
-        <svg viewBox="0 0 60 90" style={{ ...style, position: 'absolute', pointerEvents: 'none' }} fill={G_OLIVE}>
-            <path d="M30,2 C52,2 62,28 52,52 C44,70 30,88 14,86 C2,84 -2,72 4,56 C12,32 10,2 30,2Z" opacity="0.75" />
-        </svg>
-    );
-}
-
-/* ── Organic curve transitions ─────────────────────────────────────────────── */
-
-function CurveDown({ from, to }: { from: string; to: string }) {
-    return (
-        <div style={{ backgroundColor: from, lineHeight: 0, display: 'block', marginBottom: '-2px' }}>
-            <svg viewBox="0 0 1440 110" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: '110px' }}>
-                <path d="M0,0 C360,110 1080,110 1440,0 L1440,110 L0,110 Z" fill={to} />
-            </svg>
-        </div>
-    );
-}
-
-function CurveUp({ from, to }: { from: string; to: string }) {
-    return (
-        <div style={{ backgroundColor: from, lineHeight: 0, display: 'block', marginBottom: '-2px' }}>
-            <svg viewBox="0 0 1440 110" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: '110px' }}>
-                <path d="M0,110 C360,0 1080,0 1440,110 L1440,0 L0,0 Z" fill={to} />
-            </svg>
-        </div>
     );
 }
 
@@ -143,54 +113,89 @@ function IgTitle({ label, bold, italic, light = false }: { label: string; bold: 
 /* ── Benefits ─────────────────────────────────────────────────────────────── */
 
 function BenefitsSection() {
-    const benefits: { Icon: React.ElementType; title: string; desc: string }[] = [
-        { Icon: Leaf,   title: 'Ingredientes naturales',        desc: 'Pollo, carne y verduras frescas. Lo que ves en la etiqueta es lo que come tu mascota.' },
-        { Icon: Shield, title: 'Sin conservantes artificiales', desc: 'Cero colorantes ni aditivos. Solo lo que la naturaleza ofrece.' },
-        { Icon: Zap,    title: 'Más energía y vitalidad',       desc: 'Un sistema inmune fuerte, pelaje brillante y más ganas de jugar.' },
-        { Icon: Heart,  title: 'Nutrición balanceada',          desc: 'Fórmulas completas para cada etapa de vida de tu compañero.' },
+    const features = [
+        { Icon: Leaf,   title: 'Ingredientes reales',          desc: 'Naturales y frescos, como debe ser.' },
+        { Icon: Zap,    title: 'Más energía y vitalidad',      desc: 'Nutrición que se nota todos los días.' },
+        { Icon: Heart,  title: 'Mejor digestión y bienestar',  desc: 'Fórmulas que cuidan su salud por dentro.' },
     ];
 
     return (
-        <section id="beneficios" style={{ backgroundColor: G_CREAM, position: 'relative', overflow: 'hidden', paddingTop: 80, paddingBottom: 80 }}>
-            <PawPrint style={{ width: 130, height: 130, top: 16, right: '4%', color: G_GREEN, opacity: 0.05, transform: 'rotate(18deg)' }} />
-            <PawPrint style={{ width: 80, height: 80, bottom: 32, left: '3%', color: G_GOLDEN, opacity: 0.10, transform: 'rotate(-12deg)' }} />
-            <LeafDecor style={{ width: 70, height: 105, top: 24, left: '5%', color: G_GREEN, opacity: 0.07, transform: 'rotate(-22deg)' }} />
-            <LeafDecor style={{ width: 55, height: 80, bottom: 16, right: '2%', color: G_OLIVE, opacity: 0.09, transform: 'rotate(28deg)' }} />
+        <section id="beneficios" style={{ backgroundColor: G_CREAM, overflow: 'hidden' }}>
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-stretch">
 
-            <div className="max-w-6xl mx-auto px-6 md:px-12" style={{ position: 'relative', zIndex: 10 }}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                    {/* Left: copy + items */}
-                    <div>
-                        <IgTitle label="Por qué elegir Gaucho" bold="Elegir ingredientes de calidad" italic="marca la diferencia." />
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                            {benefits.map(({ Icon, title, desc }) => (
-                                <div key={title} style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
-                                    <div style={{ width: 44, height: 44, borderRadius: '50%', backgroundColor: G_GREEN, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: `0 6px 18px ${G_GREEN}30` }}>
-                                        <Icon size={20} color="white" strokeWidth={1.5} />
-                                    </div>
-                                    <div>
-                                        <p style={{ fontWeight: 700, fontSize: 14, color: G_DARK, marginBottom: 3 }}>{title}</p>
-                                        <p style={{ fontSize: 13, color: '#777', lineHeight: 1.55 }}>{desc}</p>
-                                    </div>
+                {/* ── Left: editorial copy ── */}
+                <div className="px-8 md:px-14 py-16 md:py-20">
+                    {/* Label with leaf + rule */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 22 }}>
+                        <Leaf size={13} style={{ color: G_OLIVE, flexShrink: 0 }} />
+                        <span className="gaucho-body" style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: G_CORAL }}>
+                            Por qué elegir Gaucho
+                        </span>
+                        <div style={{ width: 48, height: 1, backgroundColor: G_CORAL, opacity: 0.45 }} />
+                    </div>
+
+                    {/* Big serif headline */}
+                    <h2 className="gaucho-subtitle" style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.8rem)', fontWeight: 800, color: G_DARK, lineHeight: 1.05, margin: 0 }}>
+                        Elegir ingredientes<br />reales
+                    </h2>
+                    <p className="gaucho-subtitle" style={{ fontSize: 'clamp(1.8rem, 3.8vw, 3.2rem)', fontStyle: 'italic', color: G_BROWN, lineHeight: 1.1, margin: '4px 0 0' }}>
+                        marca la diferencia.
+                    </p>
+                    <div style={{ width: 72, height: 2, backgroundColor: G_BROWN, borderRadius: 2, marginTop: 14, marginBottom: 28, opacity: 0.5 }} />
+
+                    {/* Body */}
+                    <p className="gaucho-body" style={{ fontSize: '0.97rem', color: '#666', lineHeight: 1.75, marginBottom: 32, maxWidth: 400 }}>
+                        Comida natural hecha con ingredientes que podés reconocer.<br />
+                        <strong style={{ color: G_DARK }}>Sin ultraprocesados.<br />Sin aditivos innecesarios.</strong>
+                    </p>
+
+                    {/* 3-column mini features */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginBottom: 36 }}>
+                        {features.map(({ Icon, title, desc }) => (
+                            <div key={title} style={{ textAlign: 'center' }}>
+                                <div style={{ width: 44, height: 44, borderRadius: '50%', backgroundColor: `${G_OLIVE}18`, border: `1px solid ${G_OLIVE}28`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px' }}>
+                                    <Icon size={18} strokeWidth={1.5} style={{ color: G_OLIVE }} />
                                 </div>
-                            ))}
-                        </div>
-                        <p style={{ marginTop: 32, fontSize: 12, color: '#999', fontStyle: 'italic' }}>
-                            Comida real. Amor que se nota. Todos los días.
-                        </p>
+                                <p className="gaucho-body" style={{ fontWeight: 700, fontSize: 11, color: G_DARK, marginBottom: 4, lineHeight: 1.3 }}>{title}</p>
+                                <p className="gaucho-body" style={{ fontSize: 10, color: '#888', lineHeight: 1.5 }}>{desc}</p>
+                            </div>
+                        ))}
                     </div>
 
-                    {/* Right: organic photo */}
-                    <div style={{ position: 'relative' }}>
-                        <OrganicPhoto src="/gaucho/dog-cta-transparent.png" alt="Perro feliz con ingredientes naturales" id="op-dog" />
-                        <div style={{ position: 'absolute', bottom: '10%', right: '-2%', backgroundColor: 'white', borderRadius: 18, padding: '12px 16px', boxShadow: '0 8px 28px rgba(0,0,0,0.10)', display: 'flex', alignItems: 'center', gap: 10 }}>
-                            <PawPrint style={{ width: 28, height: 28, color: G_CORAL, position: 'static' }} />
-                            <div>
-                                <p style={{ fontWeight: 800, color: G_GREEN, fontSize: 17, lineHeight: 1 }}>+500</p>
-                                <p style={{ fontSize: 10, color: '#999' }}>mascotas felices</p>
-                            </div>
+                    {/* CTA */}
+                    <a href="#nosotros" className="gaucho-body"
+                        style={{ display: 'inline-flex', alignItems: 'center', gap: 8, backgroundColor: G_CORAL, color: 'white', padding: '14px 30px', borderRadius: 50, fontSize: 12, fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase', textDecoration: 'none', boxShadow: `0 8px 28px ${G_CORAL}40` }}>
+                        Conocé más sobre Gaucho 🌿
+                    </a>
+                </div>
+
+                {/* ── Right: dark green organic blob + photo + quote ── */}
+                <div style={{ position: 'relative', minHeight: 480 }}>
+                    {/* Organic blob — fills column height */}
+                    <div style={{
+                        position: 'absolute',
+                        top: 24, bottom: 24,
+                        left: 32, right: -8,
+                        backgroundColor: G_DARK,
+                        borderRadius: '58% 42% 52% 48% / 44% 56% 44% 56%',
+                        overflow: 'hidden',
+                    }}>
+                        {/* Quote overlay — upper area of blob */}
+                        <div style={{ position: 'absolute', top: '10%', left: '12%', zIndex: 20, maxWidth: 190 }}>
+                            <p className="gaucho-subtitle" style={{ fontSize: 'clamp(0.95rem, 1.8vw, 1.2rem)', fontStyle: 'italic', color: 'white', lineHeight: 1.65, opacity: 0.92, textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
+                                ♡ El amor también<br />se demuestra<br />en su plato.
+                            </p>
                         </div>
+                        {/* Ingredients photo — lower-right of blob */}
+                        <img
+                            src="/gaucho/ingredients.png.png"
+                            alt="Ingredientes naturales frescos"
+                            style={{ position: 'absolute', bottom: 0, right: 0, width: '85%', height: '70%', objectFit: 'cover', filter: 'saturate(1.05) brightness(1.02)' }}
+                        />
                     </div>
+                    {/* Leaf accents outside blob */}
+                    <LeafDecor style={{ width: 50, height: 75, top: '8%', right: 4, color: G_OLIVE, opacity: 0.28, transform: 'rotate(16deg)' }} />
+                    <LeafDecor style={{ width: 36, height: 54, bottom: '12%', right: 10, color: G_GOLDEN, opacity: 0.20, transform: 'rotate(-10deg)' }} />
                 </div>
             </div>
         </section>
