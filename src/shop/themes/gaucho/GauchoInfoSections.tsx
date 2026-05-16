@@ -1,6 +1,19 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp, Leaf, ShieldCheck, Zap, Heart, Package, Truck, MessageCircle, Star, ArrowRight } from "lucide-react";
 
+function Wave({ from, to, flip = false }: { from: string; to: string; flip?: boolean }) {
+    const path = flip
+        ? "M0,30 C360,0 1080,60 1440,30 L1440,60 L0,60 Z"
+        : "M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z";
+    return (
+        <div style={{ backgroundColor: from, lineHeight: 0, display: 'block', marginBottom: '-1px' }}>
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: '52px' }}>
+                <path d={path} fill={to} />
+            </svg>
+        </div>
+    );
+}
+
 const G_GREEN = '#2D5F34';
 const G_GOLDEN = '#D4A574';
 const G_CREAM = '#F5F1EB';
@@ -271,6 +284,7 @@ export function GauchoInfoSections({ whatsapp }: GauchoInfoSectionsProps) {
 
             {/* ── CTA Banner ────────────────────────────────────────────── */}
             <CTABanner whatsapp={whatsapp} />
+            <Wave from="#1A3D20" to={G_GREEN} flip />
 
             {/* ── Credentials strip ─────────────────────────────────────── */}
             <div className="py-4 px-4 overflow-x-auto no-scrollbar" style={{ backgroundColor: G_GREEN }}>
@@ -283,6 +297,7 @@ export function GauchoInfoSections({ whatsapp }: GauchoInfoSectionsProps) {
                     ))}
                 </div>
             </div>
+            <Wave from={G_GREEN} to={G_WARM_WHITE} flip />
 
             {/* ── Benefits ──────────────────────────────────────────────── */}
             <section className="py-16 px-4" style={{ backgroundColor: G_WARM_WHITE }}>
@@ -309,6 +324,8 @@ export function GauchoInfoSections({ whatsapp }: GauchoInfoSectionsProps) {
                 </div>
             </section>
 
+            <Wave from={G_WARM_WHITE} to={G_CREAM} />
+
             {/* ── Weight Guide ───────────────────────────────────────────── */}
             <section id="guia-pesos" className="py-16 px-4" style={{ backgroundColor: G_CREAM }}>
                 <div className="max-w-2xl mx-auto">
@@ -324,6 +341,8 @@ export function GauchoInfoSections({ whatsapp }: GauchoInfoSectionsProps) {
                     <WeightGuide />
                 </div>
             </section>
+
+            <Wave from={G_CREAM} to={G_WARM_WHITE} flip />
 
             {/* ── Transition guide ──────────────────────────────────────── */}
             <section className="py-16 px-4" style={{ backgroundColor: G_WARM_WHITE }}>
@@ -363,6 +382,8 @@ export function GauchoInfoSections({ whatsapp }: GauchoInfoSectionsProps) {
                 </div>
             </section>
 
+            <Wave from={G_WARM_WHITE} to={G_CREAM} />
+
             {/* ── Tips ──────────────────────────────────────────────────── */}
             <section id="tips" className="py-16 px-4" style={{ backgroundColor: G_CREAM }}>
                 <div className="max-w-3xl mx-auto">
@@ -387,6 +408,8 @@ export function GauchoInfoSections({ whatsapp }: GauchoInfoSectionsProps) {
                 </div>
             </section>
 
+            <Wave from={G_CREAM} to={G_WARM_WHITE} flip />
+
             {/* ── FAQ ───────────────────────────────────────────────────── */}
             <section id="faq" className="py-16 px-4" style={{ backgroundColor: G_WARM_WHITE }}>
                 <div className="max-w-2xl mx-auto">
@@ -403,6 +426,8 @@ export function GauchoInfoSections({ whatsapp }: GauchoInfoSectionsProps) {
                     </div>
                 </div>
             </section>
+
+            <Wave from={G_WARM_WHITE} to={G_GREEN} />
 
             {/* ── Mascots Gallery ───────────────────────────────────────── */}
             <section className="py-16 px-4 overflow-hidden" style={{ backgroundColor: G_GREEN }}>
@@ -426,6 +451,8 @@ export function GauchoInfoSections({ whatsapp }: GauchoInfoSectionsProps) {
                     </div>
                 </div>
             </section>
+
+            <Wave from={G_GREEN} to={G_CREAM} flip />
 
             {/* ── Testimonials ──────────────────────────────────────────── */}
             <section id="testimonios" className="py-16 px-4" style={{ backgroundColor: G_CREAM }}>
@@ -464,6 +491,8 @@ export function GauchoInfoSections({ whatsapp }: GauchoInfoSectionsProps) {
                     </div>
                 </div>
             </section>
+
+            <Wave from={G_CREAM} to={G_GREEN} />
 
             {/* ── Shipping process ──────────────────────────────────────── */}
             <section id="envios" className="py-16 px-4" style={{ backgroundColor: G_GREEN }}>

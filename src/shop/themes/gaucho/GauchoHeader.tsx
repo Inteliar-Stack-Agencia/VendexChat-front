@@ -2,6 +2,19 @@ import { Search, Instagram, Facebook, ShoppingCart, Leaf, Truck, Check, Star } f
 import AssistantIcon from "../../../components/icons/AssistantIcon";
 import { getSocialLink } from "../../../utils/format";
 
+function Wave({ from, to, flip = false }: { from: string; to: string; flip?: boolean }) {
+    const path = flip
+        ? "M0,30 C360,0 1080,60 1440,30 L1440,60 L0,60 Z"
+        : "M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z";
+    return (
+        <div style={{ backgroundColor: from, lineHeight: 0, display: 'block', marginBottom: '-1px' }}>
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: '52px' }}>
+                <path d={path} fill={to} />
+            </svg>
+        </div>
+    );
+}
+
 const G_GREEN = '#2D5F34';
 const G_GOLDEN = '#D4A574';
 const G_CREAM = '#F5F1EB';
@@ -351,7 +364,9 @@ export function GauchoHeader({
             </div>
 
             <HeroSection name={name} logo={logo} whatsapp={whatsapp} address={address} />
+            <Wave from={G_CREAM} to={G_WARM_WHITE} />
             <FeatureCardsStrip />
+            <Wave from={G_WARM_WHITE} to={G_CREAM} flip />
             <WeCareSection />
         </header>
     );
