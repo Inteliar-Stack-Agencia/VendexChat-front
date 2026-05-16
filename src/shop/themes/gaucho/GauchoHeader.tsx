@@ -59,7 +59,7 @@ function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
         : '#productos';
 
     return (
-        <section style={{ display: 'block', backgroundColor: '#F5EDDB', lineHeight: 0 }}>
+        <section style={{ display: 'block', backgroundColor: '#F5EDDB', lineHeight: 0, position: 'relative', maxWidth: 1920, margin: '0 auto' }}>
             <a href={waLink} target={whatsapp ? '_blank' : undefined} rel={whatsapp ? 'noreferrer' : undefined}
                 style={{ display: 'block', lineHeight: 0 }}>
                 <picture>
@@ -71,6 +71,12 @@ function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
                     />
                 </picture>
             </a>
+            {/* Organic wave overlay — adds depth and "movement" between hero and content */}
+            <div style={{ position: 'absolute', bottom: -1, left: 0, right: 0, zIndex: 5, lineHeight: 0, pointerEvents: 'none' }}>
+                <svg viewBox="0 0 1440 90" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 90 }}>
+                    <path d="M0,90 C180,40 360,80 540,50 C720,20 900,70 1080,45 C1260,20 1380,60 1440,40 L1440,90 Z" fill="#F5EDDB" opacity="0.97" />
+                </svg>
+            </div>
         </section>
     );
 }
