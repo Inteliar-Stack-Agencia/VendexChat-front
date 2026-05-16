@@ -1,4 +1,4 @@
-import { Search, Instagram, ShoppingCart, Package, Heart, Leaf, Lightbulb, ArrowRightLeft, Calculator, Truck } from "lucide-react";
+import { Search, Instagram, ShoppingCart, Package, Heart, Leaf, Lightbulb, ArrowRightLeft, Calculator, Truck, Zap, Shield, Dna } from "lucide-react";
 import AssistantIcon from "../../../components/icons/AssistantIcon";
 import { getSocialLink } from "../../../utils/format";
 
@@ -119,74 +119,71 @@ function OrganicPhoto({ src, alt, id, style }: { src: string; alt: string; id: s
     );
 }
 
+/* ── Shared: IG-style section title ─────────────────────────────────────── */
+
+function IgTitle({ label, bold, italic, light = false }: { label: string; bold: string; italic: string; light?: boolean }) {
+    return (
+        <div style={{ marginBottom: 36 }}>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: light ? G_GOLDEN : G_CORAL, marginBottom: 14 }}>{label}</p>
+            <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.5rem)', fontWeight: 800, color: light ? 'white' : G_DARK, lineHeight: 1.2, margin: 0 }}>
+                {bold}<br />
+                <em style={{ fontStyle: 'italic', fontWeight: 700, color: light ? G_GOLDEN : G_BROWN }}>{italic}</em>
+            </h2>
+            <div style={{ width: 36, height: 2.5, backgroundColor: light ? G_GOLDEN : G_GOLDEN, borderRadius: 2, marginTop: 16 }} />
+        </div>
+    );
+}
+
 /* ── Benefits ─────────────────────────────────────────────────────────────── */
 
 function BenefitsSection() {
-    const benefits = [
-        { icon: '🥩', title: 'Ingredientes reales', desc: 'Pollo, carne y verduras frescas de origen trazable.' },
-        { icon: '🌾', title: 'Sin cereales', desc: 'Mejor digestión, menos inflamación, más energía.' },
-        { icon: '🚫', title: 'Sin aditivos', desc: 'Cero colorantes, conservantes ni artificiales.' },
-        { icon: '💪', title: 'Más vitalidad', desc: 'Pelaje brillante, energía y sistema inmune fuerte.' },
-        { icon: '🇦🇷', title: '100% argentino', desc: 'Producido con ingredientes frescos locales.' },
-        { icon: '❤️', title: 'Hecho con amor', desc: 'Cada porción pensada para el bienestar de tu mascota.' },
+    const benefits: { Icon: React.ElementType; title: string; desc: string }[] = [
+        { Icon: Leaf,   title: 'Ingredientes naturales',        desc: 'Pollo, carne y verduras frescas. Lo que ves en la etiqueta es lo que come tu mascota.' },
+        { Icon: Shield, title: 'Sin conservantes artificiales', desc: 'Cero colorantes ni aditivos. Solo lo que la naturaleza ofrece.' },
+        { Icon: Zap,    title: 'Más energía y vitalidad',       desc: 'Un sistema inmune fuerte, pelaje brillante y más ganas de jugar.' },
+        { Icon: Heart,  title: 'Nutrición balanceada',          desc: 'Fórmulas completas para cada etapa de vida de tu compañero.' },
     ];
 
     return (
-        <section id="beneficios" style={{ backgroundColor: G_CREAM, position: 'relative', overflow: 'hidden', paddingTop: 72, paddingBottom: 72 }}>
-            {/* Decorative paw prints */}
-            <PawPrint style={{ width: 120, height: 120, top: 20, right: '5%', color: G_GREEN, opacity: 0.06, transform: 'rotate(20deg)' }} />
-            <PawPrint style={{ width: 80, height: 80, bottom: 40, left: '3%', color: G_GOLDEN, opacity: 0.12, transform: 'rotate(-15deg)' }} />
-            <LeafDecor style={{ width: 80, height: 120, top: 30, left: '8%', color: G_GREEN, opacity: 0.08, transform: 'rotate(-20deg)' }} />
-            <LeafDecor style={{ width: 60, height: 90, bottom: 20, right: '3%', color: G_OLIVE, opacity: 0.1, transform: 'rotate(30deg)' }} />
+        <section id="beneficios" style={{ backgroundColor: G_CREAM, position: 'relative', overflow: 'hidden', paddingTop: 80, paddingBottom: 80 }}>
+            <PawPrint style={{ width: 130, height: 130, top: 16, right: '4%', color: G_GREEN, opacity: 0.05, transform: 'rotate(18deg)' }} />
+            <PawPrint style={{ width: 80, height: 80, bottom: 32, left: '3%', color: G_GOLDEN, opacity: 0.10, transform: 'rotate(-12deg)' }} />
+            <LeafDecor style={{ width: 70, height: 105, top: 24, left: '5%', color: G_GREEN, opacity: 0.07, transform: 'rotate(-22deg)' }} />
+            <LeafDecor style={{ width: 55, height: 80, bottom: 16, right: '2%', color: G_OLIVE, opacity: 0.09, transform: 'rotate(28deg)' }} />
 
             <div className="max-w-6xl mx-auto px-6 md:px-12" style={{ position: 'relative', zIndex: 10 }}>
-                {/* Header */}
-                <div className="text-center mb-14">
-                    <p className="gaucho-body text-xs font-bold tracking-widest uppercase mb-3" style={{ color: G_CORAL }}>Por qué elegir Gaucho</p>
-                    <h2 className="gaucho-subtitle font-bold" style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)', color: G_DARK }}>
-                        Comida real para mascotas reales
-                    </h2>
-                </div>
-
-                {/* Two columns: image left, benefits right */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-                    {/* Image */}
-                    <div style={{ position: 'relative' }}>
-                        <OrganicPhoto src="/gaucho/dog-cta-transparent.png" alt="Perro feliz con ingredientes naturales" id="op-dog" />
-                        {/* Floating badge */}
-                        <div style={{
-                            position: 'absolute', bottom: '8%', right: '-4%',
-                            backgroundColor: 'white', borderRadius: 20,
-                            padding: '12px 18px', boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
-                            display: 'flex', alignItems: 'center', gap: 10,
-                        }}>
-                            <span style={{ fontSize: 28 }}>🐾</span>
-                            <div>
-                                <p className="gaucho-subtitle font-bold" style={{ color: G_GREEN, fontSize: 18, lineHeight: 1 }}>+500</p>
-                                <p className="gaucho-body" style={{ color: '#888', fontSize: 11 }}>mascotas felices</p>
-                            </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    {/* Left: copy + items */}
+                    <div>
+                        <IgTitle label="Por qué elegir Gaucho" bold="Elegir ingredientes de calidad" italic="marca la diferencia." />
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                            {benefits.map(({ Icon, title, desc }) => (
+                                <div key={title} style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+                                    <div style={{ width: 44, height: 44, borderRadius: '50%', backgroundColor: G_GREEN, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: `0 6px 18px ${G_GREEN}30` }}>
+                                        <Icon size={20} color="white" strokeWidth={1.5} />
+                                    </div>
+                                    <div>
+                                        <p style={{ fontWeight: 700, fontSize: 14, color: G_DARK, marginBottom: 3 }}>{title}</p>
+                                        <p style={{ fontSize: 13, color: '#777', lineHeight: 1.55 }}>{desc}</p>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                        <PawPrint style={{ width: 60, height: 60, top: '-5%', left: '5%', color: G_CORAL, opacity: 0.2 }} />
+                        <p style={{ marginTop: 32, fontSize: 12, color: '#999', fontStyle: 'italic' }}>
+                            Comida real. Amor que se nota. Todos los días.
+                        </p>
                     </div>
 
-                    {/* Benefits grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        {benefits.map(b => (
-                            <div key={b.title} style={{
-                                backgroundColor: 'white', borderRadius: 16,
-                                padding: '18px 20px', display: 'flex', gap: 14, alignItems: 'flex-start',
-                                boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
-                                transition: 'transform 0.2s, box-shadow 0.2s',
-                            }}
-                                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)'; (e.currentTarget as HTMLElement).style.boxShadow = `0 12px 32px ${G_GREEN}18`; }}
-                                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ''; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 20px rgba(0,0,0,0.05)'; }}>
-                                <span style={{ fontSize: 26, flexShrink: 0 }}>{b.icon}</span>
-                                <div>
-                                    <p className="gaucho-subtitle font-bold" style={{ color: G_DARK, fontSize: 14, marginBottom: 4 }}>{b.title}</p>
-                                    <p className="gaucho-body" style={{ color: '#777', fontSize: 12, lineHeight: 1.5 }}>{b.desc}</p>
-                                </div>
+                    {/* Right: organic photo */}
+                    <div style={{ position: 'relative' }}>
+                        <OrganicPhoto src="/gaucho/dog-cta-transparent.png" alt="Perro feliz con ingredientes naturales" id="op-dog" />
+                        <div style={{ position: 'absolute', bottom: '10%', right: '-2%', backgroundColor: 'white', borderRadius: 18, padding: '12px 16px', boxShadow: '0 8px 28px rgba(0,0,0,0.10)', display: 'flex', alignItems: 'center', gap: 10 }}>
+                            <PawPrint style={{ width: 28, height: 28, color: G_CORAL, position: 'static' }} />
+                            <div>
+                                <p style={{ fontWeight: 800, color: G_GREEN, fontSize: 17, lineHeight: 1 }}>+500</p>
+                                <p style={{ fontSize: 10, color: '#999' }}>mascotas felices</p>
                             </div>
-                        ))}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -198,63 +195,50 @@ function BenefitsSection() {
 
 function HowItWorksSection() {
     const steps = [
-        { n: '01', icon: '🛒', title: 'Elegís tu menú', desc: 'Seleccioná el plan ideal para el tamaño y etapa de vida de tu mascota.' },
-        { n: '02', icon: '🌿', title: 'Lo preparamos', desc: 'Elaboramos con ingredientes frescos del día, sin conservantes.' },
-        { n: '03', icon: '🚚', title: 'Lo recibís', desc: 'Llega a tu puerta fresco, listo para servir. Sin vueltas.' },
+        { Icon: Package, title: 'Elegís tu menú',  desc: 'Seleccioná el plan ideal para el peso y etapa de vida de tu mascota.' },
+        { Icon: Leaf,    title: 'Lo preparamos',   desc: 'Con ingredientes frescos del día, sin conservantes ni rellenos.' },
+        { Icon: Truck,   title: 'Lo recibís',      desc: 'A tu puerta, fresco y listo para servir. Pequeños cambios, grandes diferencias.' },
     ];
 
     return (
-        <section style={{ backgroundColor: G_DARK, position: 'relative', overflow: 'hidden', paddingTop: 72, paddingBottom: 72 }}>
-            {/* Decorative */}
-            <LeafDecor style={{ width: 100, height: 150, top: 10, left: '2%', color: G_OLIVE, opacity: 0.15, transform: 'rotate(-10deg)' }} />
-            <LeafDecor style={{ width: 70, height: 105, bottom: 10, right: '2%', color: G_GOLDEN, opacity: 0.12, transform: 'rotate(25deg)' }} />
-            <PawPrint style={{ width: 140, height: 140, top: '30%', right: '8%', color: 'white', opacity: 0.04, transform: 'rotate(10deg)' }} />
-            <PawPrint style={{ width: 90, height: 90, bottom: '20%', left: '5%', color: G_GOLDEN, opacity: 0.08 }} />
+        <section style={{ backgroundColor: G_DARK, position: 'relative', overflow: 'hidden', paddingTop: 80, paddingBottom: 80 }}>
+            <LeafDecor style={{ width: 90, height: 135, top: 8, left: '1%', color: G_OLIVE, opacity: 0.14, transform: 'rotate(-12deg)' }} />
+            <LeafDecor style={{ width: 65, height: 95, bottom: 8, right: '1%', color: G_GOLDEN, opacity: 0.11, transform: 'rotate(22deg)' }} />
+            <PawPrint style={{ width: 130, height: 130, top: '25%', right: '6%', color: 'white', opacity: 0.03 }} />
+            <PawPrint style={{ width: 80, height: 80, bottom: '18%', left: '4%', color: G_GOLDEN, opacity: 0.07 }} />
 
             <div className="max-w-6xl mx-auto px-6 md:px-12" style={{ position: 'relative', zIndex: 10 }}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
-                    {/* Left: title + steps */}
-                    <div>
-                        <p className="gaucho-body text-xs font-bold tracking-widest uppercase mb-3" style={{ color: G_GOLDEN }}>Así de fácil</p>
-                        <h2 className="gaucho-subtitle font-bold mb-10" style={{ fontSize: 'clamp(1.9rem, 3.5vw, 2.6rem)', color: 'white' }}>
-                            Cómo funciona
-                        </h2>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
-                            {steps.map((s, i) => (
-                                <div key={s.n} style={{ display: 'flex', gap: 20, alignItems: 'flex-start' }}>
-                                    <div style={{
-                                        width: 52, height: 52, borderRadius: '50%', flexShrink: 0,
-                                        background: `linear-gradient(135deg, ${G_CORAL} 0%, ${G_GOLDEN} 100%)`,
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                        boxShadow: `0 8px 24px ${G_CORAL}40`,
-                                    }}>
-                                        <span style={{ fontSize: 22 }}>{s.icon}</span>
-                                    </div>
-                                    <div>
-                                        <p className="gaucho-body font-bold" style={{ color: G_GOLDEN, fontSize: 11, letterSpacing: '0.1em', marginBottom: 4 }}>PASO {s.n}</p>
-                                        <p className="gaucho-subtitle font-bold" style={{ color: 'white', fontSize: 18, marginBottom: 6 }}>{s.title}</p>
-                                        <p className="gaucho-body" style={{ color: 'rgba(255,255,255,0.65)', fontSize: 13, lineHeight: 1.6 }}>{s.desc}</p>
-                                    </div>
-                                    {i < steps.length - 1 && (
-                                        <div style={{ position: 'absolute', left: 26, marginTop: 54, width: 2, height: 20, backgroundColor: `${G_GOLDEN}30` }} />
-                                    )}
-                                </div>
-                            ))}
+                    {/* Left: organic ingredients photo */}
+                    <div style={{ position: 'relative' }}>
+                        <OrganicPhoto src="/gaucho/ingredients.png.png" alt="Ingredientes naturales frescos" id="op-ingredients" />
+                        <div style={{ position: 'absolute', top: '-4%', left: '-4%', backgroundColor: G_GOLDEN, borderRadius: 14, padding: '10px 16px', boxShadow: `0 8px 24px ${G_GOLDEN}50` }}>
+                            <p style={{ fontWeight: 700, color: G_DARK, fontSize: 13 }}>🌿 Ingredientes reales</p>
                         </div>
                     </div>
 
-                    {/* Right: ingredients photo */}
-                    <div style={{ position: 'relative' }}>
-                        <OrganicPhoto src="/gaucho/ingredients.png.png" alt="Ingredientes naturales frescos" id="op-ingredients" />
-                        {/* Floating label */}
-                        <div style={{
-                            position: 'absolute', top: '-5%', left: '-6%',
-                            backgroundColor: G_GOLDEN, borderRadius: 16,
-                            padding: '10px 16px',
-                            boxShadow: `0 8px 24px ${G_GOLDEN}50`,
-                        }}>
-                            <p className="gaucho-subtitle font-bold" style={{ color: G_DARK, fontSize: 13 }}>🌿 Ingredientes reales</p>
+                    {/* Right: steps */}
+                    <div>
+                        <IgTitle label="Así de fácil" bold="La diferencia muchas" italic="veces se nota." light />
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+                            {steps.map(({ Icon, title, desc }, i) => (
+                                <div key={title} style={{ display: 'flex', gap: 18, alignItems: 'flex-start' }}>
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
+                                        <div style={{ width: 50, height: 50, borderRadius: '50%', background: `linear-gradient(135deg, ${G_CORAL} 0%, ${G_GOLDEN} 100%)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: `0 8px 20px ${G_CORAL}40` }}>
+                                            <Icon size={20} color="white" strokeWidth={1.5} />
+                                        </div>
+                                        {i < steps.length - 1 && <div style={{ width: 1, height: 28, backgroundColor: `${G_GOLDEN}30`, marginTop: 4 }} />}
+                                    </div>
+                                    <div style={{ paddingTop: 6 }}>
+                                        <p style={{ fontWeight: 700, fontSize: 16, color: 'white', marginBottom: 5 }}>{title}</p>
+                                        <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.60)', lineHeight: 1.6 }}>{desc}</p>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
+                        <p style={{ marginTop: 36, fontSize: 12, color: `${G_GOLDEN}99`, fontStyle: 'italic' }}>
+                            Elegí comida real. Elegí salud y bienestar para tu mejor amigo.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -268,48 +252,41 @@ function AboutSection() {
     const stats = [
         { n: '+500', label: 'Mascotas felices' },
         { n: '100%', label: 'Natural' },
-        { n: '0', label: 'Conservantes' },
-        { n: '🇦🇷', label: 'Hecho en Argentina' },
+        { n: '0',    label: 'Conservantes' },
+        { n: '🇦🇷',  label: 'Hecho en Argentina' },
     ];
 
     return (
-        <section id="nosotros" style={{ backgroundColor: G_BEIGE, position: 'relative', overflow: 'hidden', paddingTop: 72, paddingBottom: 72 }}>
-            <PawPrint style={{ width: 160, height: 160, top: '5%', right: '1%', color: G_GREEN, opacity: 0.05, transform: 'rotate(15deg)' }} />
-            <PawPrint style={{ width: 100, height: 100, bottom: '8%', left: '2%', color: G_CORAL, opacity: 0.07, transform: 'rotate(-20deg)' }} />
-            <LeafDecor style={{ width: 90, height: 130, bottom: '5%', right: '6%', color: G_GREEN, opacity: 0.08, transform: 'rotate(15deg)' }} />
-            <LeafDecor style={{ width: 65, height: 95, top: '10%', left: '3%', color: G_OLIVE, opacity: 0.1, transform: 'rotate(-30deg)' }} />
+        <section id="nosotros" style={{ backgroundColor: G_BEIGE, position: 'relative', overflow: 'hidden', paddingTop: 80, paddingBottom: 80 }}>
+            <PawPrint style={{ width: 150, height: 150, top: '4%', right: '1%', color: G_GREEN, opacity: 0.05, transform: 'rotate(14deg)' }} />
+            <PawPrint style={{ width: 90, height: 90, bottom: '6%', left: '2%', color: G_CORAL, opacity: 0.07, transform: 'rotate(-18deg)' }} />
+            <LeafDecor style={{ width: 80, height: 120, bottom: '4%', right: '5%', color: G_GREEN, opacity: 0.07, transform: 'rotate(14deg)' }} />
+            <LeafDecor style={{ width: 60, height: 88, top: '8%', left: '2%', color: G_OLIVE, opacity: 0.09, transform: 'rotate(-28deg)' }} />
 
             <div className="max-w-6xl mx-auto px-6 md:px-12" style={{ position: 'relative', zIndex: 10 }}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
-                    {/* Left: image */}
+                    {/* Left: organic photo */}
                     <div style={{ position: 'relative' }}>
-                        <OrganicPhoto src="/gaucho/mascots-group.png.png" alt="Nuestras mascotas" id="op-mascots" />
-                        <PawPrint style={{ width: 70, height: 70, bottom: '5%', right: '-3%', color: G_CORAL, opacity: 0.25 }} />
-                        <LeafDecor style={{ width: 50, height: 75, top: '5%', left: '-2%', color: G_GREEN, opacity: 0.2, transform: 'rotate(-15deg)' }} />
+                        <OrganicPhoto src="/gaucho/woman-cat.png.png" alt="Amor entre mascota y familia" id="op-mascots" />
+                        <PawPrint style={{ width: 65, height: 65, bottom: '6%', right: '-2%', color: G_CORAL, opacity: 0.22 }} />
+                        <LeafDecor style={{ width: 46, height: 68, top: '4%', left: '-1%', color: G_GREEN, opacity: 0.18, transform: 'rotate(-14deg)' }} />
                     </div>
 
                     {/* Right: text */}
                     <div>
-                        <p className="gaucho-body text-xs font-bold tracking-widest uppercase mb-3" style={{ color: G_CORAL }}>Nuestra historia</p>
-                        <h2 className="gaucho-subtitle font-bold mb-6" style={{ fontSize: 'clamp(1.9rem, 3.5vw, 2.5rem)', color: G_DARK }}>
-                            Nos importa la salud de tu mascota
-                        </h2>
-                        <p className="gaucho-body leading-relaxed mb-4" style={{ color: '#666', fontSize: '1rem' }}>
-                            Somos una marca argentina dedicada a ofrecer alimento natural de calidad premium para perros y gatos. Creemos que nuestras mascotas merecen ingredientes reales, sin artificiales ni rellenos.
+                        <IgTitle label="Nuestra historia" bold="Ya no son mascotas." italic="Son familia." />
+                        <p style={{ fontSize: '1rem', color: '#555', lineHeight: 1.75, marginBottom: 16 }}>
+                            Ellos dependen completamente de nosotros. Y eso incluye lo que comen todos los días.
                         </p>
-                        <p className="gaucho-body leading-relaxed mb-10" style={{ color: '#666', fontSize: '1rem' }}>
-                            Cada receta es formulada para garantizar el equilibrio perfecto de nutrientes en cada etapa de vida.
+                        <p style={{ fontSize: '1rem', color: '#555', lineHeight: 1.75, marginBottom: 36 }}>
+                            Somos una marca argentina que cree que cada mascota merece ingredientes reales, sin rellenos ni artificiales. Cada receta es formulada para el equilibrio perfecto de nutrientes en cada etapa de vida.
                         </p>
 
-                        {/* Stats */}
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                             {stats.map(s => (
-                                <div key={s.label} style={{
-                                    backgroundColor: 'white', borderRadius: 16, padding: '18px 14px',
-                                    textAlign: 'center', boxShadow: '0 4px 16px rgba(0,0,0,0.06)',
-                                }}>
-                                    <p className="gaucho-subtitle font-bold" style={{ color: G_GREEN, fontSize: 22, lineHeight: 1.1 }}>{s.n}</p>
-                                    <p className="gaucho-body" style={{ color: '#888', fontSize: 11, marginTop: 4 }}>{s.label}</p>
+                                <div key={s.label} style={{ backgroundColor: 'white', borderRadius: 14, padding: '16px 12px', textAlign: 'center', boxShadow: '0 4px 14px rgba(0,0,0,0.06)' }}>
+                                    <p style={{ fontWeight: 800, color: G_GREEN, fontSize: 20, lineHeight: 1.1 }}>{s.n}</p>
+                                    <p style={{ fontSize: 10, color: '#999', marginTop: 4 }}>{s.label}</p>
                                 </div>
                             ))}
                         </div>
