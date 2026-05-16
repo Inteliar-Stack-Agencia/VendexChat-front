@@ -395,6 +395,8 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
             {isGaucho && (
                 <GauchoInfoSections
                     whatsapp={data.store.whatsapp || data.store.phone || ""}
+                    instagram={data.store.instagram || ""}
+                    facebook={data.store.facebook || ""}
                 />
             )}
 

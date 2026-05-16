@@ -1,5 +1,24 @@
 import { useState } from "react";
-import { ChevronDown, ChevronUp, Leaf, ShieldCheck, Zap, Heart, Package, Truck, MessageCircle, Star, ArrowRight } from "lucide-react";
+import { ChevronDown, ChevronUp, MessageCircle, Instagram, Facebook, Star } from "lucide-react";
+
+const G_GREEN      = '#2D5F34';
+const G_OLIVE      = '#4E7A52';
+const G_GOLDEN     = '#D4A574';
+const G_CREAM      = '#F6F1E7';
+const G_BEIGE      = '#EADFCF';
+const G_WARM_WHITE = '#FFFDF8';
+const G_BROWN      = '#6A3E24';
+const G_CORAL      = '#E97B63';
+const G_SALMON     = '#F29B7A';
+const G_DARK       = '#1F402E';
+
+function WhatsAppIcon({ className }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+    );
+}
 
 function Wave({ from, to, flip = false }: { from: string; to: string; flip?: boolean }) {
     const path = flip
@@ -14,254 +33,225 @@ function Wave({ from, to, flip = false }: { from: string; to: string; flip?: boo
     );
 }
 
-const G_GREEN = '#2D5F34';
-const G_GOLDEN = '#D4A574';
-const G_CREAM = '#F5F1EB';
-const G_WARM_WHITE = '#FFFDF8';
-const G_BROWN = '#6A3E24';
+/* ─── Products Section ──────────────────────────────────────────────────────── */
 
-/* ─── Benefits ─────────────────────────────────────────────────────────── */
-const BENEFITS = [
-    { icon: Leaf,        title: "Ingredientes Reales",    desc: "Pollo, carne, verduras y granos enteros. Lo que ves en la etiqueta es lo que come tu mascota." },
-    { icon: ShieldCheck, title: "Sin Cereales ni Soja",   desc: "Sin maíz, sin trigo, sin soja. Menos inflamación, mejor digestión y más energía." },
-    { icon: Zap,         title: "Sin Aditivos Artificiales", desc: "Sin colorantes, sin conservantes artificiales, sin saborizantes químicos." },
-    { icon: Heart,       title: "Nutrición Completa",     desc: "Recetas balanceadas que cubren todos los requerimientos nutricionales de perros y gatos." },
-    { icon: Package,     title: "Marca Argentina",        desc: "Producción local con ingredientes frescos y trazables. Sabés de dónde viene lo que come." },
-    { icon: Truck,       title: "Entregas Martes y Viernes", desc: "Pedí cuando quieras y coordinamos la entrega en CABA y alrededores." },
-];
+function ProductsSection() {
+    const products = [
+        { name: 'Para Perros', desc: 'Fórmula balanceada para cachorros, adultos y seniors.', emoji: '🐕' },
+        { name: 'Para Gatos', desc: 'Con taurina y arginina. Específico para felinos.', emoji: '🐈' },
+        { name: 'Carne Real', desc: 'Pollo, carne y cerdo como primer ingrediente.', emoji: '🥩' },
+        { name: 'Pack Prueba', desc: 'Perfecto para empezar la transición. Comenzá hoy.', emoji: '📦' },
+    ];
 
-/* ─── Transition steps ──────────────────────────────────────────────────── */
+    return (
+        <section id="productos" className="relative overflow-hidden py-24 px-6 md:px-12" style={{ backgroundColor: '#fff' }}>
+            {/* Decorative blob */}
+            <div className="absolute -bottom-24 -left-24 w-96 h-96 pointer-events-none"
+                style={{ background: '#68BE4E', borderRadius: '45% 55% 52% 48% / 48% 45% 55% 52%', opacity: 0.08 }} />
+
+            <div className="max-w-6xl mx-auto relative z-10">
+                <div className="text-center max-w-xl mx-auto mb-14">
+                    <p className="gaucho-body text-sm font-semibold tracking-widest uppercase mb-3" style={{ color: G_SALMON }}>
+                        Nuestras opciones
+                    </p>
+                    <h2 className="gaucho-subtitle font-bold" style={{ fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', color: G_DARK }}>
+                        Productos Destacados
+                    </h2>
+                    <p className="gaucho-body mt-3" style={{ color: '#666', fontSize: '1.02rem' }}>
+                        Diferentes opciones para perros, gatos, cachorros y adultos mayores.
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+                    {products.map((p) => (
+                        <div key={p.name}
+                            className="group rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer"
+                            style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.07)', backgroundColor: G_CREAM }}>
+                            {/* Image area — dark green with pack photo */}
+                            <div className="relative flex items-center justify-center overflow-hidden"
+                                style={{ height: '180px', backgroundColor: G_DARK }}>
+                                <img
+                                    src="/gaucho/pack-bag.png.png"
+                                    alt={p.name}
+                                    className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+                                    style={{ mixBlendMode: 'screen' }}
+                                />
+                                <div className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center rounded-full text-lg"
+                                    style={{ backgroundColor: 'rgba(255,255,255,0.12)' }}>
+                                    {p.emoji}
+                                </div>
+                            </div>
+                            {/* Info */}
+                            <div className="p-4">
+                                <h3 className="gaucho-subtitle font-semibold text-base mb-1" style={{ color: G_GREEN }}>{p.name}</h3>
+                                <p className="gaucho-body text-xs leading-relaxed mb-3" style={{ color: '#666' }}>{p.desc}</p>
+                                <span className="gaucho-body text-xs font-semibold transition-all group-hover:gap-2"
+                                    style={{ color: G_SALMON, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                    Ver más <span className="transition-transform group-hover:translate-x-1">→</span>
+                                </span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/* ─── Transition Section ─────────────────────────────────────────────────── */
+
 const TRANSITION_STEPS = [
-    { week: "Semana 1", pct: "25%", label: "25% natural · 75% anterior", desc: "Empezá con poco. Mezclá el alimento nuevo con el que ya comía." },
-    { week: "Semana 2", pct: "50%", label: "50% natural · 50% anterior", desc: "El sistema digestivo ya lo conoce. Podés aumentar la proporción." },
-    { week: "Semana 3", pct: "75%", label: "75% natural · 25% anterior", desc: "Casi ahí. Seguí observando heces, energía y pelaje." },
-    { week: "Semana 4", pct: "100%",label: "100% Gaucho Natural Pet",    desc: "Transición completa. Tu mascota ya come real." },
+    { n: '1', week: 'Semana 1', pct: '25%', desc: 'Gaucho · 75% Anterior. Empezá con poco. Mezclá con el alimento que ya comía.' },
+    { n: '2', week: 'Semana 2', pct: '50%', desc: 'Gaucho · 50% Anterior. El sistema digestivo ya lo conoce. Aumentá la proporción.' },
+    { n: '3', week: 'Semana 3', pct: '75%', desc: 'Gaucho · 25% Anterior. Casi ahí. Observá heces, energía y pelaje.' },
+    { n: '4', week: 'Semana 4', pct: '100%', desc: 'Gaucho Natural Pet. Transición completa. Tu mascota ya come real.' },
 ];
 
-/* ─── Tips ──────────────────────────────────────────────────────────────── */
-const TIPS = [
-    { emoji: "🥣", title: "Servir a temperatura ambiente", desc: "Si estaba en freezer, descongelá en heladera la noche anterior. Servir frío directo puede causar malestar gástrico." },
-    { emoji: "💧", title: "Agua fresca siempre disponible", desc: "Con alimento húmedo el consumo de agua suele bajar, pero igual es fundamental tenerla en todo momento." },
-    { emoji: "⚖️", title: "Pesá las porciones al inicio",  desc: "En los primeros días pesá con balanza. Después del primer mes ya vas a tener el ojo entrenado." },
-    { emoji: "📅", title: "Dividí en 2 comidas",           desc: "Repartí la porción diaria en mañana y noche. Ayuda a la digestión y evita la torsión gástrica en razas grandes." },
-];
+function TransitionSection() {
+    return (
+        <section className="relative overflow-hidden py-24 px-6 md:px-12"
+            style={{ background: `linear-gradient(135deg, ${G_GREEN} 0%, ${G_OLIVE} 100%)` }}>
+            {/* Blob decorativo */}
+            <div className="absolute -top-24 -right-24 w-96 h-96 pointer-events-none"
+                style={{ background: G_GOLDEN, borderRadius: '55% 45% 48% 52% / 52% 48% 45% 55%', opacity: 0.1 }} />
 
-/* ─── FAQ ───────────────────────────────────────────────────────────────── */
-const FAQS = [
-    { q: "¿A partir de qué edad puede comer alimento natural?",             a: "Cachorros desde las 4 semanas y gatitos desde el destete. Para animales muy pequeños compartimos la guía de porciones por edad por WhatsApp." },
-    { q: "¿Cuánto le doy por día?",                                         a: "La porción estándar es del 2% al 3% del peso corporal para adultos y del 4% al 6% para cachorros. Usá la Guía de Pesos de arriba para calcular la porción exacta." },
-    { q: "¿Cómo conservo el alimento?",                                     a: "En heladera hasta 3 días una vez abierto, o en freezer hasta 3 meses sin abrir. Los packs vienen sellados al vacío para máxima frescura." },
-    { q: "¿Es apto para perros con alergias o sensibilidad alimenticia?",   a: "Sí. La fórmula Hipoalergénica (Cerdo + Batata + Quinoa + Zapallo) está formulada especialmente para mascotas con sensibilidades, sin los alérgenos más comunes." },
-    { q: "¿Puedo hacer el pedido y que llegue el mismo día?",               a: "Los pedidos se procesan y entregan los martes y viernes. Podés pedirlo cualquier día de la semana y coordinamos el próximo día de reparto más cercano." },
-    { q: "¿Mi gato puede comer lo mismo que el perro?",                    a: "No. Los gatos tienen requerimientos muy distintos (taurina, arginina). Tenemos una línea específica para gatos: Pollo + Corazón + Hígado + Zapallo." },
-    { q: "¿Es normal que las heces cambien al inicio?",                     a: "Sí, es completamente normal. Puede haber heces más blandas o un cambio de olor. Se regulariza en 7-10 días, especialmente si hacés la transición gradual." },
-    { q: "¿El alimento es apto para cachorros y adultos mayores?",         a: "Sí. Apto para todas las etapas de vida. Para cachorros y seniors recomendamos ajustar la porción según la Guía de Pesos." },
-];
+            <div className="max-w-5xl mx-auto relative z-10">
+                <div className="text-center mb-14">
+                    <p className="gaucho-body text-sm font-semibold tracking-widest uppercase mb-3" style={{ color: G_GOLDEN }}>
+                        Un cambio que suma calidad
+                    </p>
+                    <h2 className="gaucho-subtitle font-bold text-white" style={{ fontSize: 'clamp(2rem, 4.5vw, 2.8rem)' }}>
+                        Plan de Transición
+                    </h2>
+                    <p className="gaucho-body mt-3 max-w-md mx-auto" style={{ color: 'rgba(255,255,255,0.72)', fontSize: '1rem' }}>
+                        Cambiar de golpe puede causar malestar. La transición gradual en 4 semanas es la forma más segura.
+                    </p>
+                </div>
 
-/* ─── Testimonials ──────────────────────────────────────────────────────── */
-const TESTIMONIALS = [
-    { name: "María G.",  city: "Buenos Aires",  stars: 5, text: "Mi perro mejoró muchísimo el pelaje y la energía. En dos meses no es el mismo animal. 100% recomendado." },
-    { name: "Juan P.",   city: "CABA",          stars: 5, text: "Finalmente comida real para mis dos gatos. Se la devoran en segundos y noto que están más activos." },
-    { name: "Laura M.",  city: "Zona Sur",      stars: 5, text: "Excelente calidad y las entregas siempre llegan el día que dicen. Ya llevo 6 meses siendo cliente." },
-    { name: "Carlos T.", city: "San Martín",    stars: 5, text: "Mi perra tenía problemas digestivos constantes. Con Gaucho mejoró en la primera semana. Increíble." },
-];
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+                    {TRANSITION_STEPS.map((step, i) => (
+                        <div key={step.n}
+                            className="rounded-2xl p-6 text-center transition-all duration-300 hover:-translate-y-1"
+                            style={{
+                                backgroundColor: 'rgba(255,255,255,0.1)',
+                                backdropFilter: 'blur(8px)',
+                                border: '1px solid rgba(255,255,255,0.18)',
+                            }}>
+                            <div className="gaucho-subtitle font-bold text-4xl mb-1" style={{ color: G_GOLDEN }}>{step.n}</div>
+                            <div className="gaucho-body text-sm font-semibold mb-3 text-white">{step.week}</div>
+                            <div className="gaucho-body text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.88)' }}>
+                                <span className="font-bold" style={{ color: G_GOLDEN }}>{step.pct} </span>
+                                {step.desc}
+                            </div>
+                        </div>
+                    ))}
+                </div>
 
-/* ─── Weight guide data ─────────────────────────────────────────────────── */
+                <p className="gaucho-body text-xs text-center mt-8 italic" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                    Mascotas con enfermedades preexistentes: consultá con tu veterinario antes de hacer el cambio.
+                </p>
+            </div>
+        </section>
+    );
+}
+
+/* ─── Weight Guide ───────────────────────────────────────────────────────── */
+
 const DOG_WEIGHTS = [1, 2, 3, 5, 7, 10, 15, 20, 25, 30, 40, 50];
 const CAT_WEIGHTS = [1, 2, 3, 4, 5, 6, 7, 8];
 
 function calcPortions(weightKg: number, petType: 'dog' | 'cat', lifeStage: 'puppy' | 'adult' | 'senior') {
     const pctMap: Record<string, [number, number]> = {
-        'dog-adult':  [0.02, 0.03],
-        'dog-puppy':  [0.04, 0.06],
-        'dog-senior': [0.015, 0.025],
-        'cat-adult':  [0.02, 0.03],
-        'cat-puppy':  [0.04, 0.06],
-        'cat-senior': [0.015, 0.02],
+        'dog-adult': [0.02, 0.03], 'dog-puppy': [0.04, 0.06], 'dog-senior': [0.015, 0.025],
+        'cat-adult': [0.02, 0.03], 'cat-puppy': [0.04, 0.06], 'cat-senior': [0.015, 0.02],
     };
     const [minPct, maxPct] = pctMap[`${petType}-${lifeStage}`];
     const minG = Math.round(weightKg * 1000 * minPct);
     const maxG = Math.round(weightKg * 1000 * maxPct);
-    const daysMin = Math.floor(1000 / maxG);
-    const daysMax = Math.floor(1000 / minG);
-    return { minG, maxG, daysMin, daysMax };
+    return { minG, maxG, daysMin: Math.floor(1000 / maxG), daysMax: Math.floor(1000 / minG) };
 }
 
-/* ─── FAQ Item ──────────────────────────────────────────────────────────── */
-function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
-    const [open, setOpen] = useState(false);
-    return (
-        <div className="rounded-2xl overflow-hidden transition-all"
-            style={{ border: `1px solid ${open ? 'rgba(45,95,52,0.2)' : 'rgba(45,95,52,0.1)'}`, backgroundColor: open ? G_WARM_WHITE : 'rgba(255,253,248,0.6)' }}>
-            <button onClick={() => setOpen(v => !v)} className="w-full flex items-start gap-3 px-5 py-4 text-left">
-                <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black gaucho-body mt-0.5"
-                    style={{ backgroundColor: open ? G_GREEN : G_CREAM, color: open ? G_WARM_WHITE : G_GREEN }}>
-                    {index + 1}
-                </span>
-                <span className="flex-1 gaucho-body text-sm font-semibold leading-snug" style={{ color: G_GREEN }}>{q}</span>
-                <span className="flex-shrink-0 mt-0.5" style={{ color: G_GOLDEN }}>
-                    {open ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                </span>
-            </button>
-            {open && (
-                <div className="px-5 pb-4 pl-14">
-                    <p className="gaucho-body text-sm leading-relaxed" style={{ color: G_BROWN }}>{a}</p>
-                </div>
-            )}
-        </div>
-    );
-}
-
-/* ─── Weight Guide ──────────────────────────────────────────────────────── */
 function WeightGuide() {
-    const [petType, setPetType]     = useState<'dog' | 'cat'>('dog');
+    const [petType, setPetType] = useState<'dog' | 'cat'>('dog');
     const [lifeStage, setLifeStage] = useState<'puppy' | 'adult' | 'senior'>('adult');
-    const [weight, setWeight]       = useState<number>(10);
+    const [weight, setWeight] = useState<number>(10);
 
     const weights = petType === 'dog' ? DOG_WEIGHTS : CAT_WEIGHTS;
     const safeWeight = weights.includes(weight) ? weight : weights[Math.floor(weights.length / 2)];
     const { minG, maxG, daysMin, daysMax } = calcPortions(safeWeight, petType, lifeStage);
 
-    const handlePetTypeChange = (type: 'dog' | 'cat') => {
-        setPetType(type);
-        const newWeights = type === 'dog' ? DOG_WEIGHTS : CAT_WEIGHTS;
-        setWeight(newWeights[Math.floor(newWeights.length / 2)]);
-    };
-
     return (
-        <div className="rounded-3xl overflow-hidden shadow-lg" style={{ border: `1px solid rgba(45,95,52,0.15)`, backgroundColor: G_WARM_WHITE }}>
-            {/* Pet type toggle */}
-            <div className="flex border-b" style={{ borderColor: 'rgba(45,95,52,0.1)' }}>
-                {(['dog', 'cat'] as const).map(type => (
-                    <button
-                        key={type}
-                        onClick={() => handlePetTypeChange(type)}
-                        className="flex-1 py-3.5 gaucho-body text-sm font-black uppercase tracking-widest transition-all"
-                        style={petType === type
-                            ? { backgroundColor: G_GREEN, color: G_WARM_WHITE }
-                            : { backgroundColor: 'transparent', color: G_GREEN }}>
-                        {type === 'dog' ? '🐕 Perros' : '🐈 Gatos'}
-                    </button>
-                ))}
-            </div>
-
-            <div className="p-5 md:p-6">
-                {/* Life stage */}
-                <div className="flex gap-2 mb-5 flex-wrap">
-                    {(['puppy', 'adult', 'senior'] as const).map(stage => {
-                        const labels = { puppy: petType === 'dog' ? 'Cachorro' : 'Gatito', adult: 'Adulto', senior: 'Senior' };
-                        return (
-                            <button
-                                key={stage}
-                                onClick={() => setLifeStage(stage)}
-                                className="px-4 py-1.5 rounded-full gaucho-body text-[10px] font-bold uppercase tracking-widest transition-all"
-                                style={lifeStage === stage
-                                    ? { backgroundColor: G_GOLDEN, color: G_GREEN }
-                                    : { backgroundColor: G_CREAM, color: G_BROWN, border: '1px solid rgba(106,62,36,0.2)' }}>
-                                {labels[stage]}
-                            </button>
-                        );
-                    })}
-                </div>
-
-                {/* Weight selector */}
-                <p className="gaucho-body text-xs font-bold uppercase tracking-widest mb-2" style={{ color: G_BROWN }}>
-                    Peso de tu mascota:
-                </p>
-                <div className="flex flex-wrap gap-2 mb-6">
-                    {weights.map(w => (
-                        <button
-                            key={w}
-                            onClick={() => setWeight(w)}
-                            className="px-3 py-1.5 rounded-xl gaucho-body text-xs font-bold transition-all"
-                            style={safeWeight === w
-                                ? { backgroundColor: G_GREEN, color: G_WARM_WHITE, boxShadow: '0 2px 8px rgba(45,95,52,0.3)' }
-                                : { backgroundColor: G_CREAM, color: G_GREEN, border: '1px solid rgba(45,95,52,0.15)' }}>
-                            {w} kg
-                        </button>
-                    ))}
-                </div>
-
-                {/* Result */}
-                <div className="rounded-2xl p-4 md:p-5" style={{ backgroundColor: G_CREAM, border: `1px solid rgba(45,95,52,0.15)` }}>
-                    <p className="gaucho-body text-xs font-bold uppercase tracking-wider mb-3" style={{ color: G_BROWN }}>
-                        📊 Resultado para {petType === 'dog' ? 'perro' : 'gato'} {({ puppy: petType === 'dog' ? 'cachorro' : 'gatito', adult: 'adulto', senior: 'senior' })[lifeStage]} de {safeWeight} kg:
+        <section id="guia-pesos" className="relative py-24 px-6 md:px-12" style={{ backgroundColor: G_CREAM }}>
+            <div className="max-w-2xl mx-auto">
+                <div className="text-center mb-10">
+                    <p className="gaucho-body text-sm font-semibold tracking-widest uppercase mb-3" style={{ color: G_SALMON }}>Calculadora interactiva</p>
+                    <h2 className="gaucho-subtitle font-bold" style={{ fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', color: G_DARK }}>Guía de Pesos</h2>
+                    <p className="gaucho-body mt-3" style={{ color: '#666' }}>
+                        Seleccioná el tipo de mascota, etapa de vida y peso para calcular la porción exacta.
                     </p>
-                    <div className="grid grid-cols-3 gap-3">
-                        {[
-                            { label: 'Por día',       value: `${minG}–${maxG} g` },
-                            { label: 'Por comida (×2)', value: `${Math.round(minG/2)}–${Math.round(maxG/2)} g` },
-                            { label: 'Rinde (1 kg)',  value: `${daysMin}–${daysMax} días` },
-                        ].map(item => (
-                            <div key={item.label} className="text-center rounded-xl p-2.5" style={{ backgroundColor: G_WARM_WHITE }}>
-                                <p className="gaucho-title text-xl md:text-2xl leading-none" style={{ color: G_GREEN }}>{item.value}</p>
-                                <p className="gaucho-body text-[9px] font-semibold uppercase tracking-wider mt-1" style={{ color: G_BROWN, opacity: 0.7 }}>{item.label}</p>
-                            </div>
+                </div>
+
+                <div className="rounded-3xl overflow-hidden shadow-lg" style={{ backgroundColor: G_WARM_WHITE, border: `1px solid ${G_BEIGE}` }}>
+                    {/* Pet type */}
+                    <div className="flex border-b" style={{ borderColor: G_BEIGE }}>
+                        {(['dog', 'cat'] as const).map(type => (
+                            <button key={type} onClick={() => { setPetType(type); setWeight(type === 'dog' ? 10 : 4); }}
+                                className="flex-1 py-3.5 gaucho-body text-sm font-bold uppercase tracking-widest transition-all"
+                                style={petType === type ? { backgroundColor: G_GREEN, color: '#fff' } : { backgroundColor: 'transparent', color: G_GREEN }}>
+                                {type === 'dog' ? '🐕 Perros' : '🐈 Gatos'}
+                            </button>
                         ))}
                     </div>
-                    <p className="gaucho-body text-[10px] mt-3 italic" style={{ color: 'rgba(106,62,36,0.6)' }}>
-                        * Ajustá según nivel de actividad, estado corporal y recomendación veterinaria.
-                    </p>
-                </div>
-            </div>
-        </div>
-    );
-}
 
-/* ─── CTA Banner ────────────────────────────────────────────────────────── */
-function CTABanner({ whatsapp }: { whatsapp?: string }) {
-    const waLink = whatsapp
-        ? `https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hola! Quiero hacer un pedido de Gaucho Natural Pet 🐾')}`
-        : '#';
+                    <div className="p-5 md:p-6">
+                        {/* Life stage */}
+                        <div className="flex gap-2 mb-5 flex-wrap">
+                            {(['puppy', 'adult', 'senior'] as const).map(stage => {
+                                const labels = { puppy: petType === 'dog' ? 'Cachorro' : 'Gatito', adult: 'Adulto', senior: 'Senior' };
+                                return (
+                                    <button key={stage} onClick={() => setLifeStage(stage)}
+                                        className="px-4 py-1.5 rounded-full gaucho-body text-[10px] font-bold uppercase tracking-widest transition-all"
+                                        style={lifeStage === stage
+                                            ? { backgroundColor: G_GOLDEN, color: G_GREEN }
+                                            : { backgroundColor: G_CREAM, color: G_BROWN, border: `1px solid ${G_BEIGE}` }}>
+                                        {labels[stage]}
+                                    </button>
+                                );
+                            })}
+                        </div>
 
-    return (
-        <section className="relative overflow-hidden" style={{ backgroundColor: '#1A3D20' }}>
-            {/* Decorative background pattern */}
-            <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <pattern id="cta-dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                        <circle cx="20" cy="20" r="3" fill="#D4A574" />
-                    </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#cta-dots)" />
-            </svg>
+                        {/* Weight */}
+                        <p className="gaucho-body text-xs font-bold uppercase tracking-widest mb-2" style={{ color: G_BROWN }}>Peso de tu mascota:</p>
+                        <div className="flex flex-wrap gap-2 mb-6">
+                            {weights.map(w => (
+                                <button key={w} onClick={() => setWeight(w)}
+                                    className="px-3 py-1.5 rounded-xl gaucho-body text-xs font-bold transition-all"
+                                    style={safeWeight === w
+                                        ? { backgroundColor: G_GREEN, color: '#fff', boxShadow: `0 2px 8px ${G_GREEN}40` }
+                                        : { backgroundColor: G_CREAM, color: G_GREEN, border: `1px solid ${G_BEIGE}` }}>
+                                    {w} kg
+                                </button>
+                            ))}
+                        </div>
 
-            <div className="relative max-w-5xl mx-auto px-4 py-16 md:py-20 flex flex-col md:flex-row items-center gap-10">
-                {/* Left: text */}
-                <div className="flex-1 text-center md:text-left">
-                    <p className="gaucho-subtitle text-base mb-3" style={{ color: G_GOLDEN }}>
-                        Martes y viernes en CABA
-                    </p>
-                    <h2 className="gaucho-title text-4xl md:text-6xl leading-none mb-5" style={{ color: G_WARM_WHITE }}>
-                        Hacé tu Pedido<br />Hoy
-                    </h2>
-                    <p className="gaucho-body text-sm leading-relaxed max-w-sm mb-8"
-                        style={{ color: 'rgba(245,241,235,0.75)' }}>
-                        Comida natural entregada en tu puerta. Pedís cuando querés y coordinamos el próximo día de reparto.
-                    </p>
-                    {whatsapp && (
-                        <a href={waLink} target="_blank" rel="noreferrer"
-                            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl font-bold transition-all hover:opacity-90 active:scale-95 shadow-xl gaucho-body text-sm uppercase tracking-widest"
-                            style={{ backgroundColor: G_GOLDEN, color: G_GREEN }}>
-                            <MessageCircle className="w-5 h-5" />
-                            Pedir por WhatsApp
-                            <ArrowRight className="w-4 h-4" />
-                        </a>
-                    )}
-                </div>
-
-                {/* Right: brand dog photo */}
-                <div className="relative flex-shrink-0 flex items-center justify-center w-52 h-52 md:w-64 md:h-64">
-                    <div className="absolute inset-0 rounded-full"
-                        style={{ border: `2px dashed rgba(212,165,116,0.4)` }} />
-                    <div className="w-40 h-40 md:w-52 md:h-52 rounded-full overflow-hidden relative z-10"
-                        style={{ border: `3px solid rgba(212,165,116,0.5)`, backgroundColor: '#1A3D20' }}>
-                        <img
-                            src="/gaucho/dog-cta.png.png"
-                            alt="Perro feliz con Gaucho Natural Pet"
-                            className="w-full h-full object-cover"
-                            style={{ mixBlendMode: 'screen' }}
-                        />
+                        {/* Result */}
+                        <div className="rounded-2xl p-4 md:p-5" style={{ backgroundColor: G_CREAM, border: `1px solid ${G_BEIGE}` }}>
+                            <p className="gaucho-body text-xs font-bold uppercase tracking-wider mb-3" style={{ color: G_BROWN }}>
+                                📊 Resultado para {petType === 'dog' ? 'perro' : 'gato'} {({ puppy: petType === 'dog' ? 'cachorro' : 'gatito', adult: 'adulto', senior: 'senior' })[lifeStage]} de {safeWeight} kg:
+                            </p>
+                            <div className="grid grid-cols-3 gap-3">
+                                {[
+                                    { label: 'Por día', value: `${minG}–${maxG} g` },
+                                    { label: 'Por comida (×2)', value: `${Math.round(minG / 2)}–${Math.round(maxG / 2)} g` },
+                                    { label: 'Rinde (1 kg)', value: `${daysMin}–${daysMax} días` },
+                                ].map(item => (
+                                    <div key={item.label} className="text-center rounded-xl p-2.5" style={{ backgroundColor: G_WARM_WHITE }}>
+                                        <p className="gaucho-subtitle font-bold text-xl leading-none" style={{ color: G_GREEN }}>{item.value}</p>
+                                        <p className="gaucho-body text-[9px] font-semibold uppercase tracking-wider mt-1" style={{ color: G_BROWN, opacity: 0.65 }}>{item.label}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -269,283 +259,305 @@ function CTABanner({ whatsapp }: { whatsapp?: string }) {
     );
 }
 
-/* ─── Main component ────────────────────────────────────────────────────── */
-interface GauchoInfoSectionsProps {
-    whatsapp?: string;
+/* ─── Mascots Gallery ────────────────────────────────────────────────────── */
+
+function MascotsSection() {
+    return (
+        <section className="relative overflow-hidden py-20 px-6 md:px-12" style={{ backgroundColor: G_DARK }}>
+            <div className="max-w-5xl mx-auto">
+                <div className="text-center mb-10">
+                    <p className="gaucho-body text-sm font-semibold tracking-widest uppercase mb-3" style={{ color: G_GOLDEN }}>
+                        Nuestros clientes
+                    </p>
+                    <h2 className="gaucho-subtitle font-bold text-white" style={{ fontSize: 'clamp(2rem, 4.5vw, 2.8rem)' }}>
+                        Mascotas Felices
+                    </h2>
+                    <p className="gaucho-body mt-3 max-w-sm mx-auto" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                        Miles de perros y gatos ya disfrutan de comida real. ¿El tuyo también?
+                    </p>
+                </div>
+                <div className="rounded-3xl overflow-hidden" style={{ backgroundColor: G_DARK }}>
+                    <img
+                        src="/gaucho/mascots.png.png"
+                        alt="Mascotas felices con Gaucho Natural Pet"
+                        className="w-full object-cover"
+                        style={{ mixBlendMode: 'screen' }}
+                    />
+                </div>
+            </div>
+        </section>
+    );
 }
 
-export function GauchoInfoSections({ whatsapp }: GauchoInfoSectionsProps) {
+/* ─── Testimonials ───────────────────────────────────────────────────────── */
+
+const TESTIMONIALS = [
+    { name: 'María G.', city: 'Buenos Aires', stars: 5, text: 'Mi perro mejoró muchísimo el pelaje y la energía. En dos meses no es el mismo animal. 100% recomendado.' },
+    { name: 'Juan P.', city: 'CABA', stars: 5, text: 'Finalmente comida real para mis dos gatos. Se la devoran en segundos y noto que están más activos.' },
+    { name: 'Laura M.', city: 'Zona Sur', stars: 5, text: 'Excelente calidad y las entregas siempre llegan el día que dicen. Ya llevo 6 meses siendo cliente.' },
+    { name: 'Carlos T.', city: 'San Martín', stars: 5, text: 'Mi perra tenía problemas digestivos constantes. Con Gaucho mejoró en la primera semana. Increíble.' },
+];
+
+function TestimonialsSection() {
+    return (
+        <section className="py-24 px-6 md:px-12" style={{ backgroundColor: G_CREAM }}>
+            <div className="max-w-6xl mx-auto">
+                <div className="text-center mb-12">
+                    <p className="gaucho-body text-sm font-semibold tracking-widest uppercase mb-3" style={{ color: G_SALMON }}>
+                        Lo que dicen nuestros clientes
+                    </p>
+                    <h2 className="gaucho-subtitle font-bold" style={{ fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', color: G_DARK }}>
+                        Testimonios
+                    </h2>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+                    {TESTIMONIALS.map((t) => (
+                        <div key={t.name} className="rounded-2xl p-5 flex flex-col gap-3 transition-all hover:shadow-lg hover:-translate-y-1"
+                            style={{ backgroundColor: '#fff', border: `1px solid ${G_BEIGE}`, boxShadow: '0 4px 16px rgba(0,0,0,0.05)' }}>
+                            <div className="flex gap-0.5">
+                                {Array.from({ length: t.stars }).map((_, i) => (
+                                    <Star key={i} className="w-3.5 h-3.5 fill-current" style={{ color: G_GOLDEN }} />
+                                ))}
+                            </div>
+                            <p className="gaucho-body text-xs leading-relaxed italic flex-1" style={{ color: '#555' }}>"{t.text}"</p>
+                            <div className="flex items-center gap-2 border-t pt-3" style={{ borderColor: G_BEIGE }}>
+                                <div className="w-8 h-8 rounded-full flex items-center justify-center gaucho-subtitle font-bold text-sm flex-shrink-0"
+                                    style={{ backgroundColor: G_GREEN, color: '#fff' }}>
+                                    {t.name.charAt(0)}
+                                </div>
+                                <div>
+                                    <p className="gaucho-body text-xs font-semibold" style={{ color: G_GREEN }}>{t.name}</p>
+                                    <p className="gaucho-body text-[9px]" style={{ color: '#999' }}>{t.city}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/* ─── FAQ ────────────────────────────────────────────────────────────────── */
+
+const FAQS = [
+    { q: '¿A partir de qué edad puede comer alimento natural?', a: 'Cachorros desde las 4 semanas y gatitos desde el destete. Para animales muy pequeños compartimos la guía de porciones por edad por WhatsApp.' },
+    { q: '¿Cuánto le doy por día?', a: 'La porción estándar es del 2% al 3% del peso corporal para adultos y del 4% al 6% para cachorros. Usá la Guía de Pesos para calcular la porción exacta.' },
+    { q: '¿Cómo conservo el alimento?', a: 'En heladera hasta 3 días una vez abierto, o en freezer hasta 3 meses sin abrir. Los packs vienen sellados al vacío para máxima frescura.' },
+    { q: '¿Es apto para perros con alergias?', a: 'Sí. La fórmula Hipoalergénica (Cerdo + Batata + Quinoa + Zapallo) está formulada especialmente para mascotas con sensibilidades.' },
+    { q: '¿Puedo hacer el pedido y que llegue el mismo día?', a: 'Los pedidos se procesan y entregan los martes y viernes. Podés pedirlo cualquier día de la semana y coordinamos el próximo día de reparto más cercano.' },
+    { q: '¿Mi gato puede comer lo mismo que el perro?', a: 'No. Los gatos tienen requerimientos muy distintos (taurina, arginina). Tenemos una línea específica para gatos: Pollo + Corazón + Hígado + Zapallo.' },
+];
+
+function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
+    const [open, setOpen] = useState(false);
+    return (
+        <div className="rounded-2xl overflow-hidden transition-all"
+            style={{ border: `1px solid ${open ? G_BEIGE : G_BEIGE}`, backgroundColor: open ? '#fff' : `${G_CREAM}99` }}>
+            <button onClick={() => setOpen(v => !v)} className="w-full flex items-start gap-3 px-5 py-4 text-left">
+                <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black gaucho-body mt-0.5"
+                    style={{ backgroundColor: open ? G_GREEN : G_BEIGE, color: open ? '#fff' : G_GREEN }}>
+                    {index + 1}
+                </span>
+                <span className="flex-1 gaucho-body text-sm font-semibold leading-snug" style={{ color: G_DARK }}>{q}</span>
+                <span className="flex-shrink-0 mt-0.5" style={{ color: G_SALMON }}>
+                    {open ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </span>
+            </button>
+            {open && (
+                <div className="px-5 pb-4 pl-14">
+                    <p className="gaucho-body text-sm leading-relaxed" style={{ color: '#555' }}>{a}</p>
+                </div>
+            )}
+        </div>
+    );
+}
+
+function FaqSection() {
+    return (
+        <section id="faq" className="py-24 px-6 md:px-12" style={{ backgroundColor: '#fff' }}>
+            <div className="max-w-2xl mx-auto">
+                <div className="text-center mb-10">
+                    <p className="gaucho-body text-sm font-semibold tracking-widest uppercase mb-3" style={{ color: G_SALMON }}>
+                        Todo lo que querés saber
+                    </p>
+                    <h2 className="gaucho-subtitle font-bold" style={{ fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', color: G_DARK }}>
+                        Preguntas Frecuentes
+                    </h2>
+                </div>
+                <div className="flex flex-col gap-3">
+                    {FAQS.map((faq, i) => <FaqItem key={i} q={faq.q} a={faq.a} index={i} />)}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/* ─── CTA Final ──────────────────────────────────────────────────────────── */
+
+function CTAFinal({ whatsapp }: { whatsapp?: string }) {
     const waLink = whatsapp
         ? `https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hola! Quiero hacer un pedido de Gaucho Natural Pet 🐾')}`
         : '#';
 
     return (
+        <section className="relative overflow-hidden py-24 px-6 md:px-12" style={{ backgroundColor: G_CREAM }}>
+            {/* Salmon blob */}
+            <div className="absolute -top-24 -left-32 w-[500px] h-[500px] pointer-events-none"
+                style={{ background: G_SALMON, borderRadius: '45% 55% 52% 48% / 48% 45% 55% 52%', opacity: 0.18 }} />
+            {/* Golden blob right */}
+            <div className="absolute -bottom-20 -right-20 w-80 h-80 pointer-events-none"
+                style={{ background: G_GOLDEN, borderRadius: '55% 45% 48% 52% / 52% 48% 45% 55%', opacity: 0.18 }} />
+
+            <div className="relative z-10 max-w-3xl mx-auto text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-6 text-3xl"
+                    style={{ backgroundColor: `${G_CORAL}20` }}>
+                    🐾
+                </div>
+                <h2 className="gaucho-subtitle font-bold mb-5" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', color: G_DARK }}>
+                    ¿Tu mascota ya come real?
+                </h2>
+                <p className="gaucho-body leading-relaxed mb-8 max-w-xl mx-auto" style={{ color: '#555', fontSize: '1.05rem' }}>
+                    Hacé tu pedido hoy. Entregamos los martes y viernes en CABA y alrededores. Comida natural, fresca y sellada al vacío.
+                </p>
+                {whatsapp && (
+                    <a href={waLink} target="_blank" rel="noreferrer"
+                        className="gaucho-body font-semibold inline-flex items-center gap-3 px-10 py-4 rounded-full transition-all hover:opacity-90 active:scale-95"
+                        style={{
+                            background: `linear-gradient(135deg, ${G_CORAL} 0%, ${G_SALMON} 100%)`,
+                            color: '#fff',
+                            fontSize: '1rem',
+                            boxShadow: `0 12px 35px ${G_CORAL}40`,
+                        }}>
+                        <WhatsAppIcon className="w-5 h-5" />
+                        Pedir por WhatsApp
+                    </a>
+                )}
+                <p className="gaucho-body text-xs mt-6 uppercase tracking-widest" style={{ color: `${G_BROWN}80` }}>
+                    Entregas martes y viernes · CABA y alrededores
+                </p>
+            </div>
+        </section>
+    );
+}
+
+/* ─── Footer ─────────────────────────────────────────────────────────────── */
+
+function Footer({ whatsapp, instagram, facebook }: { whatsapp?: string; instagram?: string; facebook?: string }) {
+    return (
+        <footer style={{ backgroundColor: G_GREEN }}>
+            <div className="max-w-6xl mx-auto px-6 md:px-12 py-14 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
+                {/* Brand */}
+                <div>
+                    <h3 className="gaucho-subtitle font-bold text-xl text-white mb-3">Gaucho Natural Pet</h3>
+                    <p className="gaucho-body text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.72)' }}>
+                        Comida real para perros y gatos. Sin aditivos, sin cereales, sin compromisos. Hecho en Argentina.
+                    </p>
+                    <div className="flex gap-3 mt-5">
+                        {instagram && (
+                            <a href={`https://instagram.com/${instagram}`} target="_blank" rel="noreferrer"
+                                className="w-9 h-9 rounded-full flex items-center justify-center transition-all hover:opacity-80"
+                                style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
+                                <Instagram className="w-4 h-4" />
+                            </a>
+                        )}
+                        {whatsapp && (
+                            <a href={`https://wa.me/${whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noreferrer"
+                                className="w-9 h-9 rounded-full flex items-center justify-center transition-all hover:opacity-80"
+                                style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}>
+                                <WhatsAppIcon className="w-4 h-4" />
+                            </a>
+                        )}
+                    </div>
+                </div>
+
+                {/* Links */}
+                <div>
+                    <h3 className="gaucho-subtitle font-semibold text-base text-white mb-4">Navegá</h3>
+                    <ul className="flex flex-col gap-2.5">
+                        {[['#productos', 'Productos'], ['#beneficios', 'Beneficios'], ['#nosotros', 'Nosotros'], ['#guia-pesos', 'Guía de Pesos'], ['#faq', 'Preguntas Frecuentes']].map(([href, label]) => (
+                            <li key={href}>
+                                <a href={href} className="gaucho-body text-sm transition-opacity hover:opacity-70"
+                                    style={{ color: 'rgba(255,255,255,0.75)', textDecoration: 'none' }}>
+                                    {label}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                {/* Contact */}
+                <div>
+                    <h3 className="gaucho-subtitle font-semibold text-base text-white mb-4">Entregas</h3>
+                    <p className="gaucho-body text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.72)' }}>
+                        Martes y viernes en CABA y alrededores. Pedís cuando querés y coordinamos el próximo día de reparto.
+                    </p>
+                    {whatsapp && (
+                        <a href={`https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hola! Quiero hacer un pedido 🐾')}`}
+                            target="_blank" rel="noreferrer"
+                            className="gaucho-body text-sm font-semibold inline-flex items-center gap-2 mt-4 px-5 py-2.5 rounded-full transition-all hover:opacity-90"
+                            style={{ backgroundColor: G_CORAL, color: '#fff' }}>
+                            <WhatsAppIcon className="w-4 h-4" />
+                            Hacer pedido
+                        </a>
+                    )}
+                </div>
+            </div>
+
+            <div className="border-t px-6 md:px-12 py-5 flex flex-col md:flex-row items-center justify-between gap-2"
+                style={{ borderColor: 'rgba(255,255,255,0.12)' }}>
+                <p className="gaucho-body text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                    © {new Date().getFullYear()} Gaucho Natural Pet · Buenos Aires, Argentina
+                </p>
+                <p className="gaucho-body text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                    Comida real · Sin aditivos · Hecho con amor 🐾
+                </p>
+            </div>
+        </footer>
+    );
+}
+
+/* ─── Main export ────────────────────────────────────────────────────────── */
+
+interface GauchoInfoSectionsProps {
+    whatsapp?: string;
+    instagram?: string;
+    facebook?: string;
+}
+
+export function GauchoInfoSections({ whatsapp, instagram, facebook }: GauchoInfoSectionsProps) {
+    return (
         <div className="w-full">
+            <Wave from={G_CREAM} to={G_GREEN} />
 
-            {/* ── CTA Banner ────────────────────────────────────────────── */}
-            <CTABanner whatsapp={whatsapp} />
-            <Wave from="#1A3D20" to={G_GREEN} flip />
-
-            {/* ── Credentials strip ─────────────────────────────────────── */}
-            <div className="py-4 px-4 overflow-x-auto no-scrollbar" style={{ backgroundColor: G_GREEN }}>
-                <div className="flex items-center justify-center gap-2 md:gap-3 w-max md:w-full mx-auto">
-                    {['100% Natural', 'Sin Cereales', 'Sin Soja', 'Sin Aditivos', 'Marca Argentina', 'Perros & Gatos'].map(tag => (
+            {/* Credentials ticker */}
+            <div className="py-3.5 px-4 overflow-x-auto no-scrollbar" style={{ backgroundColor: G_GREEN }}>
+                <div className="flex items-center justify-center gap-3 w-max md:w-full mx-auto">
+                    {['🐾 100% Natural', '🌾 Sin Cereales', '🌿 Sin Soja', '🚫 Sin Aditivos', '🇦🇷 Marca Argentina', '🐕 Perros & Gatos'].map(tag => (
                         <span key={tag} className="gaucho-body text-[9px] md:text-[10px] font-bold uppercase tracking-widest whitespace-nowrap px-3 py-1.5 rounded-full flex-shrink-0"
-                            style={{ backgroundColor: 'rgba(212,165,116,0.18)', color: G_GOLDEN, border: '1px solid rgba(212,165,116,0.35)' }}>
+                            style={{ backgroundColor: 'rgba(212,165,116,0.18)', color: G_GOLDEN, border: '1px solid rgba(212,165,116,0.3)' }}>
                             {tag}
                         </span>
                     ))}
                 </div>
             </div>
-            <Wave from={G_GREEN} to={G_WARM_WHITE} flip />
 
-            {/* ── Benefits ──────────────────────────────────────────────── */}
-            <section className="py-16 px-4" style={{ backgroundColor: G_WARM_WHITE }}>
-                <div className="max-w-4xl mx-auto">
-                    <div className="text-center mb-10">
-                        <p className="gaucho-subtitle text-base mb-2" style={{ color: G_GOLDEN }}>Más bienestar en cada comida</p>
-                        <h2 className="gaucho-title text-4xl md:text-5xl" style={{ color: G_GREEN }}>
-                            Por qué elegir alimento natural
-                        </h2>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                        {BENEFITS.map(({ icon: Icon, title, desc }) => (
-                            <div key={title} className="rounded-2xl p-5 flex flex-col gap-3"
-                                style={{ border: `1px solid rgba(45,95,52,0.1)`, backgroundColor: G_CREAM }}>
-                                <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                                    style={{ backgroundColor: 'rgba(45,95,52,0.1)' }}>
-                                    <Icon className="w-5 h-5" style={{ color: G_GREEN }} />
-                                </div>
-                                <h3 className="gaucho-body font-extrabold text-sm uppercase tracking-tight" style={{ color: G_GREEN }}>{title}</h3>
-                                <p className="gaucho-body text-xs leading-relaxed" style={{ color: G_BROWN }}>{desc}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            <Wave from={G_WARM_WHITE} to={G_CREAM} />
-
-            {/* ── Weight Guide ───────────────────────────────────────────── */}
-            <section id="guia-pesos" className="py-16 px-4" style={{ backgroundColor: G_CREAM }}>
-                <div className="max-w-2xl mx-auto">
-                    <div className="text-center mb-10">
-                        <p className="gaucho-subtitle text-base mb-2" style={{ color: G_GOLDEN }}>Calculadora interactiva</p>
-                        <h2 className="gaucho-title text-4xl md:text-5xl" style={{ color: G_GREEN }}>
-                            Guía de Pesos
-                        </h2>
-                        <p className="gaucho-body text-sm mt-3 max-w-sm mx-auto" style={{ color: G_BROWN }}>
-                            Seleccioná el tipo de mascota, la etapa de vida y el peso. Te calculamos la porción diaria exacta.
-                        </p>
-                    </div>
-                    <WeightGuide />
-                </div>
-            </section>
-
-            <Wave from={G_CREAM} to={G_WARM_WHITE} flip />
-
-            {/* ── Transition guide ──────────────────────────────────────── */}
-            <section className="py-16 px-4" style={{ backgroundColor: G_WARM_WHITE }}>
-                <div className="max-w-3xl mx-auto">
-                    <div className="text-center mb-10">
-                        <p className="gaucho-subtitle text-base mb-2" style={{ color: G_GOLDEN }}>Un cambio que suma calidad</p>
-                        <h2 className="gaucho-title text-4xl md:text-5xl" style={{ color: G_GREEN }}>
-                            Cómo hacer la transición
-                        </h2>
-                        <p className="gaucho-body text-sm mt-3 max-w-md mx-auto" style={{ color: G_BROWN }}>
-                            Cambiar de golpe puede causar malestar digestivo. La transición gradual en 4 semanas es la forma más segura y efectiva.
-                        </p>
-                    </div>
-                    <div className="flex flex-col gap-4">
-                        {TRANSITION_STEPS.map((step, i) => (
-                            <div key={step.week} className="flex items-center gap-4">
-                                <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center shadow-md"
-                                    style={{ backgroundColor: i === TRANSITION_STEPS.length - 1 ? G_GREEN : G_CREAM, border: `2px solid ${G_GREEN}` }}>
-                                    <span className="gaucho-title text-xl" style={{ color: i === TRANSITION_STEPS.length - 1 ? G_WARM_WHITE : G_GREEN }}>
-                                        {step.pct}
-                                    </span>
-                                </div>
-                                <div className="flex-1 rounded-2xl p-4" style={{ backgroundColor: G_CREAM, border: `1px solid rgba(45,95,52,0.1)` }}>
-                                    <div className="flex flex-wrap items-baseline gap-2 mb-1">
-                                        <span className="gaucho-body text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full"
-                                            style={{ backgroundColor: 'rgba(45,95,52,0.08)', color: G_GREEN }}>{step.week}</span>
-                                        <span className="gaucho-body text-sm font-extrabold" style={{ color: G_GREEN }}>{step.label}</span>
-                                    </div>
-                                    <p className="gaucho-body text-xs leading-relaxed" style={{ color: G_BROWN }}>{step.desc}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    <p className="gaucho-body text-xs text-center mt-6 italic" style={{ color: 'rgba(106,62,36,0.5)' }}>
-                        Mascotas con enfermedades preexistentes: consultá con tu veterinario antes de hacer el cambio.
-                    </p>
-                </div>
-            </section>
-
-            <Wave from={G_WARM_WHITE} to={G_CREAM} />
-
-            {/* ── Tips ──────────────────────────────────────────────────── */}
-            <section id="tips" className="py-16 px-4" style={{ backgroundColor: G_CREAM }}>
-                <div className="max-w-3xl mx-auto">
-                    <div className="text-center mb-10">
-                        <p className="gaucho-subtitle text-base mb-2" style={{ color: G_GOLDEN }}>Pequeños detalles, grandes resultados</p>
-                        <h2 className="gaucho-title text-4xl md:text-5xl" style={{ color: G_GREEN }}>
-                            Tips para empezar bien
-                        </h2>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {TIPS.map(tip => (
-                            <div key={tip.title} className="rounded-2xl p-5 flex gap-4"
-                                style={{ backgroundColor: G_WARM_WHITE, border: `1px solid rgba(45,95,52,0.1)` }}>
-                                <span className="text-3xl flex-shrink-0">{tip.emoji}</span>
-                                <div>
-                                    <h3 className="gaucho-body font-extrabold text-sm mb-1" style={{ color: G_GREEN }}>{tip.title}</h3>
-                                    <p className="gaucho-body text-xs leading-relaxed" style={{ color: G_BROWN }}>{tip.desc}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            <Wave from={G_CREAM} to={G_WARM_WHITE} flip />
-
-            {/* ── FAQ ───────────────────────────────────────────────────── */}
-            <section id="faq" className="py-16 px-4" style={{ backgroundColor: G_WARM_WHITE }}>
-                <div className="max-w-2xl mx-auto">
-                    <div className="text-center mb-10">
-                        <p className="gaucho-subtitle text-base mb-2" style={{ color: G_GOLDEN }}>Todo lo que querés saber</p>
-                        <h2 className="gaucho-title text-4xl md:text-5xl" style={{ color: G_GREEN }}>
-                            Preguntas frecuentes
-                        </h2>
-                    </div>
-                    <div className="flex flex-col gap-3">
-                        {FAQS.map((faq, i) => (
-                            <FaqItem key={i} q={faq.q} a={faq.a} index={i} />
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            <Wave from={G_WARM_WHITE} to={G_GREEN} />
-
-            {/* ── Mascots Gallery ───────────────────────────────────────── */}
-            <section className="py-16 px-4 overflow-hidden" style={{ backgroundColor: G_GREEN }}>
-                <div className="max-w-4xl mx-auto">
-                    <div className="text-center mb-10">
-                        <p className="gaucho-subtitle text-base mb-2" style={{ color: G_GOLDEN }}>Nuestros clientes</p>
-                        <h2 className="gaucho-title text-4xl md:text-5xl" style={{ color: G_WARM_WHITE }}>
-                            Mascotas Felices
-                        </h2>
-                        <p className="gaucho-body text-sm mt-3 max-w-sm mx-auto" style={{ color: 'rgba(245,241,235,0.65)' }}>
-                            Miles de perros y gatos ya disfrutan de comida real. ¿El tuyo también?
-                        </p>
-                    </div>
-                    <div className="rounded-3xl overflow-hidden" style={{ backgroundColor: G_GREEN }}>
-                        <img
-                            src="/gaucho/mascots.png.png"
-                            alt="Galería de mascotas felices con Gaucho Natural Pet"
-                            className="w-full object-cover"
-                            style={{ mixBlendMode: 'screen' }}
-                        />
-                    </div>
-                </div>
-            </section>
-
+            <Wave from={G_GREEN} to="#fff" flip />
+            <ProductsSection />
+            <Wave from="#fff" to={G_GREEN} />
+            <TransitionSection />
             <Wave from={G_GREEN} to={G_CREAM} flip />
-
-            {/* ── Testimonials ──────────────────────────────────────────── */}
-            <section id="testimonios" className="py-16 px-4" style={{ backgroundColor: G_CREAM }}>
-                <div className="max-w-4xl mx-auto">
-                    <div className="text-center mb-10">
-                        <p className="gaucho-subtitle text-base mb-2" style={{ color: G_GOLDEN }}>Lo que dicen nuestros clientes</p>
-                        <h2 className="gaucho-title text-4xl md:text-5xl" style={{ color: G_GREEN }}>
-                            Testimonios
-                        </h2>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                        {TESTIMONIALS.map((t) => (
-                            <div key={t.name} className="rounded-2xl p-5 flex flex-col gap-3"
-                                style={{ backgroundColor: G_WARM_WHITE, border: `1px solid rgba(45,95,52,0.12)`, boxShadow: '0 2px 10px rgba(45,95,52,0.06)' }}>
-                                {/* Stars */}
-                                <div className="flex gap-0.5">
-                                    {Array.from({ length: t.stars }).map((_, i) => (
-                                        <Star key={i} className="w-3.5 h-3.5 fill-current" style={{ color: G_GOLDEN }} />
-                                    ))}
-                                </div>
-                                <p className="gaucho-body text-xs leading-relaxed italic flex-1" style={{ color: G_BROWN }}>
-                                    "{t.text}"
-                                </p>
-                                <div className="border-t pt-3 flex items-center gap-2" style={{ borderColor: 'rgba(45,95,52,0.1)' }}>
-                                    <div className="w-8 h-8 rounded-full flex items-center justify-center gaucho-title text-base flex-shrink-0"
-                                        style={{ backgroundColor: G_GREEN, color: G_WARM_WHITE }}>
-                                        {t.name.charAt(0)}
-                                    </div>
-                                    <div>
-                                        <p className="gaucho-body text-xs font-bold" style={{ color: G_GREEN }}>{t.name}</p>
-                                        <p className="gaucho-body text-[9px]" style={{ color: G_BROWN, opacity: 0.6 }}>{t.city}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
+            <WeightGuide />
+            <Wave from={G_CREAM} to={G_DARK} />
+            <MascotsSection />
+            <Wave from={G_DARK} to={G_CREAM} flip />
+            <TestimonialsSection />
+            <Wave from={G_CREAM} to="#fff" />
+            <FaqSection />
+            <Wave from="#fff" to={G_CREAM} flip />
+            <CTAFinal whatsapp={whatsapp} />
             <Wave from={G_CREAM} to={G_GREEN} />
-
-            {/* ── Shipping process ──────────────────────────────────────── */}
-            <section id="envios" className="py-16 px-4" style={{ backgroundColor: G_GREEN }}>
-                <div className="max-w-3xl mx-auto">
-                    <div className="text-center mb-10">
-                        <p className="gaucho-subtitle text-base mb-2" style={{ color: G_GOLDEN }}>CABA y alrededores</p>
-                        <h2 className="gaucho-title text-4xl md:text-5xl" style={{ color: G_WARM_WHITE }}>
-                            Entregas Programadas
-                        </h2>
-                        <p className="gaucho-body text-sm mt-3" style={{ color: 'rgba(245,241,235,0.75)' }}>
-                            Martes y viernes. El proceso es simple:
-                        </p>
-                    </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-                        {[
-                            { n: '1', emoji: '📲', label: 'Hacés tu pedido',   sub: 'Por la tienda o WhatsApp' },
-                            { n: '2', emoji: '💳', label: 'Coordinás el pago', sub: 'Transferencia o efectivo' },
-                            { n: '3', emoji: '📅', label: 'Confirmamos entrega', sub: 'Martes o viernes próximo' },
-                            { n: '4', emoji: '🎉', label: '¡Llega tu comida!',  sub: 'Fresca y lista para servir' },
-                        ].map(step => (
-                            <div key={step.n} className="text-center rounded-2xl p-4"
-                                style={{ backgroundColor: 'rgba(245,241,235,0.08)', border: '1px solid rgba(245,241,235,0.15)' }}>
-                                <div className="w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-2 gaucho-title text-base"
-                                    style={{ backgroundColor: G_GOLDEN, color: G_GREEN }}>
-                                    {step.n}
-                                </div>
-                                <div className="text-2xl mb-1">{step.emoji}</div>
-                                <p className="gaucho-body text-xs font-bold uppercase tracking-wide" style={{ color: G_WARM_WHITE }}>{step.label}</p>
-                                <p className="gaucho-body text-[9px] mt-1" style={{ color: 'rgba(245,241,235,0.55)' }}>{step.sub}</p>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* CTA */}
-                    <div className="text-center">
-                        <p className="gaucho-subtitle text-lg mb-6" style={{ color: G_GOLDEN }}>
-                            Ingredientes nobles. Resultados reales.
-                        </p>
-                        {whatsapp && (
-                            <a href={waLink} target="_blank" rel="noreferrer"
-                                className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl font-bold transition-all hover:opacity-90 active:scale-95 shadow-xl gaucho-body text-sm uppercase tracking-widest"
-                                style={{ backgroundColor: G_GOLDEN, color: G_GREEN }}>
-                                <MessageCircle className="w-5 h-5" />
-                                Hacer pedido por WhatsApp
-                            </a>
-                        )}
-                        <p className="gaucho-body text-[10px] mt-5 uppercase tracking-widest" style={{ color: 'rgba(212,165,116,0.45)' }}>
-                            Entregas martes y viernes · CABA y alrededores
-                        </p>
-                    </div>
-                </div>
-            </section>
-
+            <Footer whatsapp={whatsapp} instagram={instagram} facebook={facebook} />
         </div>
     );
 }
