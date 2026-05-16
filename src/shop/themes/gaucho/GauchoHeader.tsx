@@ -1,4 +1,4 @@
-import { Search, Instagram, ShoppingCart, Package, Heart, Leaf } from "lucide-react";
+import { Search, Instagram, ShoppingCart, Package, Heart, Leaf, Lightbulb, ArrowRightLeft, Calculator, Truck } from "lucide-react";
 import AssistantIcon from "../../../components/icons/AssistantIcon";
 import { getSocialLink } from "../../../utils/format";
 
@@ -212,11 +212,11 @@ export interface GauchoHeaderProps {
 
 function NavHighlight({ href, icon: Icon, label }: { href: string; icon: React.ElementType; label: string }) {
     return (
-        <a href={href} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, textDecoration: 'none' }}>
+        <a href={href} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, textDecoration: 'none' }}>
             <div style={{
-                width: 46, height: 46, borderRadius: '50%',
+                width: 40, height: 40, borderRadius: '50%',
                 background: `linear-gradient(135deg, ${G_CORAL} 0%, ${G_GOLDEN} 100%)`,
-                padding: 2.5, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                padding: 2, display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
                 <div style={{
                     width: '100%', height: '100%', borderRadius: '50%',
@@ -226,10 +226,10 @@ function NavHighlight({ href, icon: Icon, label }: { href: string; icon: React.E
                 }}
                     onMouseEnter={e => ((e.currentTarget as HTMLElement).style.backgroundColor = G_DARK)}
                     onMouseLeave={e => ((e.currentTarget as HTMLElement).style.backgroundColor = G_GREEN)}>
-                    <Icon size={18} color="white" />
+                    <Icon size={15} color="white" />
                 </div>
             </div>
-            <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: 10, fontWeight: 600, letterSpacing: '0.04em', fontFamily: 'inherit' }}>{label}</span>
+            <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: 9, fontWeight: 600, letterSpacing: '0.04em', fontFamily: 'inherit' }}>{label}</span>
         </a>
     );
 }
@@ -250,17 +250,20 @@ export function GauchoHeader({
             <div className="sticky top-0 z-50"
                 style={{ backgroundColor: `rgba(45,95,52,0.97)`, backdropFilter: 'blur(14px)', boxShadow: '0 2px 16px rgba(0,0,0,0.18)' }}>
                 <div className="max-w-7xl mx-auto px-5 py-2 flex items-center gap-4">
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                        <div className="w-8 h-8 rounded-full overflow-hidden" style={{ border: '2px solid rgba(255,255,255,0.3)' }}>
-                            <img src={logo || '/gaucho/logo.png.png'} alt={name} className="w-full h-full object-contain p-0.5" />
+                    <div className="flex items-center flex-shrink-0">
+                        <div className="w-12 h-12 rounded-full overflow-hidden" style={{ border: '2px solid rgba(255,255,255,0.35)' }}>
+                            <img src={logo || '/gaucho/logo.png.png'} alt={name} className="w-full h-full object-contain" />
                         </div>
-                        <span className="hidden md:block gaucho-subtitle font-bold text-base" style={{ color: 'white' }}>{name}</span>
                     </div>
 
-                    <nav className="hidden md:flex items-center gap-5 ml-4">
-                        <NavHighlight href="#productos" icon={Package} label="Productos" />
-                        <NavHighlight href="#beneficios" icon={Heart} label="Beneficios" />
-                        <NavHighlight href="#nosotros" icon={Leaf} label="Nosotros" />
+                    <nav className="hidden md:flex items-center gap-3 ml-3">
+                        <NavHighlight href="#productos"   icon={Package}         label="Productos"   />
+                        <NavHighlight href="#beneficios"  icon={Heart}           label="Beneficios"  />
+                        <NavHighlight href="#nosotros"    icon={Leaf}            label="Nosotros"    />
+                        <NavHighlight href="#tips"        icon={Lightbulb}       label="Tips"        />
+                        <NavHighlight href="#transicion"  icon={ArrowRightLeft}  label="Transición"  />
+                        <NavHighlight href="#calculadora" icon={Calculator}      label="Calculadora" />
+                        <NavHighlight href="#envios"      icon={Truck}           label="Envíos"      />
                     </nav>
 
                     <div className="relative flex-1 max-w-xs mx-auto md:mx-4">
