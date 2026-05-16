@@ -60,20 +60,18 @@ function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
 
     return (
         <section className="relative overflow-hidden" style={{ backgroundColor: G_CREAM }}>
-            {/* Banner principal — reemplazá hero-banner.jpg con el archivo del diseñador */}
             <a href={waLink} target={whatsapp ? '_blank' : undefined} rel={whatsapp ? 'noreferrer' : undefined}
                 style={{ display: 'block', lineHeight: 0 }}>
-                <img
-                    src="/gaucho/hero-banner.jpg"
-                    alt="Gaucho Natural Pet — Comida real, vida real. Alimento natural para perros y gatos."
-                    style={{
-                        width: '100%',
-                        display: 'block',
-                        maxHeight: '90vh',
-                        objectFit: 'cover',
-                        objectPosition: 'center top',
-                    }}
-                />
+                <picture>
+                    {/* Mobile: banner vertical */}
+                    <source media="(max-width: 768px)" srcSet="/gaucho/gaucho_banner_mobile_780x1360.jpg" />
+                    {/* Desktop: banner horizontal */}
+                    <img
+                        src="/gaucho/gaucho_banner_desktop_2880x1240.jpg"
+                        alt="Gaucho Natural Pet — Comida real, vida real. Alimento natural para perros y gatos."
+                        style={{ width: '100%', display: 'block', objectFit: 'cover', objectPosition: 'center top' }}
+                    />
+                </picture>
             </a>
             <CurveDown from={G_CREAM} to="#ffffff" />
         </section>
