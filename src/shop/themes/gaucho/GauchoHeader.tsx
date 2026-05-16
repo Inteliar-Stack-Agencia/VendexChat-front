@@ -103,53 +103,6 @@ function IgTitle({ label, bold, italic, light = false }: { label: string; bold: 
     );
 }
 
-/* ── About ─────────────────────────────────────────────────────────────────── */
-
-function AboutSection() {
-    const stats = [
-        { n: '+500', label: 'Mascotas felices' },
-        { n: '100%', label: 'Natural' },
-        { n: '0',    label: 'Conservantes' },
-        { n: '🇦🇷',  label: 'Hecho en Argentina' },
-    ];
-
-    return (
-        <section id="nosotros" style={{ backgroundColor: G_BEIGE, position: 'relative', overflow: 'hidden', paddingTop: 80, paddingBottom: 80 }}>
-            <PawPrint style={{ width: 150, height: 150, top: '4%', right: '1%', color: G_GREEN, opacity: 0.05, transform: 'rotate(14deg)' }} />
-            <PawPrint style={{ width: 90, height: 90, bottom: '6%', left: '2%', color: G_CORAL, opacity: 0.07, transform: 'rotate(-18deg)' }} />
-            <LeafDecor style={{ width: 80, height: 120, bottom: '4%', right: '5%', color: G_GREEN, opacity: 0.07, transform: 'rotate(14deg)' }} />
-            <LeafDecor style={{ width: 60, height: 88, top: '8%', left: '2%', color: G_OLIVE, opacity: 0.09, transform: 'rotate(-28deg)' }} />
-
-            <div className="max-w-6xl mx-auto px-6 md:px-12" style={{ position: 'relative', zIndex: 10 }}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
-                    <div style={{ position: 'relative' }}>
-                        <OrganicPhoto src="/gaucho/woman-cat.png.png" alt="Amor entre mascota y familia" id="op-mascots" />
-                        <PawPrint style={{ width: 65, height: 65, bottom: '6%', right: '-2%', color: G_CORAL, opacity: 0.22 }} />
-                        <LeafDecor style={{ width: 46, height: 68, top: '4%', left: '-1%', color: G_GREEN, opacity: 0.18, transform: 'rotate(-14deg)' }} />
-                    </div>
-                    <div>
-                        <IgTitle label="Nuestra historia" bold="Ya no son mascotas." italic="Son familia." />
-                        <p style={{ fontSize: '1rem', color: '#555', lineHeight: 1.75, marginBottom: 16 }}>
-                            Ellos dependen completamente de nosotros. Y eso incluye lo que comen todos los días.
-                        </p>
-                        <p style={{ fontSize: '1rem', color: '#555', lineHeight: 1.75, marginBottom: 36 }}>
-                            Somos una marca argentina que cree que cada mascota merece ingredientes reales, sin rellenos ni artificiales. Cada receta es formulada para el equilibrio perfecto de nutrientes en cada etapa de vida.
-                        </p>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                            {stats.map(s => (
-                                <div key={s.label} style={{ backgroundColor: 'white', borderRadius: 14, padding: '16px 12px', textAlign: 'center', boxShadow: '0 4px 14px rgba(0,0,0,0.06)' }}>
-                                    <p style={{ fontWeight: 800, color: G_GREEN, fontSize: 20, lineHeight: 1.1 }}>{s.n}</p>
-                                    <p style={{ fontSize: 10, color: '#999', marginTop: 4 }}>{s.label}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-}
-
 /* ── Main GauchoHeader ───────────────────────────────────────────────────── */
 
 export interface GauchoHeaderProps {
@@ -273,7 +226,6 @@ export function GauchoHeader({
             </div>
 
             <HeroSection whatsapp={whatsapp} address={address} />
-            <AboutSection />
         </header>
     );
 }
