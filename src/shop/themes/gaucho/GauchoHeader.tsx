@@ -51,244 +51,32 @@ function CurveUp({ from, to }: { from: string; to: string }) {
     );
 }
 
-/* ── Hero ─────────────────────────────────────────────────────────────────── */
+/* ── Hero — banner image ───────────────────────────────────────────────────── */
 
-function HeroSection({ whatsapp, address }: { whatsapp?: string; address?: string }) {
+function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
     const waLink = whatsapp
         ? `https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hola! Quiero hacer un pedido de Gaucho Natural Pet 🐾')}`
-        : '#';
+        : '#productos';
 
     return (
-        <>
-            <style>{`
-                @keyframes gnp-bob {
-                    0%, 100% { transform: translateY(0px); }
-                    50%       { transform: translateY(-12px); }
-                }
-                @keyframes gnp-float {
-                    0%, 100% { transform: translateY(0px) rotate(0deg); }
-                    40%      { transform: translateY(-8px) rotate(2deg); }
-                    70%      { transform: translateY(-4px) rotate(-1.5deg); }
-                }
-                .gnp-pet   { animation: gnp-bob 4.2s ease-in-out infinite; }
-                .gnp-leaf1 { animation: gnp-float 3.6s ease-in-out infinite 0.4s; }
-                .gnp-leaf2 { animation: gnp-float 4.8s ease-in-out infinite 1.1s; }
-                .gnp-cta:hover { opacity: 0.88; transform: translateY(-2px); }
-                .gnp-cta { transition: opacity 0.2s, transform 0.2s; }
-            `}</style>
-
-            <section className="relative overflow-hidden" style={{ backgroundColor: G_CREAM, minHeight: '82vh' }}>
-
-                {/* ── Blob verde grande — cubre lado derecho ── */}
-                <div style={{
-                    position: 'absolute',
-                    top: '-20%', right: '-6%',
-                    width: '56%', height: '140%',
-                    backgroundColor: G_GREEN,
-                    borderRadius: '55% 45% 50% 50% / 48% 52% 48% 52%',
-                    zIndex: 0,
-                }} />
-
-                {/* ── Decoraciones de hojas ── */}
-                <LeafSVG style={{ top: '-4%', right: '38%', width: '52px', height: '78px', transform: 'rotate(30deg)', opacity: 0.9, zIndex: 2 }} />
-                <LeafSVG style={{ top: '8%', right: '34%', width: '34px', height: '52px', transform: 'rotate(-20deg)', opacity: 0.7, zIndex: 2 }} />
-                <LeafSVG style={{ bottom: '5%', right: '40%', width: '40px', height: '60px', transform: 'rotate(15deg) scaleX(-1)', opacity: 0.65, zIndex: 2 }} />
-                <LeafSVG style={{ top: '15%', right: '10%', width: '30px', height: '46px', transform: 'rotate(-35deg)', opacity: 0.5, zIndex: 2 }} />
-
-                {/* ── Contenido ── */}
-                <div style={{
-                    maxWidth: '1180px',
-                    margin: '0 auto',
-                    padding: '4rem 2.5rem 3rem',
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 1.05fr',
-                    alignItems: 'center',
-                    gap: '1rem',
-                    minHeight: '80vh',
-                    position: 'relative',
-                    zIndex: 10,
-                }}>
-
-                    {/* ── LEFT: texto ── */}
-                    <div className="order-2 md:order-1" style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
-
-                        {/* Logo + nombre */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                            <div style={{
-                                width: '60px', height: '60px', borderRadius: '50%',
-                                border: `2.5px solid ${G_GREEN}`,
-                                backgroundColor: '#fff',
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                overflow: 'hidden', flexShrink: 0,
-                                boxShadow: '0 4px 14px rgba(45,95,52,0.15)',
-                            }}>
-                                <img src="/gaucho/logo.png.png" alt="Gaucho"
-                                    style={{ width: '50px', height: '50px', objectFit: 'contain' }} />
-                            </div>
-                            <div>
-                                <p style={{
-                                    fontWeight: 900, fontSize: '1.2rem', color: G_DARK,
-                                    letterSpacing: '3px', lineHeight: 1.05,
-                                    fontFamily: 'inherit', textTransform: 'uppercase',
-                                }}>GAUCHO</p>
-                                <p className="gaucho-body" style={{
-                                    fontSize: '0.62rem', color: G_GREEN,
-                                    fontWeight: 700, letterSpacing: '2px',
-                                }}>→ NATURAL PET ←</p>
-                            </div>
-                        </div>
-
-                        {/* Heading */}
-                        <div>
-                            <h1 className="gaucho-subtitle" style={{
-                                fontSize: 'clamp(2.9rem, 6vw, 5.2rem)',
-                                color: G_DARK,
-                                fontWeight: 900,
-                                lineHeight: 0.95,
-                                textTransform: 'uppercase',
-                                letterSpacing: '-2px',
-                                margin: 0,
-                            }}>
-                                COMIDA REAL,
-                            </h1>
-                            <p className="gaucho-subtitle" style={{
-                                fontSize: 'clamp(2.1rem, 4.5vw, 3.9rem)',
-                                fontStyle: 'italic',
-                                color: G_DARK,
-                                fontWeight: 700,
-                                lineHeight: 1.1,
-                                margin: 0,
-                            }}>
-                                vida real.{' '}
-                                <span style={{ color: G_CORAL }}>♥</span>
-                            </p>
-                        </div>
-
-                        {/* Subtítulo */}
-                        <p className="gaucho-body" style={{
-                            fontWeight: 800,
-                            fontSize: '0.8rem',
-                            color: G_GREEN,
-                            textTransform: 'uppercase',
-                            letterSpacing: '2.5px',
-                            lineHeight: 1.6,
-                        }}>
-                            Alimento Natural<br />Para Perros y Gatos
-                        </p>
-
-                        {/* Feature icons */}
-                        <div style={{ display: 'flex', gap: '1.2rem', flexWrap: 'wrap', marginTop: '0.4rem' }}>
-                            {[
-                                { icon: '🌿', label: 'Ingredientes\nReales' },
-                                { icon: '🚫', label: 'Sin Aditivos\nArtificiales' },
-                                { icon: '❤️', label: 'Hecho con Amor\nPara Ellos' },
-                            ].map(item => (
-                                <div key={item.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
-                                    <div style={{
-                                        width: '42px', height: '42px', borderRadius: '50%',
-                                        border: `1.5px solid ${G_GREEN}40`,
-                                        backgroundColor: '#fff',
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                        fontSize: '1.15rem',
-                                        boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
-                                    }}>{item.icon}</div>
-                                    <p className="gaucho-body" style={{
-                                        fontSize: '0.52rem', fontWeight: 800, color: G_GREEN,
-                                        textTransform: 'uppercase', letterSpacing: '0.5px',
-                                        textAlign: 'center', whiteSpace: 'pre-line', lineHeight: 1.4,
-                                    }}>{item.label}</p>
-                                </div>
-                            ))}
-                        </div>
-
-                        {address && (
-                            <p className="gaucho-body" style={{ color: G_BROWN, fontSize: '0.78rem', marginTop: '0.3rem' }}>📍 {address}</p>
-                        )}
-                    </div>
-
-                    {/* ── RIGHT: perro + CTA ── */}
-                    <div className="order-1 md:order-2"
-                        style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', minHeight: '500px' }}>
-
-                        {/* Badge Carne Real */}
-                        <div className="gnp-leaf1" style={{
-                            position: 'absolute', top: '18%', left: '-4%',
-                            backgroundColor: '#fff', borderRadius: '16px', padding: '9px 13px',
-                            boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
-                            display: 'flex', alignItems: 'center', gap: '8px',
-                            zIndex: 20,
-                        }}>
-                            <span style={{ fontSize: '1.25rem' }}>🥩</span>
-                            <div>
-                                <p className="gaucho-body" style={{ fontSize: '9px', fontWeight: 800, textTransform: 'uppercase', color: G_GREEN, lineHeight: 1.2 }}>Carne Real</p>
-                                <p className="gaucho-body" style={{ fontSize: '7.5px', color: '#999' }}>Primer ingrediente</p>
-                            </div>
-                        </div>
-
-                        {/* Badge Sin Cereales */}
-                        <div className="gnp-leaf2" style={{
-                            position: 'absolute', top: '46%', right: '-2%',
-                            backgroundColor: '#fff', borderRadius: '16px', padding: '9px 13px',
-                            boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
-                            display: 'flex', alignItems: 'center', gap: '8px',
-                            zIndex: 20,
-                        }}>
-                            <span style={{ fontSize: '1.25rem' }}>🌿</span>
-                            <div>
-                                <p className="gaucho-body" style={{ fontSize: '9px', fontWeight: 800, textTransform: 'uppercase', color: G_GREEN, lineHeight: 1.2 }}>Sin Cereales</p>
-                                <p className="gaucho-body" style={{ fontSize: '7.5px', color: '#999' }}>0% cereales</p>
-                            </div>
-                        </div>
-
-                        {/* Perro — multiply blends white bg into whatever background is below */}
-                        <img
-                            src="/gaucho/dog-cta.png.png"
-                            alt="Gaucho Natural Pet — perro con ingredientes naturales"
-                            className="gnp-pet"
-                            style={{
-                                position: 'relative',
-                                zIndex: 10,
-                                width: '100%',
-                                maxWidth: '560px',
-                                objectFit: 'contain',
-                                mixBlendMode: 'multiply',
-                                filter: 'drop-shadow(0 18px 40px rgba(0,0,0,0.18))',
-                                marginBottom: '-1rem',
-                            }}
-                        />
-
-                        {/* CTA — "CONOCÉ NUESTROS MENÚS" */}
-                        <a
-                            href={whatsapp ? waLink : '#productos'}
-                            target={whatsapp ? '_blank' : undefined}
-                            rel={whatsapp ? 'noreferrer' : undefined}
-                            className="gaucho-body gnp-cta"
-                            style={{
-                                display: 'inline-flex', alignItems: 'center', gap: '10px',
-                                padding: '0.85rem 2.2rem',
-                                backgroundColor: G_DARK,
-                                color: '#fff',
-                                borderRadius: '50px',
-                                fontWeight: 800,
-                                textDecoration: 'none',
-                                fontSize: '0.78rem',
-                                letterSpacing: '1.5px',
-                                textTransform: 'uppercase',
-                                boxShadow: '0 8px 24px rgba(0,0,0,0.22)',
-                                position: 'relative',
-                                zIndex: 20,
-                            }}
-                        >
-                            Conocé Nuestros Menús →
-                        </a>
-                    </div>
-
-                </div>
-
-                {/* Curva hacia Benefits */}
-                <CurveDown from={G_CREAM} to="#ffffff" />
-            </section>
-        </>
+        <section className="relative overflow-hidden" style={{ backgroundColor: G_CREAM }}>
+            {/* Banner principal — reemplazá hero-banner.jpg con el archivo del diseñador */}
+            <a href={waLink} target={whatsapp ? '_blank' : undefined} rel={whatsapp ? 'noreferrer' : undefined}
+                style={{ display: 'block', lineHeight: 0 }}>
+                <img
+                    src="/gaucho/hero-banner.jpg"
+                    alt="Gaucho Natural Pet — Comida real, vida real. Alimento natural para perros y gatos."
+                    style={{
+                        width: '100%',
+                        display: 'block',
+                        maxHeight: '90vh',
+                        objectFit: 'cover',
+                        objectPosition: 'center top',
+                    }}
+                />
+            </a>
+            <CurveDown from={G_CREAM} to="#ffffff" />
+        </section>
     );
 }
 
