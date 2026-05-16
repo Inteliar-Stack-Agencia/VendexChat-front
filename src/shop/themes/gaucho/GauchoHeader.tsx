@@ -135,95 +135,90 @@ function HeroSection({ whatsapp, address }: { whatsapp?: string; address?: strin
                         )}
                     </div>
 
-                    {/* ── RIGHT: big blob + dog emerging ── */}
-                    <div style={{ position: 'relative', height: '540px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                        className="order-1 md:order-2">
+                    {/* ── RIGHT: blob + dog con ingredientes ── */}
+                    <div style={{ position: 'relative', minHeight: '520px' }}
+                        className="order-1 md:order-2 flex items-center justify-center">
 
-                        {/* ─ Large organic green blob ─ */}
+                        {/* ─ Large organic blob — cubre la mayor parte ─ */}
                         <div style={{
                             position: 'absolute',
-                            top: '8%', left: '8%', right: '-6%', bottom: '4%',
+                            top: '12%', bottom: '0%',
+                            left: '-4%', right: '-8%',
                             backgroundColor: G_GREEN,
-                            borderRadius: '58% 42% 52% 48% / 50% 54% 46% 50%',
-                            boxShadow: `0 32px 80px ${G_GREEN}30`,
+                            borderRadius: '52% 48% 44% 56% / 46% 52% 48% 54%',
+                            boxShadow: `0 28px 70px ${G_GREEN}28`,
                         }} />
 
-                        {/* ─ Coral accent blob — bottom left ─ */}
+                        {/* ─ Coral accent bottom-left ─ */}
                         <div style={{
                             position: 'absolute',
-                            bottom: '8%', left: '2%',
-                            width: '90px', height: '90px',
+                            bottom: '4%', left: '-2%',
+                            width: '80px', height: '80px',
                             backgroundColor: G_CORAL,
-                            borderRadius: '60% 40% 55% 45% / 45% 55% 45% 55%',
-                            boxShadow: `0 8px 24px ${G_CORAL}50`,
+                            borderRadius: '55% 45% 60% 40% / 50% 55% 45% 50%',
                             zIndex: 2,
+                            boxShadow: `0 6px 20px ${G_CORAL}45`,
                         }} />
 
-                        {/* ─ Golden circle detail top right ─ */}
+                        {/* ─ Golden ring detail ─ */}
                         <div style={{
                             position: 'absolute',
-                            top: '6%', right: '10%',
-                            width: '52px', height: '52px',
+                            top: '5%', right: '8%',
+                            width: '48px', height: '48px',
                             border: `3px solid ${G_GOLDEN}`,
                             borderRadius: '50%',
-                            opacity: 0.7,
+                            opacity: 0.65,
                             zIndex: 2,
                         }} />
 
-                        {/* ─ Pet photo — breaking OUT above the blob ─
-                              bottom anchored, top extends beyond blob's top edge */}
-                        <div className="gnp-pet" style={{
-                            position: 'absolute',
-                            bottom: '-2%',
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            width: '88%',
-                            zIndex: 10,
-                        }}>
-                            <img
-                                src="/gaucho/hero-puppy.png.png"
-                                alt="Cachorro feliz Gaucho Natural Pet"
-                                style={{ width: '100%', objectFit: 'contain', mixBlendMode: 'screen' }}
-                            />
-                        </div>
+                        {/* ─ Imagen del perro con ingredientes
+                              imagen landscape → ancho al 100%, perro emerge arriba del blob ─ */}
+                        <img
+                            src="/gaucho/hero-puppy.png.png"
+                            alt="Perro Gaucho Natural Pet con ingredientes naturales"
+                            className="gnp-pet"
+                            style={{
+                                position: 'absolute',
+                                bottom: '-4%',
+                                left: '50%',
+                                transform: 'translateX(-50%)',
+                                width: '108%',
+                                objectFit: 'contain',
+                                mixBlendMode: 'screen',
+                                zIndex: 10,
+                                filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.15))',
+                            }}
+                        />
 
-                        {/* ─ Floating ingredient badge: Carne Real ─ */}
+                        {/* ─ Badge Carne Real ─ */}
                         <div className="gnp-leaf1" style={{
-                            position: 'absolute', top: '18%', left: '-2%',
-                            backgroundColor: '#fff',
-                            borderRadius: '14px', padding: '8px 12px',
-                            boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
-                            display: 'flex', alignItems: 'center', gap: '8px',
-                            zIndex: 20,
-                            border: `1.5px solid ${G_BEIGE}`,
+                            position: 'absolute', top: '14%', left: '-4%',
+                            backgroundColor: '#fff', borderRadius: '14px', padding: '8px 11px',
+                            boxShadow: '0 8px 20px rgba(0,0,0,0.09)',
+                            display: 'flex', alignItems: 'center', gap: '7px',
+                            zIndex: 20, border: `1.5px solid ${G_BEIGE}`,
                         }}>
-                            <span style={{ fontSize: '1.2rem' }}>🥩</span>
+                            <span style={{ fontSize: '1.15rem' }}>🥩</span>
                             <div>
-                                <p className="gaucho-body" style={{ fontSize: '9px', fontWeight: 800, textTransform: 'uppercase', color: G_GREEN }}>Carne Real</p>
-                                <p className="gaucho-body" style={{ fontSize: '8px', color: '#999' }}>Primer ingrediente</p>
+                                <p className="gaucho-body" style={{ fontSize: '9px', fontWeight: 800, textTransform: 'uppercase', color: G_GREEN, lineHeight: 1.2 }}>Carne Real</p>
+                                <p className="gaucho-body" style={{ fontSize: '7.5px', color: '#aaa' }}>Primer ingrediente</p>
                             </div>
                         </div>
 
-                        {/* ─ Floating badge: Sin Cereales ─ */}
+                        {/* ─ Badge Sin Cereales ─ */}
                         <div className="gnp-leaf2" style={{
-                            position: 'absolute', top: '44%', right: '-2%',
-                            backgroundColor: '#fff',
-                            borderRadius: '14px', padding: '8px 12px',
-                            boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
-                            display: 'flex', alignItems: 'center', gap: '8px',
-                            zIndex: 20,
-                            border: `1.5px solid ${G_BEIGE}`,
+                            position: 'absolute', top: '40%', right: '-4%',
+                            backgroundColor: '#fff', borderRadius: '14px', padding: '8px 11px',
+                            boxShadow: '0 8px 20px rgba(0,0,0,0.09)',
+                            display: 'flex', alignItems: 'center', gap: '7px',
+                            zIndex: 20, border: `1.5px solid ${G_BEIGE}`,
                         }}>
-                            <span style={{ fontSize: '1.2rem' }}>🌿</span>
+                            <span style={{ fontSize: '1.15rem' }}>🌿</span>
                             <div>
-                                <p className="gaucho-body" style={{ fontSize: '9px', fontWeight: 800, textTransform: 'uppercase', color: G_GREEN }}>Sin Cereales</p>
-                                <p className="gaucho-body" style={{ fontSize: '8px', color: '#999' }}>100% libre</p>
+                                <p className="gaucho-body" style={{ fontSize: '9px', fontWeight: 800, textTransform: 'uppercase', color: G_GREEN, lineHeight: 1.2 }}>Sin Cereales</p>
+                                <p className="gaucho-body" style={{ fontSize: '7.5px', color: '#aaa' }}>0% cereales</p>
                             </div>
                         </div>
-
-                        {/* ─ Leaf decorations ─ */}
-                        <div style={{ position: 'absolute', top: '9%', right: '20%', fontSize: '1.6rem', zIndex: 15 }} className="gnp-leaf1">🌿</div>
-                        <div style={{ position: 'absolute', bottom: '24%', left: '5%', fontSize: '1.3rem', zIndex: 15 }} className="gnp-leaf2">🍃</div>
                     </div>
 
                 </div>
