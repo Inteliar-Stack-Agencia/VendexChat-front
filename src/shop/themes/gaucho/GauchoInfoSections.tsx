@@ -237,24 +237,17 @@ function CTABanner({ whatsapp }: { whatsapp?: string }) {
                     )}
                 </div>
 
-                {/* Right: real pet photo in circle */}
+                {/* Right: brand dog photo */}
                 <div className="relative flex-shrink-0 flex items-center justify-center w-52 h-52 md:w-64 md:h-64">
                     <div className="absolute inset-0 rounded-full"
                         style={{ border: `2px dashed rgba(212,165,116,0.4)` }} />
                     <div className="w-40 h-40 md:w-52 md:h-52 rounded-full overflow-hidden relative z-10"
-                        style={{ border: `3px solid rgba(212,165,116,0.5)` }}>
+                        style={{ border: `3px solid rgba(212,165,116,0.5)`, backgroundColor: '#1A3D20' }}>
                         <img
-                            src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=512&h=512&fit=crop&q=80"
-                            alt="Golden retriever feliz"
+                            src="/gaucho/dog-cta.png.png"
+                            alt="Perro feliz con Gaucho Natural Pet"
                             className="w-full h-full object-cover"
-                        />
-                    </div>
-                    <div className="absolute -top-2 -right-2 w-11 h-11 rounded-full overflow-hidden shadow-lg z-20"
-                        style={{ border: `2px solid ${G_GOLDEN}` }}>
-                        <img
-                            src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=88&h=88&fit=crop&q=80"
-                            alt="Gato"
-                            className="w-full h-full object-cover"
+                            style={{ mixBlendMode: 'screen' }}
                         />
                     </div>
                 </div>
@@ -407,6 +400,29 @@ export function GauchoInfoSections({ whatsapp }: GauchoInfoSectionsProps) {
                         {FAQS.map((faq, i) => (
                             <FaqItem key={i} q={faq.q} a={faq.a} index={i} />
                         ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* ── Mascots Gallery ───────────────────────────────────────── */}
+            <section className="py-16 px-4 overflow-hidden" style={{ backgroundColor: G_GREEN }}>
+                <div className="max-w-4xl mx-auto">
+                    <div className="text-center mb-10">
+                        <p className="gaucho-subtitle text-base mb-2" style={{ color: G_GOLDEN }}>Nuestros clientes</p>
+                        <h2 className="gaucho-title text-4xl md:text-5xl" style={{ color: G_WARM_WHITE }}>
+                            Mascotas Felices
+                        </h2>
+                        <p className="gaucho-body text-sm mt-3 max-w-sm mx-auto" style={{ color: 'rgba(245,241,235,0.65)' }}>
+                            Miles de perros y gatos ya disfrutan de comida real. ¿El tuyo también?
+                        </p>
+                    </div>
+                    <div className="rounded-3xl overflow-hidden" style={{ backgroundColor: G_GREEN }}>
+                        <img
+                            src="/gaucho/mascots.png.png"
+                            alt="Galería de mascotas felices con Gaucho Natural Pet"
+                            className="w-full object-cover"
+                            style={{ mixBlendMode: 'screen' }}
+                        />
                     </div>
                 </div>
             </section>

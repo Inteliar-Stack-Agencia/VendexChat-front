@@ -105,13 +105,13 @@ function HeroSection({ name, logo, whatsapp, address }: {
                         />
                     </svg>
 
-                    {/* Foto del cachorro con mix-blend-mode para eliminar fondo negro */}
+                    {/* Foto del cachorro — mix-blend-mode:screen hace transparente el fondo negro */}
                     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-56 md:w-72 z-10">
                         <img
-                            src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=576&h=576&fit=crop&crop=top&q=80"
+                            src="/gaucho/hero-puppy.png.png"
                             alt="Cachorro feliz con alimento natural"
                             className="w-full object-cover"
-                            style={{ borderRadius: '50% 50% 0 0' }}
+                            style={{ borderRadius: '50% 50% 0 0', mixBlendMode: 'screen' }}
                         />
                     </div>
 
@@ -197,17 +197,16 @@ function WeCareSection() {
                             fill={G_GREEN} opacity="0.15"/>
                     </svg>
 
-                    {/* Foto persona con mascotas */}
-                    <div className="absolute inset-4 rounded-3xl overflow-hidden shadow-xl">
+                    {/* Foto grupo mascotas + persona — fondo oscuro + screen blend para transparencia */}
+                    <div className="absolute inset-4 rounded-3xl overflow-hidden shadow-xl" style={{ backgroundColor: '#1A3D20' }}>
                         <img
-                            src="https://images.unsplash.com/photo-1601758174493-9c2d3f2baff?w=700&h=600&fit=crop&q=80"
-                            alt="Persona cuidando a su mascota"
+                            src="/gaucho/mascots-group.png.png"
+                            alt="Persona con sus mascotas felices"
                             className="w-full h-full object-cover"
+                            style={{ mixBlendMode: 'screen' }}
                         />
-                        <div className="absolute inset-0"
-                            style={{ background: `linear-gradient(to top, ${G_GREEN}99 0%, transparent 50%)` }} />
                         {/* Badge flotante */}
-                        <div className="absolute bottom-4 left-4 px-3 py-2 rounded-xl"
+                        <div className="absolute bottom-4 left-4 px-3 py-2 rounded-xl z-10"
                             style={{ backgroundColor: G_GOLDEN }}>
                             <p className="gaucho-body text-[10px] font-black uppercase tracking-widest" style={{ color: G_GREEN }}>
                                 🐾 Comida Real
@@ -286,11 +285,9 @@ export function GauchoHeader({
             {/* Sticky nav */}
             <div className="sticky top-0 z-50 shadow-md" style={{ backgroundColor: G_GREEN }}>
                 <div className="max-w-[1440px] mx-auto px-4 py-3 flex items-center gap-3">
-                    {logo && (
-                        <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 border-2" style={{ borderColor: G_GOLDEN }}>
-                            <img src={logo} alt={name} className="w-full h-full object-cover" />
-                        </div>
-                    )}
+                    <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 border-2 bg-white flex-shrink-0" style={{ borderColor: G_GOLDEN }}>
+                        <img src={logo || '/gaucho/logo.png.png'} alt={name} className="w-full h-full object-contain p-0.5" />
+                    </div>
                     <span className="hidden md:block gaucho-title text-base leading-none flex-shrink-0" style={{ color: G_GOLDEN }}>
                         {name}
                     </span>
