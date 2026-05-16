@@ -144,63 +144,62 @@ function HeroSection({ whatsapp, address }: { whatsapp?: string; address?: strin
                         )}
                     </div>
 
-                    {/* ── RIGHT: blob orgánico + perro con alimento ── */}
-                    <div style={{ position: 'relative', minHeight: '600px' }}
-                        className="order-1 md:order-2 flex items-center justify-center">
+                    {/* ── RIGHT: Bernés con ingredientes ── */}
+                    <div style={{ position: 'relative', minHeight: '580px' }}
+                        className="order-1 md:order-2 flex items-end justify-center">
 
-                        {/* ─ Blob orgánico grande — forma asimétrica ─ */}
+                        {/* ─ Blob verde detrás del perro (esquina sup-der) ─ */}
                         <div style={{
                             position: 'absolute',
-                            top: '5%', bottom: '-5%',
-                            left: '-2%', right: '-14%',
+                            top: '0%', right: '-12%',
+                            width: '78%', height: '78%',
                             backgroundColor: G_GREEN,
                             borderRadius: '62% 38% 46% 54% / 60% 44% 56% 40%',
                             boxShadow: `0 32px 80px ${G_GREEN}35`,
+                            zIndex: 0,
                         }} />
 
-                        {/* ─ Coral accent blob bottom-left ─ */}
+                        {/* ─ Coral accent blob (esquina inf-izq) ─ */}
                         <div style={{
                             position: 'absolute',
-                            bottom: '8%', left: '-4%',
-                            width: '78px', height: '78px',
+                            bottom: '12%', left: '-2%',
+                            width: '70px', height: '70px',
                             backgroundColor: G_CORAL,
                             borderRadius: '58% 42% 62% 38% / 48% 60% 40% 52%',
-                            zIndex: 2,
+                            zIndex: 1,
                             boxShadow: `0 8px 24px ${G_CORAL}50`,
                         }} />
 
-                        {/* ─ Golden ring detail ─ */}
+                        {/* ─ Ring dorado decorativo ─ */}
                         <div style={{
                             position: 'absolute',
-                            top: '8%', right: '16%',
-                            width: '42px', height: '42px',
+                            top: '6%', left: '10%',
+                            width: '38px', height: '38px',
                             border: `3px solid ${G_GOLDEN}`,
                             borderRadius: '50%',
                             opacity: 0.7,
-                            zIndex: 2,
+                            zIndex: 1,
                         }} />
 
-                        {/* ─ Perro con ingredientes — imagen sobre fondo negro, screen blend ─ */}
+                        {/* ─ Perro Bernés con ingredientes — fondo blanco sobre cream ─ */}
                         <img
-                            src="/gaucho/hero-composite.png.png"
-                            alt="Perro Gaucho Natural Pet con ingredientes naturales"
+                            src="/gaucho/dog-cta.png.png"
+                            alt="Gaucho Natural Pet — perro con ingredientes naturales"
                             className="gnp-pet"
                             style={{
-                                position: 'absolute',
-                                top: '-8%',
-                                left: '50%',
-                                transform: 'translateX(-46%)',
-                                width: '125%',
+                                position: 'relative',
+                                zIndex: 5,
+                                width: '100%',
+                                maxWidth: '540px',
                                 objectFit: 'contain',
-                                mixBlendMode: 'screen',
-                                zIndex: 10,
-                                filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.1)) brightness(1.08)',
+                                filter: 'drop-shadow(0 16px 40px rgba(45,95,52,0.25))',
+                                marginBottom: '-2%',
                             }}
                         />
 
                         {/* ─ Badge Carne Real ─ */}
                         <div className="gnp-leaf1" style={{
-                            position: 'absolute', top: '20%', left: '-8%',
+                            position: 'absolute', top: '22%', left: '-4%',
                             backgroundColor: '#fff', borderRadius: '14px', padding: '9px 13px',
                             boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
                             display: 'flex', alignItems: 'center', gap: '8px',
@@ -215,7 +214,7 @@ function HeroSection({ whatsapp, address }: { whatsapp?: string; address?: strin
 
                         {/* ─ Badge Sin Cereales ─ */}
                         <div className="gnp-leaf2" style={{
-                            position: 'absolute', top: '44%', right: '-8%',
+                            position: 'absolute', top: '46%', right: '-4%',
                             backgroundColor: '#fff', borderRadius: '14px', padding: '9px 13px',
                             boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
                             display: 'flex', alignItems: 'center', gap: '8px',
