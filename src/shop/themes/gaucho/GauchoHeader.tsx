@@ -62,12 +62,12 @@ function HeroSection({ whatsapp, address }: { whatsapp?: string; address?: strin
                 <div className="gnp-dot-grid absolute inset-y-0 right-0 pointer-events-none" style={{ width: '58%' }} />
 
                 <div style={{
-                    maxWidth: '1380px',
+                    maxWidth: '1100px',
                     margin: '0 auto',
-                    padding: '0 2.5rem',
-                    minHeight: '92vh',
+                    padding: '0 2rem',
+                    minHeight: '88vh',
                     display: 'grid',
-                    gridTemplateColumns: '1fr 1.15fr',
+                    gridTemplateColumns: '1fr 1.05fr',
                     alignItems: 'center',
                     position: 'relative',
                     zIndex: 10,
@@ -136,14 +136,14 @@ function HeroSection({ whatsapp, address }: { whatsapp?: string; address?: strin
                     </div>
 
                     {/* ── RIGHT: blob + dog con ingredientes ── */}
-                    <div style={{ position: 'relative', minHeight: '520px' }}
+                    <div style={{ position: 'relative', minHeight: '560px' }}
                         className="order-1 md:order-2 flex items-center justify-center">
 
-                        {/* ─ Large organic blob — cubre la mayor parte ─ */}
+                        {/* ─ Large organic blob ─ */}
                         <div style={{
                             position: 'absolute',
-                            top: '12%', bottom: '0%',
-                            left: '-4%', right: '-8%',
+                            top: '8%', bottom: '-2%',
+                            left: '-6%', right: '-10%',
                             backgroundColor: G_GREEN,
                             borderRadius: '52% 48% 44% 56% / 46% 52% 48% 54%',
                             boxShadow: `0 28px 70px ${G_GREEN}28`,
@@ -152,8 +152,8 @@ function HeroSection({ whatsapp, address }: { whatsapp?: string; address?: strin
                         {/* ─ Coral accent bottom-left ─ */}
                         <div style={{
                             position: 'absolute',
-                            bottom: '4%', left: '-2%',
-                            width: '80px', height: '80px',
+                            bottom: '6%', left: '0%',
+                            width: '72px', height: '72px',
                             backgroundColor: G_CORAL,
                             borderRadius: '55% 45% 60% 40% / 50% 55% 45% 50%',
                             zIndex: 2,
@@ -163,36 +163,35 @@ function HeroSection({ whatsapp, address }: { whatsapp?: string; address?: strin
                         {/* ─ Golden ring detail ─ */}
                         <div style={{
                             position: 'absolute',
-                            top: '5%', right: '8%',
-                            width: '48px', height: '48px',
+                            top: '6%', right: '10%',
+                            width: '44px', height: '44px',
                             border: `3px solid ${G_GOLDEN}`,
                             borderRadius: '50%',
                             opacity: 0.65,
                             zIndex: 2,
                         }} />
 
-                        {/* ─ Imagen del perro con ingredientes
-                              imagen landscape → ancho al 100%, perro emerge arriba del blob ─ */}
+                        {/* ─ Imagen del perro — más grande, anclada al fondo ─ */}
                         <img
                             src="/gaucho/hero-puppy.png.png"
                             alt="Perro Gaucho Natural Pet con ingredientes naturales"
                             className="gnp-pet"
                             style={{
                                 position: 'absolute',
-                                bottom: '-4%',
+                                bottom: '-6%',
                                 left: '50%',
                                 transform: 'translateX(-50%)',
-                                width: '108%',
+                                width: '130%',
                                 objectFit: 'contain',
                                 mixBlendMode: 'screen',
                                 zIndex: 10,
-                                filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.15))',
+                                filter: 'drop-shadow(0 12px 32px rgba(0,0,0,0.18))',
                             }}
                         />
 
                         {/* ─ Badge Carne Real ─ */}
                         <div className="gnp-leaf1" style={{
-                            position: 'absolute', top: '14%', left: '-4%',
+                            position: 'absolute', top: '18%', left: '-6%',
                             backgroundColor: '#fff', borderRadius: '14px', padding: '8px 11px',
                             boxShadow: '0 8px 20px rgba(0,0,0,0.09)',
                             display: 'flex', alignItems: 'center', gap: '7px',
@@ -207,7 +206,7 @@ function HeroSection({ whatsapp, address }: { whatsapp?: string; address?: strin
 
                         {/* ─ Badge Sin Cereales ─ */}
                         <div className="gnp-leaf2" style={{
-                            position: 'absolute', top: '40%', right: '-4%',
+                            position: 'absolute', top: '42%', right: '-6%',
                             backgroundColor: '#fff', borderRadius: '14px', padding: '8px 11px',
                             boxShadow: '0 8px 20px rgba(0,0,0,0.09)',
                             display: 'flex', alignItems: 'center', gap: '7px',
@@ -219,67 +218,6 @@ function HeroSection({ whatsapp, address }: { whatsapp?: string; address?: strin
                                 <p className="gaucho-body" style={{ fontSize: '7.5px', color: '#aaa' }}>0% cereales</p>
                             </div>
                         </div>
-                    </div>
-
-                </div>
-            </section>
-        </>
-    );
-}
-
-                    {/* ── Right blob + pet ── */}
-                    <div className="relative flex items-center justify-center order-1 md:order-2" style={{ minHeight: '440px' }}>
-                        {/* Main blob */}
-                        <div className="absolute w-[360px] h-[360px] md:w-[420px] md:h-[420px]"
-                            style={{
-                                background: `linear-gradient(135deg, ${G_GREEN} 0%, ${G_OLIVE} 100%)`,
-                                borderRadius: '45% 55% 52% 48% / 48% 45% 55% 52%',
-                                boxShadow: `0 24px 60px ${G_GREEN}35`,
-                            }} />
-
-                        {/* Coral accent blob */}
-                        <div className="gnp-deco-2 absolute w-28 h-28"
-                            style={{
-                                bottom: '6%', left: '6%',
-                                background: G_CORAL,
-                                borderRadius: '60% 40% 55% 45% / 42% 58% 42% 58%',
-                                opacity: 0.88,
-                                boxShadow: `0 8px 24px ${G_CORAL}45`,
-                            }} />
-
-                        {/* Pet photo — screen blend */}
-                        <div className="absolute z-10" style={{ width: '72%', bottom: 0 }}>
-                            <img
-                                src="/gaucho/hero-puppy.png.png"
-                                alt="Cachorro feliz"
-                                className="w-full object-contain"
-                                style={{ mixBlendMode: 'screen' }}
-                            />
-                        </div>
-
-                        {/* Floating card: Carne Real */}
-                        <div className="gnp-deco absolute z-20 bg-white rounded-2xl px-3 py-2 shadow-xl flex items-center gap-2"
-                            style={{ top: '16%', left: '0', border: `1.5px solid ${G_BEIGE}` }}>
-                            <span className="text-lg">🥩</span>
-                            <div>
-                                <p className="gaucho-body text-[9px] font-bold uppercase" style={{ color: G_GREEN }}>Carne Real</p>
-                                <p className="gaucho-body text-[8px]" style={{ color: G_BROWN, opacity: 0.55 }}>Primer ingrediente</p>
-                            </div>
-                        </div>
-
-                        {/* Floating card: Sin Cereales */}
-                        <div className="gnp-deco-2 absolute z-20 bg-white rounded-2xl px-3 py-2 shadow-xl flex items-center gap-2"
-                            style={{ top: '42%', right: '0', border: `1.5px solid ${G_BEIGE}` }}>
-                            <span className="text-lg">🌿</span>
-                            <div>
-                                <p className="gaucho-body text-[9px] font-bold uppercase" style={{ color: G_GREEN }}>Sin Cereales</p>
-                                <p className="gaucho-body text-[8px]" style={{ color: G_BROWN, opacity: 0.55 }}>100% libre</p>
-                            </div>
-                        </div>
-
-                        {/* Leaf decorations */}
-                        <div className="gnp-deco absolute z-20 text-2xl select-none" style={{ top: '8%', right: '18%' }}>🌿</div>
-                        <div className="gnp-deco-2 absolute z-20 text-xl select-none" style={{ bottom: '28%', left: '4%' }}>🍃</div>
                     </div>
 
                 </div>
