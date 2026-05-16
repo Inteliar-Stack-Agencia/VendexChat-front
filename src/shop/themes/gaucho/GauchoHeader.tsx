@@ -67,7 +67,7 @@ function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
                     <img
                         src="/gaucho/gaucho_desktop_2080x1240.png"
                         alt="Gaucho Natural Pet — Comida real, vida real."
-                        style={{ width: '100%', height: 'auto', display: 'block', maxHeight: 'calc(100dvh - 56px)', objectFit: 'contain', objectPosition: 'center center' }}
+                        style={{ width: '100%', height: 'auto', display: 'block' }}
                     />
                 </picture>
             </a>
