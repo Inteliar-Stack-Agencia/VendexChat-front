@@ -1,4 +1,4 @@
-import { Search, Instagram, ShoppingCart, Package, Heart, Leaf, Lightbulb, ArrowRightLeft, Calculator, Truck, Zap } from "lucide-react";
+import { Search, Instagram, ShoppingCart, Package, Heart, Leaf, Lightbulb, ArrowRightLeft, Calculator, Truck, ChefHat } from "lucide-react";
 import AssistantIcon from "../../../components/icons/AssistantIcon";
 import { getSocialLink } from "../../../utils/format";
 
@@ -7,7 +7,6 @@ const G_OLIVE      = '#4E7A52';
 const G_GOLDEN     = '#D4A574';
 const G_CREAM      = '#F5EDDB';
 const G_BEIGE      = '#EADFCF';
-const G_WARM_WHITE = '#FFFDF8';
 const G_BROWN      = '#6A3E24';
 const G_CORAL      = '#E97B63';
 const G_SALMON     = '#F29B7A';
@@ -41,7 +40,6 @@ function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
                     />
                 </picture>
             </a>
-            {/* Organic wave overlay — adds depth and "movement" between hero and content */}
             <div style={{ position: 'absolute', bottom: -1, left: 0, right: 0, zIndex: 5, lineHeight: 0, pointerEvents: 'none' }}>
                 <svg viewBox="0 0 1440 90" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 90 }}>
                     <path d="M0,90 C180,40 360,80 540,50 C720,20 900,70 1080,45 C1260,20 1380,60 1440,40 L1440,90 Z" fill="#F5EDDB" opacity="0.97" />
@@ -73,7 +71,7 @@ function LeafDecor({ style }: { style?: React.CSSProperties }) {
     );
 }
 
-/* ── Organic photo clip ────────────────────────────────────────────────────── */
+/* ── Organic photo clip (used by AboutSection) ─────────────────────────────── */
 
 function OrganicPhoto({ src, alt, id, style }: { src: string; alt: string; id: string; style?: React.CSSProperties }) {
     return (
@@ -81,12 +79,7 @@ function OrganicPhoto({ src, alt, id, style }: { src: string; alt: string; id: s
             <svg width="0" height="0" style={{ position: 'absolute', overflow: 'hidden' }}>
                 <defs>
                     <clipPath id={id} clipPathUnits="objectBoundingBox">
-                        {id === 'op-dog'
-                            ? <path d="M0.08,0.02 C0.28,-0.04 0.62,0.0 0.85,0.08 C1.08,0.16 1.06,0.42 0.97,0.66 C0.88,0.9 0.72,1.04 0.48,0.98 C0.24,0.92 -0.02,0.86 0.0,0.56 C0.02,0.26 -0.12,0.08 0.08,0.02Z" />
-                            : id === 'op-ingredients'
-                            ? <path d="M0.12,0.0 C0.36,-0.06 0.7,0.02 0.9,0.14 C1.1,0.26 1.04,0.54 0.95,0.76 C0.86,0.98 0.66,1.06 0.42,0.96 C0.18,0.86 -0.04,0.72 0.02,0.46 C0.08,0.2 -0.12,0.06 0.12,0.0Z" />
-                            : <path d="M0.06,0.08 C0.22,-0.06 0.56,0.02 0.8,0.1 C1.04,0.18 1.08,0.46 0.96,0.7 C0.84,0.94 0.62,1.06 0.38,0.96 C0.14,0.86 -0.06,0.7 0.02,0.42 C0.1,0.14 -0.1,0.22 0.06,0.08Z" />
-                        }
+                        <path d="M0.06,0.08 C0.22,-0.06 0.56,0.02 0.8,0.1 C1.04,0.18 1.08,0.46 0.96,0.7 C0.84,0.94 0.62,1.06 0.38,0.96 C0.14,0.86 -0.06,0.7 0.02,0.42 C0.1,0.14 -0.1,0.22 0.06,0.08Z" />
                     </clipPath>
                 </defs>
             </svg>
@@ -95,7 +88,7 @@ function OrganicPhoto({ src, alt, id, style }: { src: string; alt: string; id: s
     );
 }
 
-/* ── Shared: IG-style section title ─────────────────────────────────────── */
+/* ── Shared: IG-style section title (used by AboutSection) ──────────────────── */
 
 function IgTitle({ label, bold, italic, light = false }: { label: string; bold: string; italic: string; light?: boolean }) {
     return (
@@ -105,7 +98,7 @@ function IgTitle({ label, bold, italic, light = false }: { label: string; bold: 
                 {bold}<br />
                 <em style={{ fontStyle: 'italic', fontWeight: 700, color: light ? G_GOLDEN : G_BROWN }}>{italic}</em>
             </h2>
-            <div style={{ width: 36, height: 2.5, backgroundColor: light ? G_GOLDEN : G_GOLDEN, borderRadius: 2, marginTop: 16 }} />
+            <div style={{ width: 36, height: 2.5, backgroundColor: G_GOLDEN, borderRadius: 2, marginTop: 16 }} />
         </div>
     );
 }
@@ -113,89 +106,67 @@ function IgTitle({ label, bold, italic, light = false }: { label: string; bold: 
 /* ── Benefits ─────────────────────────────────────────────────────────────── */
 
 function BenefitsSection() {
-    const features = [
-        { Icon: Leaf,   title: 'Ingredientes reales',          desc: 'Naturales y frescos, como debe ser.' },
-        { Icon: Zap,    title: 'Más energía y vitalidad',      desc: 'Nutrición que se nota todos los días.' },
-        { Icon: Heart,  title: 'Mejor digestión y bienestar',  desc: 'Fórmulas que cuidan su salud por dentro.' },
+    const features: { Icon?: React.ElementType; paw?: boolean; label: string }[] = [
+        { Icon: Leaf,     label: 'Ingredientes\nreales' },
+        { Icon: Heart,    label: 'Nutrición\ncompleta' },
+        { Icon: ChefHat,  label: 'Cocinado\ncon cuidado' },
+        { paw: true,      label: 'Pensado para\nsu bienestar' },
     ];
 
     return (
         <section id="beneficios" style={{ backgroundColor: G_CREAM, overflow: 'hidden' }}>
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-stretch">
+            <div className="grid grid-cols-1 md:grid-cols-2 items-stretch" style={{ maxWidth: 1400, margin: '0 auto' }}>
 
                 {/* ── Left: editorial copy ── */}
-                <div className="px-8 md:px-14 py-16 md:py-20">
-                    {/* Label with leaf + rule */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 22 }}>
-                        <Leaf size={13} style={{ color: G_OLIVE, flexShrink: 0 }} />
-                        <span className="gaucho-body" style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: G_CORAL }}>
-                            Por qué elegir Gaucho
+                <div className="px-10 md:px-16 py-16 md:py-20">
+                    {/* Label */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 20 }}>
+                        <Leaf size={12} style={{ color: G_DARK, opacity: 0.7 }} />
+                        <span className="gaucho-body" style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: G_DARK, opacity: 0.7 }}>
+                            Ingredientes reales
                         </span>
-                        <div style={{ width: 48, height: 1, backgroundColor: G_CORAL, opacity: 0.45 }} />
                     </div>
 
                     {/* Big serif headline */}
-                    <h2 className="gaucho-subtitle" style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.8rem)', fontWeight: 800, color: G_DARK, lineHeight: 1.05, margin: 0 }}>
-                        Elegir ingredientes<br />reales
+                    <h2 className="gaucho-subtitle" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.8rem)', fontWeight: 800, color: G_DARK, lineHeight: 1.05, margin: 0 }}>
+                        Alimentar mejor<br />a nuestras mascotas
                     </h2>
-                    <p className="gaucho-subtitle" style={{ fontSize: 'clamp(1.8rem, 3.8vw, 3.2rem)', fontStyle: 'italic', color: G_BROWN, lineHeight: 1.1, margin: '4px 0 0' }}>
-                        marca la diferencia.
+                    <p className="gaucho-subtitle" style={{ fontSize: 'clamp(1.9rem, 3.8vw, 3rem)', fontStyle: 'italic', color: G_BROWN, lineHeight: 1.1, margin: '4px 0 0' }}>
+                        nunca fue tan simple.
                     </p>
-                    <div style={{ width: 72, height: 2, backgroundColor: G_BROWN, borderRadius: 2, marginTop: 14, marginBottom: 28, opacity: 0.5 }} />
+                    <div style={{ width: 48, height: 2, backgroundColor: G_BROWN, borderRadius: 2, marginTop: 14, marginBottom: 26, opacity: 0.5 }} />
 
                     {/* Body */}
-                    <p className="gaucho-body" style={{ fontSize: '0.97rem', color: '#666', lineHeight: 1.75, marginBottom: 32, maxWidth: 400 }}>
-                        Comida natural hecha con ingredientes que podés reconocer.<br />
-                        <strong style={{ color: G_DARK }}>Sin ultraprocesados.<br />Sin aditivos innecesarios.</strong>
+                    <p className="gaucho-body" style={{ fontSize: '0.97rem', color: '#666', lineHeight: 1.75, marginBottom: 36, maxWidth: 420 }}>
+                        Comida real, fresca y natural para perros y gatos.<br />
+                        Vos elegís el menú, nosotros hacemos el resto.
                     </p>
 
-                    {/* 3-column mini features */}
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginBottom: 36 }}>
-                        {features.map(({ Icon, title, desc }) => (
-                            <div key={title} style={{ textAlign: 'center' }}>
-                                <div style={{ width: 44, height: 44, borderRadius: '50%', backgroundColor: `${G_OLIVE}18`, border: `1px solid ${G_OLIVE}28`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px' }}>
-                                    <Icon size={18} strokeWidth={1.5} style={{ color: G_OLIVE }} />
+                    {/* 4 mini-features */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
+                        {features.map((f, i) => (
+                            <div key={i} style={{ textAlign: 'center' }}>
+                                <div style={{ width: 52, height: 52, borderRadius: '50%', border: `1.5px solid ${G_DARK}28`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px' }}>
+                                    {f.paw
+                                        ? <PawPrint style={{ width: 22, height: 22, color: G_DARK, opacity: 0.60, position: 'static' }} />
+                                        : <f.Icon! size={20} strokeWidth={1.5} style={{ color: G_DARK, opacity: 0.65 }} />
+                                    }
                                 </div>
-                                <p className="gaucho-body" style={{ fontWeight: 700, fontSize: 11, color: G_DARK, marginBottom: 4, lineHeight: 1.3 }}>{title}</p>
-                                <p className="gaucho-body" style={{ fontSize: 10, color: '#888', lineHeight: 1.5 }}>{desc}</p>
+                                <p className="gaucho-body" style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: G_DARK, lineHeight: 1.4 }}>
+                                    {f.label.split('\n').map((line, j) => <span key={j}>{line}{j === 0 && <br />}</span>)}
+                                </p>
                             </div>
                         ))}
                     </div>
-
-                    {/* CTA */}
-                    <a href="#nosotros" className="gaucho-body"
-                        style={{ display: 'inline-flex', alignItems: 'center', gap: 8, backgroundColor: G_CORAL, color: 'white', padding: '14px 30px', borderRadius: 50, fontSize: 12, fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase', textDecoration: 'none', boxShadow: `0 8px 28px ${G_CORAL}40` }}>
-                        Conocé más sobre Gaucho 🌿
-                    </a>
                 </div>
 
-                {/* ── Right: dark green organic blob + photo + quote ── */}
-                <div style={{ position: 'relative', minHeight: 480 }}>
-                    {/* Organic blob — fills column height */}
-                    <div style={{
-                        position: 'absolute',
-                        top: 24, bottom: 24,
-                        left: 32, right: -8,
-                        backgroundColor: G_DARK,
-                        borderRadius: '58% 42% 52% 48% / 44% 56% 44% 56%',
-                        overflow: 'hidden',
-                    }}>
-                        {/* Quote overlay — upper area of blob */}
-                        <div style={{ position: 'absolute', top: '10%', left: '12%', zIndex: 20, maxWidth: 190 }}>
-                            <p className="gaucho-subtitle" style={{ fontSize: 'clamp(0.95rem, 1.8vw, 1.2rem)', fontStyle: 'italic', color: 'white', lineHeight: 1.65, opacity: 0.92, textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
-                                ♡ El amor también<br />se demuestra<br />en su plato.
-                            </p>
-                        </div>
-                        {/* Ingredients photo — lower-right of blob */}
-                        <img
-                            src="/gaucho/ingredients.png.png"
-                            alt="Ingredientes naturales frescos"
-                            style={{ position: 'absolute', bottom: 0, right: 0, width: '85%', height: '70%', objectFit: 'cover', filter: 'saturate(1.05) brightness(1.02)' }}
-                        />
-                    </div>
-                    {/* Leaf accents outside blob */}
-                    <LeafDecor style={{ width: 50, height: 75, top: '8%', right: 4, color: G_OLIVE, opacity: 0.28, transform: 'rotate(16deg)' }} />
-                    <LeafDecor style={{ width: 36, height: 54, bottom: '12%', right: 10, color: G_GOLDEN, opacity: 0.20, transform: 'rotate(-10deg)' }} />
+                {/* ── Right: full-bleed photo ── */}
+                <div style={{ overflow: 'hidden', minHeight: 420 }}>
+                    <img
+                        src="/gaucho/ingredients.png.png"
+                        alt="Ingredientes naturales frescos"
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    />
                 </div>
             </div>
         </section>
@@ -204,53 +175,68 @@ function BenefitsSection() {
 
 /* ── How it works ─────────────────────────────────────────────────────────── */
 
-function HowItWorksSection() {
+function HowItWorksSection({ whatsapp }: { whatsapp?: string }) {
+    const waLink = whatsapp
+        ? `https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hola! Quiero hacer un pedido de Gaucho Natural Pet 🐾')}`
+        : '#productos';
+
     const steps = [
-        { Icon: Package, title: 'Elegís tu menú',  desc: 'Seleccioná el plan ideal para el peso y etapa de vida de tu mascota.' },
-        { Icon: Leaf,    title: 'Lo preparamos',   desc: 'Con ingredientes frescos del día, sin conservantes ni rellenos.' },
-        { Icon: Truck,   title: 'Lo recibís',      desc: 'A tu puerta, fresco y listo para servir. Pequeños cambios, grandes diferencias.' },
+        { n: '1', Icon: Package,  title: 'Elegís tu menú',  desc: 'Seleccioná el plan ideal según el peso y etapa de vida de tu mascota.' },
+        { n: '2', Icon: ChefHat,  title: 'Lo preparamos',   desc: 'Cocinamos cada receta con ingredientes frescos y naturales, sin conservantes ni rellenos.' },
+        { n: '3', Icon: Truck,    title: 'Lo recibís',      desc: 'A tu puerta, fresco y listo para servir. Pequeños cambios, grandes diferencias.' },
     ];
 
     return (
-        <section style={{ backgroundColor: G_DARK, position: 'relative', overflow: 'hidden', paddingTop: 80, paddingBottom: 80 }}>
-            <LeafDecor style={{ width: 90, height: 135, top: 8, left: '1%', color: G_OLIVE, opacity: 0.14, transform: 'rotate(-12deg)' }} />
-            <LeafDecor style={{ width: 65, height: 95, bottom: 8, right: '1%', color: G_GOLDEN, opacity: 0.11, transform: 'rotate(22deg)' }} />
-            <PawPrint style={{ width: 130, height: 130, top: '25%', right: '6%', color: 'white', opacity: 0.03 }} />
-            <PawPrint style={{ width: 80, height: 80, bottom: '18%', left: '4%', color: G_GOLDEN, opacity: 0.07 }} />
+        <section style={{ backgroundColor: G_DARK, position: 'relative', overflow: 'hidden' }}>
+            <LeafDecor style={{ width: 80, height: 120, top: '15%', left: '2%', color: G_OLIVE, opacity: 0.18, transform: 'rotate(-12deg)' }} />
+            <LeafDecor style={{ width: 80, height: 120, top: '15%', right: '2%', color: G_OLIVE, opacity: 0.18, transform: 'rotate(12deg)' }} />
 
-            <div className="max-w-6xl mx-auto px-6 md:px-12" style={{ position: 'relative', zIndex: 10 }}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
-                    {/* Left: organic ingredients photo */}
-                    <div style={{ position: 'relative' }}>
-                        <OrganicPhoto src="/gaucho/ingredients.png.png" alt="Ingredientes naturales frescos" id="op-ingredients" />
-                        <div style={{ position: 'absolute', top: '-4%', left: '-4%', backgroundColor: G_GOLDEN, borderRadius: 14, padding: '10px 16px', boxShadow: `0 8px 24px ${G_GOLDEN}50` }}>
-                            <p style={{ fontWeight: 700, color: G_DARK, fontSize: 13 }}>🌿 Ingredientes reales</p>
-                        </div>
-                    </div>
+            <div className="max-w-4xl mx-auto px-6 md:px-12 py-16 md:py-20" style={{ position: 'relative', zIndex: 10 }}>
+                {/* Header */}
+                <div style={{ textAlign: 'center', marginBottom: 56 }}>
+                    <Leaf size={16} style={{ color: G_GOLDEN, marginBottom: 12, display: 'inline-block' }} />
+                    <h2 className="gaucho-body" style={{ fontSize: 'clamp(1.4rem, 3vw, 1.9rem)', fontWeight: 800, color: 'white', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>
+                        ¿Cómo funciona?
+                    </h2>
+                    <p className="gaucho-body" style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: G_GOLDEN, marginTop: 8 }}>
+                        Fácil, práctico y pensado para ellos.
+                    </p>
+                </div>
 
-                    {/* Right: steps */}
-                    <div>
-                        <IgTitle label="Así de fácil" bold="La diferencia muchas" italic="veces se nota." light />
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
-                            {steps.map(({ Icon, title, desc }, i) => (
-                                <div key={title} style={{ display: 'flex', gap: 18, alignItems: 'flex-start' }}>
-                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
-                                        <div style={{ width: 50, height: 50, borderRadius: '50%', background: `linear-gradient(135deg, ${G_CORAL} 0%, ${G_GOLDEN} 100%)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: `0 8px 20px ${G_CORAL}40` }}>
-                                            <Icon size={20} color="white" strokeWidth={1.5} />
-                                        </div>
-                                        {i < steps.length - 1 && <div style={{ width: 1, height: 28, backgroundColor: `${G_GOLDEN}30`, marginTop: 4 }} />}
-                                    </div>
-                                    <div style={{ paddingTop: 6 }}>
-                                        <p style={{ fontWeight: 700, fontSize: 16, color: 'white', marginBottom: 5 }}>{title}</p>
-                                        <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.60)', lineHeight: 1.6 }}>{desc}</p>
+                {/* 3 steps with arrows */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr auto 1fr', alignItems: 'start', gap: 0 }}>
+                    {steps.map(({ n, Icon, title, desc }, i) => (
+                        <>
+                            <div key={title} style={{ textAlign: 'center', padding: '0 8px' }}>
+                                <div style={{ position: 'relative', width: 88, height: 88, margin: '0 auto 20px', borderRadius: '50%', border: `1.5px solid rgba(255,255,255,0.18)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Icon size={32} strokeWidth={1} style={{ color: 'rgba(255,255,255,0.82)' }} />
+                                    <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', width: 28, height: 28, borderRadius: '50%', backgroundColor: G_GOLDEN, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <span className="gaucho-body" style={{ fontWeight: 700, fontSize: 13, color: G_DARK }}>{n}</span>
                                     </div>
                                 </div>
-                            ))}
-                        </div>
-                        <p style={{ marginTop: 36, fontSize: 12, color: `${G_GOLDEN}99`, fontStyle: 'italic' }}>
-                            Elegí comida real. Elegí salud y bienestar para tu mejor amigo.
-                        </p>
+                                <h3 className="gaucho-body" style={{ fontWeight: 800, fontSize: 12, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'white', marginBottom: 10 }}>{title}</h3>
+                                <p className="gaucho-body" style={{ fontSize: 13, color: 'rgba(255,255,255,0.62)', lineHeight: 1.65, maxWidth: 220, margin: '0 auto' }}>{desc}</p>
+                            </div>
+                            {i < 2 && (
+                                <div key={`arrow-${i}`} style={{ display: 'flex', alignItems: 'flex-start', paddingTop: 52, color: G_GOLDEN, fontSize: 22, opacity: 0.55 }}>→</div>
+                            )}
+                        </>
+                    ))}
+                </div>
+
+                {/* CTA bar */}
+                <div style={{ marginTop: 52, borderRadius: 16, backgroundColor: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', padding: '18px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                        <Leaf size={15} style={{ color: G_GOLDEN }} />
+                        <span className="gaucho-body" style={{ fontWeight: 700, fontSize: 12, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'white' }}>
+                            Comida real. Resultados reales.
+                        </span>
                     </div>
+                    <a href={waLink} target={whatsapp ? '_blank' : undefined} rel={whatsapp ? 'noreferrer' : undefined}
+                        style={{ display: 'inline-flex', alignItems: 'center', gap: 8, backgroundColor: G_DARK, border: '1.5px solid rgba(255,255,255,0.22)', color: 'white', padding: '12px 24px', borderRadius: 50, fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', flexShrink: 0 }}>
+                        <WhatsAppIcon className="w-4 h-4" />
+                        Hacé tu pedido
+                    </a>
                 </div>
             </div>
         </section>
@@ -276,14 +262,11 @@ function AboutSection() {
 
             <div className="max-w-6xl mx-auto px-6 md:px-12" style={{ position: 'relative', zIndex: 10 }}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
-                    {/* Left: organic photo */}
                     <div style={{ position: 'relative' }}>
                         <OrganicPhoto src="/gaucho/woman-cat.png.png" alt="Amor entre mascota y familia" id="op-mascots" />
                         <PawPrint style={{ width: 65, height: 65, bottom: '6%', right: '-2%', color: G_CORAL, opacity: 0.22 }} />
                         <LeafDecor style={{ width: 46, height: 68, top: '4%', left: '-1%', color: G_GREEN, opacity: 0.18, transform: 'rotate(-14deg)' }} />
                     </div>
-
-                    {/* Right: text */}
                     <div>
                         <IgTitle label="Nuestra historia" bold="Ya no son mascotas." italic="Son familia." />
                         <p style={{ fontSize: '1rem', color: '#555', lineHeight: 1.75, marginBottom: 16 }}>
@@ -292,7 +275,6 @@ function AboutSection() {
                         <p style={{ fontSize: '1rem', color: '#555', lineHeight: 1.75, marginBottom: 36 }}>
                             Somos una marca argentina que cree que cada mascota merece ingredientes reales, sin rellenos ni artificiales. Cada receta es formulada para el equilibrio perfecto de nutrientes en cada etapa de vida.
                         </p>
-
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                             {stats.map(s => (
                                 <div key={s.label} style={{ backgroundColor: 'white', borderRadius: 14, padding: '16px 12px', textAlign: 'center', boxShadow: '0 4px 14px rgba(0,0,0,0.06)' }}>
@@ -352,7 +334,7 @@ function NavHighlight({ href, icon: Icon, label }: { href: string; icon: React.E
 }
 
 export function GauchoHeader({
-    name, logo, address, whatsapp, instagram, facebook,
+    name, logo, address, whatsapp, instagram,
     totalItems, announcement, onSearch, onChatClick, onCartClick, hideChatButton
 }: GauchoHeaderProps) {
     return (
@@ -363,7 +345,7 @@ export function GauchoHeader({
                 </div>
             )}
 
-            {/* ── Nav — verde ── */}
+            {/* ── Nav ── */}
             <div className="sticky top-0 z-50"
                 style={{ backgroundColor: `rgba(45,95,52,0.97)`, backdropFilter: 'blur(14px)', boxShadow: '0 2px 16px rgba(0,0,0,0.18)' }}>
                 <div className="max-w-7xl mx-auto px-5 py-2 flex items-center gap-4">
@@ -432,7 +414,7 @@ export function GauchoHeader({
 
             <HeroSection whatsapp={whatsapp} address={address} />
             <BenefitsSection />
-            <HowItWorksSection />
+            <HowItWorksSection whatsapp={whatsapp} />
             <AboutSection />
         </header>
     );
