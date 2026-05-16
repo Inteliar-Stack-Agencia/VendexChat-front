@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, ChevronUp, MessageCircle, Instagram, Facebook, Star } from "lucide-react";
+import { ChevronDown, ChevronUp, MessageCircle, Instagram, Facebook, Star, Leaf, ArrowRightLeft, Droplets, Eye, Package, Truck, Heart, MapPin, Clock, CheckCircle2, AlertCircle } from "lucide-react";
 
 const G_GREEN      = '#2D5F34';
 const G_OLIVE      = '#4E7A52';
@@ -37,10 +37,30 @@ function Wave({ from, to, flip = false }: { from: string; to: string; flip?: boo
 
 function ProductsSection() {
     const products = [
-        { name: 'Para Perros', desc: 'Fórmula balanceada para cachorros, adultos y seniors.', emoji: '🐕' },
-        { name: 'Para Gatos', desc: 'Con taurina y arginina. Específico para felinos.', emoji: '🐈' },
-        { name: 'Carne Real', desc: 'Pollo, carne y cerdo como primer ingrediente.', emoji: '🥩' },
-        { name: 'Pack Prueba', desc: 'Perfecto para empezar la transición. Comenzá hoy.', emoji: '📦' },
+        {
+            name: 'Para Perros',
+            desc: 'Fórmula balanceada para cachorros, adultos y seniors.',
+            emoji: '🐕',
+            ingredients: '🥩 Pollo · 🥕 Zanahoria · 🎃 Zapallo',
+        },
+        {
+            name: 'Para Gatos',
+            desc: 'Con taurina y arginina. Específico para felinos.',
+            emoji: '🐈',
+            ingredients: '🥩 Pollo · 🫀 Corazón · 🫁 Hígado',
+        },
+        {
+            name: 'Carne Real',
+            desc: 'Pollo, carne y cerdo como primer ingrediente.',
+            emoji: '🥩',
+            ingredients: '🐄 Carne · 🐖 Cerdo · 🎃 Zapallo',
+        },
+        {
+            name: 'Pack Prueba',
+            desc: 'Perfecto para empezar la transición. Comenzá hoy.',
+            emoji: '📦',
+            ingredients: '🥩 Pollo · 🥕 Zanahoria · 🌿 Vegetales',
+        },
     ];
 
     return (
@@ -67,9 +87,9 @@ function ProductsSection() {
                         <div key={p.name}
                             className="group rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2 cursor-pointer"
                             style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.07)', backgroundColor: G_CREAM }}>
-                            {/* Image area — dark green with pack photo */}
+                            {/* Image area — dark green with pack photo, taller at 240px */}
                             <div className="relative flex items-center justify-center overflow-hidden"
-                                style={{ height: '180px', backgroundColor: G_DARK }}>
+                                style={{ height: '240px', backgroundColor: G_DARK }}>
                                 <img
                                     src="/gaucho/pack-bag.png.png"
                                     alt={p.name}
@@ -84,7 +104,12 @@ function ProductsSection() {
                             {/* Info */}
                             <div className="p-4">
                                 <h3 className="gaucho-subtitle font-semibold text-base mb-1" style={{ color: G_GREEN }}>{p.name}</h3>
-                                <p className="gaucho-body text-xs leading-relaxed mb-3" style={{ color: '#666' }}>{p.desc}</p>
+                                <p className="gaucho-body text-xs leading-relaxed mb-2" style={{ color: '#666' }}>{p.desc}</p>
+                                {/* Ingredients line */}
+                                <p className="gaucho-body text-[10px] font-medium mb-3 px-2 py-1.5 rounded-lg"
+                                    style={{ color: G_OLIVE, backgroundColor: `${G_GREEN}12`, border: `1px solid ${G_GREEN}20` }}>
+                                    {p.ingredients}
+                                </p>
                                 <span className="gaucho-body text-xs font-semibold transition-all group-hover:gap-2"
                                     style={{ color: G_SALMON, display: 'flex', alignItems: 'center', gap: '4px' }}>
                                     Ver más <span className="transition-transform group-hover:translate-x-1">→</span>
@@ -93,6 +118,99 @@ function ProductsSection() {
                         </div>
                     ))}
                 </div>
+
+                {/* Ver productos button */}
+                <div className="mt-10 flex justify-center">
+                    <a href="#productos"
+                        className="gaucho-body font-semibold inline-flex items-center gap-2 px-8 py-4 rounded-full transition-all hover:opacity-90 active:scale-95 w-full md:w-auto justify-center"
+                        style={{
+                            background: `linear-gradient(135deg, ${G_CORAL} 0%, ${G_SALMON} 100%)`,
+                            color: '#fff',
+                            fontSize: '0.95rem',
+                            boxShadow: `0 8px 28px ${G_CORAL}40`,
+                        }}>
+                        Ver productos →
+                    </a>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/* ─── Tips Section ───────────────────────────────────────────────────────────── */
+
+const TIPS = [
+    {
+        Icon: Leaf,
+        title: 'Proteína como primer ingrediente',
+        desc: 'Pollo, carne, pescado. Leé la etiqueta: lo primero que aparece es lo que más contiene.',
+    },
+    {
+        Icon: ArrowRightLeft,
+        title: 'Transición gradual, siempre',
+        desc: 'Nunca cambies de golpe. 25% por semana evita el malestar digestivo.',
+    },
+    {
+        Icon: Droplets,
+        title: 'Agua siempre disponible',
+        desc: 'La comida natural es más seca. Agua fresca 24/7 es fundamental.',
+    },
+    {
+        Icon: Eye,
+        title: 'Observá las señales',
+        desc: 'Pelaje brillante, más energía, heces firmes: señales de que la dieta funciona.',
+    },
+    {
+        Icon: Package,
+        title: 'Porción exacta, no más',
+        desc: '2–3% del peso corporal para adultos. Usá nuestra calculadora.',
+    },
+    {
+        Icon: Heart,
+        title: 'Rotá las proteínas',
+        desc: 'Alternar pollo, carne y pescado da nutrientes distintos y evita la monotonía.',
+    },
+];
+
+function TipsSection() {
+    return (
+        <section id="tips" className="relative py-24 px-6 md:px-12" style={{ backgroundColor: G_CREAM }}>
+            <div className="max-w-5xl mx-auto">
+                <div className="text-center mb-14">
+                    <p className="gaucho-body text-sm font-semibold tracking-widest uppercase mb-3" style={{ color: G_CORAL }}>
+                        Tips &amp; Consejos
+                    </p>
+                    <h2 className="gaucho-subtitle font-bold" style={{ fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', color: G_DARK }}>
+                        Pequeños cambios,{' '}
+                        <span className="italic" style={{ color: G_BROWN }}>Grandes diferencias.</span>
+                    </h2>
+                    {/* Golden divider */}
+                    <div className="mx-auto mt-5" style={{ width: '36px', height: '2.5px', backgroundColor: G_GOLDEN, borderRadius: '2px' }} />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {TIPS.map(({ Icon, title, desc }) => (
+                        <div key={title}
+                            className="group bg-white rounded-2xl p-5 flex items-start gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                            style={{
+                                borderLeft: `4px solid ${G_GREEN}`,
+                                boxShadow: '0 4px 16px rgba(0,0,0,0.05)',
+                            }}>
+                            <div className="flex-shrink-0 w-11 h-11 rounded-full flex items-center justify-center"
+                                style={{ backgroundColor: `${G_GREEN}18` }}>
+                                <Icon className="w-5 h-5" style={{ color: G_GREEN }} />
+                            </div>
+                            <div>
+                                <h3 className="gaucho-subtitle font-bold text-sm mb-1" style={{ color: G_DARK }}>{title}</h3>
+                                <p className="gaucho-body text-xs leading-relaxed" style={{ color: '#666' }}>{desc}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <p className="gaucho-body text-sm text-center mt-10 italic" style={{ color: G_BROWN, opacity: 0.75 }}>
+                    La diferencia muchas veces se nota. Elegí comida real.
+                </p>
             </div>
         </section>
     );
@@ -109,7 +227,7 @@ const TRANSITION_STEPS = [
 
 function TransitionSection() {
     return (
-        <section className="relative overflow-hidden py-24 px-6 md:px-12"
+        <section id="transicion" className="relative overflow-hidden py-24 px-6 md:px-12"
             style={{ background: `linear-gradient(135deg, ${G_GREEN} 0%, ${G_OLIVE} 100%)` }}>
             {/* Blob decorativo */}
             <div className="absolute -top-24 -right-24 w-96 h-96 pointer-events-none"
@@ -129,7 +247,7 @@ function TransitionSection() {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
-                    {TRANSITION_STEPS.map((step, i) => (
+                    {TRANSITION_STEPS.map((step) => (
                         <div key={step.n}
                             className="rounded-2xl p-6 text-center transition-all duration-300 hover:-translate-y-1"
                             style={{
@@ -181,7 +299,7 @@ function WeightGuide() {
     const { minG, maxG, daysMin, daysMax } = calcPortions(safeWeight, petType, lifeStage);
 
     return (
-        <section id="guia-pesos" className="relative py-24 px-6 md:px-12" style={{ backgroundColor: G_CREAM }}>
+        <section id="calculadora" className="relative py-24 px-6 md:px-12" style={{ backgroundColor: G_CREAM }}>
             <div className="max-w-2xl mx-auto">
                 <div className="text-center mb-10">
                     <p className="gaucho-body text-sm font-semibold tracking-widest uppercase mb-3" style={{ color: G_SALMON }}>Calculadora interactiva</p>
@@ -298,10 +416,29 @@ const TESTIMONIALS = [
     { name: 'Carlos T.', city: 'San Martín', stars: 5, text: 'Mi perra tenía problemas digestivos constantes. Con Gaucho mejoró en la primera semana. Increíble.' },
 ];
 
+function PawPrint({ style }: { style?: React.CSSProperties }) {
+    return (
+        <svg viewBox="0 0 64 64" fill="currentColor" style={style}>
+            {/* Main pad */}
+            <ellipse cx="32" cy="44" rx="14" ry="11" />
+            {/* Toe pads */}
+            <ellipse cx="14" cy="30" rx="7" ry="9" />
+            <ellipse cx="26" cy="22" rx="7" ry="9" />
+            <ellipse cx="38" cy="22" rx="7" ry="9" />
+            <ellipse cx="50" cy="30" rx="7" ry="9" />
+        </svg>
+    );
+}
+
 function TestimonialsSection() {
     return (
-        <section className="py-24 px-6 md:px-12" style={{ backgroundColor: G_CREAM }}>
-            <div className="max-w-6xl mx-auto">
+        <section className="py-24 px-6 md:px-12 relative overflow-hidden" style={{ backgroundColor: G_CREAM }}>
+            {/* Decorative paw prints */}
+            <PawPrint style={{ position: 'absolute', top: 24, left: 16, width: 56, height: 56, color: G_GREEN, opacity: 0.07, transform: 'rotate(-20deg)' }} />
+            <PawPrint style={{ position: 'absolute', bottom: 32, right: 24, width: 72, height: 72, color: G_GREEN, opacity: 0.07, transform: 'rotate(15deg)' }} />
+            <PawPrint style={{ position: 'absolute', top: '40%', right: 8, width: 40, height: 40, color: G_GOLDEN, opacity: 0.1, transform: 'rotate(30deg)' }} />
+
+            <div className="max-w-6xl mx-auto relative z-10">
                 <div className="text-center mb-12">
                     <p className="gaucho-body text-sm font-semibold tracking-widest uppercase mb-3" style={{ color: G_SALMON }}>
                         Lo que dicen nuestros clientes
@@ -312,15 +449,20 @@ function TestimonialsSection() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
                     {TESTIMONIALS.map((t) => (
-                        <div key={t.name} className="rounded-2xl p-5 flex flex-col gap-3 transition-all hover:shadow-lg hover:-translate-y-1"
+                        <div key={t.name} className="rounded-2xl p-5 flex flex-col gap-3 transition-all hover:shadow-lg hover:-translate-y-1 relative overflow-hidden"
                             style={{ backgroundColor: '#fff', border: `1px solid ${G_BEIGE}`, boxShadow: '0 4px 16px rgba(0,0,0,0.05)' }}>
-                            <div className="flex gap-0.5">
+                            {/* Large background quote mark */}
+                            <div className="absolute -top-2 -right-1 gaucho-subtitle font-black select-none pointer-events-none"
+                                style={{ fontSize: '7rem', lineHeight: 1, color: G_GOLDEN, opacity: 0.1 }}>
+                                "
+                            </div>
+                            <div className="flex gap-0.5 relative z-10">
                                 {Array.from({ length: t.stars }).map((_, i) => (
-                                    <Star key={i} className="w-3.5 h-3.5 fill-current" style={{ color: G_GOLDEN }} />
+                                    <Star key={i} className="w-4 h-4 fill-current" style={{ color: G_GOLDEN }} />
                                 ))}
                             </div>
-                            <p className="gaucho-body text-xs leading-relaxed italic flex-1" style={{ color: '#555' }}>"{t.text}"</p>
-                            <div className="flex items-center gap-2 border-t pt-3" style={{ borderColor: G_BEIGE }}>
+                            <p className="gaucho-body text-xs leading-relaxed italic flex-1 relative z-10" style={{ color: '#555' }}>"{t.text}"</p>
+                            <div className="flex items-center gap-2 border-t pt-3 relative z-10" style={{ borderColor: G_BEIGE }}>
                                 <div className="w-8 h-8 rounded-full flex items-center justify-center gaucho-subtitle font-bold text-sm flex-shrink-0"
                                     style={{ backgroundColor: G_GREEN, color: '#fff' }}>
                                     {t.name.charAt(0)}
@@ -333,6 +475,9 @@ function TestimonialsSection() {
                         </div>
                     ))}
                 </div>
+                <p className="gaucho-body text-sm text-center mt-10 italic" style={{ color: G_BROWN, opacity: 0.7 }}>
+                    Tu mascota también puede hacer el cambio.
+                </p>
             </div>
         </section>
     );
@@ -341,6 +486,8 @@ function TestimonialsSection() {
 /* ─── FAQ ────────────────────────────────────────────────────────────────── */
 
 const FAQS = [
+    { q: '¿Qué es la comida natural?', a: 'Es comida real, hecha con ingredientes frescos y balanceados. Sin conservantes, sin colorantes, sin aditivos artificiales. Lo mismo que vos comerías.' },
+    { q: '¿Cómo hago la transición?', a: 'Recomendamos un plan gradual de 4 semanas: 25% → 50% → 75% → 100% Gaucho. El sistema digestivo se adapta sin malestar.' },
     { q: '¿A partir de qué edad puede comer alimento natural?', a: 'Cachorros desde las 4 semanas y gatitos desde el destete. Para animales muy pequeños compartimos la guía de porciones por edad por WhatsApp.' },
     { q: '¿Cuánto le doy por día?', a: 'La porción estándar es del 2% al 3% del peso corporal para adultos y del 4% al 6% para cachorros. Usá la Guía de Pesos para calcular la porción exacta.' },
     { q: '¿Cómo conservo el alimento?', a: 'En heladera hasta 3 días una vez abierto, o en freezer hasta 3 meses sin abrir. Los packs vienen sellados al vacío para máxima frescura.' },
@@ -353,7 +500,7 @@ function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
     const [open, setOpen] = useState(false);
     return (
         <div className="rounded-2xl overflow-hidden transition-all"
-            style={{ border: `1px solid ${open ? G_BEIGE : G_BEIGE}`, backgroundColor: open ? '#fff' : `${G_CREAM}99` }}>
+            style={{ border: `1px solid ${G_BEIGE}`, backgroundColor: open ? '#fff' : `${G_CREAM}99` }}>
             <button onClick={() => setOpen(v => !v)} className="w-full flex items-start gap-3 px-5 py-4 text-left">
                 <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black gaucho-body mt-0.5"
                     style={{ backgroundColor: open ? G_GREEN : G_BEIGE, color: open ? '#fff' : G_GREEN }}>
@@ -375,11 +522,11 @@ function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
 
 function FaqSection() {
     return (
-        <section id="faq" className="py-24 px-6 md:px-12" style={{ backgroundColor: '#fff' }}>
+        <section id="preguntas" className="py-24 px-6 md:px-12" style={{ backgroundColor: '#fff' }}>
             <div className="max-w-2xl mx-auto">
                 <div className="text-center mb-10">
                     <p className="gaucho-body text-sm font-semibold tracking-widest uppercase mb-3" style={{ color: G_SALMON }}>
-                        Todo lo que querés saber
+                        Todo lo que necesitás saber
                     </p>
                     <h2 className="gaucho-subtitle font-bold" style={{ fontSize: 'clamp(2rem, 4.5vw, 2.8rem)', color: G_DARK }}>
                         Preguntas Frecuentes
@@ -387,6 +534,103 @@ function FaqSection() {
                 </div>
                 <div className="flex flex-col gap-3">
                     {FAQS.map((faq, i) => <FaqItem key={i} q={faq.q} a={faq.a} index={i} />)}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/* ─── Envios Section ─────────────────────────────────────────────────────── */
+
+function EnviosSection({ whatsapp }: { whatsapp?: string }) {
+    const waLink = whatsapp
+        ? `https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hola! Quiero hacer un pedido de Gaucho Natural Pet 🐾')}`
+        : '#';
+
+    const steps = [
+        {
+            Icon: Clock,
+            label: 'Pedís cuando querés',
+            desc: 'Cualquier día de la semana por WhatsApp.',
+        },
+        {
+            Icon: Package,
+            label: 'Lo preparamos',
+            desc: 'Con ingredientes frescos del día, sellado al vacío.',
+        },
+        {
+            Icon: Truck,
+            label: 'Lo recibís',
+            desc: 'Martes y viernes en CABA y alrededores.',
+        },
+    ];
+
+    return (
+        <section id="envios" className="relative py-24 px-6 md:px-12" style={{ backgroundColor: G_DARK }}>
+            <div className="max-w-5xl mx-auto">
+                {/* Header */}
+                <div className="text-center mb-14">
+                    <p className="gaucho-body text-sm font-semibold tracking-widest uppercase mb-3" style={{ color: G_GOLDEN }}>
+                        Entregas
+                    </p>
+                    <h2 className="gaucho-subtitle font-bold text-white" style={{ fontSize: 'clamp(2rem, 4.5vw, 2.8rem)' }}>
+                        Lo recibís fresco,{' '}
+                        <span className="italic" style={{ color: G_GOLDEN }}>en la puerta de tu casa.</span>
+                    </h2>
+                    {/* Golden divider */}
+                    <div className="mx-auto mt-5" style={{ width: '36px', height: '2.5px', backgroundColor: G_GOLDEN, borderRadius: '2px' }} />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+                    {/* Left: delivery steps */}
+                    <div className="flex flex-col gap-5">
+                        {steps.map(({ Icon, label, desc }, idx) => (
+                            <div key={label} className="flex items-start gap-4">
+                                <div className="flex-shrink-0 w-11 h-11 rounded-full flex items-center justify-center"
+                                    style={{ backgroundColor: G_CORAL }}>
+                                    <Icon className="w-5 h-5 text-white" />
+                                </div>
+                                <div className="bg-white bg-opacity-10 rounded-2xl px-5 py-4 flex-1"
+                                    style={{ border: '1px solid rgba(255,255,255,0.12)' }}>
+                                    <p className="gaucho-subtitle font-bold text-white text-sm mb-0.5">{label}</p>
+                                    <p className="gaucho-body text-xs" style={{ color: 'rgba(255,255,255,0.65)' }}>{desc}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Right: delivery info card */}
+                    <div className="bg-white rounded-2xl p-7 flex flex-col gap-5" style={{ color: G_DARK }}>
+                        <div className="flex flex-col gap-4">
+                            <div className="flex flex-col gap-0.5">
+                                <p className="gaucho-subtitle font-bold text-xl" style={{ color: G_DARK }}>📅 Martes y Viernes</p>
+                                <p className="gaucho-body text-xs font-semibold uppercase tracking-widest" style={{ color: '#888' }}>Días de entrega</p>
+                            </div>
+                            <div className="h-px" style={{ backgroundColor: G_BEIGE }} />
+                            <div className="flex flex-col gap-0.5">
+                                <p className="gaucho-subtitle font-bold text-xl" style={{ color: G_DARK }}>📍 CABA y alrededores</p>
+                                <p className="gaucho-body text-xs font-semibold uppercase tracking-widest" style={{ color: '#888' }}>Zona de cobertura</p>
+                            </div>
+                            <div className="h-px" style={{ backgroundColor: G_BEIGE }} />
+                            <div className="flex flex-col gap-0.5">
+                                <p className="gaucho-subtitle font-bold text-xl" style={{ color: G_DARK }}>❄️ Sellado al vacío</p>
+                                <p className="gaucho-body text-xs font-semibold uppercase tracking-widest" style={{ color: '#888' }}>Llega fresco siempre</p>
+                            </div>
+                        </div>
+                        {whatsapp && (
+                            <a href={waLink} target="_blank" rel="noreferrer"
+                                className="gaucho-body font-semibold inline-flex items-center justify-center gap-3 px-6 py-3.5 rounded-full transition-all hover:opacity-90 active:scale-95 mt-2"
+                                style={{
+                                    background: `linear-gradient(135deg, ${G_CORAL} 0%, ${G_SALMON} 100%)`,
+                                    color: '#fff',
+                                    fontSize: '0.95rem',
+                                    boxShadow: `0 8px 28px ${G_CORAL}40`,
+                                }}>
+                                <WhatsAppIcon className="w-5 h-5" />
+                                Pedir por WhatsApp
+                            </a>
+                        )}
+                    </div>
                 </div>
             </div>
         </section>
@@ -475,7 +719,14 @@ function Footer({ whatsapp, instagram, facebook }: { whatsapp?: string; instagra
                 <div>
                     <h3 className="gaucho-subtitle font-semibold text-base text-white mb-4">Navegá</h3>
                     <ul className="flex flex-col gap-2.5">
-                        {[['#productos', 'Productos'], ['#beneficios', 'Beneficios'], ['#nosotros', 'Nosotros'], ['#guia-pesos', 'Guía de Pesos'], ['#faq', 'Preguntas Frecuentes']].map(([href, label]) => (
+                        {[
+                            ['#productos', 'Productos'],
+                            ['#tips', 'Tips & Consejos'],
+                            ['#transicion', 'Plan de Transición'],
+                            ['#calculadora', 'Calculadora'],
+                            ['#preguntas', 'Preguntas Frecuentes'],
+                            ['#envios', 'Envíos'],
+                        ].map(([href, label]) => (
                             <li key={href}>
                                 <a href={href} className="gaucho-body text-sm transition-opacity hover:opacity-70"
                                     style={{ color: 'rgba(255,255,255,0.75)', textDecoration: 'none' }}>
@@ -544,7 +795,9 @@ export function GauchoInfoSections({ whatsapp, instagram, facebook }: GauchoInfo
 
             <Wave from={G_GREEN} to="#fff" flip />
             <ProductsSection />
-            <Wave from="#fff" to={G_GREEN} />
+            <Wave from="#fff" to={G_CREAM} />
+            <TipsSection />
+            <Wave from={G_CREAM} to={G_GREEN} />
             <TransitionSection />
             <Wave from={G_GREEN} to={G_CREAM} flip />
             <WeightGuide />
@@ -554,7 +807,9 @@ export function GauchoInfoSections({ whatsapp, instagram, facebook }: GauchoInfo
             <TestimonialsSection />
             <Wave from={G_CREAM} to="#fff" />
             <FaqSection />
-            <Wave from="#fff" to={G_CREAM} flip />
+            <Wave from="#fff" to={G_DARK} flip />
+            <EnviosSection whatsapp={whatsapp} />
+            <Wave from={G_DARK} to={G_CREAM} />
             <CTAFinal whatsapp={whatsapp} />
             <Wave from={G_CREAM} to={G_GREEN} />
             <Footer whatsapp={whatsapp} instagram={instagram} facebook={facebook} />
