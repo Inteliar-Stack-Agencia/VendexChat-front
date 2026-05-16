@@ -251,9 +251,7 @@ export function GauchoHeader({
                 style={{ backgroundColor: `rgba(45,95,52,0.97)`, backdropFilter: 'blur(14px)', boxShadow: '0 2px 16px rgba(0,0,0,0.18)' }}>
                 <div className="max-w-7xl mx-auto px-5 py-2 flex items-center gap-4">
                     <div className="flex items-center flex-shrink-0">
-                        <div className="w-12 h-12 rounded-full overflow-hidden" style={{ border: '2px solid rgba(255,255,255,0.35)' }}>
-                            <img src={logo || '/gaucho/logo.png.png'} alt={name} className="w-full h-full object-contain" />
-                        </div>
+                        <img src={logo || '/gaucho/logo-transparent.png'} alt={name} style={{ height: 44, width: 'auto', objectFit: 'contain' }} />
                     </div>
 
                     <nav className="hidden md:flex items-center gap-3 ml-3">
