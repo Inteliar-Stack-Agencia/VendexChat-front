@@ -31,103 +31,206 @@ function HeroSection({ whatsapp, address }: { whatsapp?: string; address?: strin
     return (
         <>
             <style>{`
-                @keyframes gaucho-float {
-                    0%, 100% { transform: translateY(0px) rotate(0deg); }
-                    50%       { transform: translateY(22px) rotate(4deg); }
+                @keyframes gnp-bob {
+                    0%, 100% { transform: translateY(0px); }
+                    50%       { transform: translateY(-14px); }
                 }
-                @keyframes gaucho-float-rev {
-                    0%, 100% { transform: translateY(0px) rotate(0deg); }
-                    50%       { transform: translateY(-18px) rotate(-3deg); }
+                @keyframes gnp-spin-slow {
+                    from { transform: rotate(0deg); }
+                    to   { transform: rotate(360deg); }
                 }
-                .gnp-blob-bg::before {
-                    content: '';
-                    position: absolute;
-                    bottom: -80px; right: -120px;
-                    width: 420px; height: 420px;
-                    background: var(--gnp-golden, #D4A574);
-                    border-radius: 45% 55% 52% 48% / 48% 45% 55% 52%;
-                    opacity: 0.28;
-                    animation: gaucho-float 7s ease-in-out infinite;
-                    pointer-events: none;
-                }
-                .gnp-blob-bg::after {
-                    content: '';
-                    position: absolute;
-                    top: -130px; left: -80px;
-                    width: 340px; height: 340px;
-                    background: var(--gnp-olive, #4E7A52);
-                    border-radius: 55% 45% 48% 52% / 52% 48% 45% 55%;
-                    opacity: 0.18;
-                    animation: gaucho-float-rev 9s ease-in-out infinite;
-                    pointer-events: none;
-                }
-                .gnp-deco { animation: gaucho-float 5s ease-in-out infinite; }
-                .gnp-deco-2 { animation: gaucho-float-rev 6s ease-in-out infinite; }
                 .gnp-benefit-card:hover .gnp-card-bar { transform: scaleX(1); }
-                .gnp-benefit-card .gnp-card-bar { transform: scaleX(0); transform-origin: left; transition: transform 0.35s ease; }
+                .gnp-benefit-card .gnp-card-bar {
+                    transform: scaleX(0);
+                    transform-origin: left;
+                    transition: transform 0.35s ease;
+                }
+                .gnp-pet { animation: gnp-bob 4s ease-in-out infinite; }
+                .gnp-leaf1 { animation: gnp-bob 3.5s ease-in-out infinite 0.5s; }
+                .gnp-leaf2 { animation: gnp-bob 4.5s ease-in-out infinite 1s; }
+                /* Dot grid bg on right side */
+                .gnp-dot-grid {
+                    background-image: radial-gradient(circle, rgba(45,95,52,0.18) 1.5px, transparent 1.5px);
+                    background-size: 22px 22px;
+                }
             `}</style>
 
-            <section
-                className="gnp-blob-bg relative overflow-hidden"
-                style={{
-                    background: `linear-gradient(135deg, ${G_CREAM} 0%, ${G_BEIGE}88 100%)`,
-                    minHeight: '100vh',
-                    '--gnp-golden': G_GOLDEN,
-                    '--gnp-olive': G_OLIVE,
-                } as React.CSSProperties}
-            >
-                <div className="max-w-7xl mx-auto px-6 md:px-12 min-h-screen grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-24 md:py-16 relative z-10">
+            {/* ─ Full hero ─ */}
+            <section className="relative overflow-hidden" style={{ backgroundColor: G_CREAM, minHeight: '92vh' }}>
 
-                    {/* ── Left text ── */}
-                    <div className="flex flex-col gap-5 text-center md:text-left order-2 md:order-1">
-                        <span className="gaucho-body text-sm font-semibold tracking-widest uppercase self-center md:self-start"
-                            style={{ color: G_SALMON }}>
+                {/* Faint dot-grid background on right half */}
+                <div className="gnp-dot-grid absolute inset-y-0 right-0 pointer-events-none" style={{ width: '58%' }} />
+
+                <div style={{
+                    maxWidth: '1380px',
+                    margin: '0 auto',
+                    padding: '0 2.5rem',
+                    minHeight: '92vh',
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1.15fr',
+                    alignItems: 'center',
+                    position: 'relative',
+                    zIndex: 10,
+                }}>
+
+                    {/* ── LEFT: text ── */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.4rem', paddingRight: '2rem' }}
+                        className="text-center md:text-left order-2 md:order-1">
+
+                        <span className="gaucho-body" style={{ color: G_SALMON, fontSize: '0.82rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px' }}>
                             🐕 Nutrición Natural
                         </span>
 
-                        <h1 className="gaucho-subtitle font-extrabold leading-tight"
-                            style={{ fontSize: 'clamp(2.4rem, 7vw, 4rem)', color: G_DARK, letterSpacing: '-1px' }}>
-                            Comida real,<br />vida real.
+                        <h1 className="gaucho-subtitle" style={{
+                            fontSize: 'clamp(2.8rem, 5.5vw, 4.2rem)',
+                            color: G_DARK,
+                            lineHeight: 1.12,
+                            letterSpacing: '-1.5px',
+                            fontWeight: 800,
+                        }}>
+                            Comida real,<br />
+                            <em style={{ fontStyle: 'italic', color: G_GREEN }}>vida real.</em>
                         </h1>
 
-                        <p className="gaucho-body leading-relaxed max-w-md mx-auto md:mx-0"
-                            style={{ fontSize: '1.05rem', color: '#555', fontWeight: 300 }}>
+                        <p className="gaucho-body" style={{ fontSize: '1.05rem', color: '#555', lineHeight: 1.72, fontWeight: 300, maxWidth: '400px' }}>
                             Ingredientes naturales, sin aditivos artificiales y hecho con amor para ellos.
                         </p>
 
-                        <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                            <a href="#productos"
-                                className="gaucho-body font-semibold inline-flex items-center gap-2 px-8 py-3.5 rounded-full transition-all hover:opacity-90 active:scale-95"
-                                style={{
-                                    background: `linear-gradient(135deg, ${G_CORAL} 0%, ${G_SALMON} 100%)`,
-                                    color: '#fff',
-                                    boxShadow: `0 8px 25px ${G_CORAL}40`,
-                                    fontSize: '1rem',
-                                }}>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.9rem', alignItems: 'center' }}>
+                            <a href="#productos" className="gaucho-body" style={{
+                                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                                padding: '1rem 2.4rem',
+                                background: `linear-gradient(135deg, ${G_CORAL} 0%, ${G_SALMON} 100%)`,
+                                color: '#fff', borderRadius: '50px', fontWeight: 600,
+                                textDecoration: 'none', fontSize: '0.98rem',
+                                boxShadow: `0 10px 28px ${G_CORAL}45`,
+                                transition: 'transform 0.2s, box-shadow 0.2s',
+                            }}
+                                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; }}
+                                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ''; }}>
                                 Ver productos
                             </a>
                             {whatsapp && (
-                                <a href={waLink} target="_blank" rel="noreferrer"
-                                    className="gaucho-body font-semibold inline-flex items-center gap-2 px-7 py-3.5 rounded-full transition-all hover:opacity-85"
-                                    style={{ border: `2px solid ${G_GREEN}`, color: G_GREEN, fontSize: '0.95rem' }}>
+                                <a href={waLink} target="_blank" rel="noreferrer" className="gaucho-body" style={{
+                                    display: 'inline-flex', alignItems: 'center', gap: '8px',
+                                    padding: '0.95rem 1.8rem',
+                                    border: `2px solid ${G_GREEN}`, color: G_GREEN,
+                                    borderRadius: '50px', fontWeight: 600,
+                                    textDecoration: 'none', fontSize: '0.92rem',
+                                }}>
                                     <WhatsAppIcon className="w-4 h-4" />
                                     Pedir ahora
                                 </a>
                             )}
                         </div>
 
-                        <div className="flex flex-wrap gap-4 justify-center md:justify-start mt-2">
-                            {['✓ 100% Natural', '✓ Sin Aditivos', '✓ Hecho con Amor'].map(b => (
-                                <span key={b} className="gaucho-body text-sm font-semibold" style={{ color: G_GREEN }}>
-                                    {b}
-                                </span>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.2rem', marginTop: '0.5rem' }}>
+                            {['✓ 100% Natural', '✓ Sin Cereales', '✓ Sin Aditivos'].map(b => (
+                                <span key={b} className="gaucho-body" style={{ color: G_GREEN, fontSize: '0.88rem', fontWeight: 600 }}>{b}</span>
                             ))}
                         </div>
 
                         {address && (
-                            <p className="gaucho-body text-xs" style={{ color: G_BROWN }}>📍 {address}</p>
+                            <p className="gaucho-body" style={{ color: G_BROWN, fontSize: '0.8rem' }}>📍 {address}</p>
                         )}
                     </div>
+
+                    {/* ── RIGHT: big blob + dog emerging ── */}
+                    <div style={{ position: 'relative', height: '540px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                        className="order-1 md:order-2">
+
+                        {/* ─ Large organic green blob ─ */}
+                        <div style={{
+                            position: 'absolute',
+                            top: '8%', left: '8%', right: '-6%', bottom: '4%',
+                            backgroundColor: G_GREEN,
+                            borderRadius: '58% 42% 52% 48% / 50% 54% 46% 50%',
+                            boxShadow: `0 32px 80px ${G_GREEN}30`,
+                        }} />
+
+                        {/* ─ Coral accent blob — bottom left ─ */}
+                        <div style={{
+                            position: 'absolute',
+                            bottom: '8%', left: '2%',
+                            width: '90px', height: '90px',
+                            backgroundColor: G_CORAL,
+                            borderRadius: '60% 40% 55% 45% / 45% 55% 45% 55%',
+                            boxShadow: `0 8px 24px ${G_CORAL}50`,
+                            zIndex: 2,
+                        }} />
+
+                        {/* ─ Golden circle detail top right ─ */}
+                        <div style={{
+                            position: 'absolute',
+                            top: '6%', right: '10%',
+                            width: '52px', height: '52px',
+                            border: `3px solid ${G_GOLDEN}`,
+                            borderRadius: '50%',
+                            opacity: 0.7,
+                            zIndex: 2,
+                        }} />
+
+                        {/* ─ Pet photo — breaking OUT above the blob ─
+                              bottom anchored, top extends beyond blob's top edge */}
+                        <div className="gnp-pet" style={{
+                            position: 'absolute',
+                            bottom: '-2%',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            width: '88%',
+                            zIndex: 10,
+                        }}>
+                            <img
+                                src="/gaucho/hero-puppy.png.png"
+                                alt="Cachorro feliz Gaucho Natural Pet"
+                                style={{ width: '100%', objectFit: 'contain', mixBlendMode: 'screen' }}
+                            />
+                        </div>
+
+                        {/* ─ Floating ingredient badge: Carne Real ─ */}
+                        <div className="gnp-leaf1" style={{
+                            position: 'absolute', top: '18%', left: '-2%',
+                            backgroundColor: '#fff',
+                            borderRadius: '14px', padding: '8px 12px',
+                            boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
+                            display: 'flex', alignItems: 'center', gap: '8px',
+                            zIndex: 20,
+                            border: `1.5px solid ${G_BEIGE}`,
+                        }}>
+                            <span style={{ fontSize: '1.2rem' }}>🥩</span>
+                            <div>
+                                <p className="gaucho-body" style={{ fontSize: '9px', fontWeight: 800, textTransform: 'uppercase', color: G_GREEN }}>Carne Real</p>
+                                <p className="gaucho-body" style={{ fontSize: '8px', color: '#999' }}>Primer ingrediente</p>
+                            </div>
+                        </div>
+
+                        {/* ─ Floating badge: Sin Cereales ─ */}
+                        <div className="gnp-leaf2" style={{
+                            position: 'absolute', top: '44%', right: '-2%',
+                            backgroundColor: '#fff',
+                            borderRadius: '14px', padding: '8px 12px',
+                            boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
+                            display: 'flex', alignItems: 'center', gap: '8px',
+                            zIndex: 20,
+                            border: `1.5px solid ${G_BEIGE}`,
+                        }}>
+                            <span style={{ fontSize: '1.2rem' }}>🌿</span>
+                            <div>
+                                <p className="gaucho-body" style={{ fontSize: '9px', fontWeight: 800, textTransform: 'uppercase', color: G_GREEN }}>Sin Cereales</p>
+                                <p className="gaucho-body" style={{ fontSize: '8px', color: '#999' }}>100% libre</p>
+                            </div>
+                        </div>
+
+                        {/* ─ Leaf decorations ─ */}
+                        <div style={{ position: 'absolute', top: '9%', right: '20%', fontSize: '1.6rem', zIndex: 15 }} className="gnp-leaf1">🌿</div>
+                        <div style={{ position: 'absolute', bottom: '24%', left: '5%', fontSize: '1.3rem', zIndex: 15 }} className="gnp-leaf2">🍃</div>
+                    </div>
+
+                </div>
+            </section>
+        </>
+    );
+}
 
                     {/* ── Right blob + pet ── */}
                     <div className="relative flex items-center justify-center order-1 md:order-2" style={{ minHeight: '440px' }}>
