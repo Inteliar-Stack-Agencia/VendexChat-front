@@ -119,14 +119,14 @@ export interface GauchoHeaderProps {
 function NavHighlight({ href, icon: Icon, label }: { href: string; icon: React.ElementType; label: string }) {
     return (
         <a href={href} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, textDecoration: 'none' }}>
-            <div style={{ width: 40, height: 40, borderRadius: '50%', background: `linear-gradient(135deg, ${G_CORAL} 0%, ${G_GOLDEN} 100%)`, padding: 2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: 48, height: 48, borderRadius: '50%', background: `linear-gradient(135deg, ${G_CORAL} 0%, ${G_GOLDEN} 100%)`, padding: 2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div style={{ width: '100%', height: '100%', borderRadius: '50%', backgroundColor: G_GREEN, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background-color 0.2s' }}
                     onMouseEnter={e => ((e.currentTarget as HTMLElement).style.backgroundColor = G_DARK)}
                     onMouseLeave={e => ((e.currentTarget as HTMLElement).style.backgroundColor = G_GREEN)}>
-                    <Icon size={15} color="white" />
+                    <Icon size={18} color="white" />
                 </div>
             </div>
-            <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: 9, fontWeight: 600, letterSpacing: '0.04em', fontFamily: 'inherit' }}>{label}</span>
+            <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: 10, fontWeight: 600, letterSpacing: '0.04em', fontFamily: 'inherit' }}>{label}</span>
         </a>
     );
 }
@@ -145,12 +145,12 @@ export function GauchoHeader({
 
             <div className="sticky top-0 z-50"
                 style={{ backgroundColor: 'rgba(45,95,52,0.97)', backdropFilter: 'blur(14px)', boxShadow: '0 2px 16px rgba(0,0,0,0.18)' }}>
-                <div className="max-w-7xl mx-auto px-5 py-2 flex items-center gap-4">
+                <div className="max-w-7xl mx-auto px-5 py-3 flex items-center gap-4">
                     <div className="flex items-center flex-shrink-0">
-                        <img src={logo || '/gaucho/logo-transparent.png'} alt={name} style={{ height: 44, width: 'auto', objectFit: 'contain' }} />
+                        <img src={logo || '/gaucho/logo-transparent.png'} alt={name} style={{ height: 52, width: 'auto', objectFit: 'contain' }} />
                     </div>
 
-                    <nav className="hidden md:flex items-center gap-3 ml-3">
+                    <nav className="hidden md:flex items-center gap-4 ml-3">
                         <NavHighlight href="#productos"   icon={Package}        label="Productos"   />
                         <NavHighlight href="#beneficios"  icon={Heart}          label="Beneficios"  />
                         <NavHighlight href="#tips"        icon={Lightbulb}      label="Tips"        />
@@ -166,7 +166,7 @@ export function GauchoHeader({
                             style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', fontFamily: 'inherit', border: '1px solid rgba(255,255,255,0.2)' }} />
                     </div>
 
-                    <div className="flex items-center gap-1 ml-auto">
+                    <div className="flex items-center gap-2 ml-auto">
                         {whatsapp && !hideChatButton && (
                             <button onClick={onChatClick} className="h-9 px-3 flex items-center gap-1.5 rounded-full hover:opacity-80"
                                 style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', transition: 'opacity 0.2s' }}>
@@ -188,6 +188,12 @@ export function GauchoHeader({
                                 <WhatsAppIcon className="w-4 h-4" />
                             </a>
                         )}
+                        <a href="#productos"
+                            className="hidden lg:flex items-center gap-2 px-4 h-10 rounded-full font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-opacity"
+                            style={{ backgroundColor: G_CORAL, color: 'white', whiteSpace: 'nowrap' }}>
+                            <ShoppingCart className="w-3.5 h-3.5" />
+                            Tienda on line
+                        </a>
                         <button onClick={onCartClick}
                             className="relative w-12 h-12 rounded-full flex items-center justify-center hover:scale-105 active:scale-95 ml-1"
                             style={{ background: `linear-gradient(135deg, ${G_SALMON} 0%, ${G_CORAL} 100%)`, boxShadow: `0 4px 15px ${G_SALMON}40`, transition: 'transform 0.2s' }}>
