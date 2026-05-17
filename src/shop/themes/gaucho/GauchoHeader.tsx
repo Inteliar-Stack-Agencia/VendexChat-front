@@ -210,7 +210,6 @@ export function GauchoHeader({
             </div>
 
             <HeroSection whatsapp={whatsapp} address={address} />
-            <Section2 />
             <Section3 />
             <Section4 whatsapp={whatsapp} />
             <section style={{ lineHeight: 0, display: 'block' }}>
@@ -222,6 +221,7 @@ export function GauchoHeader({
             <section style={{ lineHeight: 0, display: 'block' }}>
                 <img src="/gaucho/gatos.png" alt="Gatos" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </section>
+            <Section2 />
         </header>
     );
 }
