@@ -183,19 +183,22 @@ function Section3() {
                     </p>
 
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
-                        {features.map((f, i) => (
+                        {features.map((f, i) => {
+                            const FeatureIcon = f.Icon as React.ElementType;
+                            return (
                             <div key={i} style={{ textAlign: 'center' }}>
                                 <div style={{ width: 52, height: 52, borderRadius: '50%', border: `1.5px solid ${G_DARK}28`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px' }}>
                                     {f.paw
                                         ? <PawPrint style={{ width: 22, height: 22, color: G_DARK, opacity: 0.60, position: 'static' }} />
-                                        : <f.Icon! size={20} strokeWidth={1.5} style={{ color: G_DARK, opacity: 0.65 }} />
+                                        : <FeatureIcon size={20} strokeWidth={1.5} style={{ color: G_DARK, opacity: 0.65 }} />
                                     }
                                 </div>
                                 <p className="gaucho-body" style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: G_DARK, lineHeight: 1.4 }}>
                                     {f.label.split('\n').map((line, j) => <span key={j}>{line}{j === 0 && <br />}</span>)}
                                 </p>
                             </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
 
