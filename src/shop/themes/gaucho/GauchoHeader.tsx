@@ -52,9 +52,9 @@ function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
             <a href={waLink} target={whatsapp ? '_blank' : undefined} rel={whatsapp ? 'noreferrer' : undefined}
                 style={{ display: 'block', lineHeight: 0, height: '100%' }}>
                 <picture style={{ display: 'block', width: '100%', height: '100%' }}>
-                    <source media="(max-width: 768px)" srcSet="/gaucho/gaucho_cta_mobile_square_780x1360.png" />
+                    <source media="(max-width: 768px)" srcSet="/gaucho/heromobile.png" />
                     <img
-                        src="/gaucho/gaucho_banner_1920x1080.png"
+                        src="/gaucho/hero.png"
                         alt="Gaucho Natural Pet — Comida real, vida real."
                         style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', objectPosition: 'top center' }}
                     />
@@ -64,30 +64,37 @@ function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
     );
 }
 
-/* ── Sección 2 — "Elegir ingredientes reales" ──────────────────────────────── */
-
 function Section2() {
     return (
         <section id="beneficios" style={{ lineHeight: 0, display: 'block' }}>
-            <img src="/gaucho/cmida%20natural.png" alt="Elegir ingredientes reales" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            <picture>
+                <source media="(max-width: 768px)" srcSet="/gaucho/comidanaturalmobile.png" />
+                <img src="/gaucho/comida natural.png" alt="Comida natural" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            </picture>
         </section>
     );
 }
-
-/* ── Sección 3 — "Alimentar mejor" + "¿Cómo funciona?" ────────────────────── */
 
 function Section3() {
     return (
         <section style={{ lineHeight: 0, display: 'block' }}>
-            <img src="/gaucho/seccion3.png" alt="Alimentar mejor - Como funciona" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            <picture>
+                <source media="(max-width: 768px)" srcSet="/gaucho/ultraprocesadosmobile.png" />
+                <img src="/gaucho/ultraprocesados.png" alt="Menos ultraprocesados" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            </picture>
         </section>
     );
 }
 
-/* ── Sección 4 — placeholder eliminado, Section3 ya incluye cómo funciona ─── */
-
 function Section4({ whatsapp }: { whatsapp?: string }) {
-    return null;
+    return (
+        <section id="transicion" style={{ lineHeight: 0, display: 'block' }}>
+            <picture>
+                <source media="(max-width: 768px)" srcSet="/gaucho/transicionmobile.png" />
+                <img src="/gaucho/transicion.png" alt="Transición a comida natural" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            </picture>
+        </section>
+    );
 }
 
 /* ── Main GauchoHeader ───────────────────────────────────────────────────── */
