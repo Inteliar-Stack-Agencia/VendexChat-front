@@ -75,7 +75,21 @@ export function GauchoCalculadora({ whatsapp }: { whatsapp?: string }) {
         : '#';
 
     return (
-        <section id="calculadora" style={{ backgroundColor: C_BEIGE2, padding: '36px 24px', fontFamily: 'inherit' }}>
+        <section id="calculadora" style={{ backgroundColor: C_BEIGE2, padding: '36px 24px', fontFamily: 'inherit', position: 'relative', overflow: 'hidden' }}>
+            {/* Decorative paw prints */}
+            <svg viewBox="0 0 100 90" style={{ position:'absolute', top:20, left:32, width:70, opacity:0.07, color:C_GREEN, pointerEvents:'none' }} fill="currentColor">
+                <ellipse cx="50" cy="72" rx="22" ry="17"/><ellipse cx="20" cy="46" rx="10" ry="13"/><ellipse cx="38" cy="33" rx="10" ry="13"/><ellipse cx="62" cy="33" rx="10" ry="13"/><ellipse cx="80" cy="46" rx="10" ry="13"/>
+            </svg>
+            <svg viewBox="0 0 100 90" style={{ position:'absolute', bottom:24, right:48, width:50, opacity:0.06, color:C_GREEN, pointerEvents:'none', transform:'rotate(20deg)' }} fill="currentColor">
+                <ellipse cx="50" cy="72" rx="22" ry="17"/><ellipse cx="20" cy="46" rx="10" ry="13"/><ellipse cx="38" cy="33" rx="10" ry="13"/><ellipse cx="62" cy="33" rx="10" ry="13"/><ellipse cx="80" cy="46" rx="10" ry="13"/>
+            </svg>
+            {/* Decorative leaves */}
+            <svg viewBox="0 0 60 90" style={{ position:'absolute', top:0, right:120, width:55, opacity:0.10, color:C_GREEN, pointerEvents:'none', transform:'rotate(15deg)' }} fill="currentColor">
+                <path d="M30,2 C52,2 62,28 52,52 C44,70 30,88 14,86 C2,84 -2,72 4,56 C12,32 10,2 30,2Z"/>
+            </svg>
+            <svg viewBox="0 0 60 90" style={{ position:'absolute', bottom:10, left:80, width:40, opacity:0.08, color:C_GREEN, pointerEvents:'none', transform:'rotate(-20deg)' }} fill="currentColor">
+                <path d="M30,2 C52,2 62,28 52,52 C44,70 30,88 14,86 C2,84 -2,72 4,56 C12,32 10,2 30,2Z"/>
+            </svg>
             <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
                 {/* Header */}
@@ -214,26 +228,50 @@ export function GauchoCalculadora({ whatsapp }: { whatsapp?: string }) {
 
                     {/* Right illustration */}
                     <div style={{
-                        flex: '0 0 240px', display: 'flex',
+                        flex: '0 0 220px', display: 'flex',
                         flexDirection: 'column', alignItems: 'center',
-                        justifyContent: 'center', gap: 16, paddingTop: 8,
+                        justifyContent: 'center', gap: 12,
                     }} className="hidden lg:flex">
-                        <div style={{
-                            width: 220, height: 220, borderRadius: '50%',
-                            backgroundColor: C_BEIGE2,
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            fontSize: 90,
-                            boxShadow: `0 8px 32px rgba(35,75,52,0.12)`,
-                        }}>
-                            {pet === 'perro' ? '🐶' : '🐱'}
+                        {/* Bowl SVG */}
+                        <div style={{ position: 'relative' }}>
+                            <div style={{
+                                width: 200, height: 200, borderRadius: '50%',
+                                backgroundColor: C_BEIGE,
+                                boxShadow: `0 8px 32px rgba(35,75,52,0.13)`,
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                overflow: 'hidden',
+                            }}>
+                                <svg viewBox="0 0 200 180" style={{ width: 160 }} fill="none">
+                                    {/* Bowl body */}
+                                    <ellipse cx="100" cy="130" rx="72" ry="28" fill="#C4A882"/>
+                                    <path d="M32 105 Q34 145 100 155 Q166 145 168 105 Z" fill="#D4B896"/>
+                                    <path d="M32 105 Q34 115 100 120 Q166 115 168 105 Z" fill="#E8D5BC"/>
+                                    {/* Food items */}
+                                    <circle cx="80"  cy="96" r="12" fill="#8B1A1A" opacity="0.9"/>
+                                    <circle cx="100" cy="90" r="10" fill="#A0522D" opacity="0.85"/>
+                                    <circle cx="118" cy="97" r="9"  fill="#6B8E23" opacity="0.8"/>
+                                    <circle cx="88"  cy="82" r="8"  fill="#CD853F" opacity="0.9"/>
+                                    <circle cx="108" cy="83" r="7"  fill="#8B1A1A" opacity="0.8"/>
+                                    <circle cx="95"  cy="76" r="6"  fill="#6B8E23" opacity="0.75"/>
+                                    {/* Logo text */}
+                                    <text x="100" y="143" textAnchor="middle" fill="#4A2E1B" fontSize="9" fontWeight="700" letterSpacing="1" opacity="0.6">GAUCHO</text>
+                                    <text x="100" y="152" textAnchor="middle" fill="#4A2E1B" fontSize="6" letterSpacing="0.5" opacity="0.5">NATURAL PET</text>
+                                    {/* Paw print small */}
+                                    <g opacity="0.15" fill={C_GREEN} transform="translate(148,60) scale(0.25)">
+                                        <ellipse cx="50" cy="72" rx="22" ry="17"/><ellipse cx="20" cy="46" rx="10" ry="13"/><ellipse cx="38" cy="33" rx="10" ry="13"/><ellipse cx="62" cy="33" rx="10" ry="13"/><ellipse cx="80" cy="46" rx="10" ry="13"/>
+                                    </g>
+                                </svg>
+                            </div>
+                            {/* Floating paw */}
+                            <div style={{ position:'absolute', top:-10, right:-10, width:36, height:36, borderRadius:'50%', backgroundColor:'white', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 2px 10px rgba(35,75,52,0.15)' }}>
+                                <svg viewBox="0 0 100 90" style={{ width:20, color:C_GREEN }} fill="currentColor">
+                                    <ellipse cx="50" cy="72" rx="22" ry="17"/><ellipse cx="20" cy="46" rx="10" ry="13"/><ellipse cx="38" cy="33" rx="10" ry="13"/><ellipse cx="62" cy="33" rx="10" ry="13"/><ellipse cx="80" cy="46" rx="10" ry="13"/>
+                                </svg>
+                            </div>
                         </div>
                         <div style={{ textAlign: 'center' }}>
-                            <p style={{ color: C_GREEN, fontWeight: 700, fontSize: 13, margin: '0 0 4px' }}>
-                                Comida real, vida real.
-                            </p>
-                            <p style={{ color: C_BROWN, opacity: 0.5, fontSize: 12 }}>
-                                Sin ultraprocesados
-                            </p>
+                            <p style={{ color: C_GREEN, fontWeight: 700, fontSize: 13, margin: '0 0 4px' }}>Comida real, vida real.</p>
+                            <p style={{ color: C_BROWN, opacity: 0.5, fontSize: 12 }}>Sin ultraprocesados</p>
                         </div>
                     </div>
                 </div>
