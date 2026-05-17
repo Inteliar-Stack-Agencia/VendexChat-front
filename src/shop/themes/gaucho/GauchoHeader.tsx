@@ -48,7 +48,7 @@ function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
         : '#productos';
 
     return (
-        <section style={{ display: 'block', lineHeight: 0, height: 'calc(100svh - 64px)', overflow: 'hidden' }}>
+        <section style={{ display: 'block', lineHeight: 0, height: '100svh', marginTop: '-64px', overflow: 'hidden' }}>
             <a href={waLink} target={whatsapp ? '_blank' : undefined} rel={whatsapp ? 'noreferrer' : undefined}
                 style={{ display: 'block', lineHeight: 0, height: '100%' }}>
                 <picture style={{ display: 'block', width: '100%', height: '100%' }}>
