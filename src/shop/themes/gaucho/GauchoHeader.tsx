@@ -48,15 +48,15 @@ function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
         : '#productos';
 
     return (
-        <section style={{ display: 'block', backgroundColor: G_CREAM, lineHeight: 0, position: 'relative', maxWidth: 1920, margin: '0 auto' }}>
+        <section style={{ display: 'block', lineHeight: 0, height: 'calc(100svh - 64px)', overflow: 'hidden' }}>
             <a href={waLink} target={whatsapp ? '_blank' : undefined} rel={whatsapp ? 'noreferrer' : undefined}
-                style={{ display: 'block', lineHeight: 0 }}>
-                <picture>
+                style={{ display: 'block', lineHeight: 0, height: '100%' }}>
+                <picture style={{ display: 'block', width: '100%', height: '100%' }}>
                     <source media="(max-width: 768px)" srcSet="/gaucho/gaucho_cta_mobile_square_780x1360.png" />
                     <img
                         src="/gaucho/gaucho_banner_1920x1080.png"
                         alt="Gaucho Natural Pet — Comida real, vida real."
-                        style={{ width: '100%', height: 'auto', display: 'block' }}
+                        style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', objectPosition: 'center center' }}
                     />
                 </picture>
             </a>
