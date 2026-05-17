@@ -54,7 +54,7 @@ function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
                 <picture style={{ display: 'block', width: '100%' }}>
                     <source media="(max-width: 768px)" srcSet="/gaucho/heromobile.png" />
                     <img
-                        src="/gaucho/hero3.png"
+                        src="/gaucho/hero (2).png"
                         alt="Gaucho Natural Pet — Comida real, vida real."
                         style={{ width: '100%', height: 'auto', display: 'block' }}
                     />
@@ -69,7 +69,7 @@ function Section2() {
         <section id="beneficios" style={{ lineHeight: 0, display: 'block' }}>
             <picture>
                 <source media="(max-width: 768px)" srcSet="/gaucho/comidanaturalmobile.png" />
-                <img src="/gaucho/comida natural.png" alt="Comida natural" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/gaucho/seccion2.png" alt="Comida natural" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </picture>
         </section>
     );
@@ -80,7 +80,7 @@ function Section3() {
         <section style={{ lineHeight: 0, display: 'block' }}>
             <picture>
                 <source media="(max-width: 768px)" srcSet="/gaucho/ultraprocesadosmobile.png" />
-                <img src="/gaucho/ultraprocesados.png" alt="Menos ultraprocesados" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/gaucho/seccion3.png" alt="Menos ultraprocesados" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </picture>
         </section>
     );
@@ -91,7 +91,7 @@ function Section4({ whatsapp }: { whatsapp?: string }) {
         <section id="transicion" style={{ lineHeight: 0, display: 'block' }}>
             <picture>
                 <source media="(max-width: 768px)" srcSet="/gaucho/transicionmobile.png" />
-                <img src="/gaucho/transicion.png" alt="Transición a comida natural" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/gaucho/seccion4.png" alt="Transición a comida natural" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </picture>
         </section>
     );
