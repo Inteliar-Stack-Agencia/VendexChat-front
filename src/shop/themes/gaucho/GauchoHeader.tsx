@@ -208,6 +208,9 @@ export function GauchoHeader({
             <Section2 />
             <Section3 />
             <Section4 whatsapp={whatsapp} />
+            <section style={{ lineHeight: 0, display: 'block' }}>
+                <img src="/gaucho/seccion6.png" alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            </section>
             <GauchoCalculadora whatsapp={whatsapp} />
         </header>
     );
