@@ -1,140 +1,91 @@
 import { useState } from "react";
 
-const C_GREEN  = '#234B34';
-const C_BEIGE  = '#E9DDCF';
-const C_BEIGE2 = '#F3EADF';
-const C_BROWN  = '#4A2E1B';
-const C_ORANGE = '#FF7A00';
+const G  = '#234B34';   // verde principal
+const G2 = '#2E5A41';   // verde secundario
+const B  = '#E9DDCF';   // beige
+const B2 = '#F3EADF';   // beige claro
+const BR = '#4A2E1B';   // marrón tipográfico
+const OR = '#FF7A00';   // naranja CTA
 
-type PetType   = 'perro' | 'gato';
-type LifeStage = 'cachorro' | 'adulto' | 'senior';
+type Pet   = 'perro' | 'gato';
+type Stage = 'cachorro' | 'adulto' | 'senior';
 
-const WEIGHTS: number[] = [1, 2, 3, 5, 7, 10, 15, 20, 25, 30, 40, 50, 60];
+const WEIGHTS = [1, 2, 3, 5, 7, 10, 15, 20, 25, 30, 40, 50, 60];
 
-const PCT: Record<PetType, Record<LifeStage, [number, number]>> = {
+const PCT: Record<Pet, Record<Stage, [number, number]>> = {
     perro: { cachorro: [0.04, 0.05], adulto: [0.025, 0.03], senior: [0.02, 0.025] },
     gato:  { cachorro: [0.04, 0.05], adulto: [0.02,  0.03], senior: [0.015, 0.02] },
 };
 
-function round10(n: number) { return Math.round(n / 10) * 10; }
+function r10(n: number) { return Math.round(n / 10) * 10; }
 
-function calcResult(pet: PetType, stage: LifeStage, kg: number) {
+function calc(pet: Pet, stage: Stage, kg: number) {
     const [lo, hi] = PCT[pet][stage];
-    const minG = round10(kg * 1000 * lo);
-    const maxG = round10(kg * 1000 * hi);
-    const avg  = (minG + maxG) / 2;
-    const rMin = Math.floor(1000 / maxG);
-    const rMax = Math.ceil(1000 / minG);
+    const minG = r10(kg * 1000 * lo);
+    const maxG = r10(kg * 1000 * hi);
     return {
-        porDia:     `${minG}–${maxG} g`,
-        porComida:  `${round10(minG / 2)}–${round10(maxG / 2)} g`,
-        rendimiento: `${rMin}–${rMax} días`,
-        label: `${pet === 'perro' ? 'Perro' : 'Gato'} ${stage} de ${kg} kg`,
+        dia:   `${minG}–${maxG}`,
+        comida:`${r10(minG / 2)}–${r10(maxG / 2)}`,
+        rinde: `${Math.floor(1000 / maxG)}–${Math.ceil(1000 / minG)}`,
+        label: `${pet === 'perro' ? 'Perro' : 'Gato'} ${stage} · ${kg} kg`,
     };
 }
 
-function Pill({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
-    return (
-        <button onClick={onClick} style={{
-            padding: '10px 22px', borderRadius: 100,
-            border: `1.5px solid ${active ? C_GREEN : C_BEIGE}`,
-            background: active ? C_GREEN : 'white',
-            color: active ? 'white' : C_BROWN,
-            cursor: 'pointer', fontWeight: 600, fontSize: 14,
-            transition: 'all 0.18s', fontFamily: 'inherit',
-        }}>
-            {children}
-        </button>
-    );
-}
-
-function Chip({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
-    return (
-        <button onClick={onClick} style={{
-            padding: '8px 14px', borderRadius: 100,
-            border: `1.5px solid ${active ? C_GREEN : C_BEIGE}`,
-            background: active ? C_GREEN : 'white',
-            color: active ? 'white' : C_BROWN,
-            cursor: 'pointer', fontWeight: 600, fontSize: 13,
-            transition: 'all 0.18s', fontFamily: 'inherit',
-        }}>
-            {children}
-        </button>
-    );
-}
-
 export function GauchoCalculadora({ whatsapp }: { whatsapp?: string }) {
-    const [pet,    setPet]    = useState<PetType>('perro');
-    const [stage,  setStage]  = useState<LifeStage>('adulto');
+    const [pet,    setPet]    = useState<Pet>('perro');
+    const [stage,  setStage]  = useState<Stage>('adulto');
     const [weight, setWeight] = useState(10);
 
-    const result = calcResult(pet, stage, weight);
-
-    const waCalc = whatsapp
+    const res = calc(pet, stage, weight);
+    const waLink = whatsapp
         ? `https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hola! Necesito ayuda para calcular la porción de mi mascota 🐾')}`
         : '#';
 
     return (
-        <section id="calculadora" style={{ backgroundColor: C_BEIGE2, padding: '36px 24px', fontFamily: 'inherit', position: 'relative', overflow: 'hidden' }}>
-            {/* Decorative paw prints */}
-            <svg viewBox="0 0 100 90" style={{ position:'absolute', top:20, left:32, width:70, opacity:0.07, color:C_GREEN, pointerEvents:'none' }} fill="currentColor">
-                <ellipse cx="50" cy="72" rx="22" ry="17"/><ellipse cx="20" cy="46" rx="10" ry="13"/><ellipse cx="38" cy="33" rx="10" ry="13"/><ellipse cx="62" cy="33" rx="10" ry="13"/><ellipse cx="80" cy="46" rx="10" ry="13"/>
-            </svg>
-            <svg viewBox="0 0 100 90" style={{ position:'absolute', bottom:24, right:48, width:50, opacity:0.06, color:C_GREEN, pointerEvents:'none', transform:'rotate(20deg)' }} fill="currentColor">
-                <ellipse cx="50" cy="72" rx="22" ry="17"/><ellipse cx="20" cy="46" rx="10" ry="13"/><ellipse cx="38" cy="33" rx="10" ry="13"/><ellipse cx="62" cy="33" rx="10" ry="13"/><ellipse cx="80" cy="46" rx="10" ry="13"/>
-            </svg>
-            {/* Decorative leaves */}
-            <svg viewBox="0 0 60 90" style={{ position:'absolute', top:0, right:120, width:55, opacity:0.10, color:C_GREEN, pointerEvents:'none', transform:'rotate(15deg)' }} fill="currentColor">
-                <path d="M30,2 C52,2 62,28 52,52 C44,70 30,88 14,86 C2,84 -2,72 4,56 C12,32 10,2 30,2Z"/>
-            </svg>
-            <svg viewBox="0 0 60 90" style={{ position:'absolute', bottom:10, left:80, width:40, opacity:0.08, color:C_GREEN, pointerEvents:'none', transform:'rotate(-20deg)' }} fill="currentColor">
-                <path d="M30,2 C52,2 62,28 52,52 C44,70 30,88 14,86 C2,84 -2,72 4,56 C12,32 10,2 30,2Z"/>
-            </svg>
-            <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <section id="calculadora" style={{ backgroundColor: B2, padding: '40px 20px 56px', fontFamily: 'inherit', position: 'relative', overflow: 'hidden' }}>
+
+            {/* Background blobs */}
+            <div style={{ position: 'absolute', top: -80, left: -80, width: 320, height: 320, borderRadius: '50%', background: B, opacity: 0.5, pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', bottom: -60, right: -60, width: 240, height: 240, borderRadius: '50%', background: B, opacity: 0.4, pointerEvents: 'none' }} />
+
+            <div style={{ maxWidth: 1120, margin: '0 auto', position: 'relative' }}>
 
                 {/* Header */}
-                <div style={{ textAlign: 'center', marginBottom: 24 }}>
-                    <span style={{ color: C_ORANGE, fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' }}>
+                <div style={{ textAlign: 'center', marginBottom: 28 }}>
+                    <span style={{ color: OR, fontSize: 10, fontWeight: 800, letterSpacing: '0.18em', textTransform: 'uppercase' }}>
                         CALCULADORA INTERACTIVA
                     </span>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, margin: '8px 0 4px' }}>
-                        <div style={{ height: 1, width: 40, backgroundColor: C_BEIGE }} />
-                        <svg viewBox="0 0 24 24" style={{ width: 18, height: 18, color: C_GREEN }} fill="currentColor">
-                            <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2-8 2v-.02C8 5.32 5 8 5 8s3.68 0 7.42 2.35A8.59 8.59 0 0 1 15 14c-2-2-4-2.5-6-2.5 1.5 3 5 4 7 4-2 3-5 3-7 3 2.5 2 7 1 9-2 2-4 2-7 1.5-9.5C19.5 7 17 8 17 8z"/>
-                        </svg>
-                        <div style={{ height: 1, width: 40, backgroundColor: C_BEIGE }} />
-                    </div>
-                    <h2 style={{ color: C_GREEN, fontSize: 'clamp(1.6rem,3.5vw,2.4rem)', fontWeight: 800, margin: '0 0 4px', lineHeight: 1.1 }}>
+                    <h2 style={{ color: G, fontSize: 'clamp(2.2rem, 4.5vw, 3.4rem)', fontWeight: 900, margin: '6px 0 2px', lineHeight: 1 }}>
                         Guía de porciones
                     </h2>
-                    <p style={{ color: C_BROWN, fontStyle: 'italic', fontSize: 'clamp(0.9rem,1.5vw,1.1rem)', margin: '0 0 8px' }}>
+                    <p style={{ color: BR, fontStyle: 'italic', fontSize: 'clamp(1rem, 1.8vw, 1.25rem)', margin: 0, opacity: 0.75 }}>
                         calculá la porción ideal ♥
-                    </p>
-                    <p style={{ color: C_BROWN, opacity: 0.65, fontSize: 14, maxWidth: 460, margin: '0 auto', lineHeight: 1.5 }}>
-                        Seleccioná el tipo de mascota, etapa y peso para calcular <strong>la cantidad recomendada.</strong>
                     </p>
                 </div>
 
-                {/* Card */}
+                {/* Main card */}
                 <div style={{
-                    background: 'white', borderRadius: 24,
-                    padding: '28px 32px',
-                    boxShadow: '0 8px 48px rgba(35,75,52,0.10)',
-                    display: 'flex', gap: 36, flexWrap: 'wrap', alignItems: 'flex-start',
+                    background: 'white',
+                    borderRadius: 32,
+                    boxShadow: '0 16px 64px rgba(35,75,52,0.12)',
+                    display: 'flex',
+                    overflow: 'hidden',
+                    minHeight: 480,
                 }}>
 
-                    {/* Controls */}
-                    <div style={{ flex: '1 1 460px', minWidth: 0 }}>
+                    {/* LEFT — controls */}
+                    <div style={{ flex: '1 1 0', padding: 'clamp(28px,4vw,48px)', display: 'flex', flexDirection: 'column', gap: 24 }}>
 
                         {/* Pet tabs */}
-                        <div style={{ display: 'flex', borderRadius: 12, overflow: 'hidden', border: `1.5px solid ${C_BEIGE}`, marginBottom: 20 }}>
-                            {(['perro', 'gato'] as PetType[]).map(p => (
+                        <div style={{ display: 'flex', background: B2, borderRadius: 16, padding: 4, gap: 4 }}>
+                            {(['perro', 'gato'] as Pet[]).map(p => (
                                 <button key={p} onClick={() => setPet(p)} style={{
-                                    flex: 1, padding: '11px 0',
-                                    background: pet === p ? C_GREEN : 'white',
-                                    color: pet === p ? 'white' : C_BROWN,
+                                    flex: 1, padding: '12px 0',
+                                    borderRadius: 12,
+                                    background: pet === p ? G : 'transparent',
+                                    color: pet === p ? 'white' : BR,
                                     border: 'none', cursor: 'pointer',
-                                    fontWeight: 700, fontSize: 15,
+                                    fontWeight: 700, fontSize: 14,
                                     letterSpacing: '0.06em', textTransform: 'uppercase',
                                     transition: 'all 0.2s', fontFamily: 'inherit',
                                 }}>
@@ -143,80 +94,93 @@ export function GauchoCalculadora({ whatsapp }: { whatsapp?: string }) {
                             ))}
                         </div>
 
-                        {/* Life stage */}
-                        <div style={{ marginBottom: 16 }}>
-                            <p style={{ color: C_BROWN, fontWeight: 700, fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 8 }}>
-                                ETAPA DE VIDA
-                            </p>
-                            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                                <Pill active={stage === 'cachorro'} onClick={() => setStage('cachorro')}>Cachorro</Pill>
-                                <Pill active={stage === 'adulto'}   onClick={() => setStage('adulto')}>Adulto</Pill>
-                                <Pill active={stage === 'senior'}   onClick={() => setStage('senior')}>Senior</Pill>
+                        {/* Stage */}
+                        <div>
+                            <p style={{ color: BR, opacity: 0.45, fontWeight: 700, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 10 }}>ETAPA DE VIDA</p>
+                            <div style={{ display: 'flex', gap: 8 }}>
+                                {(['cachorro', 'adulto', 'senior'] as Stage[]).map(s => (
+                                    <button key={s} onClick={() => setStage(s)} style={{
+                                        flex: 1, padding: '11px 0',
+                                        borderRadius: 12,
+                                        border: `2px solid ${stage === s ? G : B}`,
+                                        background: stage === s ? G : 'white',
+                                        color: stage === s ? 'white' : BR,
+                                        cursor: 'pointer', fontWeight: 600, fontSize: 13,
+                                        transition: 'all 0.18s', fontFamily: 'inherit',
+                                        textTransform: 'capitalize',
+                                    }}>
+                                        {s.charAt(0).toUpperCase() + s.slice(1)}
+                                    </button>
+                                ))}
                             </div>
                         </div>
 
                         {/* Weight */}
-                        <div style={{ marginBottom: 20 }}>
-                            <p style={{ color: C_BROWN, fontWeight: 700, fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 8 }}>
-                                PESO DE TU MASCOTA
-                            </p>
-                            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                        <div>
+                            <p style={{ color: BR, opacity: 0.45, fontWeight: 700, fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 10 }}>PESO DE TU MASCOTA</p>
+                            <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap' }}>
                                 {WEIGHTS.map(w => (
-                                    <Chip key={w} active={weight === w} onClick={() => setWeight(w)}>{w} kg</Chip>
+                                    <button key={w} onClick={() => setWeight(w)} style={{
+                                        padding: '9px 14px',
+                                        borderRadius: 10,
+                                        border: `2px solid ${weight === w ? G : B}`,
+                                        background: weight === w ? G : 'white',
+                                        color: weight === w ? 'white' : BR,
+                                        cursor: 'pointer', fontWeight: 600, fontSize: 13,
+                                        transition: 'all 0.18s', fontFamily: 'inherit',
+                                        lineHeight: 1,
+                                    }}>
+                                        {w} kg
+                                    </button>
                                 ))}
                             </div>
                         </div>
 
-                        {/* Result */}
-                        <div style={{ backgroundColor: C_BEIGE2, borderRadius: 14, padding: '14px 18px', marginBottom: 14 }}>
-                            <p style={{ color: C_GREEN, fontWeight: 700, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>
-                                📊 RESULTADO PARA {result.label.toUpperCase()}:
+                        {/* Results */}
+                        <div style={{ background: B2, borderRadius: 20, padding: '20px 24px', marginTop: 'auto' }}>
+                            <p style={{ color: G, fontWeight: 700, fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', margin: '0 0 16px', opacity: 0.7 }}>
+                                RESULTADO · {res.label.toUpperCase()}
                             </p>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10 }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
                                 {[
-                                    { icon: '🥗', label: 'POR DÍA',         value: result.porDia,      sub: 'DE COMIDA NATURAL' },
-                                    { icon: '🍽️', label: 'POR COMIDA (×2)', value: result.porComida,   sub: 'POR COMIDA' },
-                                    { icon: '📅', label: 'RENDIMIENTO',      value: result.rendimiento, sub: 'RINDE APROX. (1 KG)' },
+                                    { label: 'POR DÍA',        value: res.dia,    unit: 'g', sub: 'de comida natural' },
+                                    { label: 'POR COMIDA (×2)', value: res.comida, unit: 'g', sub: 'por comida' },
+                                    { label: 'RENDIMIENTO',     value: res.rinde,  unit: 'días', sub: 'por kg aprox.' },
                                 ].map(r => (
                                     <div key={r.label} style={{
-                                        background: 'white', borderRadius: 10,
-                                        padding: '12px 8px',
-                                        textAlign: 'center',
-                                        boxShadow: '0 2px 8px rgba(35,75,52,0.07)',
+                                        background: 'white', borderRadius: 16,
+                                        padding: '18px 14px', textAlign: 'center',
+                                        boxShadow: '0 2px 16px rgba(35,75,52,0.08)',
                                     }}>
-                                        <div style={{ fontSize: 16, marginBottom: 4 }}>{r.icon}</div>
-                                        <p style={{ color: C_BROWN, opacity: 0.5, fontSize: 9, fontWeight: 700, letterSpacing: '0.06em', marginBottom: 4 }}>{r.label}</p>
-                                        <p style={{ color: C_GREEN, fontWeight: 800, fontSize: 'clamp(0.9rem,1.8vw,1.2rem)', fontStyle: 'italic', margin: '0 0 2px', lineHeight: 1.1 }}>{r.value}</p>
-                                        <p style={{ color: C_BROWN, opacity: 0.4, fontSize: 9, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{r.sub}</p>
+                                        <p style={{ color: BR, opacity: 0.4, fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', margin: '0 0 8px' }}>{r.label}</p>
+                                        <p style={{ color: G, fontWeight: 900, fontSize: 'clamp(1.3rem,2.5vw,2rem)', fontStyle: 'italic', margin: '0 0 2px', lineHeight: 1 }}>
+                                            {r.value}
+                                            <span style={{ fontSize: '0.45em', fontStyle: 'normal', fontWeight: 600, marginLeft: 3, opacity: 0.7 }}>{r.unit}</span>
+                                        </p>
+                                        <p style={{ color: BR, opacity: 0.35, fontSize: 9, textTransform: 'uppercase', letterSpacing: '0.06em', margin: 0 }}>{r.sub}</p>
                                     </div>
                                 ))}
                             </div>
+                            <p style={{ color: BR, opacity: 0.35, fontSize: 11, lineHeight: 1.5, margin: '14px 0 0' }}>
+                                🌿 Porciones orientativas. Pueden variar según actividad y metabolismo.
+                            </p>
                         </div>
-
-                        {/* Legal */}
-                        <p style={{ color: C_BROWN, opacity: 0.45, fontSize: 12, lineHeight: 1.6, marginBottom: 20 }}>
-                            🌿 Las porciones son orientativas y pueden variar según actividad, metabolismo y objetivos nutricionales.
-                        </p>
 
                         {/* WhatsApp CTA */}
                         {whatsapp && (
-                            <div style={{
-                                display: 'flex', alignItems: 'center', gap: 16,
-                                backgroundColor: C_BEIGE2, borderRadius: 16, padding: '16px 20px',
-                                flexWrap: 'wrap',
-                            }}>
-                                <div style={{ flex: 1, minWidth: 180 }}>
-                                    <p style={{ color: C_BROWN, fontWeight: 700, fontSize: 14, margin: '0 0 2px' }}>¿Necesitás ayuda?</p>
-                                    <p style={{ color: C_BROWN, opacity: 0.6, fontSize: 13, margin: 0 }}>Escribinos por WhatsApp y te asesoramos 🧡</p>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+                                <div style={{ flex: 1, minWidth: 150 }}>
+                                    <p style={{ color: BR, fontWeight: 700, fontSize: 13, margin: '0 0 2px' }}>¿Necesitás ayuda?</p>
+                                    <p style={{ color: BR, opacity: 0.5, fontSize: 12, margin: 0 }}>Escribinos y te asesoramos 🧡</p>
                                 </div>
-                                <a href={waCalc} target="_blank" rel="noreferrer"
-                                    style={{
-                                        backgroundColor: C_ORANGE, color: 'white',
-                                        padding: '12px 22px', borderRadius: 100,
-                                        fontWeight: 700, fontSize: 13,
-                                        textDecoration: 'none', whiteSpace: 'nowrap',
-                                        transition: 'opacity 0.2s',
-                                    }}
+                                <a href={waLink} target="_blank" rel="noreferrer" style={{
+                                    background: OR, color: 'white',
+                                    padding: '12px 24px', borderRadius: 100,
+                                    fontWeight: 700, fontSize: 13,
+                                    textDecoration: 'none', whiteSpace: 'nowrap',
+                                    boxShadow: `0 4px 16px ${OR}44`,
+                                    transition: 'opacity 0.2s',
+                                }}
                                     onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
                                     onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
                                 >
@@ -226,20 +190,56 @@ export function GauchoCalculadora({ whatsapp }: { whatsapp?: string }) {
                         )}
                     </div>
 
-                    {/* Right illustration */}
-                    <div style={{
-                        flex: '0 0 240px', display: 'flex',
-                        flexDirection: 'column', alignItems: 'center',
-                        justifyContent: 'center', gap: 10,
-                    }} className="hidden lg:flex">
-                        <img
-                            src="/gaucho/dog-cta-transparent.png"
-                            alt="Mascota Gaucho Natural Pet"
-                            style={{ width: 220, height: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 8px 24px rgba(35,75,52,0.15))' }}
-                        />
-                        <div style={{ textAlign: 'center' }}>
-                            <p style={{ color: C_GREEN, fontWeight: 700, fontSize: 13, margin: '0 0 4px' }}>Comida real, vida real.</p>
-                            <p style={{ color: C_BROWN, opacity: 0.5, fontSize: 12 }}>Sin ultraprocesados</p>
+                    {/* RIGHT — premium visual panel */}
+                    <div className="hidden lg:flex" style={{
+                        width: 280, flexShrink: 0,
+                        background: G,
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 0,
+                        padding: '40px 28px',
+                        position: 'relative',
+                        overflow: 'hidden',
+                    }}>
+                        {/* Decorative circles */}
+                        <div style={{ position: 'absolute', top: -60, right: -60, width: 200, height: 200, borderRadius: '50%', background: G2, opacity: 0.5 }} />
+                        <div style={{ position: 'absolute', bottom: -40, left: -40, width: 160, height: 160, borderRadius: '50%', background: G2, opacity: 0.4 }} />
+
+                        {/* Paw prints decorative */}
+                        <svg viewBox="0 0 100 90" style={{ position:'absolute', top:30, left:20, width:48, opacity:0.12, pointerEvents:'none' }} fill="white">
+                            <ellipse cx="50" cy="72" rx="22" ry="17"/><ellipse cx="20" cy="46" rx="10" ry="13"/><ellipse cx="38" cy="33" rx="10" ry="13"/><ellipse cx="62" cy="33" rx="10" ry="13"/><ellipse cx="80" cy="46" rx="10" ry="13"/>
+                        </svg>
+                        <svg viewBox="0 0 100 90" style={{ position:'absolute', bottom:40, right:16, width:32, opacity:0.10, pointerEvents:'none', transform:'rotate(20deg)' }} fill="white">
+                            <ellipse cx="50" cy="72" rx="22" ry="17"/><ellipse cx="20" cy="46" rx="10" ry="13"/><ellipse cx="38" cy="33" rx="10" ry="13"/><ellipse cx="62" cy="33" rx="10" ry="13"/><ellipse cx="80" cy="46" rx="10" ry="13"/>
+                        </svg>
+
+                        {/* Bowl image */}
+                        <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+                            <div style={{ width: 160, height: 160, borderRadius: '50%', background: G2, margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 32px rgba(0,0,0,0.2)', overflow: 'hidden' }}>
+                                <img src="/gaucho/dog-cta-transparent.png" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center', mixBlendMode: 'luminosity', opacity: 0.9 }} />
+                            </div>
+
+                            <p style={{ color: 'white', fontWeight: 800, fontSize: 16, margin: '0 0 6px', lineHeight: 1.2 }}>
+                                Comida real,<br />vida real.
+                            </p>
+                            <p style={{ color: 'white', opacity: 0.55, fontSize: 12, margin: '0 0 20px' }}>
+                                Sin ultraprocesados
+                            </p>
+
+                            {/* Mini stats */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
+                                {[
+                                    { n: '100%', t: 'ingredientes naturales' },
+                                    { n: '0%',   t: 'conservantes' },
+                                    { n: '∞',    t: 'amor por tu mascota' },
+                                ].map(s => (
+                                    <div key={s.t} style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'rgba(255,255,255,0.08)', borderRadius: 10, padding: '8px 12px' }}>
+                                        <span style={{ color: OR, fontWeight: 900, fontSize: 15, minWidth: 36 }}>{s.n}</span>
+                                        <span style={{ color: 'white', opacity: 0.7, fontSize: 11 }}>{s.t}</span>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
