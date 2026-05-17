@@ -66,33 +66,39 @@ function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
 
 function Section2() {
     return (
-        <section id="beneficios" style={{ lineHeight: 0, display: 'block' }}>
-            <picture>
-                <source media="(max-width: 768px)" srcSet="/gaucho/comidanaturalmobile.png" />
-                <img src="/gaucho/comida natural.png" alt="Comida natural" style={{ width: '100%', height: 'auto', display: 'block' }} />
-            </picture>
+        <section id="beneficios" style={{ lineHeight: 0, display: 'block', backgroundColor: G_CREAM }}>
+            <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+                <picture>
+                    <source media="(max-width: 768px)" srcSet="/gaucho/comidanaturalmobile.png" />
+                    <img src="/gaucho/comida natural.png" alt="Comida natural" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                </picture>
+            </div>
         </section>
     );
 }
 
 function Section3() {
     return (
-        <section style={{ lineHeight: 0, display: 'block' }}>
-            <picture>
-                <source media="(max-width: 768px)" srcSet="/gaucho/ultraprocesadosmobile.png" />
-                <img src="/gaucho/ultraprocesados.png" alt="Menos ultraprocesados" style={{ width: '100%', height: 'auto', display: 'block' }} />
-            </picture>
+        <section style={{ lineHeight: 0, display: 'block', backgroundColor: G_CREAM }}>
+            <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+                <picture>
+                    <source media="(max-width: 768px)" srcSet="/gaucho/ultraprocesadosmobile.png" />
+                    <img src="/gaucho/ultraprocesados.png" alt="Menos ultraprocesados" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                </picture>
+            </div>
         </section>
     );
 }
 
 function Section4({ whatsapp }: { whatsapp?: string }) {
     return (
-        <section id="transicion" style={{ lineHeight: 0, display: 'block' }}>
-            <picture>
-                <source media="(max-width: 768px)" srcSet="/gaucho/transicionmobile.png" />
-                <img src="/gaucho/transicion.png" alt="Transición a comida natural" style={{ width: '100%', height: 'auto', display: 'block' }} />
-            </picture>
+        <section id="transicion" style={{ lineHeight: 0, display: 'block', backgroundColor: G_CREAM }}>
+            <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+                <picture>
+                    <source media="(max-width: 768px)" srcSet="/gaucho/transicionmobile.png" />
+                    <img src="/gaucho/transicion.png" alt="Transición a comida natural" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                </picture>
+            </div>
         </section>
     );
 }
