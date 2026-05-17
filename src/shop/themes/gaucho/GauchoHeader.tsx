@@ -197,6 +197,7 @@ export function GauchoHeader({
             </div>
 
             <HeroSection whatsapp={whatsapp} address={address} />
+            <div style={{ height: 80, background: 'linear-gradient(to bottom, #1A3A20 0%, #F5EDDB 100%)', marginTop: -1 }} />
             <Section2 />
             <Section3 />
             <Section4 whatsapp={whatsapp} />
