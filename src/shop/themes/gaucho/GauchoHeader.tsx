@@ -1,7 +1,6 @@
 import { Search, Instagram, ShoppingCart, Package, Heart, Leaf, Lightbulb, ArrowRightLeft, Calculator, Truck, ChefHat, Zap } from "lucide-react";
 import AssistantIcon from "../../../components/icons/AssistantIcon";
 import { getSocialLink } from "../../../utils/format";
-import { GauchoCalculadora } from "./GauchoCalculadora";
 
 const G_GREEN  = '#2D5F34';
 const G_OLIVE  = '#4E7A52';
@@ -211,7 +210,6 @@ export function GauchoHeader({
             <section style={{ lineHeight: 0, display: 'block' }}>
                 <img src="/gaucho/seccion6.png" alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </section>
-            <GauchoCalculadora whatsapp={whatsapp} />
         </header>
     );
 }
