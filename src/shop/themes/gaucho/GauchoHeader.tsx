@@ -54,7 +54,7 @@ function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
                 <picture style={{ display: 'block', width: '100%', height: '100%' }}>
                     <source media="(max-width: 768px)" srcSet="/gaucho/heromobile.png" />
                     <img
-                        src="/gaucho/hero.png"
+                        src="/gaucho/hero1.png"
                         alt="Gaucho Natural Pet — Comida real, vida real."
                         style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', objectPosition: 'top center' }}
                     />
