@@ -413,6 +413,12 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 </Suspense>
             )}
 
+            {isGaucho && (
+                <section style={{ lineHeight: 0, display: 'block' }}>
+                    <img src="/gaucho/seccion6.png" alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                </section>
+            )}
+
             {/* Powered by */}
             <div className="py-4 text-center">
                 <a
