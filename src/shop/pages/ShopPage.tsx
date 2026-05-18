@@ -314,7 +314,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
 
             {isGaucho && (
                 <section style={{ lineHeight: 0, display: 'block' }}>
-                    <img src="/gaucho/nuestrosproductos.png" alt="Nuestros Productos" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                    <img src="/gaucho/nuestrosproductos.png" alt="Nuestros Productos" style={{ width: '100%', height: 'auto', display: 'block', maxHeight: 320, objectFit: 'cover' }} />
                 </section>
             )}
 
