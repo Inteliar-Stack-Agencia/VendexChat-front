@@ -219,9 +219,6 @@ export function GauchoHeader({
             <section style={{ lineHeight: 0, display: 'block' }}>
                 <img src="/gaucho/gatos.png" alt="Gatos" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </section>
-            <section style={{ lineHeight: 0, display: 'block' }}>
-                <img src="/gaucho/seccion6.png" alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
-            </section>
         </header>
     );
 }
