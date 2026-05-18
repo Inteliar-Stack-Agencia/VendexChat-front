@@ -506,11 +506,6 @@ export function GauchoInfoSections({ whatsapp }: GauchoInfoSectionsProps) {
                 </div>
             </section>
 
-            {/* ── Seccion6 — al final de la web ─────────────────────────── */}
-            <section style={{ lineHeight: 0, display: 'block' }}>
-                <img src="/gaucho/seccion6.png" alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
-            </section>
-
         </div>
     );
 }
