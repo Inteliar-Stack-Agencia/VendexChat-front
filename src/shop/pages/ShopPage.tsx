@@ -313,17 +313,9 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
             )}
 
             {isGaucho && (
-                <div className="text-center py-14 px-4" style={{ backgroundColor: '#F5EDDB' }}>
-                    <span style={{ color: '#E97B63', fontSize: 10, fontWeight: 800, letterSpacing: '0.18em', textTransform: 'uppercase' }}>
-                        GAUCHO NATURAL PET
-                    </span>
-                    <h2 className="gaucho-title mt-2" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: '#2D5F34', lineHeight: 1 }}>
-                        Nuestros Productos
-                    </h2>
-                    <p className="gaucho-body mt-3 max-w-md mx-auto text-sm" style={{ color: '#6A3E24', opacity: 0.7 }}>
-                        Comida real, fresca y natural. Elaborada con ingredientes de verdad para perros y gatos.
-                    </p>
-                </div>
+                <section style={{ lineHeight: 0, display: 'block' }}>
+                    <img src="/gaucho/nuestrosproductos.png" alt="Nuestros Productos" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                </section>
             )}
 
             <main id="productos" className="max-w-[1440px] mx-auto px-4 py-8">
