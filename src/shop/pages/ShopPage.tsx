@@ -303,13 +303,27 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 </div>
             )}
 
-            {viewMode === 'standard' && (
+            {viewMode === 'standard' && !isGaucho && (
                 <ActiveCategoryChips
                     categories={data.categories}
                     activeId={effectiveActiveCategory}
                     onSelect={setActiveCategory}
                     onMenuClick={() => setIsCategoryDrawerOpen(true)}
                 />
+            )}
+
+            {isGaucho && (
+                <div className="text-center py-14 px-4" style={{ backgroundColor: '#F5EDDB' }}>
+                    <span style={{ color: '#E97B63', fontSize: 10, fontWeight: 800, letterSpacing: '0.18em', textTransform: 'uppercase' }}>
+                        GAUCHO NATURAL PET
+                    </span>
+                    <h2 className="gaucho-title mt-2" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: '#2D5F34', lineHeight: 1 }}>
+                        Nuestros Productos
+                    </h2>
+                    <p className="gaucho-body mt-3 max-w-md mx-auto text-sm" style={{ color: '#6A3E24', opacity: 0.7 }}>
+                        Comida real, fresca y natural. Elaborada con ingredientes de verdad para perros y gatos.
+                    </p>
+                </div>
             )}
 
             <main id="productos" className="max-w-[1440px] mx-auto px-4 py-8">
@@ -335,22 +349,24 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                         const remaining = cat.products.length - PAGE_SIZE;
                         return (
                             <section key={cat.id} className="mb-12">
-                                <div className="flex items-center gap-4 mb-6">
-                                    {isGaucho ? (
-                                        <h2 className="gaucho-title text-2xl md:text-3xl leading-none" style={{ color: '#2D5F34' }}>
-                                            {cat.name}
-                                        </h2>
-                                    ) : (
-                                        <h2 className="text-sm md:text-lg font-black text-slate-900 uppercase tracking-tight">
-                                            {cat.name}
-                                        </h2>
-                                    )}
-                                    <div className="h-[1px] flex-1" style={{ backgroundColor: isGaucho ? 'rgba(212,165,116,0.4)' : '#f1f5f9' }} />
-                                    <span className={`text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-tighter ${isGaucho ? 'gaucho-body' : ''}`}
-                                        style={isGaucho ? { backgroundColor: 'rgba(45,95,52,0.08)', color: '#2D5F34' } : {}}>
-                                        {isGaucho ? '' : ''}{cat.products.length} Items
-                                    </span>
-                                </div>
+                                {(!isGaucho || filteredCategories.length > 1) && (
+                                    <div className="flex items-center gap-4 mb-6">
+                                        {isGaucho ? (
+                                            <h2 className="gaucho-title text-2xl md:text-3xl leading-none" style={{ color: '#2D5F34' }}>
+                                                {cat.name}
+                                            </h2>
+                                        ) : (
+                                            <h2 className="text-sm md:text-lg font-black text-slate-900 uppercase tracking-tight">
+                                                {cat.name}
+                                            </h2>
+                                        )}
+                                        <div className="h-[1px] flex-1" style={{ backgroundColor: isGaucho ? 'rgba(212,165,116,0.4)' : '#f1f5f9' }} />
+                                        <span className={`text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-tighter ${isGaucho ? 'gaucho-body' : ''}`}
+                                            style={isGaucho ? { backgroundColor: 'rgba(45,95,52,0.08)', color: '#2D5F34' } : {}}>
+                                            {isGaucho ? '' : ''}{cat.products.length} Items
+                                        </span>
+                                    </div>
+                                )}
 
                                 <div className={isGaucho
                                     ? `grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 max-w-4xl mx-auto`
