@@ -318,6 +318,15 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 </section>
             )}
 
+            {isGaucho && viewMode === 'standard' && data.categories.length > 1 && (
+                <ActiveCategoryChips
+                    categories={data.categories}
+                    activeId={effectiveActiveCategory}
+                    onSelect={setActiveCategory}
+                    onMenuClick={() => setIsCategoryDrawerOpen(true)}
+                />
+            )}
+
             <main id="productos" className="max-w-[1440px] mx-auto px-4 py-8">
                 {viewMode === 'weekly' ? (
                     <WeeklyMenuGrid
