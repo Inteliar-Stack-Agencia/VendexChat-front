@@ -361,7 +361,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                                 )}
 
                                 <div className={isGaucho
-                                    ? `grid grid-cols-2 gap-5 md:gap-7 max-w-3xl mx-auto`
+                                    ? `grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-7 max-w-5xl mx-auto`
                                     : `grid grid-cols-1 ${cat.products.length > 20 ? 'md:grid-cols-3' : 'md:grid-cols-2 max-w-4xl mx-auto'} gap-3 md:gap-6`
                                 }>
                                     {visibleProducts.map((p) => (
