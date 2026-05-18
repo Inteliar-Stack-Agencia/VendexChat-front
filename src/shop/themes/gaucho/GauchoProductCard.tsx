@@ -36,8 +36,8 @@ export const GauchoProductCard = memo(function GauchoProductCard({
                 boxShadow: '0 4px 16px rgba(45,95,52,0.08)',
             }}
         >
-            {/* Product image — top, aspect-square */}
-            <div className="relative aspect-square w-full overflow-hidden flex-shrink-0" style={{ backgroundColor: G_CREAM }}>
+            {/* Product image — top, aspect-[4/3] */}
+            <div className="relative w-full overflow-hidden flex-shrink-0" style={{ backgroundColor: G_CREAM, aspectRatio: '4/3' }}>
                 {product.image_url && !imgError ? (
                     <img
                         src={getProductImageUrl(product.image_url, 512)}
@@ -83,9 +83,9 @@ export const GauchoProductCard = memo(function GauchoProductCard({
             </div>
 
             {/* Content — below image */}
-            <div className="flex flex-col gap-2 p-3 md:p-4 flex-1">
+            <div className="flex flex-col gap-2 p-4 md:p-5 flex-1">
                 <div>
-                    <h3 className="gaucho-body font-extrabold text-sm md:text-base leading-tight uppercase tracking-tight line-clamp-2"
+                    <h3 className="gaucho-title text-lg md:text-xl leading-tight line-clamp-2"
                         style={{ color: G_GREEN }}>
                         {product.name}
                     </h3>
@@ -107,7 +107,7 @@ export const GauchoProductCard = memo(function GauchoProductCard({
                                     {formatPrice(product.price)}
                                 </span>
                             )}
-                            <span className="gaucho-body text-sm md:text-base font-extrabold tracking-tight"
+                            <span className="gaucho-title text-xl md:text-2xl"
                                 style={{ color: G_GOLDEN }}>
                                 {formatPrice(hasOffer ? product.offer_price! : product.price)}
                             </span>
