@@ -475,7 +475,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 quantity={quickViewProduct ? getItemQuantity(quickViewProduct.id) : 0}
                 onAdd={addItem}
                 onUpdate={updateQuantity}
-                onAskAI={(p) => openChat(`Hola 👋, me gustaría saber más sobre el producto: **${p.name}**`)}
+                onAskAI={hasBotAccess ? (p) => openChat(`Hola 👋, me gustaría saber más sobre el producto: **${p.name}**`) : undefined}
                 isMorfiEmpresas={isMorfiEmpresas}
                 getQuantityForDay={isMorfiEmpresas && quickViewProduct
                     ? (day) => getItemQuantity(quickViewProduct.id, day)
