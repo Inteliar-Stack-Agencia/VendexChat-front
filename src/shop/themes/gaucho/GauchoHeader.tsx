@@ -210,7 +210,6 @@ export function GauchoHeader({
             </div>
 
             <HeroSection whatsapp={whatsapp} address={address} />
-            <Section2 />
             <Section3 />
             <Section4 whatsapp={whatsapp} />
             <section style={{ lineHeight: 0, display: 'block' }}>

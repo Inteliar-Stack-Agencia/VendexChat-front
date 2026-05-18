@@ -414,9 +414,14 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
             )}
 
             {isGaucho && (
-                <section style={{ lineHeight: 0, display: 'block' }}>
-                    <img src="/gaucho/seccion6.png" alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
-                </section>
+                <>
+                    <section style={{ lineHeight: 0, display: 'block' }}>
+                        <img src="/gaucho/seccion6.png" alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                    </section>
+                    <section style={{ lineHeight: 0, display: 'block' }}>
+                        <img src="/gaucho/seccion2.png" alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                    </section>
+                </>
             )}
 
             {/* Powered by */}
