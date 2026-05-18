@@ -53,7 +53,7 @@ export function GauchoCategoryChips({ categories, activeId, onSelect, onMenuClic
                         <button
                             key={cat.id}
                             onClick={() => onSelect(cat.id)}
-                            className="flex items-center gap-2.5 px-7 py-3.5 rounded-2xl gaucho-body font-bold uppercase tracking-widest transition-all text-sm hover:opacity-90 active:scale-95"
+                            className="px-7 py-3.5 rounded-2xl gaucho-body font-bold uppercase tracking-widest transition-all text-sm hover:opacity-90 active:scale-95"
                             style={isActive ? {
                                 backgroundColor: G_GREEN,
                                 color: G_WARM_WHITE,
@@ -66,7 +66,6 @@ export function GauchoCategoryChips({ categories, activeId, onSelect, onMenuClic
                                 boxShadow: '0 2px 8px rgba(45,95,52,0.06)',
                             }}
                         >
-                            <span className="text-lg">{emoji}</span>
                             {cat.name}
                         </button>
                     );
