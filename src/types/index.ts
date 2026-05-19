@@ -10,6 +10,7 @@ export interface Product {
   stock: number;
   unlimited_stock: boolean;
   is_active: boolean;
+  is_featured?: boolean;
   category_id: string;
   sort_order: number;
 }
