@@ -40,6 +40,16 @@ export function MundoInfoSections({ whatsapp }: MundoInfoSectionsProps) {
     return (
         <div className="w-full" style={{ backgroundColor: M_BG }}>
 
+            {/* Sección imagen 2 */}
+            <section className="w-full">
+                <img
+                    src="https://images.vendexchat.app/mundoelectronico/seccion2.png"
+                    alt="Mundo Electrónico"
+                    className="w-full"
+                    style={{ display: 'block', objectFit: 'cover' }}
+                />
+            </section>
+
             {/* Info cards */}
             <section className="py-16 px-4" style={{ borderTop: '1px solid rgba(59,130,246,0.12)' }}>
                 <div className="max-w-4xl mx-auto">
