@@ -24,17 +24,21 @@ Luego llama a `get_catalog(identifier)` en Supabase que busca por `slug = identi
 1. **Slugs hardcodeados — actualizar si cambian en DB.** Hay referencias a slugs específicos en:
    - `src/shop/components/CartDrawer.tsx` → `CUSTOMER_TYPE_STORES` (tiendas con selector Particular/Empresa) y `MORFI_EMPRESAS_SLUG`
    - `src/shop/pages/ShopPage.tsx` → `isMorfiEmpresas` (activa UI sin precios y pedidos por día)
+   - `src/shop/pages/ShopPage.tsx` → `GAUCHO_SLUG = 'gauchopet'` (activa tema visual Gaucho)
 
-2. **Slugs actuales** (post-migración 052):
+2. **Slugs actuales:**
    | Store | slug |
    |-------|------|
    | Morfi Viandas CABA | `caba` |
    | Morfi La Plata | `laplata` |
    | Morfi Empresas | `empresas` |
+   | Gaucho Natural Pet | `gauchopet` |
 
-3. **Assets estáticos** los maneja el worker `vendexchat-domain-proxy` en el repo admin. Si aparecen 404 en JS/CSS/imágenes bajo dominio custom, revisar el regex `STATIC_ASSET_RE` en `workers/domain-proxy/src/index.ts`.
+3. **Dominios custom sin sub-ruta (`tienda.com` raíz):** `App.tsx` detecta si el hostname no es `vendexchat.app` ni localhost y rutea todo a `ShopPage`. El tema visual (ej. Gaucho) se activa por `data?.store?.slug` porque `useParams().slug` es `undefined` en ese caso. Si una tienda con tema custom no muestra su diseño en dominio propio, revisar `isGaucho` (u otras flags de tema) en `ShopPage.tsx` para que lean también `data?.store?.slug`.
 
-4. **Probar siempre en incógnito** después de cambios para evitar caché.
+4. **Assets estáticos** los maneja el worker `vendexchat-domain-proxy`. Si aparecen 404 en JS/CSS/imágenes bajo dominio custom, revisar el regex `STATIC_ASSET_RE` en el código del worker en Cloudflare.
+
+5. **Probar siempre en incógnito** después de cambios para evitar caché.
 
 ## Deploy
 Push a `main` → Cloudflare Pages buildea y deploya automáticamente. No hay pasos manuales.
