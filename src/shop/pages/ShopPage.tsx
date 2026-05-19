@@ -45,7 +45,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
     const planFetchedFor = useRef<string | null>(null);
 
     const isMorfiEmpresas = data?.store?.slug === 'empresas';
-    const isGaucho = slug === GAUCHO_SLUG;
+    const isGaucho = slug === GAUCHO_SLUG || data?.store?.slug === GAUCHO_SLUG;
 
     useEffect(() => {
         if (data?.store?.popups) {
