@@ -33,7 +33,7 @@ export interface MundoHeaderProps {
 }
 
 export function MundoHeader({
-    name, logo, whatsapp, instagram,
+    name, logo, banner, whatsapp, instagram,
     totalItems, announcement, onSearch, onChatClick, onCartClick, hideChatButton,
 }: MundoHeaderProps) {
     return (
