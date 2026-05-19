@@ -119,8 +119,17 @@ export function MundoHeader({
                 </div>
             </div>
 
-            {/* Hero space for logo PNG — usa el logo de la tienda como hero si está disponible */}
-            {logo && (
+            {/* Hero banner */}
+            {banner ? (
+                <div className="w-full" style={{ maxHeight: 420, overflow: 'hidden' }}>
+                    <img
+                        src={banner}
+                        alt={name}
+                        className="w-full"
+                        style={{ objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+                    />
+                </div>
+            ) : logo && (
                 <div className="flex items-center justify-center py-12 px-4"
                     style={{ background: 'linear-gradient(180deg, rgba(59,130,246,0.08) 0%, transparent 100%)' }}>
                     <img
