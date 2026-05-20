@@ -299,7 +299,10 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                     whatsapp={data.store.whatsapp || data.store.phone || ""}
                     onShowShop={() => {
                         setShowMundoCatalog(true);
-                        setTimeout(() => document.getElementById('mundo-shop')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                        setTimeout(() => {
+                            const el = document.getElementById('mundo-shop') || document.getElementById('productos');
+                            el?.scrollIntoView({ behavior: 'smooth' });
+                        }, 150);
                     }}
                 />
             )}
