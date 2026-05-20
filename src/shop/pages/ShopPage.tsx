@@ -297,7 +297,6 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
             {isMundoElectronico && (
                 <MundoTopSections
                     whatsapp={data.store.whatsapp || data.store.phone || ""}
-                    seccion2Img="https://images.vendexchat.app/mundoelectronico/seccion2.png"
                     onShowShop={() => {
                         setShowMundoCatalog(true);
                         setTimeout(() => document.getElementById('mundo-shop')?.scrollIntoView({ behavior: 'smooth' }), 100);

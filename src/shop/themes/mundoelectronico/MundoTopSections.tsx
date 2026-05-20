@@ -38,13 +38,14 @@ const UPGRADES = [
     'Optimización de rendimiento',
 ];
 
+const CDN = 'https://images.vendexchat.app/mundoelectronico';
+
 interface MundoTopSectionsProps {
     whatsapp?: string;
-    seccion2Img?: string;
     onShowShop: () => void;
 }
 
-export function MundoTopSections({ whatsapp, seccion2Img, onShowShop }: MundoTopSectionsProps) {
+export function MundoTopSections({ whatsapp, onShowShop }: MundoTopSectionsProps) {
     const wa = (msg: string) => whatsapp
         ? `https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`
         : '#';
@@ -52,29 +53,19 @@ export function MundoTopSections({ whatsapp, seccion2Img, onShowShop }: MundoTop
     return (
         <div style={{ backgroundColor: WHITE }}>
 
-            {/* SECCIÓN 2 — Ecosistema */}
-            <section id="servicios" className="py-20 px-4" style={{ backgroundColor: LIGHT }}>
-                <div className="max-w-5xl mx-auto">
-                    <div className="text-center mb-12">
-                        <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: BLUE }}>Nuestros servicios</p>
-                        <h2 className="text-4xl font-black" style={{ color: DARK_TEXT, letterSpacing: '-0.02em' }}>
-                            Todo lo que necesitás para tu tecnología.
-                        </h2>
-                    </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-                        {ECOSYSTEM.map(({ icon: Icon, label, desc, color }) => (
-                            <div key={label} className="rounded-[20px] p-6 flex flex-col gap-3 bg-white"
-                                style={{ boxShadow: SHADOW }}>
-                                <div className="w-11 h-11 rounded-[12px] flex items-center justify-center"
-                                    style={{ backgroundColor: `${color}15` }}>
-                                    <Icon className="w-5 h-5" style={{ color }} />
-                                </div>
-                                <h3 className="font-bold text-sm leading-tight" style={{ color: DARK_TEXT }}>{label}</h3>
-                                <p className="text-xs leading-relaxed" style={{ color: GRAY }}>{desc}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+            {/* SECCIÓN 2 */}
+            <section id="servicios" style={{ lineHeight: 0 }}>
+                <img src={`${CDN}/seccion2.png`} alt="Nuestros servicios" style={{ width: '100%', display: 'block' }} />
+            </section>
+
+            {/* SECCIÓN 3 */}
+            <section style={{ lineHeight: 0 }}>
+                <img src={`${CDN}/seccion3.png`} alt="Reparación avanzada" style={{ width: '100%', display: 'block' }} />
+            </section>
+
+            {/* SECCIÓN 4 */}
+            <section style={{ lineHeight: 0 }}>
+                <img src={`${CDN}/seccion4.png`} alt="Soporte técnico" style={{ width: '100%', display: 'block' }} />
             </section>
 
             {/* SECCIÓN 3 — Reparación avanzada */}
