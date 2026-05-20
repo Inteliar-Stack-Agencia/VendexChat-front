@@ -121,14 +121,24 @@ export function MundoHeader({
 
             {/* Hero banner */}
             {banner ? (
-                <div className="w-full" style={{ maxHeight: 420, overflow: 'hidden' }}>
-                    <img
-                        src={banner}
-                        alt={name}
-                        className="w-full"
-                        style={{ objectFit: 'cover', objectPosition: 'center', display: 'block' }}
-                    />
-                </div>
+                <>
+                    <div className="w-full" style={{ maxHeight: 420, overflow: 'hidden' }}>
+                        <img
+                            src={banner}
+                            alt={name}
+                            className="w-full"
+                            style={{ objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+                        />
+                    </div>
+                    <div className="w-full py-10 px-4 text-center" style={{ background: 'linear-gradient(180deg, rgba(59,130,246,0.07) 0%, transparent 100%)' }}>
+                        <h2 className="text-2xl md:text-4xl font-black tracking-tight" style={{ color: M_WHITE }}>
+                            Todo lo que necesitás para tu tecnología
+                        </h2>
+                        <p className="mt-2 text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                            Celulares, accesorios, reparaciones y más. Envíos a todo el país.
+                        </p>
+                    </div>
+                </>
             ) : logo && (
                 <div className="flex items-center justify-center py-12 px-4"
                     style={{ background: 'linear-gradient(180deg, rgba(59,130,246,0.08) 0%, transparent 100%)' }}>
