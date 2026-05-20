@@ -16,7 +16,7 @@ export function MundoTopSections({ whatsapp, onShowShop }: MundoTopSectionsProps
 
             {/* SECCIÓN 2 — Tienda, con botones superpuestos */}
             <section id="servicios" style={{ position: 'relative', lineHeight: 0 }}>
-                <img src={`${CDN}/seccion2.png`} alt="Tienda online" style={{ width: '100%', display: 'block' }} />
+                <img src={`${CDN}/seccion2.webp`} alt="Tienda online" style={{ width: '100%', display: 'block' }} />
                 <div onClick={onShowShop} style={{
                     position: 'absolute',
                     bottom: '10%',
@@ -30,7 +30,7 @@ export function MundoTopSections({ whatsapp, onShowShop }: MundoTopSectionsProps
 
             {/* SECCIÓN 3 */}
             <section style={{ lineHeight: 0 }}>
-                <img src={`${CDN}/seccion3.png`} alt="Reparación avanzada" style={{ width: '100%', display: 'block' }} />
+                <img src={`${CDN}/seccion3.webp`} alt="Reparación avanzada" style={{ width: '100%', display: 'block' }} />
             </section>
 
             {/* SECCIÓN 4 */}
