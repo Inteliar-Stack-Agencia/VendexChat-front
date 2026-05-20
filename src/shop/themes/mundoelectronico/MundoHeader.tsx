@@ -35,16 +35,10 @@ export interface MundoHeaderProps {
 
 export function MundoHeader({
     name, logo, banner, whatsapp, instagram,
-    totalItems, announcement, onSearch, onChatClick, onCartClick, hideChatButton,
+    totalItems, onSearch, onChatClick, onCartClick, hideChatButton,
 }: MundoHeaderProps) {
     return (
         <header>
-            {announcement && (
-                <div className="px-4 py-2.5 text-center" style={{ background: `linear-gradient(135deg, ${BLUE} 0%, ${BLUE2} 100%)` }}>
-                    <p className="text-xs font-semibold uppercase tracking-widest text-white">{announcement}</p>
-                </div>
-            )}
-
             {/* Navbar */}
             <div className="sticky top-0 z-50"
                 style={{ backgroundColor: DARK, borderBottom: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 2px 16px rgba(0,0,0,0.35)' }}>
