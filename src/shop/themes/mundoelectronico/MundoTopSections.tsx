@@ -40,12 +40,20 @@ export function MundoTopSections({ whatsapp, onShowShop }: MundoTopSectionsProps
                 <p className="text-base mb-8" style={{ color: GRAY }}>
                     Accesorios, periféricos y electrónica de calidad con garantía.
                 </p>
-                <button
-                    onClick={onShowShop}
-                    className="px-8 py-4 rounded-[14px] font-bold text-sm transition-all hover:opacity-90 active:scale-95"
-                    style={{ background: GRADIENT, color: WHITE, boxShadow: `0 4px 20px ${BLUE}40` }}>
-                    Ver productos →
-                </button>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <button
+                        onClick={onShowShop}
+                        className="px-8 py-4 rounded-[14px] font-bold text-sm transition-all hover:opacity-90 active:scale-95"
+                        style={{ background: GRADIENT, color: WHITE, boxShadow: `0 4px 20px ${BLUE}40` }}>
+                        Ver tienda online →
+                    </button>
+                    <button
+                        onClick={onShowShop}
+                        className="px-8 py-4 rounded-[14px] font-bold text-sm transition-all hover:opacity-90 active:scale-95"
+                        style={{ border: `2px solid ${BLUE}`, color: BLUE, backgroundColor: 'transparent' }}>
+                        Ver productos →
+                    </button>
+                </div>
             </section>
 
         </div>
