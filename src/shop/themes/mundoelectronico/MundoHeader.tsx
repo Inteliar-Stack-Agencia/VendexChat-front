@@ -6,8 +6,6 @@ const BLUE    = '#00A8FF';
 const BLUE2   = '#3A78B5';
 const DARK    = '#0F172A';
 const WHITE   = '#FFFFFF';
-const GRAY    = '#64748B';
-const DARK_TEXT = '#111827';
 
 function WhatsAppIcon({ className }: { className?: string }) {
     return (
@@ -34,7 +32,6 @@ export interface MundoHeaderProps {
     hideChatButton?: boolean;
 }
 
-const BADGES = ['Desde 2006', 'Garantía 60 días', 'Diagnóstico sin cargo', '+172 reseñas'];
 
 export function MundoHeader({
     name, logo, banner, whatsapp, instagram,
@@ -108,61 +105,12 @@ export function MundoHeader({
                 </div>
             </div>
 
-            {/* Hero */}
-            <section style={{ background: `linear-gradient(135deg, ${BLUE} 0%, ${BLUE2} 100%)`, position: 'relative', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.18)', pointerEvents: 'none' }} />
-                <div style={{ position: 'absolute', top: -80, right: -60, width: 400, height: 400, borderRadius: '50%', background: 'rgba(255,255,255,0.06)', filter: 'blur(60px)', pointerEvents: 'none' }} />
-
-                <div className="relative max-w-6xl mx-auto px-5 py-16 md:py-24">
-                    <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-center">
-
-                        {/* Text */}
-                        <div className="flex-1">
-                            <div className="flex flex-wrap gap-2 mb-6">
-                                {BADGES.map(b => (
-                                    <span key={b} className="text-[11px] font-semibold px-3 py-1 rounded-full"
-                                        style={{ backgroundColor: 'rgba(255,255,255,0.18)', color: WHITE, backdropFilter: 'blur(4px)' }}>
-                                        {b}
-                                    </span>
-                                ))}
-                            </div>
-                            <h1 className="text-4xl md:text-5xl font-black leading-tight mb-4" style={{ color: WHITE, letterSpacing: '-0.02em' }}>
-                                Soluciones tecnológicas para hogares y empresas.
-                            </h1>
-                            <p className="text-base mb-8 leading-relaxed" style={{ color: 'rgba(255,255,255,0.82)' }}>
-                                Reparación de celulares, notebooks, soporte técnico y tienda online en Microcentro.
-                            </p>
-                            <div className="flex flex-wrap gap-3">
-                                {whatsapp && (
-                                    <a href={`https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hola! Quiero hacer una consulta')}`}
-                                        target="_blank" rel="noreferrer"
-                                        className="px-6 py-3 rounded-[14px] font-bold text-sm flex items-center gap-2 transition-all hover:opacity-90 active:scale-95"
-                                        style={{ backgroundColor: WHITE, color: DARK_TEXT, boxShadow: '0 4px 20px rgba(0,0,0,0.2)' }}>
-                                        <WhatsAppIcon className="w-4 h-4" style={{ color: '#25D366' } as any} />
-                                        Hablar por WhatsApp
-                                    </a>
-                                )}
-                                <button
-                                    onClick={() => document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' })}
-                                    className="px-6 py-3 rounded-[14px] font-bold text-sm transition-all hover:bg-white/10"
-                                    style={{ border: '2px solid rgba(255,255,255,0.5)', color: WHITE, backgroundColor: 'transparent' }}>
-                                    Ver servicios
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Banner */}
-                        {banner && (
-                            <div className="flex-1 w-full md:max-w-lg">
-                                <div className="rounded-[20px] overflow-hidden"
-                                    style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.3)' }}>
-                                    <img src={banner} alt={name} className="w-full" style={{ display: 'block' }} />
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </section>
+            {/* Hero — imagen full-width */}
+            {banner && (
+                <section style={{ lineHeight: 0 }}>
+                    <img src={banner} alt={name} style={{ width: '100%', display: 'block' }} />
+                </section>
+            )}
         </header>
     );
 }
