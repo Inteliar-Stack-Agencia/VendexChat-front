@@ -17,6 +17,7 @@ interface ChatBotWidgetProps {
     whatsappNumber?: string;
     initialMessage?: string | null;
     storeId: string;
+    assistantIconUrl?: string;
 }
 
 export function ChatBotWidget({
@@ -24,7 +25,8 @@ export function ChatBotWidget({
     onClose,
     whatsappNumber,
     initialMessage,
-    storeId
+    storeId,
+    assistantIconUrl,
 }: ChatBotWidgetProps) {
     const [messages, setMessages] = useState<Message[]>([]);
     const [botName, setBotName] = useState("Chat de ayuda");
@@ -124,8 +126,10 @@ export function ChatBotWidget({
             {/* Header */}
             <div className="p-4 bg-primary-dynamic text-white flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-md">
-                        <AssistantIcon className="w-6 h-6" />
+                    <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-md overflow-hidden">
+                        {assistantIconUrl
+                            ? <img src={assistantIconUrl} alt="Asistente" className="w-full h-full object-contain rounded-xl" />
+                            : <AssistantIcon className="w-6 h-6" />}
                     </div>
                     <div>
                         <h3 className="font-black text-sm uppercase tracking-tight">{botName}</h3>

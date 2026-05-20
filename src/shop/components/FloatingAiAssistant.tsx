@@ -6,9 +6,10 @@ interface FloatingAiAssistantProps {
     onClick: () => void;
     isOpen: boolean;
     isCartOpen?: boolean;
+    assistantIconUrl?: string;
 }
 
-export default function FloatingAiAssistant({ onClick, isOpen, isCartOpen }: FloatingAiAssistantProps) {
+export default function FloatingAiAssistant({ onClick, isOpen, isCartOpen, assistantIconUrl }: FloatingAiAssistantProps) {
     const [showBubble, setShowBubble] = useState(false);
     const [hasBounced, setHasBounced] = useState(false);
 
@@ -63,8 +64,8 @@ export default function FloatingAiAssistant({ onClick, isOpen, isCartOpen }: Flo
             >
                 <div className="absolute inset-0 rounded-2xl bg-emerald-500 animate-ping opacity-30 group-hover:hidden" />
                 <img
-                    src="/logosinfondo.png"
-                    alt="VendexChat"
+                    src={assistantIconUrl || "/logosinfondo.png"}
+                    alt="Asistente"
                     className="w-full h-full object-contain z-10"
                 />
 

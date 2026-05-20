@@ -14,12 +14,17 @@ import FloatingAiAssistant from "../components/FloatingAiAssistant";
 import PopupModal from "../components/PopupModal";
 import { Suspense, lazy } from "react";
 import type { Popup } from "../../types";
+import { GauchoHeader } from "../themes/gaucho/GauchoHeader";
+import { GauchoProductCard } from "../themes/gaucho/GauchoProductCard";
+import { GauchoCategoryChips } from "../themes/gaucho/GauchoCategoryChips";
+import { GauchoInfoSections } from "../themes/gaucho/GauchoInfoSections";
 import { MundoHeader } from "../themes/mundoelectronico/MundoHeader";
 import { MundoProductCard } from "../themes/mundoelectronico/MundoProductCard";
 import { MundoCategoryChips } from "../themes/mundoelectronico/MundoCategoryChips";
 import { MundoInfoSections } from "../themes/mundoelectronico/MundoInfoSections";
 import { MundoTopSections } from "../themes/mundoelectronico/MundoTopSections";
 
+const GAUCHO_SLUG = 'gauchopet';
 const MUNDO_SLUG = 'mundoelectronico';
 
 const CartDrawer = lazy(() => import("../components/CartDrawer").then(m => ({ default: m.CartDrawer })));
@@ -46,6 +51,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
     const planFetchedFor = useRef<string | null>(null);
 
     const isMorfiEmpresas = data?.store?.slug === 'empresas';
+    const isGaucho = slug === GAUCHO_SLUG || data?.store?.slug === GAUCHO_SLUG;
     const isMundoElectronico = slug === MUNDO_SLUG || data?.store?.slug === MUNDO_SLUG;
     const [showMundoCatalog, setShowMundoCatalog] = useState(false);
 
@@ -133,9 +139,10 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
     if (loading) {
         // Si ya tenemos info de la tienda, mostramos el header real con skeleton de productos
         if (storePreview) {
+            const HeaderComponent = isGaucho ? GauchoHeader : isMundoElectronico ? MundoHeader : StoreHeader;
             return (
-                <div className="min-h-screen bg-white pb-24">
-                    <StoreHeader
+                <div className={`min-h-screen pb-24 ${isGaucho ? 'bg-[#F5F1EB]' : 'bg-white'}`}>
+                    <HeaderComponent
                         name={storePreview.name}
                         logo={storePreview.logo_url || ""}
                         banner={storePreview.banner_url || ""}
@@ -259,17 +266,17 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
         );
     }
 
-    const ActiveHeader = isMundoElectronico ? MundoHeader : StoreHeader;
-    const ActiveProductCard = isMundoElectronico ? MundoProductCard : ProductCard;
-    const ActiveCategoryChips = isMundoElectronico ? MundoCategoryChips : CategoryChips;
+    const ActiveHeader = isGaucho ? GauchoHeader : isMundoElectronico ? MundoHeader : StoreHeader;
+    const ActiveProductCard = isGaucho ? GauchoProductCard : isMundoElectronico ? MundoProductCard : ProductCard;
+    const ActiveCategoryChips = isGaucho ? GauchoCategoryChips : isMundoElectronico ? MundoCategoryChips : CategoryChips;
 
     const featuredProducts = isMundoElectronico
         ? data.categories.flatMap(cat => cat.products || []).filter(p => p.is_featured)
         : [];
 
     return (
-        <div className="min-h-screen bg-white pb-24">
-            {!isMundoElectronico && <GlobalAnnouncement announcement={data.announcement} />}
+        <div className={`min-h-screen pb-24 ${isGaucho ? 'bg-[#F5F1EB]' : 'bg-white'}`}>
+            {!isGaucho && !isMundoElectronico && <GlobalAnnouncement announcement={data.announcement} />}
             <ActiveHeader
                 name={data.store.name}
                 logo={data.store.logo_url || ""}
@@ -319,7 +326,22 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 </div>
             )}
 
-            {viewMode === 'standard' && !isMundoElectronico && (
+            {viewMode === 'standard' && !isGaucho && !isMundoElectronico && (
+                <ActiveCategoryChips
+                    categories={data.categories}
+                    activeId={effectiveActiveCategory}
+                    onSelect={setActiveCategory}
+                    onMenuClick={() => setIsCategoryDrawerOpen(true)}
+                />
+            )}
+
+            {isGaucho && (
+                <section style={{ lineHeight: 0, display: 'block' }}>
+                    <img src="/gaucho/menuoptimizado.png" alt="Nuestros Productos" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                </section>
+            )}
+
+            {isGaucho && viewMode === 'standard' && data.categories.length > 1 && (
                 <ActiveCategoryChips
                     categories={data.categories}
                     activeId={effectiveActiveCategory}
@@ -368,8 +390,12 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                         onItemClick={setQuickViewProduct}
                     />
                 ) : filteredCategories.length === 0 ? (
-                    <div className="text-center py-20 bg-slate-50 rounded-[2rem] border-2 border-dashed border-slate-100">
-                        <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">No se encontraron productos</p>
+                    <div className="text-center py-20 rounded-[2rem] border-2 border-dashed"
+                        style={isGaucho ? { backgroundColor: 'rgba(245,241,235,0.7)', borderColor: 'rgba(45,95,52,0.2)' } : { backgroundColor: '#f8fafc', borderColor: '#f1f5f9' }}>
+                        <p className={`font-bold uppercase tracking-widest text-xs ${isGaucho ? 'gaucho-body' : ''}`}
+                            style={isGaucho ? { color: 'rgba(45,95,52,0.5)' } : { color: '#94a3b8' }}>
+                            No se encontraron productos
+                        </p>
                     </div>
                 ) : (
                     filteredCategories.map((cat) => {
@@ -379,17 +405,33 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                         const remaining = cat.products.length - PAGE_SIZE;
                         return (
                             <section key={cat.id} className="mb-12">
-                                <div className="flex items-center gap-4 mb-6">
-                                    <h2 className="text-sm md:text-lg font-black text-slate-900 uppercase tracking-tight">
-                                        {cat.name}
-                                    </h2>
-                                    <div className="h-[1px] flex-1 bg-slate-100" />
-                                    <span className="text-[9px] font-black bg-slate-50 text-slate-400 px-3 py-1 rounded-full uppercase tracking-tighter">
-                                        {cat.products.length} Items
-                                    </span>
-                                </div>
+                                {(!isGaucho || filteredCategories.length > 1) && (
+                                    <div className="flex items-center gap-4 mb-6">
+                                        {isGaucho ? (
+                                            <h2 className="gaucho-title text-2xl md:text-3xl leading-none" style={{ color: '#2D5F34' }}>
+                                                {cat.name}
+                                            </h2>
+                                        ) : isMundoElectronico ? (
+                                            <h2 className="text-sm md:text-lg font-black uppercase tracking-tight" style={{ color: '#ffffff' }}>
+                                                {cat.name}
+                                            </h2>
+                                        ) : (
+                                            <h2 className="text-sm md:text-lg font-black text-slate-900 uppercase tracking-tight">
+                                                {cat.name}
+                                            </h2>
+                                        )}
+                                        <div className="h-[1px] flex-1" style={{ backgroundColor: isGaucho ? 'rgba(212,165,116,0.4)' : isMundoElectronico ? 'rgba(59,130,246,0.2)' : '#f1f5f9' }} />
+                                        <span className={`text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-tighter ${isGaucho ? 'gaucho-body' : ''}`}
+                                            style={isGaucho ? { backgroundColor: 'rgba(45,95,52,0.08)', color: '#2D5F34' } : isMundoElectronico ? { backgroundColor: 'rgba(59,130,246,0.12)', color: '#3b82f6' } : {}}>
+                                            {cat.products.length} Items
+                                        </span>
+                                    </div>
+                                )}
 
-                                <div className={`grid grid-cols-1 ${cat.products.length > 20 ? 'md:grid-cols-3' : 'md:grid-cols-2 max-w-4xl mx-auto'} gap-3 md:gap-6`}>
+                                <div className={isGaucho || isMundoElectronico
+                                    ? `grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-7 max-w-5xl mx-auto`
+                                    : `grid grid-cols-1 ${cat.products.length > 20 ? 'md:grid-cols-3' : 'md:grid-cols-2 max-w-4xl mx-auto'} gap-3 md:gap-6`
+                                }>
                                     {visibleProducts.map((p) => (
                                         <div
                                             key={p.id}
@@ -410,8 +452,14 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                                 {!isExpanded && remaining > 0 && (
                                     <button
                                         onClick={() => setExpandedCategories(prev => new Set(prev).add(cat.id))}
-                                        className="mt-4 w-full py-3 text-[10px] font-black uppercase tracking-widest rounded-2xl transition-all border border-dashed"
-                                        style={isMundoElectronico ? { color: '#3b82f6', borderColor: 'rgba(59,130,246,0.3)' } : { color: '#94a3b8', borderColor: '#e2e8f0' }}
+                                        className={`mt-4 w-full py-3 text-[10px] font-black uppercase tracking-widest rounded-2xl transition-all border border-dashed ${isGaucho ? 'gaucho-body' : ''}`}
+                                        style={isGaucho ? {
+                                            color: '#2D5F34',
+                                            borderColor: 'rgba(45,95,52,0.3)',
+                                        } : isMundoElectronico ? {
+                                            color: '#3b82f6',
+                                            borderColor: 'rgba(59,130,246,0.3)',
+                                        } : {}}
                                     >
                                         Ver {remaining} productos más
                                     </button>
@@ -422,6 +470,8 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 )}
             </main>}
 
+            {isGaucho && null}
+
             {isMundoElectronico && (
                 <MundoInfoSections
                     whatsapp={data.store.whatsapp || data.store.phone || ""}
@@ -430,23 +480,25 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 />
             )}
 
-            {!isMundoElectronico && <Suspense fallback={null}>
-                <StoreInfoSections
-                    description={data.store.description}
-                    address={data.store.address}
-                    whatsapp={data.store.whatsapp || data.store.phone || ""}
-                    instagram={data.store.instagram}
-                    facebook={data.store.facebook}
-                    schedule={(() => {
-                        const phys = data.store.physical_schedule || data.store.schedule;
-                        const hasOpenPhysical = phys && Object.values(phys).some((d: any) => d?.open);
-                        return hasOpenPhysical ? phys : (data.store.online_schedule || phys);
-                    })()}
-                    storeName={data.store.name}
-                    metadata={data.store.metadata}
-                    footerMessage={data.store.footer_message}
-                />
-            </Suspense>}
+            {!isGaucho && !isMundoElectronico && (
+                <Suspense fallback={null}>
+                    <StoreInfoSections
+                        description={data.store.description}
+                        address={data.store.address}
+                        whatsapp={data.store.whatsapp || data.store.phone || ""}
+                        instagram={data.store.instagram}
+                        facebook={data.store.facebook}
+                        schedule={(() => {
+                            const phys = data.store.physical_schedule || data.store.schedule;
+                            const hasOpenPhysical = phys && Object.values(phys).some((d: any) => d?.open);
+                            return hasOpenPhysical ? phys : (data.store.online_schedule || phys);
+                        })()}
+                        storeName={data.store.name}
+                        metadata={data.store.metadata}
+                        footerMessage={data.store.footer_message}
+                    />
+                </Suspense>
+            )}
 
             {/* Powered by */}
             <div className="py-4 text-center">
@@ -493,7 +545,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 quantity={quickViewProduct ? getItemQuantity(quickViewProduct.id) : 0}
                 onAdd={addItem}
                 onUpdate={updateQuantity}
-                onAskAI={(p) => openChat(`Hola 👋, me gustaría saber más sobre el producto: **${p.name}**`)}
+                onAskAI={hasBotAccess ? (p) => openChat(`Hola 👋, me gustaría saber más sobre el producto: **${p.name}**`) : undefined}
                 isMorfiEmpresas={isMorfiEmpresas}
                 getQuantityForDay={isMorfiEmpresas && quickViewProduct
                     ? (day) => getItemQuantity(quickViewProduct.id, day)
@@ -509,6 +561,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                         whatsappNumber={data.store.whatsapp || data.store.phone || ""}
                         initialMessage={chatInitialMessage}
                         storeId={data.store.id}
+                        assistantIconUrl={isGaucho ? '/gaucho/logo-transparent.png' : undefined}
                     />
                 </Suspense>
             )}
@@ -518,6 +571,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                     onClick={() => openChat()}
                     isOpen={isChatOpen}
                     isCartOpen={isCartOpen}
+                    assistantIconUrl={isGaucho ? '/gaucho/logo-transparent.png' : undefined}
                 />
             )}
 
