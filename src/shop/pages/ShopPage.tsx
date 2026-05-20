@@ -14,6 +14,13 @@ import FloatingAiAssistant from "../components/FloatingAiAssistant";
 import PopupModal from "../components/PopupModal";
 import { Suspense, lazy } from "react";
 import type { Popup } from "../../types";
+import { MundoHeader } from "../themes/mundoelectronico/MundoHeader";
+import { MundoProductCard } from "../themes/mundoelectronico/MundoProductCard";
+import { MundoCategoryChips } from "../themes/mundoelectronico/MundoCategoryChips";
+import { MundoInfoSections } from "../themes/mundoelectronico/MundoInfoSections";
+import { MundoTopSections } from "../themes/mundoelectronico/MundoTopSections";
+
+const MUNDO_SLUG = 'mundoelectronico';
 
 const CartDrawer = lazy(() => import("../components/CartDrawer").then(m => ({ default: m.CartDrawer })));
 const CategoryDrawer = lazy(() => import("../components/CategoryDrawer").then(m => ({ default: m.CategoryDrawer })));
@@ -39,6 +46,8 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
     const planFetchedFor = useRef<string | null>(null);
 
     const isMorfiEmpresas = data?.store?.slug === 'empresas';
+    const isMundoElectronico = slug === MUNDO_SLUG || data?.store?.slug === MUNDO_SLUG;
+    const [showMundoCatalog, setShowMundoCatalog] = useState(false);
 
     useEffect(() => {
         if (data?.store?.popups) {
@@ -250,10 +259,18 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
         );
     }
 
+    const ActiveHeader = isMundoElectronico ? MundoHeader : StoreHeader;
+    const ActiveProductCard = isMundoElectronico ? MundoProductCard : ProductCard;
+    const ActiveCategoryChips = isMundoElectronico ? MundoCategoryChips : CategoryChips;
+
+    const featuredProducts = isMundoElectronico
+        ? data.categories.flatMap(cat => cat.products || []).filter(p => p.is_featured)
+        : [];
+
     return (
         <div className="min-h-screen bg-white pb-24">
-            <GlobalAnnouncement announcement={data.announcement} />
-            <StoreHeader
+            {!isMundoElectronico && <GlobalAnnouncement announcement={data.announcement} />}
+            <ActiveHeader
                 name={data.store.name}
                 logo={data.store.logo_url || ""}
                 banner={data.store.banner_url || ""}
@@ -269,6 +286,17 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 onCartClick={() => setIsCartOpen(true)}
                 hideChatButton={isMorfiEmpresas}
             />
+
+            {isMundoElectronico && (
+                <MundoTopSections
+                    whatsapp={data.store.whatsapp || data.store.phone || ""}
+                    seccion2Img="https://images.vendexchat.app/mundoelectronico/seccion2.png"
+                    onShowShop={() => {
+                        setShowMundoCatalog(true);
+                        setTimeout(() => document.getElementById('mundo-shop')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                    }}
+                />
+            )}
 
             {data.store.metadata?.enable_weekly_planning && (
                 <div className="max-w-[1440px] mx-auto px-4 mt-8 flex justify-center">
@@ -291,8 +319,8 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 </div>
             )}
 
-            {viewMode === 'standard' && (
-                <CategoryChips
+            {viewMode === 'standard' && !isMundoElectronico && (
+                <ActiveCategoryChips
                     categories={data.categories}
                     activeId={effectiveActiveCategory}
                     onSelect={setActiveCategory}
@@ -300,7 +328,39 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 />
             )}
 
-            <main className="max-w-[1440px] mx-auto px-4 py-8">
+            {isMundoElectronico && showMundoCatalog && featuredProducts.length > 0 && (
+                <section id="mundo-shop" className="max-w-[1440px] mx-auto px-4 pt-10 pb-4">
+                    <div className="flex items-center gap-4 mb-6">
+                        <h2 className="text-sm font-black uppercase tracking-widest" style={{ color: '#3b82f6' }}>
+                            ⭐ Destacados
+                        </h2>
+                        <div className="h-[1px] flex-1" style={{ backgroundColor: 'rgba(59,130,246,0.2)' }} />
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+                        {featuredProducts.map(p => (
+                            <div key={p.id} onClick={() => !getItemQuantity(p.id) && setQuickViewProduct(p)} className="cursor-pointer">
+                                <MundoProductCard
+                                    product={p}
+                                    quantity={getItemQuantity(p.id)}
+                                    onAdd={prod => addItem(prod)}
+                                    onUpdate={updateQuantity}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            {isMundoElectronico && showMundoCatalog && viewMode === 'standard' && (
+                <ActiveCategoryChips
+                    categories={data.categories}
+                    activeId={effectiveActiveCategory}
+                    onSelect={setActiveCategory}
+                    onMenuClick={() => setIsCategoryDrawerOpen(true)}
+                />
+            )}
+
+            {(!isMundoElectronico || showMundoCatalog) && <main id="productos" className="max-w-[1440px] mx-auto px-4 py-8">
                 {viewMode === 'weekly' ? (
                     <WeeklyMenuGrid
                         categories={data.categories}
@@ -336,7 +396,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                                             onClick={() => isMorfiEmpresas ? setQuickViewProduct(p) : (!getItemQuantity(p.id) && setQuickViewProduct(p))}
                                             className="cursor-pointer"
                                         >
-                                            <ProductCard
+                                            <ActiveProductCard
                                                 product={p}
                                                 quantity={getItemQuantity(p.id)}
                                                 onAdd={isMorfiEmpresas ? () => setQuickViewProduct(p) : (prod) => addItem(prod)}
@@ -350,7 +410,8 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                                 {!isExpanded && remaining > 0 && (
                                     <button
                                         onClick={() => setExpandedCategories(prev => new Set(prev).add(cat.id))}
-                                        className="mt-4 w-full py-3 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-700 border border-dashed border-slate-200 hover:border-slate-400 rounded-2xl transition-all"
+                                        className="mt-4 w-full py-3 text-[10px] font-black uppercase tracking-widest rounded-2xl transition-all border border-dashed"
+                                        style={isMundoElectronico ? { color: '#3b82f6', borderColor: 'rgba(59,130,246,0.3)' } : { color: '#94a3b8', borderColor: '#e2e8f0' }}
                                     >
                                         Ver {remaining} productos más
                                     </button>
@@ -359,10 +420,17 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                         );
                     })
                 )}
-            </main>
+            </main>}
 
+            {isMundoElectronico && (
+                <MundoInfoSections
+                    whatsapp={data.store.whatsapp || data.store.phone || ""}
+                    address={data.store.address || ""}
+                    instagram={data.store.instagram || ""}
+                />
+            )}
 
-            <Suspense fallback={null}>
+            {!isMundoElectronico && <Suspense fallback={null}>
                 <StoreInfoSections
                     description={data.store.description}
                     address={data.store.address}
@@ -378,7 +446,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                     metadata={data.store.metadata}
                     footerMessage={data.store.footer_message}
                 />
-            </Suspense>
+            </Suspense>}
 
             {/* Powered by */}
             <div className="py-4 text-center">
