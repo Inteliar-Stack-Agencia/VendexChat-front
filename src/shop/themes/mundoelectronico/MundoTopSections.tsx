@@ -17,11 +17,11 @@ export function MundoTopSections({ whatsapp, onShowShop }: MundoTopSectionsProps
             {/* SECCIÓN 2 — Tienda, con botones superpuestos */}
             <section id="servicios" style={{ position: 'relative', lineHeight: 0 }}>
                 <img src={`${CDN}/seccion2.png`} alt="Tienda online" style={{ width: '100%', display: 'block' }} />
-                <div style={{ position: 'absolute', bottom: '12%', left: '3%', lineHeight: 'normal' }}>
+                <div style={{ position: 'absolute', bottom: '18%', left: '2%', lineHeight: 'normal' }}>
                     <button
                         onClick={onShowShop}
-                        className="px-6 py-3 rounded-[14px] font-bold text-sm transition-all hover:opacity-90 active:scale-95"
-                        style={{ background: GRADIENT, color: WHITE, boxShadow: `0 4px 20px ${BLUE}50` }}>
+                        className="px-5 py-2.5 rounded-[10px] font-bold text-sm transition-all hover:opacity-90 active:scale-95"
+                        style={{ background: GRADIENT, color: WHITE, boxShadow: `0 4px 20px ${BLUE}50`, opacity: 0.01, minWidth: 160 }}>
                         Ver productos →
                     </button>
                 </div>
