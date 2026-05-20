@@ -22,6 +22,7 @@ import { MundoHeader } from "../themes/mundoelectronico/MundoHeader";
 import { MundoProductCard } from "../themes/mundoelectronico/MundoProductCard";
 import { MundoCategoryChips } from "../themes/mundoelectronico/MundoCategoryChips";
 import { MundoInfoSections } from "../themes/mundoelectronico/MundoInfoSections";
+import { MundoTopSections } from "../themes/mundoelectronico/MundoTopSections";
 
 const GAUCHO_SLUG = 'gauchopet';
 const MUNDO_SLUG = 'mundoelectronico';
@@ -52,6 +53,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
     const isMorfiEmpresas = data?.store?.slug === 'empresas';
     const isGaucho = slug === GAUCHO_SLUG || data?.store?.slug === GAUCHO_SLUG;
     const isMundoElectronico = slug === MUNDO_SLUG || data?.store?.slug === MUNDO_SLUG;
+    const [showMundoCatalog, setShowMundoCatalog] = useState(false);
 
     useEffect(() => {
         if (data?.store?.popups) {
@@ -139,7 +141,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
         if (storePreview) {
             const HeaderComponent = isGaucho ? GauchoHeader : isMundoElectronico ? MundoHeader : StoreHeader;
             return (
-                <div className={`min-h-screen pb-24 ${isGaucho ? 'bg-[#F5F1EB]' : isMundoElectronico ? 'bg-[#0f0f1a]' : 'bg-white'}`}>
+                <div className={`min-h-screen pb-24 ${isGaucho ? 'bg-[#F5F1EB]' : 'bg-white'}`}>
                     <HeaderComponent
                         name={storePreview.name}
                         logo={storePreview.logo_url || ""}
@@ -273,7 +275,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
         : [];
 
     return (
-        <div className={`min-h-screen pb-24 ${isGaucho ? 'bg-[#F5F1EB]' : isMundoElectronico ? 'bg-[#0f0f1a]' : 'bg-white'}`}>
+        <div className={`min-h-screen pb-24 ${isGaucho ? 'bg-[#F5F1EB]' : 'bg-white'}`}>
             {!isGaucho && !isMundoElectronico && <GlobalAnnouncement announcement={data.announcement} />}
             <ActiveHeader
                 name={data.store.name}
@@ -291,6 +293,17 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 onCartClick={() => setIsCartOpen(true)}
                 hideChatButton={isMorfiEmpresas}
             />
+
+            {isMundoElectronico && (
+                <MundoTopSections
+                    whatsapp={data.store.whatsapp || data.store.phone || ""}
+                    seccion2Img="https://images.vendexchat.app/mundoelectronico/seccion2.png"
+                    onShowShop={() => {
+                        setShowMundoCatalog(true);
+                        setTimeout(() => document.getElementById('mundo-shop')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                    }}
+                />
+            )}
 
             {data.store.metadata?.enable_weekly_planning && (
                 <div className="max-w-[1440px] mx-auto px-4 mt-8 flex justify-center">
@@ -337,8 +350,8 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 />
             )}
 
-            {isMundoElectronico && featuredProducts.length > 0 && (
-                <section className="max-w-[1440px] mx-auto px-4 pt-10 pb-4">
+            {isMundoElectronico && showMundoCatalog && featuredProducts.length > 0 && (
+                <section id="mundo-shop" className="max-w-[1440px] mx-auto px-4 pt-10 pb-4">
                     <div className="flex items-center gap-4 mb-6">
                         <h2 className="text-sm font-black uppercase tracking-widest" style={{ color: '#3b82f6' }}>
                             ⭐ Destacados
@@ -360,7 +373,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 </section>
             )}
 
-            {isMundoElectronico && viewMode === 'standard' && (
+            {isMundoElectronico && showMundoCatalog && viewMode === 'standard' && (
                 <ActiveCategoryChips
                     categories={data.categories}
                     activeId={effectiveActiveCategory}
@@ -369,7 +382,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 />
             )}
 
-            <main id="productos" className="max-w-[1440px] mx-auto px-4 py-8">
+            {(!isMundoElectronico || showMundoCatalog) && <main id="productos" className="max-w-[1440px] mx-auto px-4 py-8">
                 {viewMode === 'weekly' ? (
                     <WeeklyMenuGrid
                         categories={data.categories}
@@ -455,12 +468,16 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                         );
                     })
                 )}
-            </main>
+            </main>}
 
             {isGaucho && null}
 
             {isMundoElectronico && (
-                <MundoInfoSections whatsapp={data.store.whatsapp || data.store.phone || ""} />
+                <MundoInfoSections
+                    whatsapp={data.store.whatsapp || data.store.phone || ""}
+                    address={data.store.address || ""}
+                    instagram={data.store.instagram || ""}
+                />
             )}
 
             {!isGaucho && !isMundoElectronico && (

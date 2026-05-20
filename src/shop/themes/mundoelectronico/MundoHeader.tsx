@@ -2,10 +2,12 @@ import { Search, ShoppingCart, Instagram } from "lucide-react";
 import AssistantIcon from "../../../components/icons/AssistantIcon";
 import { getSocialLink } from "../../../utils/format";
 
-const M_BG   = '#0f0f1a';
-const M_BLUE = '#3b82f6';
-const M_WHITE = '#ffffff';
-const M_NAV  = 'rgba(15,15,26,0.97)';
+const BLUE    = '#00A8FF';
+const BLUE2   = '#3A78B5';
+const DARK    = '#0F172A';
+const WHITE   = '#FFFFFF';
+const GRAY    = '#64748B';
+const DARK_TEXT = '#111827';
 
 function WhatsAppIcon({ className }: { className?: string }) {
     return (
@@ -32,32 +34,31 @@ export interface MundoHeaderProps {
     hideChatButton?: boolean;
 }
 
+const BADGES = ['Desde 2006', 'Garantía 60 días', 'Diagnóstico sin cargo', '+172 reseñas'];
+
 export function MundoHeader({
     name, logo, banner, whatsapp, instagram,
     totalItems, announcement, onSearch, onChatClick, onCartClick, hideChatButton,
 }: MundoHeaderProps) {
     return (
-        <header style={{ backgroundColor: M_BG }}>
+        <header>
             {announcement && (
-                <div className="px-4 py-2.5 text-center" style={{ backgroundColor: M_BLUE }}>
+                <div className="px-4 py-2.5 text-center" style={{ background: `linear-gradient(135deg, ${BLUE} 0%, ${BLUE2} 100%)` }}>
                     <p className="text-xs font-semibold uppercase tracking-widest text-white">{announcement}</p>
                 </div>
             )}
 
+            {/* Navbar */}
             <div className="sticky top-0 z-50"
-                style={{ backgroundColor: M_NAV, backdropFilter: 'blur(14px)', borderBottom: '1px solid rgba(59,130,246,0.15)', boxShadow: '0 2px 20px rgba(0,0,0,0.5)' }}>
+                style={{ backgroundColor: DARK, borderBottom: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 2px 16px rgba(0,0,0,0.35)' }}>
                 <div className="max-w-7xl mx-auto px-5 py-3 flex items-center gap-4">
 
-                    {/* Logo */}
-                    <div className="flex items-center flex-shrink-0">
-                        {logo ? (
-                            <img src={logo} alt={name} style={{ height: 48, width: 'auto', objectFit: 'contain', filter: 'brightness(1.05)' }} />
-                        ) : (
-                            <span style={{ color: M_BLUE, fontWeight: 900, fontSize: 18, letterSpacing: '-0.02em' }}>{name}</span>
-                        )}
-                    </div>
+                    {logo ? (
+                        <img src={logo} alt={name} style={{ height: 40, width: 'auto', objectFit: 'contain', flexShrink: 0 }} />
+                    ) : (
+                        <span style={{ color: BLUE, fontWeight: 900, fontSize: 17, letterSpacing: '-0.02em', flexShrink: 0 }}>{name}</span>
+                    )}
 
-                    {/* Search */}
                     <div className="relative flex-1 max-w-sm mx-auto md:mx-4">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(255,255,255,0.35)' }} />
                         <input
@@ -65,22 +66,15 @@ export function MundoHeader({
                             placeholder="Buscar productos..."
                             onChange={e => onSearch(e.target.value)}
                             className="w-full rounded-full py-2 pl-9 pr-4 text-sm focus:outline-none"
-                            style={{
-                                backgroundColor: 'rgba(255,255,255,0.07)',
-                                color: M_WHITE,
-                                border: '1px solid rgba(59,130,246,0.25)',
-                                fontFamily: 'inherit',
-                            }}
+                            style={{ backgroundColor: 'rgba(255,255,255,0.08)', color: WHITE, border: '1px solid rgba(255,255,255,0.12)', fontFamily: 'inherit' }}
                         />
                     </div>
 
-                    {/* Actions */}
                     <div className="flex items-center gap-2 ml-auto">
                         {whatsapp && !hideChatButton && (
-                            <button
-                                onClick={onChatClick}
+                            <button onClick={onChatClick}
                                 className="h-9 px-3 flex items-center gap-1.5 rounded-full hover:opacity-80 transition-opacity"
-                                style={{ backgroundColor: 'rgba(59,130,246,0.15)', color: M_WHITE, border: '1px solid rgba(59,130,246,0.3)' }}>
+                                style={{ backgroundColor: `${BLUE}20`, color: WHITE, border: `1px solid ${BLUE}40` }}>
                                 <AssistantIcon className="w-4 h-4" />
                                 <span className="hidden lg:inline text-[10px] font-bold uppercase tracking-widest">IA</span>
                             </button>
@@ -99,18 +93,13 @@ export function MundoHeader({
                                 <WhatsAppIcon className="w-4 h-4" />
                             </a>
                         )}
-                        <button
-                            onClick={onCartClick}
+                        <button onClick={onCartClick}
                             className="relative w-12 h-12 rounded-full flex items-center justify-center hover:scale-105 active:scale-95 ml-1"
-                            style={{
-                                background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
-                                boxShadow: '0 4px 15px rgba(59,130,246,0.4)',
-                                transition: 'transform 0.2s',
-                            }}>
+                            style={{ background: `linear-gradient(135deg, ${BLUE} 0%, ${BLUE2} 100%)`, boxShadow: `0 4px 15px ${BLUE}50`, transition: 'transform 0.2s' }}>
                             <ShoppingCart className="w-5 h-5 text-white" />
                             {totalItems > 0 && (
                                 <span className="absolute -top-1 -right-1 bg-white text-[9px] font-black w-5 h-5 flex items-center justify-center rounded-full"
-                                    style={{ color: '#1d4ed8' }}>
+                                    style={{ color: DARK }}>
                                     {totalItems}
                                 </span>
                             )}
@@ -119,36 +108,61 @@ export function MundoHeader({
                 </div>
             </div>
 
-            {/* Hero banner */}
-            {banner ? (
-                <>
-                    <div className="w-full" style={{ maxHeight: 420, overflow: 'hidden' }}>
-                        <img
-                            src={banner}
-                            alt={name}
-                            className="w-full"
-                            style={{ objectFit: 'cover', objectPosition: 'center', display: 'block' }}
-                        />
+            {/* Hero */}
+            <section style={{ background: `linear-gradient(135deg, ${BLUE} 0%, ${BLUE2} 100%)`, position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.18)', pointerEvents: 'none' }} />
+                <div style={{ position: 'absolute', top: -80, right: -60, width: 400, height: 400, borderRadius: '50%', background: 'rgba(255,255,255,0.06)', filter: 'blur(60px)', pointerEvents: 'none' }} />
+
+                <div className="relative max-w-6xl mx-auto px-5 py-16 md:py-24">
+                    <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-center">
+
+                        {/* Text */}
+                        <div className="flex-1">
+                            <div className="flex flex-wrap gap-2 mb-6">
+                                {BADGES.map(b => (
+                                    <span key={b} className="text-[11px] font-semibold px-3 py-1 rounded-full"
+                                        style={{ backgroundColor: 'rgba(255,255,255,0.18)', color: WHITE, backdropFilter: 'blur(4px)' }}>
+                                        {b}
+                                    </span>
+                                ))}
+                            </div>
+                            <h1 className="text-4xl md:text-5xl font-black leading-tight mb-4" style={{ color: WHITE, letterSpacing: '-0.02em' }}>
+                                Soluciones tecnológicas para hogares y empresas.
+                            </h1>
+                            <p className="text-base mb-8 leading-relaxed" style={{ color: 'rgba(255,255,255,0.82)' }}>
+                                Reparación de celulares, notebooks, soporte técnico y tienda online en Microcentro.
+                            </p>
+                            <div className="flex flex-wrap gap-3">
+                                {whatsapp && (
+                                    <a href={`https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hola! Quiero hacer una consulta')}`}
+                                        target="_blank" rel="noreferrer"
+                                        className="px-6 py-3 rounded-[14px] font-bold text-sm flex items-center gap-2 transition-all hover:opacity-90 active:scale-95"
+                                        style={{ backgroundColor: WHITE, color: DARK_TEXT, boxShadow: '0 4px 20px rgba(0,0,0,0.2)' }}>
+                                        <WhatsAppIcon className="w-4 h-4" style={{ color: '#25D366' } as any} />
+                                        Hablar por WhatsApp
+                                    </a>
+                                )}
+                                <button
+                                    onClick={() => document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' })}
+                                    className="px-6 py-3 rounded-[14px] font-bold text-sm transition-all hover:bg-white/10"
+                                    style={{ border: '2px solid rgba(255,255,255,0.5)', color: WHITE, backgroundColor: 'transparent' }}>
+                                    Ver servicios
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Banner */}
+                        {banner && (
+                            <div className="flex-1 w-full md:max-w-lg">
+                                <div className="rounded-[20px] overflow-hidden"
+                                    style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.3)' }}>
+                                    <img src={banner} alt={name} className="w-full" style={{ display: 'block' }} />
+                                </div>
+                            </div>
+                        )}
                     </div>
-                    <div className="w-full py-10 px-4 text-center" style={{ background: 'linear-gradient(180deg, rgba(59,130,246,0.07) 0%, transparent 100%)' }}>
-                        <h2 className="text-2xl md:text-4xl font-black tracking-tight" style={{ color: M_WHITE }}>
-                            Todo lo que necesitás para tu tecnología
-                        </h2>
-                        <p className="mt-2 text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                            Celulares, accesorios, reparaciones y más. Envíos a todo el país.
-                        </p>
-                    </div>
-                </>
-            ) : logo && (
-                <div className="flex items-center justify-center py-12 px-4"
-                    style={{ background: 'linear-gradient(180deg, rgba(59,130,246,0.08) 0%, transparent 100%)' }}>
-                    <img
-                        src={logo}
-                        alt={name}
-                        style={{ maxHeight: 120, maxWidth: 320, objectFit: 'contain', filter: 'brightness(1.1)' }}
-                    />
                 </div>
-            )}
+            </section>
         </header>
     );
 }
