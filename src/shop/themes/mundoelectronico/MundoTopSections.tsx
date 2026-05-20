@@ -1,8 +1,6 @@
 const BLUE     = '#00A8FF';
 const BLUE2    = '#3A78B5';
 const WHITE    = '#FFFFFF';
-const GRAY     = '#64748B';
-const DARK_TEXT = '#111827';
 const GRADIENT = `linear-gradient(135deg, ${BLUE} 0%, ${BLUE2} 100%)`;
 
 const CDN = 'https://images.vendexchat.app/mundoelectronico';
@@ -16,9 +14,31 @@ export function MundoTopSections({ whatsapp, onShowShop }: MundoTopSectionsProps
     return (
         <div style={{ backgroundColor: WHITE }}>
 
-            {/* SECCIÓN 2 */}
-            <section id="servicios" style={{ lineHeight: 0 }}>
-                <img src={`${CDN}/seccion2.png`} alt="Nuestros servicios" style={{ width: '100%', display: 'block' }} />
+            {/* SECCIÓN 2 — Tienda, con botones superpuestos */}
+            <section id="servicios" style={{ position: 'relative', lineHeight: 0 }}>
+                <img src={`${CDN}/seccion2.png`} alt="Tienda online" style={{ width: '100%', display: 'block' }} />
+                <div style={{
+                    position: 'absolute',
+                    bottom: '12%',
+                    left: '3%',
+                    display: 'flex',
+                    gap: 12,
+                    flexWrap: 'wrap',
+                    lineHeight: 'normal',
+                }}>
+                    <button
+                        onClick={onShowShop}
+                        className="px-6 py-3 rounded-[14px] font-bold text-sm transition-all hover:opacity-90 active:scale-95"
+                        style={{ background: GRADIENT, color: WHITE, boxShadow: `0 4px 20px ${BLUE}50` }}>
+                        Ver tienda online →
+                    </button>
+                    <button
+                        onClick={onShowShop}
+                        className="px-6 py-3 rounded-[14px] font-bold text-sm transition-all hover:opacity-90 active:scale-95"
+                        style={{ backgroundColor: WHITE, color: BLUE, boxShadow: '0 4px 20px rgba(0,0,0,0.15)' }}>
+                        Ver productos →
+                    </button>
+                </div>
             </section>
 
             {/* SECCIÓN 3 */}
@@ -29,31 +49,6 @@ export function MundoTopSections({ whatsapp, onShowShop }: MundoTopSectionsProps
             {/* SECCIÓN 4 */}
             <section style={{ lineHeight: 0 }}>
                 <img src={`${CDN}/seccion4.png`} alt="Soporte técnico" style={{ width: '100%', display: 'block' }} />
-            </section>
-
-            {/* CTA tienda */}
-            <section className="py-16 px-4 text-center" style={{ backgroundColor: WHITE }}>
-                <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: BLUE }}>Tienda online</p>
-                <h2 className="text-3xl font-black mb-4" style={{ color: DARK_TEXT, letterSpacing: '-0.02em' }}>
-                    Productos seleccionados para vos.
-                </h2>
-                <p className="text-base mb-8" style={{ color: GRAY }}>
-                    Accesorios, periféricos y electrónica de calidad con garantía.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                    <button
-                        onClick={onShowShop}
-                        className="px-8 py-4 rounded-[14px] font-bold text-sm transition-all hover:opacity-90 active:scale-95"
-                        style={{ background: GRADIENT, color: WHITE, boxShadow: `0 4px 20px ${BLUE}40` }}>
-                        Ver tienda online →
-                    </button>
-                    <button
-                        onClick={onShowShop}
-                        className="px-8 py-4 rounded-[14px] font-bold text-sm transition-all hover:opacity-90 active:scale-95"
-                        style={{ border: `2px solid ${BLUE}`, color: BLUE, backgroundColor: 'transparent' }}>
-                        Ver productos →
-                    </button>
-                </div>
             </section>
 
         </div>
