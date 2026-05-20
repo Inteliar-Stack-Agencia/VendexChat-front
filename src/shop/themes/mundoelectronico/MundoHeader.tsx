@@ -181,7 +181,7 @@ export function MundoHeader({
         {
             id: 1,
             type: 'image',
-            imageUrl: banner,
+            imageUrl: 'https://images.vendexchat.app/mundoelectronico/hero1.png',
             bg: `linear-gradient(135deg, ${BLUE} 0%, ${BLUE2} 100%)`,
             tag: 'Celulares',
             title: 'Reparación de celulares',
