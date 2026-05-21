@@ -26,7 +26,7 @@ export default function App() {
               {/* Demo page */}
               <Route path="/demo" element={<Suspense fallback={null}><DemoPage /></Suspense>} />
 
-              {/* Rutas reservadas que no deben ser capturadas por el shop */}
+              {/* Rutas reservadas */}
               <Route path="/admin" element={<div className="p-10 font-bold">Admin Panel (Separated deployment)</div>} />
               <Route path="/admin/*" element={<div className="p-10 font-bold">Admin Panel (Separated deployment)</div>} />
               <Route path="/api/*" element={<div>API Endpoint</div>} />
