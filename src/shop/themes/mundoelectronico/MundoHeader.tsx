@@ -67,7 +67,7 @@ function HeroSlider({ slides, whatsapp }: { slides: Slide[]; whatsapp?: string }
                 opacity: transitioning ? 0 : 1,
                 transition: 'opacity 0.3s ease',
                 background: slide.bg,
-                minHeight: 340,
+                height: 'clamp(280px, 45vw, 600px)',
                 display: 'flex',
                 alignItems: 'center',
                 position: 'relative',
@@ -78,7 +78,7 @@ function HeroSlider({ slides, whatsapp }: { slides: Slide[]; whatsapp?: string }
                 <div style={{ position: 'absolute', bottom: -80, left: -40, width: 250, height: 250, borderRadius: '50%', background: 'rgba(255,255,255,0.04)', pointerEvents: 'none' }} />
 
                 {slide.type === 'image' && slide.imageUrl ? (
-                    <img src={slide.imageUrl} alt={slide.title} style={{ width: '100%', display: 'block', lineHeight: 0 }} />
+                    <img src={slide.imageUrl} alt={slide.title} style={{ width: '100%', height: '100%', position: 'absolute', inset: 0, objectFit: 'cover', display: 'block' }} />
                 ) : (
                     <div className="max-w-6xl mx-auto px-6 md:px-12 py-14 w-full" style={{ lineHeight: 'normal' }}>
                         <div className="flex flex-col md:flex-row items-center gap-10">
