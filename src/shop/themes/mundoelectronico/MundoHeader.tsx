@@ -81,7 +81,7 @@ function HeroSlider({ slides, whatsapp }: { slides: Slide[]; whatsapp?: string }
                 <div style={{ position: 'absolute', bottom: -80, left: -40, width: 250, height: 250, borderRadius: '50%', background: 'rgba(255,255,255,0.04)', pointerEvents: 'none' }} />
 
                 {slide.type === 'image' && slide.imageUrl ? (
-                    <img src={slide.imageUrl} alt={slide.title} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
+                    <img src={slide.imageUrl} alt={slide.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 ) : (
                     <div className="max-w-6xl mx-auto px-6 md:px-12 py-14 w-full" style={{ lineHeight: 'normal' }}>
                         <div className="flex flex-col md:flex-row items-center gap-10">
