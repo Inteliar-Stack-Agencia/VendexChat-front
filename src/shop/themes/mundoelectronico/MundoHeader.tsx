@@ -214,12 +214,12 @@ export function MundoHeader({
         {
             id: 4,
             type: 'image',
-            imageUrl: 'https://images.vendexchat.app/mundoelectronico/seccion6.webp',
-            bg: `linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)`,
-            tag: 'Servicios extra',
+            imageUrl: 'https://images.vendexchat.app/mundoelectronico/ecommerce.webp',
+            bg: `linear-gradient(135deg, #0a1628 0%, #0f2040 100%)`,
+            tag: 'Punto de Retiro y Envío',
             title: '',
             subtitle: '',
-            accent: '#6366F1',
+            accent: '#00A8FF',
         },
         {
             id: 5,
