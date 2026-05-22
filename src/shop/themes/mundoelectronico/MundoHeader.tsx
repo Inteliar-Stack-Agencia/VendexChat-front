@@ -61,67 +61,13 @@ function HeroSlider({ slides, whatsapp }: { slides: Slide[]; whatsapp?: string }
     const slide = slides[current];
 
     return (
-        <div style={{ position: 'relative', overflow: 'hidden', lineHeight: 0, aspectRatio: '1920/600', width: '100%' }}>
-            {/* Slide content */}
-            <div style={{
-                opacity: transitioning ? 0 : 1,
-                transition: 'opacity 0.3s ease',
-                background: slide.bg,
-                position: 'absolute',
-                inset: 0,
-                display: 'flex',
-                alignItems: 'center',
-                overflow: 'hidden',
-            }}>
-                {/* Decorative circles */}
-                <div style={{ position: 'absolute', top: -60, right: -60, width: 300, height: 300, borderRadius: '50%', background: 'rgba(255,255,255,0.05)', pointerEvents: 'none' }} />
-                <div style={{ position: 'absolute', bottom: -80, left: -40, width: 250, height: 250, borderRadius: '50%', background: 'rgba(255,255,255,0.04)', pointerEvents: 'none' }} />
-
-                {slide.type === 'image' && slide.imageUrl ? (
-                    <img src={slide.imageUrl} alt={slide.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                ) : (
-                    <div className="max-w-6xl mx-auto px-6 md:px-12 py-14 w-full" style={{ lineHeight: 'normal' }}>
-                        <div className="flex flex-col md:flex-row items-center gap-10">
-                            {/* Text */}
-                            <div className="flex-1">
-                                <span className="inline-block text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-full mb-4"
-                                    style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: WHITE }}>
-                                    {slide.tag}
-                                </span>
-                                <h2 className="text-3xl md:text-5xl font-black leading-tight mb-3"
-                                    style={{ color: WHITE, letterSpacing: '-0.02em' }}
-                                    dangerouslySetInnerHTML={{ __html: slide.title }} />
-                                <p className="text-base mb-6" style={{ color: 'rgba(255,255,255,0.75)' }}>
-                                    {slide.subtitle}
-                                </p>
-                                {slide.chips && (
-                                    <div className="flex flex-wrap gap-2 mb-6">
-                                        {slide.chips.map(chip => (
-                                            <span key={chip} className="text-xs font-semibold px-3 py-1.5 rounded-full"
-                                                style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: WHITE, backdropFilter: 'blur(4px)' }}>
-                                                {chip}
-                                            </span>
-                                        ))}
-                                    </div>
-                                )}
-                                {slide.cta && (
-                                    <a href={slide.ctaHref || (whatsapp ? `https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(slide.cta)}` : '#')}
-                                        target="_blank" rel="noreferrer"
-                                        className="inline-flex items-center gap-2 px-6 py-3 rounded-[14px] font-bold text-sm transition-all hover:opacity-90 active:scale-95"
-                                        style={{ backgroundColor: WHITE, color: DARK, boxShadow: '0 4px 20px rgba(0,0,0,0.2)' }}>
-                                        {slide.cta} →
-                                    </a>
-                                )}
-                            </div>
-                            {/* Icon */}
-                            <div className="hidden md:flex w-64 h-64 items-center justify-center rounded-[40px] flex-shrink-0"
-                                style={{ backgroundColor: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)' }}>
-                                {slide.icon}
-                            </div>
-                        </div>
-                    </div>
-                )}
-            </div>
+        <div style={{ position: 'relative', lineHeight: 0 }}>
+            {/* Imagen del slide actual — define la altura naturalmente */}
+            <img
+                src={slide.imageUrl!}
+                alt={slide.title}
+                style={{ width: '100%', display: 'block', opacity: transitioning ? 0 : 1, transition: 'opacity 0.3s ease' }}
+            />
 
             {/* Arrows */}
             <button onClick={prev}
@@ -136,7 +82,7 @@ function HeroSlider({ slides, whatsapp }: { slides: Slide[]; whatsapp?: string }
             </button>
 
             {/* Dots */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2" style={{ zIndex: 10, lineHeight: 'normal' }}>
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2" style={{ zIndex: 10 }}>
                 {slides.map((_, i) => (
                     <button key={i} onClick={() => goTo(i)}
                         style={{
