@@ -194,7 +194,7 @@ export function MundoHeader({
         {
             id: 2,
             type: 'image',
-            imageUrl: 'https://images.vendexchat.app/mundoelectronico/pc.webp',
+            imageUrl: 'https://images.vendexchat.app/mundoelectronico/pc.webp?v=2',
             bg: `linear-gradient(135deg, #1e3a5f 0%, #0f2744 100%)`,
             tag: 'Notebooks & PCs',
             title: '',
@@ -214,7 +214,7 @@ export function MundoHeader({
         {
             id: 4,
             type: 'image',
-            imageUrl: 'https://images.vendexchat.app/mundoelectronico/ecommerce.webp',
+            imageUrl: 'https://images.vendexchat.app/mundoelectronico/ecommerce.webp?v=2',
             bg: `linear-gradient(135deg, #0a1628 0%, #0f2040 100%)`,
             tag: 'Punto de Retiro y Envío',
             title: '',
