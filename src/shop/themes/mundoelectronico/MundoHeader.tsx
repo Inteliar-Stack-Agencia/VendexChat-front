@@ -61,11 +61,8 @@ function HeroSlider({ slides, whatsapp }: { slides: Slide[]; whatsapp?: string }
     const slide = slides[current];
 
     return (
-        <div style={{ position: 'relative', overflow: 'hidden', lineHeight: 0 }}>
-            {/* Hero image as height sizer — always rendered, invisible on non-hero slides */}
-            <img src={slides[0].imageUrl} alt="" aria-hidden style={{ width: '100%', display: 'block', visibility: 'hidden' }} />
-
-            {/* Slide content — absolutely positioned over the sizer */}
+        <div style={{ position: 'relative', overflow: 'hidden', lineHeight: 0, aspectRatio: '1920/600', width: '100%' }}>
+            {/* Slide content */}
             <div style={{
                 opacity: transitioning ? 0 : 1,
                 transition: 'opacity 0.3s ease',
