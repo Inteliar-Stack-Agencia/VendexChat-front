@@ -12,7 +12,7 @@ const CDN = 'https://images.vendexchat.app/mundoelectronico';
 
 const SLIDES = [
     { id: 1, url: `${CDN}/hero1.webp`,      alt: 'Reparación de celulares' },
-    { id: 2, url: `${CDN}/pcnuevo.webp`,   alt: 'Notebooks & PCs' },
+    { id: 2, url: `${CDN}/pcnuevo.png`,    alt: 'Notebooks & PCs' },
     { id: 3, url: `${CDN}/ecomerce.png`,    alt: 'Punto de Retiro y Envío' },
 ];
 
