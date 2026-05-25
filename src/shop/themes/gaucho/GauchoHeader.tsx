@@ -212,10 +212,7 @@ export function GauchoHeader({
             <HeroSection whatsapp={whatsapp} address={address} />
             <Section2 />
             <section style={{ lineHeight: 0, display: 'block' }}>
-                <picture>
-                    <source media="(max-width: 768px)" srcSet="/gaucho/ultraprocesadosmobile.png" />
-                    <img src="/gaucho/ultraprocesados.png" alt="Menos ultraprocesados" style={{ width: '100%', height: 'auto', display: 'block' }} />
-                </picture>
+                <img src="/gaucho/ultraprocesados.webp" alt="Menos ultraprocesados" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </section>
             <Section4 whatsapp={whatsapp} />
             <section style={{ lineHeight: 0, display: 'block' }}>
