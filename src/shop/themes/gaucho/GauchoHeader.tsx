@@ -219,10 +219,10 @@ export function GauchoHeader({
             </section>
             <Section4 whatsapp={whatsapp} />
             <section style={{ lineHeight: 0, display: 'block' }}>
-                <img src="/gaucho/perros.png" alt="Perros" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/gaucho/perros.webp" alt="Perros" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </section>
             <section style={{ lineHeight: 0, display: 'block' }}>
-                <img src="/gaucho/gatos.png" alt="Gatos" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/gaucho/gatos.webp" alt="Gatos" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </section>
             <section style={{ lineHeight: 0, display: 'block' }}>
                 <img src="/gaucho/seccion6.png" alt="Compará y elegí lo mejor para tu mascota" style={{ width: '100%', height: 'auto', display: 'block' }} />
