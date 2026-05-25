@@ -214,7 +214,7 @@ export function GauchoHeader({
             <section style={{ lineHeight: 0, display: 'block' }}>
                 <picture>
                     <source media="(max-width: 768px)" srcSet="/gaucho/ultraprocesadosmobile.png" />
-                    <img src="/gaucho/ultraprocesados.webp" alt="Menos ultraprocesados" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                    <img src="/gaucho/ultraprocesados.webp" alt="Menos ultraprocesados" style={{ width: '100%', maxHeight: '500px', objectFit: 'cover', display: 'block' }} />
                 </picture>
             </section>
             <Section4 whatsapp={whatsapp} />
