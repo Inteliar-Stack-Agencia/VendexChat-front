@@ -4,12 +4,11 @@ import { type CartItem } from "../../types";
 import { validateCoupon, createOrder } from "../../api/catalog";
 import { sanitizePhoneNumber, formatPrice } from "../../utils/format";
 import { getProductImageUrl } from "../../utils/imageUrl";
+import { getStoreConfig } from "../config/storeConfig";
 
 // Tiendas que requieren selección explícita de tipo de cliente (Particular / Empresa).
 // Agregar nuevos slugs aquí para habilitarlo en más tiendas.
-const CUSTOMER_TYPE_STORES: readonly string[] = ["caba", "laplata"];
-
-const MORFI_EMPRESAS_SLUG = "empresas";
+const CUSTOMER_TYPE_STORES: readonly string[] = ["morfiviandas", "morfilaplata"];
 
 interface CartDrawerProps {
     isOpen: boolean;
@@ -58,7 +57,8 @@ export function CartDrawer({
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const requiresCustomerType = CUSTOMER_TYPE_STORES.includes(storeSlug);
-    const isMorfiEmpresas = storeSlug === MORFI_EMPRESAS_SLUG;
+    const storeConfig = getStoreConfig(storeSlug);
+    const isMorfiEmpresas = storeConfig.requiresDeliveryDay;
 
     const [couponCode, setCouponCode] = useState("");
     const [appliedCoupon, setAppliedCoupon] = useState<any>(null);

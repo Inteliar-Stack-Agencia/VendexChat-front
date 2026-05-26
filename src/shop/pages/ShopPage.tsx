@@ -23,9 +23,7 @@ import { MundoProductCard } from "../themes/mundoelectronico/MundoProductCard";
 import { MundoCategoryChips } from "../themes/mundoelectronico/MundoCategoryChips";
 import { MundoInfoSections } from "../themes/mundoelectronico/MundoInfoSections";
 import { MundoTopSections } from "../themes/mundoelectronico/MundoTopSections";
-
-const GAUCHO_SLUG = 'gauchopet';
-const MUNDO_SLUG = 'mundoelectronico';
+import { getStoreConfig } from "../config/storeConfig";
 
 const CartDrawer = lazy(() => import("../components/CartDrawer").then(m => ({ default: m.CartDrawer })));
 const CategoryDrawer = lazy(() => import("../components/CategoryDrawer").then(m => ({ default: m.CategoryDrawer })));
@@ -50,9 +48,10 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
     const [planType, setPlanType] = useState<string | null>(null);
     const planFetchedFor = useRef<string | null>(null);
 
-    const isMorfiEmpresas = data?.store?.slug === 'morfi-empresas';
-    const isGaucho = slug === GAUCHO_SLUG || data?.store?.slug === GAUCHO_SLUG;
-    const isMundoElectronico = slug === MUNDO_SLUG || data?.store?.slug === MUNDO_SLUG;
+    const storeConfig = getStoreConfig(data?.store?.slug, slug);
+    const isGaucho = storeConfig.theme === 'gaucho';
+    const isMundoElectronico = storeConfig.theme === 'mundoelectronico';
+    const isMorfiEmpresas = storeConfig.requiresDeliveryDay;
     const [showMundoCatalog, setShowMundoCatalog] = useState(false);
 
     useEffect(() => {

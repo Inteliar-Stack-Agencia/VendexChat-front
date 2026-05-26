@@ -19,22 +19,56 @@ React + Vite, Supabase, Cloudflare Pages, MercadoPago.
 
 Luego llama a `get_catalog(identifier)` en Supabase que busca por `slug = identifier` o `custom_domain = identifier`.
 
-## Reglas críticas
+---
 
-1. **Slugs hardcodeados — actualizar si cambian en DB.** Hay referencias a slugs específicos en:
-   - `src/shop/components/CartDrawer.tsx` → `CUSTOMER_TYPE_STORES` (tiendas con selector Particular/Empresa) y `MORFI_EMPRESAS_SLUG`
-   - `src/shop/pages/ShopPage.tsx` → `isMorfiEmpresas` (activa UI sin precios y pedidos por día)
+## ⚠️ REGLA OBLIGATORIA: Configuración de tiendas
 
-2. **Slugs actuales** (post-migración 052):
-   | Store | slug |
-   |-------|------|
-   | Morfi Viandas CABA | `caba` |
-   | Morfi La Plata | `laplata` |
-   | Morfi Empresas | `empresas` |
+**Toda lógica específica de tienda se declara en `src/shop/config/storeConfig.ts`. Esta regla es no negociable.**
 
-3. **Assets estáticos** los maneja el worker `vendexchat-domain-proxy` en el repo admin. Si aparecen 404 en JS/CSS/imágenes bajo dominio custom, revisar el regex `STATIC_ASSET_RE` en `workers/domain-proxy/src/index.ts`.
+### Por qué existe esta regla
+Comparar slugs dispersos en múltiples archivos causa que cambios en una tienda rompan otras tiendas. Pasó con morfi-empresas cuando se agregó Gaucho/Mundo Electronico.
 
-4. **Probar siempre en incógnito** después de cambios para evitar caché.
+### Cómo agregar una tienda nueva con comportamiento especial
+
+1. Abrir `src/shop/config/storeConfig.ts`
+2. Agregar una entrada en `STORE_CONFIGS` con el **slug exacto de la columna `slug` en Supabase**:
+   ```ts
+   'mi-nueva-tienda': {
+     hidePrice: true,
+     // solo los flags que difieren del DEFAULT
+   },
+   ```
+3. **No tocar** `ShopPage.tsx` ni `CartDrawer.tsx` ni ningún otro componente para agregar el nuevo caso.
+
+### Tiendas con config especial (slugs actuales en Supabase)
+
+| Store | slug en Supabase | Flags activos |
+|-------|-----------------|---------------|
+| Morfi Empresas | `morfi-empresas` | hidePrice, hideChatButton, hideAI, alwaysOpenModal, requiresDeliveryDay, requiresCompany |
+| Gaucho Pet | `gauchopet` | theme: gaucho |
+| Mundo Electronico | `mundoelectronico` | theme: mundoelectronico |
+
+### Lo que está prohibido
+
+- ❌ `storeSlug === 'nombre-tienda'` en cualquier componente
+- ❌ Constantes de slug (`const MORFI_EMPRESAS_SLUG = ...`) en componentes
+- ❌ Modificar ShopPage.tsx o CartDrawer.tsx para agregar un nuevo `if (isTal)`
+
+### Lo que está permitido
+
+- ✅ `getStoreConfig(slug).algúnFlag` en cualquier componente
+- ✅ Agregar nuevos flags a `StoreConfig` si se necesitan
+- ✅ Agregar entradas en `STORE_CONFIGS` para tiendas nuevas
+
+---
+
+## Otras reglas
+
+- **Tiendas con selector Particular/Empresa** → se configuran en `CUSTOMER_TYPE_STORES` dentro de `CartDrawer.tsx` (array de slugs). Cuando esto sea más de 3 tiendas, mover a `storeConfig.ts` también.
+
+- **Assets estáticos** los maneja el worker `vendexchat-domain-proxy` en el repo admin. Si aparecen 404 en JS/CSS/imágenes bajo dominio custom, revisar el regex `STATIC_ASSET_RE` en `workers/domain-proxy/src/index.ts`.
+
+- **Probar siempre en incógnito** después de cambios para evitar caché.
 
 ## Deploy
 Push a `main` → Cloudflare Pages buildea y deploya automáticamente. No hay pasos manuales.
