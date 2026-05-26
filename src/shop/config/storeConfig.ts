@@ -46,15 +46,18 @@ const DEFAULT_CONFIG: StoreConfig = {
  * Mapa de configuraciones por slug.
  * Slug = valor exacto de la columna `slug` en la tabla `stores` de Supabase.
  */
+const MORFI_EMPRESAS_CONFIG: Partial<StoreConfig> = {
+  hidePrice: true,
+  hideChatButton: true,
+  hideAI: true,
+  alwaysOpenModal: true,
+  requiresDeliveryDay: true,
+  requiresCompany: true,
+};
+
 const STORE_CONFIGS: Record<string, Partial<StoreConfig>> = {
-  'morfi-empresas': {
-    hidePrice: true,
-    hideChatButton: true,
-    hideAI: true,
-    alwaysOpenModal: true,
-    requiresDeliveryDay: true,
-    requiresCompany: true,
-  },
+  'morfi-empresas': MORFI_EMPRESAS_CONFIG,
+  'empresas': MORFI_EMPRESAS_CONFIG,    // alias — verificar slug real en Supabase
   'gauchopet': {
     theme: 'gaucho',
     bgClass: 'bg-[#F5F1EB]',
