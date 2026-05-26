@@ -339,7 +339,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
 
             {isGaucho && (
                 <section style={{ lineHeight: 0, display: 'block' }}>
-                    <img src="/gaucho/nuestrosproductos.webp" alt="Nuestros Productos" style={{ width: '100%', height: '400px', objectFit: 'cover', display: 'block' }} />
+                    <img src="/gaucho/nuestrosproductos.webp" alt="Nuestros Productos" style={{ width: '100%', height: '400px', objectFit: 'cover', objectPosition: 'left center', display: 'block' }} />
                 </section>
             )}
 
