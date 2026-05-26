@@ -50,7 +50,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
     const [planType, setPlanType] = useState<string | null>(null);
     const planFetchedFor = useRef<string | null>(null);
 
-    const isMorfiEmpresas = data?.store?.slug === 'empresas';
+    const isMorfiEmpresas = data?.store?.slug === 'morfi-empresas';
     const isGaucho = slug === GAUCHO_SLUG || data?.store?.slug === GAUCHO_SLUG;
     const isMundoElectronico = slug === MUNDO_SLUG || data?.store?.slug === MUNDO_SLUG;
     const [showMundoCatalog, setShowMundoCatalog] = useState(false);
