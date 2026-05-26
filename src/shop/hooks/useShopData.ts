@@ -14,13 +14,23 @@ export function useShopData(slug: string | undefined, isDemo?: boolean) {
 
     useEffect(() => {
         const hostname = typeof window !== "undefined" ? window.location.hostname : "";
+        const pathname = typeof window !== "undefined" ? window.location.pathname : "";
         const isLocal = hostname === "localhost" || hostname === "127.0.0.1";
         const isMainDomain = hostname.endsWith("vendexchat.app");
 
+        // Para dominios custom con sub-ruta (ej: morfiviandas.com.ar/empresas),
+        // el path slug es el identificador de la sub-tienda.
+        const pathSlug = pathname.split('/').filter(Boolean)[0] || '';
+
         // Si es demo, forzamos un identificador conocido.
-        // En dominios custom con sub-rutas (/laplata, /empresas), el slug del path ya
-        // fue resuelto por el domain proxy — usarlo directo en vez del hostname.
-        const identifier = isDemo ? "demo-store" : ((isLocal || isMainDomain || slug) ? slug : hostname);
+        // Local/main domain: usa el slug del param de React Router (:slug).
+        // Dominio custom con sub-ruta: usa el path slug.
+        // Dominio custom sin sub-ruta: usa el hostname.
+        const identifier = isDemo
+            ? "demo-store"
+            : (isLocal || isMainDomain)
+                ? slug
+                : (pathSlug || hostname);
 
         if (!identifier) {
             setLoading(false);
