@@ -44,7 +44,7 @@ Comparar slugs dispersos en múltiples archivos causa que cambios en una tienda 
 
 | Store | slug en Supabase | Flags activos |
 |-------|-----------------|---------------|
-| Morfi Empresas | `morfi-empresas` | hidePrice, hideChatButton, hideAI, alwaysOpenModal, requiresDeliveryDay, requiresCompany |
+| Morfi Empresas | `empresas` (acceso: morfiviandas.com.ar/empresas) | hidePrice, hideChatButton, hideAI, alwaysOpenModal, requiresDeliveryDay, requiresCompany |
 | Gaucho Pet | `gauchopet` | theme: gaucho |
 | Mundo Electronico | `mundoelectronico` | theme: mundoelectronico |
 

@@ -56,8 +56,7 @@ const MORFI_EMPRESAS_CONFIG: Partial<StoreConfig> = {
 };
 
 const STORE_CONFIGS: Record<string, Partial<StoreConfig>> = {
-  'morfi-empresas': MORFI_EMPRESAS_CONFIG,
-  'empresas': MORFI_EMPRESAS_CONFIG,    // alias — verificar slug real en Supabase
+  'empresas': MORFI_EMPRESAS_CONFIG,    // morfiviandas.com.ar/empresas
   'gauchopet': {
     theme: 'gaucho',
     bgClass: 'bg-[#F5F1EB]',
