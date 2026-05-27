@@ -473,6 +473,12 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
             </main>}
 
             {isGaucho && (
+                <section style={{ lineHeight: 0, display: 'block' }}>
+                    <img src="/gaucho/envios.webp" alt="Envíos y entregas" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                </section>
+            )}
+
+            {isGaucho && (
                 <GauchoFooter
                     name={data.store.name}
                     logo={data.store.logo}
