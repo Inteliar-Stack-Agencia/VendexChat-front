@@ -581,6 +581,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                         initialMessage={chatInitialMessage}
                         storeId={data.store.id}
                         assistantIconUrl={isGaucho ? '/gaucho/logo-transparent.png' : undefined}
+                        buttonBg={isGaucho ? '#ffffff' : undefined}
                     />
                 </Suspense>
             )}

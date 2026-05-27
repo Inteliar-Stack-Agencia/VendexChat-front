@@ -7,9 +7,10 @@ interface FloatingAiAssistantProps {
     isOpen: boolean;
     isCartOpen?: boolean;
     assistantIconUrl?: string;
+    buttonBg?: string;
 }
 
-export default function FloatingAiAssistant({ onClick, isOpen, isCartOpen, assistantIconUrl }: FloatingAiAssistantProps) {
+export default function FloatingAiAssistant({ onClick, isOpen, isCartOpen, assistantIconUrl, buttonBg }: FloatingAiAssistantProps) {
     const [showBubble, setShowBubble] = useState(false);
     const [hasBounced, setHasBounced] = useState(false);
 
@@ -58,15 +59,19 @@ export default function FloatingAiAssistant({ onClick, isOpen, isCartOpen, assis
             <button
                 onClick={onClick}
                 className={`
-                    group pointer-events-auto relative w-14 h-14 rounded-2xl overflow-hidden bg-emerald-600 shadow-2xl shadow-emerald-600/50 flex items-center justify-center transition-all duration-500 hover:scale-110 hover:bg-emerald-500 active:scale-90
+                    group pointer-events-auto relative w-16 h-16 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center transition-all duration-500 hover:scale-110 active:scale-90
                     ${showBubble ? 'animate-float' : 'animate-pulse-subtle'}
                 `}
+                style={buttonBg
+                    ? { backgroundColor: buttonBg, boxShadow: `0 8px 32px ${buttonBg}80` }
+                    : undefined}
             >
-                <div className="absolute inset-0 rounded-2xl bg-emerald-500 animate-ping opacity-30 group-hover:hidden" />
+                {!buttonBg && <div className="absolute inset-0 rounded-2xl bg-emerald-500 animate-ping opacity-30 group-hover:hidden" />}
+                {!buttonBg && <div className="absolute inset-0 bg-emerald-600 group-hover:bg-emerald-500 transition-colors" />}
                 <img
                     src={assistantIconUrl || "/logosinfondo.png"}
                     alt="Asistente"
-                    className="w-full h-full object-contain z-10"
+                    className="w-full h-full object-contain z-10 p-1"
                 />
 
                 {/* Indicador online */}
