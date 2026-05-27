@@ -519,6 +519,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
             )}
 
             {/* Powered by */}
+            {!isGaucho && !isMundoElectronico && (
             <div className="py-4 text-center">
                 <a
                     href="https://vendexchat.app"
@@ -529,6 +530,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                     Powered by VendeXChat
                 </a>
             </div>
+            )}
 
             <CartBar
                 totalItems={totalItems}
