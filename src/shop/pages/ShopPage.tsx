@@ -405,7 +405,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                         const visibleProducts = isExpanded ? cat.products : cat.products.slice(0, PAGE_SIZE);
                         const remaining = cat.products.length - PAGE_SIZE;
                         return (
-                            <section key={cat.id} className="mb-12">
+                            <section key={cat.id} id={isGaucho ? cat.name.toLowerCase().replace(/\s+/g, '-') : undefined} className="mb-12">
                                 {(!isGaucho || filteredCategories.length > 1) && (
                                     <div className="flex items-center gap-4 mb-6">
                                         {isGaucho ? (

@@ -143,7 +143,7 @@ export function GauchoHeader({
                 </div>
             )}
 
-            <div className="sticky top-0 z-50"
+            <div className="sticky top-0 z-[100]"
                 style={{ backgroundColor: 'rgba(45,95,52,0.97)', backdropFilter: 'blur(14px)', boxShadow: '0 2px 16px rgba(0,0,0,0.18)' }}>
                 <div className="max-w-7xl mx-auto px-5 py-3 flex items-center gap-4">
                     <div className="flex items-center flex-shrink-0">
@@ -155,7 +155,7 @@ export function GauchoHeader({
                         <NavHighlight href="#beneficios"  icon={Heart}          label="Beneficios"  />
                         <NavHighlight href="#comparativa" icon={BarChart2}      label="Comparar"    />
                         <NavHighlight href="#transicion"  icon={ArrowRightLeft} label="Transición"  />
-                        <NavHighlight href="#productos"   icon={BookOpen}      label="Guía alim."  />
+                        <NavHighlight href="#perros"      icon={BookOpen}      label="Guía alim."  />
                         <NavHighlight href="#envios"      icon={Truck}          label="Envíos"      />
                     </nav>
 
