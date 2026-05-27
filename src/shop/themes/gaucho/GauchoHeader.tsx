@@ -66,7 +66,7 @@ function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
 
 function Section2() {
     return (
-        <section id="beneficios" style={{ lineHeight: 0, display: 'block' }}>
+        <section style={{ lineHeight: 0, display: 'block' }}>
             <picture>
                 <source media="(max-width: 768px)" srcSet="/gaucho/comidanaturalmobile.png" />
                 <img src="/gaucho/seccion2.png" alt="Comida natural" style={{ width: '100%', height: 'auto', display: 'block' }} />
@@ -211,7 +211,7 @@ export function GauchoHeader({
 
             <HeroSection whatsapp={whatsapp} address={address} />
             <Section2 />
-            <section style={{ lineHeight: 0, display: 'block' }}>
+            <section id="beneficios" style={{ lineHeight: 0, display: 'block' }}>
                 <picture>
                     <source media="(max-width: 768px)" srcSet="/gaucho/ultraprocesadosmobile.png" />
                     <img src="/gaucho/ultraprocesados.webp" alt="Menos ultraprocesados" style={{ width: '100%', height: 'auto', display: 'block' }} />
