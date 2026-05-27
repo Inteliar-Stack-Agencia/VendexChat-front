@@ -141,8 +141,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
         if (storePreview) {
             const HeaderComponent = isGaucho ? GauchoHeader : isMundoElectronico ? MundoHeader : StoreHeader;
             return (
-                <div className={`min-h-screen pb-24 ${isGaucho ? 'bg-[#F5F1EB]' : 'bg-white'}`}>
-                    <HeaderComponent
+                <div className={`min-h-screen pb-24 ${isGaucho ? 'bg-[#F5F1EB]' : 'bg-white'}`}>                    <HeaderComponent
                         name={storePreview.name}
                         logo={storePreview.logo_url || ""}
                         banner={storePreview.banner_url || ""}
@@ -275,7 +274,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
         : [];
 
     return (
-        <div className={`min-h-screen pb-24 ${isGaucho ? 'bg-[#F5F1EB]' : 'bg-white'}`}>
+        <div className={`min-h-screen ${isGaucho ? 'bg-[#F5F1EB]' : 'pb-24 bg-white'}`}>
             {!isGaucho && !isMundoElectronico && <GlobalAnnouncement announcement={data.announcement} />}
             <ActiveHeader
                 name={data.store.name}
