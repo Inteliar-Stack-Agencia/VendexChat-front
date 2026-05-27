@@ -1,4 +1,4 @@
-import { Search, Instagram, ShoppingCart, Package, Heart, Leaf, Lightbulb, ArrowRightLeft, BookOpen, Truck, ChefHat, Zap } from "lucide-react";
+import { Search, Instagram, ShoppingCart, Package, Heart, BarChart2, ArrowRightLeft, BookOpen, Truck, ChefHat, Zap } from "lucide-react";
 import AssistantIcon from "../../../components/icons/AssistantIcon";
 import { getSocialLink } from "../../../utils/format";
 
@@ -153,7 +153,7 @@ export function GauchoHeader({
                     <nav className="hidden md:flex items-center gap-4 ml-3">
                         <NavHighlight href="#productos"   icon={Package}        label="Productos"   />
                         <NavHighlight href="#beneficios"  icon={Heart}          label="Beneficios"  />
-                        <NavHighlight href="#tips"        icon={Lightbulb}      label="Tips"        />
+                        <NavHighlight href="#comparativa" icon={BarChart2}      label="Comparar"    />
                         <NavHighlight href="#transicion"  icon={ArrowRightLeft} label="Transición"  />
                         <NavHighlight href="#productos"   icon={BookOpen}      label="Guía alim."  />
                         <NavHighlight href="#envios"      icon={Truck}          label="Envíos"      />
@@ -224,7 +224,7 @@ export function GauchoHeader({
             <section style={{ lineHeight: 0, display: 'block' }}>
                 <img src="/gaucho/gatos.webp" alt="Gatos" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </section>
-            <section style={{ lineHeight: 0, display: 'block' }}>
+            <section id="comparativa" style={{ lineHeight: 0, display: 'block' }}>
                 <img src="/gaucho/seccion6.png" alt="Compará y elegí lo mejor para tu mascota" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </section>
         </header>
