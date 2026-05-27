@@ -18,6 +18,7 @@ import { GauchoHeader } from "../themes/gaucho/GauchoHeader";
 import { GauchoProductCard } from "../themes/gaucho/GauchoProductCard";
 import { GauchoCategoryChips } from "../themes/gaucho/GauchoCategoryChips";
 import { GauchoInfoSections } from "../themes/gaucho/GauchoInfoSections";
+import { GauchoFooter } from "../themes/gaucho/GauchoFooter";
 import { MundoHeader } from "../themes/mundoelectronico/MundoHeader";
 import { MundoProductCard } from "../themes/mundoelectronico/MundoProductCard";
 import { MundoCategoryChips } from "../themes/mundoelectronico/MundoCategoryChips";
@@ -471,7 +472,17 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 )}
             </main>}
 
-            {isGaucho && null}
+            {isGaucho && (
+                <GauchoFooter
+                    name={data.store.name}
+                    logo={data.store.logo}
+                    address={data.store.address}
+                    whatsapp={data.store.whatsapp || data.store.phone}
+                    instagram={data.store.instagram}
+                    facebook={data.store.facebook}
+                    email={data.store.email}
+                />
+            )}
 
             {isMundoElectronico && (
                 <MundoInfoSections
