@@ -472,6 +472,12 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
             </main>}
 
             {isGaucho && (
+                <GauchoInfoSections
+                    whatsapp={data.store.whatsapp || data.store.phone || ""}
+                />
+            )}
+
+            {isGaucho && (
                 <section style={{ lineHeight: 0, display: 'block' }}>
                     <img src="/gaucho/envios.webp" alt="Envíos y entregas" style={{ width: '100%', height: 'auto', display: 'block' }} />
                 </section>

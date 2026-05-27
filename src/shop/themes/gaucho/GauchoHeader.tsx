@@ -1,4 +1,4 @@
-import { Search, Instagram, ShoppingCart, Package, Heart, Leaf, Lightbulb, ArrowRightLeft, Calculator, Truck, ChefHat, Zap } from "lucide-react";
+import { Search, Instagram, ShoppingCart, Package, Heart, Leaf, Lightbulb, ArrowRightLeft, BookOpen, Truck, ChefHat, Zap } from "lucide-react";
 import AssistantIcon from "../../../components/icons/AssistantIcon";
 import { getSocialLink } from "../../../utils/format";
 
@@ -155,7 +155,7 @@ export function GauchoHeader({
                         <NavHighlight href="#beneficios"  icon={Heart}          label="Beneficios"  />
                         <NavHighlight href="#tips"        icon={Lightbulb}      label="Tips"        />
                         <NavHighlight href="#transicion"  icon={ArrowRightLeft} label="Transición"  />
-                        <NavHighlight href="#calculadora" icon={Calculator}     label="Calculadora" />
+                        <NavHighlight href="#guia-pesos"  icon={BookOpen}      label="Guía alim."  />
                         <NavHighlight href="#envios"      icon={Truck}          label="Envíos"      />
                     </nav>
 
