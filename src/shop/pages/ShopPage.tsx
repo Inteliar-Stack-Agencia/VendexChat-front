@@ -580,7 +580,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                         whatsappNumber={data.store.whatsapp || data.store.phone || ""}
                         initialMessage={chatInitialMessage}
                         storeId={data.store.id}
-                        assistantIconUrl={isGaucho ? '/gaucho/logo-transparent.png' : undefined}
+                        assistantIconUrl={isGaucho ? '/gaucho/bot.png' : undefined}
                         buttonBg={isGaucho ? '#ffffff' : undefined}
                     />
                 </Suspense>
