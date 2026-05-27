@@ -155,7 +155,7 @@ export function GauchoHeader({
                         <NavHighlight href="#beneficios"  icon={Heart}          label="Beneficios"  />
                         <NavHighlight href="#tips"        icon={Lightbulb}      label="Tips"        />
                         <NavHighlight href="#transicion"  icon={ArrowRightLeft} label="Transición"  />
-                        <NavHighlight href="#guia-pesos"  icon={BookOpen}      label="Guía alim."  />
+                        <NavHighlight href="#productos"   icon={BookOpen}      label="Guía alim."  />
                         <NavHighlight href="#envios"      icon={Truck}          label="Envíos"      />
                     </nav>
 
