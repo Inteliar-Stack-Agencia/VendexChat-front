@@ -591,7 +591,8 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                     onClick={() => openChat()}
                     isOpen={isChatOpen}
                     isCartOpen={isCartOpen}
-                    assistantIconUrl={isGaucho ? '/gaucho/logo-transparent.png' : undefined}
+                    assistantIconUrl={isGaucho ? '/gaucho/bot.png' : undefined}
+                    buttonBg={isGaucho ? '#ffffff' : undefined}
                 />
             )}
 
