@@ -171,7 +171,7 @@ export function GauchoHeader({
                         {whatsapp && !hideChatButton && (
                             <button onClick={onChatClick} className="h-9 px-3 flex items-center gap-1.5 rounded-full hover:opacity-80"
                                 style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', transition: 'opacity 0.2s' }}>
-                                <AssistantIcon className="w-4 h-4" />
+                                <img src="/gaucho/bot.png" alt="Asistente" className="w-6 h-6 rounded-full object-cover" />
                                 <span className="hidden lg:inline gaucho-body text-[10px] font-bold uppercase tracking-widest">IA</span>
                             </button>
                         )}
