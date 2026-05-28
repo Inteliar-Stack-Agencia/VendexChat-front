@@ -291,6 +291,11 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 onChatClick={hasBotAccess ? () => openChat() : () => {}}
                 onCartClick={() => setIsCartOpen(true)}
                 hideChatButton={isMorfiEmpresas}
+                onPerrosClick={isGaucho ? () => {
+                    const perrosCat = data.categories.find((c: any) => c.name.toLowerCase().includes('perro'));
+                    if (perrosCat) setActiveCategory(perrosCat.id);
+                    setTimeout(() => document.getElementById('productos')?.scrollIntoView({ behavior: 'smooth' }), 50);
+                } : undefined}
             />
 
             {isMundoElectronico && (
