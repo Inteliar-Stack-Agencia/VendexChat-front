@@ -72,3 +72,45 @@ Comparar slugs dispersos en múltiples archivos causa que cambios en una tienda 
 
 ## Deploy
 Push a `main` → Cloudflare Pages buildea y deploya automáticamente. No hay pasos manuales.
+
+---
+
+## Asistente IA — Guía de configuración de prompts
+
+### Dónde se configura
+- Campo `ai_prompt` en la tabla `stores` de Supabase (por tienda)
+- Edge function: `store-ai-chat` en `pjrhfbhqdbyoljactdkj.supabase.co/functions/v1/store-ai-chat`
+- El bot recibe el catálogo de productos automáticamente → **no repetir productos/precios en el prompt**
+
+### Arquitectura del chat
+```
+Front (ChatBotWidget.tsx)
+  → GET  store-ai-chat?storeId=X   (carga botName + greeting)
+  → POST store-ai-chat { messages, storeId }  (envía historial + nueva pregunta)
+        → Edge function inyecta: ai_prompt + catálogo
+        → Llama a la IA → devuelve { reply }
+```
+
+### Buenas prácticas para prompts (pet food / ecommerce)
+Basado en análisis de chatbots del rubro:
+
+1. **Preguntar antes de recomendar** — pedir especie, edad y peso antes de sugerir producto o porción
+2. **Máximo 2-3 opciones** — nunca listar todo el catálogo si no lo piden
+3. **Sin rodeos** — respuesta directa, sin introducción genérica
+4. **No repetir** lo que el cliente ya mencionó en la conversación
+5. **Derivar a WhatsApp/email** solo para casos muy específicos fuera del scope
+
+### Prompt activo — Gaucho Natural Pet (`gauchopet`)
+Última versión en Supabase. Secciones:
+- QUIÉN SOS (tono, estilo, límite de oraciones)
+- CUANDO RECOMIENDAN UN PRODUCTO (pedir datos antes de responder)
+- LOGÍSTICA (días de entrega, pago, email)
+- PRODUCTOS (características generales, no precios)
+- PORCIONES perros adultos / cachorros / senior / gatos
+- TRANSICIÓN GRADUAL (8 días)
+- LO QUE NO HACÉS
+
+### Referencias
+- [AI Chatbot for Pet Stores — Oscar Chat](https://www.oscarchat.ai/blog/ai-chatbot-for-pet-stores-2/)
+- [AI Chatbot for Pet Supplies — Elx Chatbot](https://www.elxchatbot.ai/industries/pet-supplies)
+- [10 Custom Prompts for AI Customer Service — Wonderchat](https://wonderchat.io/blog/10-prompts-for-ai-customer-service-chatbots)
