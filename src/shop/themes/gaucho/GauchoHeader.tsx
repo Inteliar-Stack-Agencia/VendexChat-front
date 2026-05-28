@@ -48,7 +48,7 @@ function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
         : '#productos';
 
     return (
-        <section style={{ display: 'block', lineHeight: 0, marginTop: '-64px' }}>
+        <section style={{ display: 'block', lineHeight: 0, marginTop: '72px' }}>
             <a href={waLink} target={whatsapp ? '_blank' : undefined} rel={whatsapp ? 'noreferrer' : undefined}
                 style={{ display: 'block', lineHeight: 0 }}>
                 <picture style={{ display: 'block', width: '100%' }}>
@@ -143,7 +143,7 @@ export function GauchoHeader({
                 </div>
             )}
 
-            <div className="sticky top-0 z-[100]"
+            <div className="fixed top-0 left-0 right-0 z-[100]"
                 style={{ backgroundColor: 'rgba(45,95,52,0.97)', backdropFilter: 'blur(14px)', boxShadow: '0 2px 16px rgba(0,0,0,0.18)' }}>
                 <div className="max-w-7xl mx-auto px-5 py-3 flex items-center gap-4">
                     <div className="flex items-center flex-shrink-0">
