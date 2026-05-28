@@ -59,7 +59,7 @@ export default function FloatingAiAssistant({ onClick, isOpen, isCartOpen, assis
             <button
                 onClick={onClick}
                 className={`
-                    group pointer-events-auto relative w-16 h-16 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center transition-all duration-500 hover:scale-110 active:scale-90
+                    group pointer-events-auto relative w-16 h-16 rounded-full overflow-hidden shadow-2xl flex items-center justify-center transition-all duration-500 hover:scale-110 active:scale-90
                     ${showBubble ? 'animate-float' : 'animate-pulse-subtle'}
                 `}
                 style={buttonBg
@@ -71,7 +71,7 @@ export default function FloatingAiAssistant({ onClick, isOpen, isCartOpen, assis
                 <img
                     src={assistantIconUrl || "/logosinfondo.png"}
                     alt="Asistente"
-                    className="w-full h-full object-contain z-10 p-1"
+                    className="w-full h-full object-cover z-10"
                 />
 
                 {/* Indicador online */}
