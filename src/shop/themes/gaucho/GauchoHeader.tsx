@@ -56,6 +56,9 @@ function HeroSection({ whatsapp }: { whatsapp?: string; address?: string }) {
                     <img
                         src="/gaucho/hero (2).png"
                         alt="Gaucho Natural Pet — Comida real, vida real."
+                        width={1920} height={900}
+                        fetchPriority="high"
+                        decoding="async"
                         style={{ width: '100%', height: 'auto', display: 'block' }}
                     />
                 </picture>
@@ -69,7 +72,7 @@ function Section2() {
         <section style={{ lineHeight: 0, display: 'block' }}>
             <picture>
                 <source media="(max-width: 768px)" srcSet="/gaucho/comidanaturalmobile.png" />
-                <img src="/gaucho/seccion2.png" alt="Comida natural" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/gaucho/seccion2.png" alt="Comida natural" width={1920} height={900} loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </picture>
         </section>
     );
@@ -91,7 +94,7 @@ function Section4({ whatsapp }: { whatsapp?: string }) {
         <section id="transicion" style={{ lineHeight: 0, display: 'block' }}>
             <picture>
                 <source media="(max-width: 768px)" srcSet="/gaucho/transicionmobile.png" />
-                <img src="/gaucho/seccion4.png" alt="Transición a comida natural" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/gaucho/seccion4.png" alt="Transición a comida natural" width={1920} height={900} loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </picture>
         </section>
     );
@@ -215,18 +218,18 @@ export function GauchoHeader({
             <section id="beneficios" style={{ lineHeight: 0, display: 'block' }}>
                 <picture>
                     <source media="(max-width: 768px)" srcSet="/gaucho/ultraprocesadosmobile.png" />
-                    <img src="/gaucho/ultraprocesados.webp" alt="Menos ultraprocesados" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                    <img src="/gaucho/ultraprocesados.webp" alt="Menos ultraprocesados" width={1920} height={900} loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', display: 'block' }} />
                 </picture>
             </section>
             <Section4 whatsapp={whatsapp} />
             <section id="guia-alimentacion" style={{ lineHeight: 0, display: 'block' }}>
-                <img src="/gaucho/perros.webp" alt="Perros" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/gaucho/perros.webp" alt="Guía de alimentación para perros — Gaucho Natural Pet" width={1920} height={900} loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </section>
             <section style={{ lineHeight: 0, display: 'block' }}>
-                <img src="/gaucho/gatos.webp" alt="Gatos" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/gaucho/gatos.webp" alt="Guía de alimentación para gatos — Gaucho Natural Pet" width={1920} height={900} loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </section>
             <section id="comparativa" style={{ lineHeight: 0, display: 'block' }}>
-                <img src="/gaucho/seccion6.png" alt="Compará y elegí lo mejor para tu mascota" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/gaucho/seccion6.png" alt="Comparativa comida natural vs balanceado vs BARF — Gaucho Natural Pet" width={1920} height={900} loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </section>
         </header>
     );
