@@ -294,7 +294,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 onPerrosClick={isGaucho ? () => {
                     const perrosCat = data.categories.find((c: any) => c.name.toLowerCase().includes('perro'));
                     if (perrosCat) setActiveCategory(perrosCat.id);
-                    setTimeout(() => document.getElementById('productos')?.scrollIntoView({ behavior: 'smooth' }), 50);
+                    setTimeout(() => document.getElementById('guia-alimentacion')?.scrollIntoView({ behavior: 'smooth' }), 50);
                 } : undefined}
             />
 

@@ -156,7 +156,7 @@ export function GauchoHeader({
                         <NavHighlight href="#beneficios"  icon={Heart}          label="Beneficios"  />
                         <NavHighlight href="#comparativa" icon={BarChart2}      label="Comparar"    />
                         <NavHighlight href="#transicion"  icon={ArrowRightLeft} label="Transición"  />
-                        <NavHighlight href="#productos"   icon={BookOpen}      label="Guía alim."  onClick={onPerrosClick ? (e) => { e.preventDefault(); onPerrosClick(); } : undefined} />
+                        <NavHighlight href="#guia-alimentacion" icon={BookOpen} label="Guía alim." onClick={onPerrosClick ? (e) => { e.preventDefault(); onPerrosClick(); } : undefined} />
                         <NavHighlight href="#envios"      icon={Truck}          label="Envíos"      />
                     </nav>
 
@@ -219,7 +219,7 @@ export function GauchoHeader({
                 </picture>
             </section>
             <Section4 whatsapp={whatsapp} />
-            <section style={{ lineHeight: 0, display: 'block' }}>
+            <section id="guia-alimentacion" style={{ lineHeight: 0, display: 'block' }}>
                 <img src="/gaucho/perros.webp" alt="Perros" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </section>
             <section style={{ lineHeight: 0, display: 'block' }}>
