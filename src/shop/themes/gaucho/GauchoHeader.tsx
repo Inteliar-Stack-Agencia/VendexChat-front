@@ -113,12 +113,13 @@ export interface GauchoHeaderProps {
     onSearch: (q: string) => void;
     onChatClick: () => void;
     onCartClick: () => void;
+    onPerrosClick?: () => void;
     hideChatButton?: boolean;
 }
 
-function NavHighlight({ href, icon: Icon, label }: { href: string; icon: React.ElementType; label: string }) {
+function NavHighlight({ href, icon: Icon, label, onClick }: { href: string; icon: React.ElementType; label: string; onClick?: () => void }) {
     return (
-        <a href={href} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, textDecoration: 'none' }}>
+        <a href={href} onClick={onClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, textDecoration: 'none' }}>
             <div style={{ width: 48, height: 48, borderRadius: '50%', background: `linear-gradient(135deg, ${G_CORAL} 0%, ${G_GOLDEN} 100%)`, padding: 2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div style={{ width: '100%', height: '100%', borderRadius: '50%', backgroundColor: G_GREEN, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background-color 0.2s' }}
                     onMouseEnter={e => ((e.currentTarget as HTMLElement).style.backgroundColor = G_DARK)}
@@ -133,7 +134,7 @@ function NavHighlight({ href, icon: Icon, label }: { href: string; icon: React.E
 
 export function GauchoHeader({
     name, logo, address, whatsapp, instagram,
-    totalItems, announcement, onSearch, onChatClick, onCartClick, hideChatButton
+    totalItems, announcement, onSearch, onChatClick, onCartClick, onPerrosClick, hideChatButton
 }: GauchoHeaderProps) {
     return (
         <header>
@@ -155,7 +156,7 @@ export function GauchoHeader({
                         <NavHighlight href="#beneficios"  icon={Heart}          label="Beneficios"  />
                         <NavHighlight href="#comparativa" icon={BarChart2}      label="Comparar"    />
                         <NavHighlight href="#transicion"  icon={ArrowRightLeft} label="Transición"  />
-                        <NavHighlight href="#perros"      icon={BookOpen}      label="Guía alim."  />
+                        <NavHighlight href="#productos"   icon={BookOpen}      label="Guía alim."  onClick={onPerrosClick ? (e) => { e.preventDefault(); onPerrosClick(); } : undefined} />
                         <NavHighlight href="#envios"      icon={Truck}          label="Envíos"      />
                     </nav>
 
