@@ -174,14 +174,14 @@ export function GauchoHeader({
 
                     <div className="flex items-center gap-2 ml-auto">
                         {whatsapp && !hideChatButton && (
-                            <button onClick={onChatClick} className="h-9 px-3 flex items-center gap-1.5 rounded-full hover:opacity-80"
+                            <button onClick={onChatClick} aria-label="Abrir asistente IA" className="h-9 px-3 flex items-center gap-1.5 rounded-full hover:opacity-80"
                                 style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: 'white', transition: 'opacity 0.2s' }}>
-                                <img src={`${CDN}/bot.png`} alt="Asistente" className="w-6 h-6 rounded-full object-cover" />
+                                <img src={`${CDN}/bot.png`} alt="Asistente IA" className="w-6 h-6 rounded-full object-cover" />
                                 <span className="hidden lg:inline gaucho-body text-[10px] font-bold uppercase tracking-widest">IA</span>
                             </button>
                         )}
                         {instagram && (
-                            <a href={getSocialLink(instagram, 'instagram')} target="_blank" rel="noreferrer"
+                            <a href={getSocialLink(instagram, 'instagram')} target="_blank" rel="noreferrer" aria-label="Instagram"
                                 className="w-9 h-9 flex items-center justify-center rounded-full hover:opacity-60"
                                 style={{ color: 'rgba(255,255,255,0.8)' }}>
                                 <Instagram className="w-4 h-4" />
@@ -194,13 +194,13 @@ export function GauchoHeader({
                                 <WhatsAppIcon className="w-4 h-4" />
                             </a>
                         )}
-                        <a href="#productos"
+                        <a href="#productos" aria-label="Ver tienda online"
                             className="hidden lg:flex items-center gap-2 px-4 h-10 rounded-full font-bold text-xs uppercase tracking-widest hover:opacity-90 transition-opacity"
                             style={{ backgroundColor: G_CORAL, color: 'white', whiteSpace: 'nowrap' }}>
                             <ShoppingCart className="w-3.5 h-3.5" />
                             Tienda on line
                         </a>
-                        <button onClick={onCartClick}
+                        <button onClick={onCartClick} aria-label="Ver carrito"
                             className="relative w-12 h-12 rounded-full flex items-center justify-center hover:scale-105 active:scale-95 ml-1"
                             style={{ background: `linear-gradient(135deg, ${G_SALMON} 0%, ${G_CORAL} 100%)`, boxShadow: `0 4px 15px ${G_SALMON}40`, transition: 'transform 0.2s' }}>
                             <ShoppingCart className="w-5 h-5 text-white" />
