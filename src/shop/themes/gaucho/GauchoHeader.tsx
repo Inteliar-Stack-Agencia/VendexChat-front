@@ -84,8 +84,8 @@ function Section3() {
     return (
         <section style={{ lineHeight: 0, display: 'block' }}>
             <picture>
-                <source media="(max-width: 768px)" srcSet="/gaucho/ultraprocesadosmobile.png" />
-                <img src="/gaucho/seccion3.png" alt="Menos ultraprocesados" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <source media="(max-width: 768px)" srcSet={`${CDN}/ultraprocesadosmobile.png`} />
+                <img src={`${CDN}/seccion3.png`} alt="Menos ultraprocesados" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </picture>
         </section>
     );

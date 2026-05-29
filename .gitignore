@@ -29,3 +29,4 @@ supabase/.temp/
 *.sln
 *.sw?
 supabase/.temp/
+public/gaucho/.wrangler

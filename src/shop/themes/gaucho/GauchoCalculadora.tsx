@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+const CDN = 'https://images.vendexchat.app/gauchopet';
 const G  = '#234B34';   // verde principal
 const G2 = '#2E5A41';   // verde secundario
 const B  = '#E9DDCF';   // beige
@@ -217,7 +218,7 @@ export function GauchoCalculadora({ whatsapp }: { whatsapp?: string }) {
                         {/* Bowl image */}
                         <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
                             <div style={{ width: 160, height: 160, borderRadius: '50%', background: G2, margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 32px rgba(0,0,0,0.2)', overflow: 'hidden' }}>
-                                <img src="/gaucho/dog-cta-transparent.png" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center', mixBlendMode: 'luminosity', opacity: 0.9 }} />
+                                <img src={`${CDN}/dog-cta-transparent.png`} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center', mixBlendMode: 'luminosity', opacity: 0.9 }} />
                             </div>
 
                             <p style={{ color: 'white', fontWeight: 800, fontSize: 16, margin: '0 0 6px', lineHeight: 1.2 }}>
