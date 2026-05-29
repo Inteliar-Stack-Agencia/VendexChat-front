@@ -136,6 +136,52 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
         }
     }, [data]);
 
+    useEffect(() => {
+        if (!data?.store) return;
+        const store = data.store;
+        const title = `${store.name} | Tienda Online`;
+        const description = store.description || `Comprá en ${store.name}. Pedidos por WhatsApp, envíos y más.`;
+        const image = store.logo_url || store.banner_url || '';
+        const url = store.custom_domain ? `https://${store.custom_domain}` : window.location.href;
+
+        document.title = title;
+        const setMeta = (sel: string, val: string) => {
+            const el = document.querySelector(sel);
+            if (el) el.setAttribute('content', val);
+        };
+        setMeta('meta[name="description"]', description);
+        setMeta('meta[property="og:title"]', title);
+        setMeta('meta[property="og:description"]', description);
+        setMeta('meta[property="og:url"]', url);
+        setMeta('meta[property="og:image"]', image);
+        setMeta('meta[name="twitter:title"]', title);
+        setMeta('meta[name="twitter:description"]', description);
+        setMeta('meta[name="twitter:image"]', image);
+
+        // Canonical URL
+        let canonical = document.querySelector('link[rel="canonical"]');
+        if (!canonical) { canonical = document.createElement('link'); canonical.setAttribute('rel', 'canonical'); document.head.appendChild(canonical); }
+        canonical.setAttribute('href', url);
+
+        // JSON-LD para la tienda
+        const existing = document.getElementById('store-jsonld');
+        if (existing) existing.remove();
+        const script = document.createElement('script');
+        script.id = 'store-jsonld';
+        script.type = 'application/ld+json';
+        script.text = JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Store",
+            "name": store.name,
+            "url": url,
+            "description": description,
+            "image": image,
+            "telephone": store.whatsapp || store.phone || undefined,
+            "address": store.address ? { "@type": "PostalAddress", "streetAddress": store.address } : undefined,
+        });
+        document.head.appendChild(script);
+    }, [data]);
+
     if (loading) {
         // Si ya tenemos info de la tienda, mostramos el header real con skeleton de productos
         if (storePreview) {
