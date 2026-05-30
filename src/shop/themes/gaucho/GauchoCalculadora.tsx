@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const CDN = 'https://images.vendexchat.app/gauchopet';
+const CDN = '/gaucho';
 const G  = '#234B34';   // verde principal
 const G2 = '#2E5A41';   // verde secundario
 const B  = '#E9DDCF';   // beige

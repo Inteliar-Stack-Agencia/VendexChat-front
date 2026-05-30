@@ -389,7 +389,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
 
             {isGaucho && (
                 <section style={{ lineHeight: 0, display: 'block' }}>
-                    <img src="https://images.vendexchat.app/gauchopet/nuestrosproductos.webp" alt="Nuestros Productos — Gaucho Natural Pet" width={1920} height={400} loading="lazy" decoding="async" style={{ width: '100%', height: '400px', objectFit: 'cover', objectPosition: 'left center', display: 'block' }} />
+                    <img src="/gaucho/nuestrosproductos.webp" alt="Nuestros Productos — Gaucho Natural Pet" width={1920} height={400} loading="lazy" decoding="async" style={{ width: '100%', height: '400px', objectFit: 'cover', objectPosition: 'left center', display: 'block' }} />
                 </section>
             )}
 
@@ -524,7 +524,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
 
             {isGaucho && (
                 <section id="envios" style={{ lineHeight: 0, display: 'block' }}>
-                    <img src="https://images.vendexchat.app/gauchopet/envios.webp" alt="Envíos y entregas — Gaucho Natural Pet" width={1920} height={900} loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                    <img src="/gaucho/envios.webp" alt="Envíos y entregas — Gaucho Natural Pet" width={1920} height={900} loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', display: 'block' }} />
                 </section>
             )}
 
@@ -631,7 +631,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                         whatsappNumber={data.store.whatsapp || data.store.phone || ""}
                         initialMessage={chatInitialMessage}
                         storeId={data.store.id}
-                        assistantIconUrl={isGaucho ? 'https://images.vendexchat.app/gauchopet/bot.png' : undefined}
+                        assistantIconUrl={isGaucho ? '/gaucho/bot.png' : undefined}
                         buttonBg={isGaucho ? '#ffffff' : undefined}
                     />
                 </Suspense>
@@ -642,7 +642,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                     onClick={() => openChat()}
                     isOpen={isChatOpen}
                     isCartOpen={isCartOpen}
-                    assistantIconUrl={isGaucho ? 'https://images.vendexchat.app/gauchopet/bot.png' : undefined}
+                    assistantIconUrl={isGaucho ? '/gaucho/bot.png' : undefined}
                     buttonBg={isGaucho ? '#ffffff' : undefined}
                 />
             )}

@@ -2,7 +2,7 @@ import { Search, Instagram, ShoppingCart, Package, Heart, BarChart2, ArrowRightL
 import AssistantIcon from "../../../components/icons/AssistantIcon";
 import { getSocialLink } from "../../../utils/format";
 
-const CDN = 'https://images.vendexchat.app/gauchopet';
+const CDN = '/gaucho';
 
 const G_GREEN  = '#2D5F34';
 const G_OLIVE  = '#4E7A52';
