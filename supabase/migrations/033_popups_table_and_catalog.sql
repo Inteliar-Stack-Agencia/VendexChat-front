@@ -88,7 +88,7 @@ AS $$
       p.is_active
     FROM categories c
     LEFT JOIN products p
-      ON p.category_id = c.id AND p.is_active = true
+      ON p.category_id = c.id AND p.is_active = true AND p.show_in_store = true
     WHERE c.store_id = (SELECT id FROM store_row)
   ),
   catalog_cats AS (

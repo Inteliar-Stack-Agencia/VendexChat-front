@@ -215,7 +215,8 @@ export async function createOrder(payload: OrderPayload): Promise<OrderResponse>
   const { data: products, error: prodError } = await supabase
     .from("products")
     .select("id, price, offer_price, name")
-    .in("id", productIds);
+    .in("id", productIds)
+    .eq('show_in_store', true);
 
   if (prodError || !products) {
     throw new Error(`Failed to look up products: ${prodError?.message}`);

@@ -5,10 +5,10 @@
 -- 1. Índice en custom_domain (faltaba — causa full table scan para dominios personalizados)
 CREATE INDEX IF NOT EXISTS idx_stores_custom_domain ON stores (custom_domain);
 
--- 2. Índice compuesto en products(category_id, is_active)
---    La query filtra ambas columnas; el índice simple en category_id
---    obligaba a un filter scan adicional sobre is_active.
-CREATE INDEX IF NOT EXISTS idx_products_category_active ON products (category_id, is_active);
+-- 2. Índice compuesto en products(category_id, is_active, show_in_store)
+--    La query filtra estas tres columnas; el índice simple en category_id
+--    obligaba a filter scans adicionales sobre is_active y show_in_store.
+CREATE INDEX IF NOT EXISTS idx_products_category_active ON products (category_id, is_active, show_in_store);
 
 -- 3. Rewrite de get_catalog: reemplaza subconsulta correlacionada (N+1 por categoría)
 --    con un single JOIN + json_agg agrupado.
@@ -49,7 +49,7 @@ AS $$
       p.is_active
     FROM categories c
     LEFT JOIN products p
-      ON p.category_id = c.id AND p.is_active = true
+      ON p.category_id = c.id AND p.is_active = true AND p.show_in_store = true
     WHERE c.store_id = (SELECT id FROM store_row)
   ),
   catalog_cats AS (

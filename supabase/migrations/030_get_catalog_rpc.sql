@@ -46,7 +46,7 @@ AS $$
             ) ORDER BY p.sort_order
           )
           FROM products p
-          WHERE p.category_id = c.id AND p.is_active = true
+          WHERE p.category_id = c.id AND p.is_active = true AND p.show_in_store = true
         ),
         '[]'::json
       ) AS products
