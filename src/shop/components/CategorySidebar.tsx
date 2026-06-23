@@ -33,7 +33,7 @@ export function CategorySidebar({ categories, activeId, onSelect }: Props) {
                     >
                         Todos
                     </button>
-                    {categories.map((cat) => (
+                    {categories.filter(cat => cat.products && cat.products.length > 0).map((cat) => (
                         <button
                             key={cat.id}
                             className={`category-sidebar__item${activeId === cat.id ? " category-sidebar__item--active" : ""}`}

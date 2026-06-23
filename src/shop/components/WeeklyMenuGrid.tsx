@@ -69,7 +69,7 @@ export function WeeklyMenuGrid({ categories, primaryColor }: WeeklyMenuGridProps
 
             {/* Product List for Active Day */}
             <div className="space-y-12">
-                {categories.map((cat) => (
+                {categories.filter(cat => cat.products && cat.products.length > 0).map((cat) => (
                     <section key={cat.id}>
                         <div className="flex items-center gap-4 mb-6">
                             <h2 className="text-sm font-black text-slate-900 uppercase tracking-tight">{cat.name}</h2>

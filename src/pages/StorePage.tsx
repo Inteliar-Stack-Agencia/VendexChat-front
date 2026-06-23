@@ -93,7 +93,7 @@ export function StorePage() {
     );
   }
 
-  const categories = data.categories ?? [];
+  const categories = (data.categories ?? []).filter(cat => cat.products && cat.products.length > 0);
   const topCategories = categories.slice(0, 4);
   const sidebarCategories = categories.slice(4);
   const hasSidebar = sidebarCategories.length > 0;

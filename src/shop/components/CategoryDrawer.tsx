@@ -67,7 +67,7 @@ export function CategoryDrawer({ isOpen, onClose, categories, activeId, onSelect
                                     <ChevronRight size={16} className={activeId === null ? "opacity-100" : "opacity-0 group-hover:opacity-100 transition-opacity"} />
                                 </button>
 
-                                {[...categories].sort((a, b) => a.name.localeCompare(b.name)).map((cat) => (
+                                {[...categories].filter(cat => cat.products && cat.products.length > 0).sort((a, b) => a.name.localeCompare(b.name)).map((cat) => (
                                     <button
                                         key={cat.id}
                                         onClick={() => handleSelect(cat.id)}
