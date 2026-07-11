@@ -59,6 +59,7 @@ export function CartDrawer({
     const requiresCustomerType = CUSTOMER_TYPE_STORES.includes(storeSlug);
     const storeConfig = getStoreConfig(storeSlug);
     const isMorfiEmpresas = storeConfig.requiresDeliveryDay;
+    const hideCartItems = requiresCustomerType && customerType === "empresa";
 
     const [couponCode, setCouponCode] = useState("");
     const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
@@ -323,7 +324,7 @@ export function CartDrawer({
                             </div>
                             <p>Tu carrito está vacío</p>
                         </div>
-                    ) : (
+                    ) : hideCartItems ? null : (
                         <div className="space-y-8">
                             {Object.entries(
                                 items.reduce((acc, item) => {
