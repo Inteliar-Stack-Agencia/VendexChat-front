@@ -97,7 +97,13 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 6.5rem;
+  }
+
+  /* Evita que el nav/header sticky tape el contenido al hacer scroll
+     hacia una sección (ej. botones "Ver Menú", chips de categoría). */
+  [id] {
+    scroll-margin-top: 6.5rem;
   }
 }
 
