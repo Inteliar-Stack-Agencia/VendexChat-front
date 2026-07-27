@@ -18,6 +18,7 @@ export interface Product {
 export interface Category {
   id: string;
   name: string;
+  sort_order?: number;
   products?: Product[];
   items?: Product[];
 }
