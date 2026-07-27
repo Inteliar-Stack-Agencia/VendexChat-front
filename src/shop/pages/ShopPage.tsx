@@ -24,6 +24,11 @@ import { MundoProductCard } from "../themes/mundoelectronico/MundoProductCard";
 import { MundoCategoryChips } from "../themes/mundoelectronico/MundoCategoryChips";
 import { MundoInfoSections } from "../themes/mundoelectronico/MundoInfoSections";
 import { MundoTopSections } from "../themes/mundoelectronico/MundoTopSections";
+import { MorfiViandasHeader } from "../themes/morfiviandas/MorfiViandasHeader";
+import { MorfiViandasProductCard } from "../themes/morfiviandas/MorfiViandasProductCard";
+import { MorfiViandasCategoryChips } from "../themes/morfiviandas/MorfiViandasCategoryChips";
+import { MorfiViandasInfoSections } from "../themes/morfiviandas/MorfiViandasInfoSections";
+import { MorfiViandasFooter } from "../themes/morfiviandas/MorfiViandasFooter";
 import { getStoreConfig } from "../config/storeConfig";
 
 const CartDrawer = lazy(() => import("../components/CartDrawer").then(m => ({ default: m.CartDrawer })));
@@ -52,6 +57,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
     const storeConfig = getStoreConfig(data?.store?.slug, slug);
     const isGaucho = storeConfig.theme === 'gaucho';
     const isMundoElectronico = storeConfig.theme === 'mundoelectronico';
+    const isMorfiViandas = storeConfig.theme === 'morfiviandas';
     const isMorfiEmpresas = storeConfig.requiresDeliveryDay;
     const [showMundoCatalog, setShowMundoCatalog] = useState(false);
 
@@ -185,9 +191,9 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
     if (loading) {
         // Si ya tenemos info de la tienda, mostramos el header real con skeleton de productos
         if (storePreview) {
-            const HeaderComponent = isGaucho ? GauchoHeader : isMundoElectronico ? MundoHeader : StoreHeader;
+            const HeaderComponent = isGaucho ? GauchoHeader : isMundoElectronico ? MundoHeader : isMorfiViandas ? MorfiViandasHeader : StoreHeader;
             return (
-                <div className={`min-h-screen pb-24 ${isGaucho ? 'bg-[#F5F1EB]' : 'bg-white'}`}>                    <HeaderComponent
+                <div className={`min-h-screen pb-24 ${isGaucho ? 'bg-[#F5F1EB]' : isMorfiViandas ? 'bg-[#F9F4F2]' : 'bg-white'}`}>                    <HeaderComponent
                         name={storePreview.name}
                         logo={storePreview.logo_url || ""}
                         banner={storePreview.banner_url || ""}
@@ -311,17 +317,17 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
         );
     }
 
-    const ActiveHeader = isGaucho ? GauchoHeader : isMundoElectronico ? MundoHeader : StoreHeader;
-    const ActiveProductCard = isGaucho ? GauchoProductCard : isMundoElectronico ? MundoProductCard : ProductCard;
-    const ActiveCategoryChips = isGaucho ? GauchoCategoryChips : isMundoElectronico ? MundoCategoryChips : CategoryChips;
+    const ActiveHeader = isGaucho ? GauchoHeader : isMundoElectronico ? MundoHeader : isMorfiViandas ? MorfiViandasHeader : StoreHeader;
+    const ActiveProductCard = isGaucho ? GauchoProductCard : isMundoElectronico ? MundoProductCard : isMorfiViandas ? MorfiViandasProductCard : ProductCard;
+    const ActiveCategoryChips = isGaucho ? GauchoCategoryChips : isMundoElectronico ? MundoCategoryChips : isMorfiViandas ? MorfiViandasCategoryChips : CategoryChips;
 
     const featuredProducts = isMundoElectronico
         ? data.categories.flatMap(cat => cat.products || []).filter(p => p.is_featured)
         : [];
 
     return (
-        <div className={`min-h-screen ${isGaucho ? 'bg-[#F5F1EB]' : 'pb-24 bg-white'}`}>
-            {!isGaucho && !isMundoElectronico && <GlobalAnnouncement announcement={data.announcement} />}
+        <div className={`min-h-screen ${isGaucho ? 'bg-[#F5F1EB]' : isMorfiViandas ? `pb-24 ${storeConfig.bgClass}` : 'pb-24 bg-white'}`}>
+            {!isGaucho && !isMundoElectronico && !isMorfiViandas && <GlobalAnnouncement announcement={data.announcement} />}
             <ActiveHeader
                 name={data.store.name}
                 logo={data.store.logo_url || ""}
@@ -467,20 +473,24 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                                             <h2 className="text-sm md:text-lg font-black uppercase tracking-tight" style={{ color: '#ffffff' }}>
                                                 {cat.name}
                                             </h2>
+                                        ) : isMorfiViandas ? (
+                                            <h2 className="morfiviandas-title font-semibold text-xl md:text-2xl" style={{ color: '#000000' }}>
+                                                {cat.name}
+                                            </h2>
                                         ) : (
                                             <h2 className="text-sm md:text-lg font-black text-slate-900 uppercase tracking-tight">
                                                 {cat.name}
                                             </h2>
                                         )}
-                                        <div className="h-[1px] flex-1" style={{ backgroundColor: isGaucho ? 'rgba(212,165,116,0.4)' : isMundoElectronico ? 'rgba(59,130,246,0.2)' : '#f1f5f9' }} />
+                                        <div className="h-[1px] flex-1" style={{ backgroundColor: isGaucho ? 'rgba(212,165,116,0.4)' : isMundoElectronico ? 'rgba(59,130,246,0.2)' : isMorfiViandas ? 'rgba(0,0,0,0.08)' : '#f1f5f9' }} />
                                         <span className={`text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-tighter ${isGaucho ? 'gaucho-body' : ''}`}
-                                            style={isGaucho ? { backgroundColor: 'rgba(45,95,52,0.08)', color: '#2D5F34' } : isMundoElectronico ? { backgroundColor: 'rgba(59,130,246,0.12)', color: '#3b82f6' } : {}}>
+                                            style={isGaucho ? { backgroundColor: 'rgba(45,95,52,0.08)', color: '#2D5F34' } : isMundoElectronico ? { backgroundColor: 'rgba(59,130,246,0.12)', color: '#3b82f6' } : isMorfiViandas ? { backgroundColor: '#A1D3D2', color: '#008CA2' } : {}}>
                                             {cat.products.length} Items
                                         </span>
                                     </div>
                                 )}
 
-                                <div className={isGaucho || isMundoElectronico
+                                <div className={isGaucho || isMundoElectronico || isMorfiViandas
                                     ? `grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-7 max-w-5xl mx-auto`
                                     : `grid grid-cols-1 ${cat.products.length > 20 ? 'md:grid-cols-3' : 'md:grid-cols-2 max-w-4xl mx-auto'} gap-3 md:gap-6`
                                 }>
@@ -548,7 +558,25 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 />
             )}
 
-            {!isGaucho && !isMundoElectronico && (
+            {isMorfiViandas && (
+                <>
+                    <MorfiViandasInfoSections whatsapp={data.store.whatsapp || data.store.phone || ""} />
+                    <MorfiViandasFooter
+                        name={data.store.name}
+                        address={data.store.address}
+                        whatsapp={data.store.whatsapp || data.store.phone}
+                        instagram={data.store.instagram}
+                        facebook={data.store.facebook}
+                        schedule={(() => {
+                            const phys = data.store.physical_schedule || data.store.schedule;
+                            const hasOpenPhysical = phys && Object.values(phys).some((d: any) => d?.open);
+                            return hasOpenPhysical ? phys : (data.store.online_schedule || phys);
+                        })()}
+                    />
+                </>
+            )}
+
+            {!isGaucho && !isMundoElectronico && !isMorfiViandas && (
                 <Suspense fallback={null}>
                     <StoreInfoSections
                         description={data.store.description}

@@ -7,10 +7,10 @@
  *   3. NO agregar comparaciones de slug en ShopPage, CartDrawer ni ningún
  *      otro componente. Leer siempre desde getStoreConfig().
  *
- * Slugs vigentes: 'morfi-empresas' | 'gauchopet' | 'mundoelectronico'
+ * Slugs vigentes: 'empresas' | 'gauchopet' | 'mundoelectronico' | 'caba' | 'laplata'
  */
 
-export type StoreTheme = 'default' | 'gaucho' | 'mundoelectronico';
+export type StoreTheme = 'default' | 'gaucho' | 'mundoelectronico' | 'morfiviandas';
 
 export interface StoreConfig {
   /** Tema visual: define qué componentes de Header/ProductCard/CategoryChips se usan */
@@ -63,6 +63,14 @@ const STORE_CONFIGS: Record<string, Partial<StoreConfig>> = {
   },
   'mundoelectronico': {
     theme: 'mundoelectronico',
+  },
+  'caba': {                              // morfiviandas.com.ar/caba
+    theme: 'morfiviandas',
+    bgClass: 'bg-[#F9F4F2]',
+  },
+  'laplata': {                           // morfiviandas.com.ar/laplata
+    theme: 'morfiviandas',
+    bgClass: 'bg-[#F9F4F2]',
   },
 };
 
