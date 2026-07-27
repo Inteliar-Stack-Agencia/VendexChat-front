@@ -57,7 +57,7 @@ function faqAnswers(whatsapp?: string, deliveryZoneText?: string, paymentMethods
         },
         {
             q: '¿Cómo se conservan las viandas?',
-            a: 'Consultanos por WhatsApp las recomendaciones de conservación según cada plato.',
+            a: 'Las viandas van termoselladas según su categoría, lo que permite conservarlas en la heladera hasta 5 días sin necesidad de congelar.',
         },
     ];
 }
