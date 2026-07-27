@@ -24,7 +24,7 @@ export function MorfiViandasCategoryChips({ categories, activeId, onSelect, onMe
                 {showMenu && (
                     <button
                         onClick={onMenuClick}
-                        className="flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-bold transition-all hover:opacity-80"
+                        className="flex items-center gap-2 px-7 py-3.5 rounded-full text-base font-bold transition-all hover:opacity-80"
                         style={{ backgroundColor: MV_SURFACE, color: MV_TEXT, border: '1px solid rgba(0,0,0,0.1)' }}
                     >
                         <Menu size={16} />
@@ -37,7 +37,7 @@ export function MorfiViandasCategoryChips({ categories, activeId, onSelect, onMe
                         <button
                             key={cat.id}
                             onClick={() => onSelect(cat.id)}
-                            className="px-8 py-3.5 rounded-full font-bold text-sm transition-all hover:opacity-90 active:scale-95"
+                            className="px-8 py-3.5 rounded-full font-bold text-base transition-all hover:opacity-90 active:scale-95"
                             style={isActive ? {
                                 backgroundColor: MV_CTA,
                                 color: '#fff',
