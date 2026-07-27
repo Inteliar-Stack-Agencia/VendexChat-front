@@ -1,0 +1,9 @@
+# VendexChat
+
+> Plataforma de tiendas online por WhatsApp con catálogo digital, carrito de compras y asistente de inteligencia artificial.
+
+VendexChat permite a comercios crear su catálogo digital, recibir pedidos por WhatsApp y gestionar su negocio de forma simple.
+
+## Enlaces
+
+- [VendexChat](https://vendexchat.app): Sitio principal de la plataforma.

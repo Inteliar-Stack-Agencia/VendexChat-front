@@ -14,26 +14,30 @@ import FloatingAiAssistant from "../components/FloatingAiAssistant";
 import PopupModal from "../components/PopupModal";
 import { Suspense, lazy } from "react";
 import type { Popup } from "../../types";
-import { GauchoHeader } from "../themes/gaucho/GauchoHeader";
-import { GauchoProductCard } from "../themes/gaucho/GauchoProductCard";
-import { GauchoCategoryChips } from "../themes/gaucho/GauchoCategoryChips";
-import { GauchoInfoSections } from "../themes/gaucho/GauchoInfoSections";
-import { GauchoFooter } from "../themes/gaucho/GauchoFooter";
-import { MundoHeader } from "../themes/mundoelectronico/MundoHeader";
-import { MundoProductCard } from "../themes/mundoelectronico/MundoProductCard";
-import { MundoCategoryChips } from "../themes/mundoelectronico/MundoCategoryChips";
-import { MundoInfoSections } from "../themes/mundoelectronico/MundoInfoSections";
-import { MundoTopSections } from "../themes/mundoelectronico/MundoTopSections";
-import { MorfiViandasHeader } from "../themes/morfiviandas/MorfiViandasHeader";
-import { MorfiViandasProductCard } from "../themes/morfiviandas/MorfiViandasProductCard";
-import { MorfiViandasCategoryChips } from "../themes/morfiviandas/MorfiViandasCategoryChips";
-import { MorfiViandasInfoSections } from "../themes/morfiviandas/MorfiViandasInfoSections";
-import { MorfiViandasFooter } from "../themes/morfiviandas/MorfiViandasFooter";
 import { getStoreConfig } from "../config/storeConfig";
 
 const CartDrawer = lazy(() => import("../components/CartDrawer").then(m => ({ default: m.CartDrawer })));
 const CategoryDrawer = lazy(() => import("../components/CategoryDrawer").then(m => ({ default: m.CategoryDrawer })));
 const StoreInfoSections = lazy(() => import("../components/StoreInfoSections").then(m => ({ default: m.StoreInfoSections })));
+
+// Themes especiales: cada uno en su propio chunk, para que una tienda con
+// theme "default" (la mayoría) no descargue el código de las demás.
+const GauchoHeader = lazy(() => import("../themes/gaucho/GauchoHeader").then(m => ({ default: m.GauchoHeader })));
+const GauchoProductCard = lazy(() => import("../themes/gaucho/GauchoProductCard").then(m => ({ default: m.GauchoProductCard })));
+const GauchoCategoryChips = lazy(() => import("../themes/gaucho/GauchoCategoryChips").then(m => ({ default: m.GauchoCategoryChips })));
+const GauchoFooter = lazy(() => import("../themes/gaucho/GauchoFooter").then(m => ({ default: m.GauchoFooter })));
+
+const MundoHeader = lazy(() => import("../themes/mundoelectronico/MundoHeader").then(m => ({ default: m.MundoHeader })));
+const MundoProductCard = lazy(() => import("../themes/mundoelectronico/MundoProductCard").then(m => ({ default: m.MundoProductCard })));
+const MundoCategoryChips = lazy(() => import("../themes/mundoelectronico/MundoCategoryChips").then(m => ({ default: m.MundoCategoryChips })));
+const MundoInfoSections = lazy(() => import("../themes/mundoelectronico/MundoInfoSections").then(m => ({ default: m.MundoInfoSections })));
+const MundoTopSections = lazy(() => import("../themes/mundoelectronico/MundoTopSections").then(m => ({ default: m.MundoTopSections })));
+
+const MorfiViandasHeader = lazy(() => import("../themes/morfiviandas/MorfiViandasHeader").then(m => ({ default: m.MorfiViandasHeader })));
+const MorfiViandasProductCard = lazy(() => import("../themes/morfiviandas/MorfiViandasProductCard").then(m => ({ default: m.MorfiViandasProductCard })));
+const MorfiViandasCategoryChips = lazy(() => import("../themes/morfiviandas/MorfiViandasCategoryChips").then(m => ({ default: m.MorfiViandasCategoryChips })));
+const MorfiViandasInfoSections = lazy(() => import("../themes/morfiviandas/MorfiViandasInfoSections").then(m => ({ default: m.MorfiViandasInfoSections })));
+const MorfiViandasFooter = lazy(() => import("../themes/morfiviandas/MorfiViandasFooter").then(m => ({ default: m.MorfiViandasFooter })));
 const ChatBotWidget = lazy(() => import("../components/ChatBotWidget").then(m => ({ default: m.ChatBotWidget })));
 import type { Product } from "../../types";
 
@@ -198,21 +202,24 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
         if (storePreview) {
             const HeaderComponent = isGaucho ? GauchoHeader : isMundoElectronico ? MundoHeader : isMorfiViandas ? MorfiViandasHeader : StoreHeader;
             return (
-                <div className={`min-h-screen pb-24 ${isGaucho ? 'bg-[#F5F1EB]' : isMorfiViandas ? 'bg-[#F9F4F2]' : 'bg-white'}`}>                    <HeaderComponent
-                        name={storePreview.name}
-                        logo={storePreview.logo_url || ""}
-                        banner={storePreview.banner_url || ""}
-                        description={storePreview.description || ""}
-                        address={storePreview.address || ""}
-                        whatsapp={storePreview.whatsapp || storePreview.phone || ""}
-                        instagram={storePreview.instagram || ""}
-                        facebook={storePreview.facebook || ""}
-                        totalItems={0}
-                        announcement={null}
-                        onSearch={() => { }}
-                        onChatClick={() => { }}
-                        onCartClick={() => { }}
-                    />
+                <div className={`min-h-screen pb-24 ${isGaucho ? 'bg-[#F5F1EB]' : isMorfiViandas ? 'bg-[#F9F4F2]' : 'bg-white'}`}>
+                    <Suspense fallback={null}>
+                        <HeaderComponent
+                            name={storePreview.name}
+                            logo={storePreview.logo_url || ""}
+                            banner={storePreview.banner_url || ""}
+                            description={storePreview.description || ""}
+                            address={storePreview.address || ""}
+                            whatsapp={storePreview.whatsapp || storePreview.phone || ""}
+                            instagram={storePreview.instagram || ""}
+                            facebook={storePreview.facebook || ""}
+                            totalItems={0}
+                            announcement={null}
+                            onSearch={() => { }}
+                            onChatClick={() => { }}
+                            onCartClick={() => { }}
+                        />
+                    </Suspense>
                     {/* Category chips skeleton */}
                     <div className="flex gap-2 px-4 py-4 overflow-hidden animate-pulse">
                         {[1, 2, 3, 4].map(i => (
@@ -331,6 +338,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
         : [];
 
     return (
+        <Suspense fallback={null}>
         <div className={`min-h-screen ${isGaucho ? 'bg-[#F5F1EB]' : isMorfiViandas ? storeConfig.bgClass : 'pb-24 bg-white'}`}>
             {!isGaucho && !isMundoElectronico && !isMorfiViandas && <GlobalAnnouncement announcement={data.announcement} />}
             <ActiveHeader
@@ -710,6 +718,6 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 />
             )}
         </div >
-
+        </Suspense>
     );
 }
