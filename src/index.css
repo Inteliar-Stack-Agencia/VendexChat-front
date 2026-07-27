@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital@1&family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 @config "../tailwind.config.ts";
 
@@ -183,4 +184,13 @@ select {
 }
 .gaucho-body {
   font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+}
+
+/* Morfi Viandas — typography utilities */
+.morfiviandas-title {
+  font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+  font-optical-sizing: auto;
+}
+.morfiviandas-body {
+  font-family: 'Manrope', 'Inter', system-ui, sans-serif;
 }
