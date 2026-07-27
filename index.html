@@ -20,8 +20,8 @@
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://vendexchat.app/" />
 
-  <!-- CDN images -->
-  <link rel="preconnect" href="https://images.vendexchat.app" crossorigin />
+  <!-- CDN images: sin crossorigin, las <img> se cargan sin modo CORS -->
+  <link rel="preconnect" href="https://images.vendexchat.app" />
   <link rel="dns-prefetch" href="https://images.vendexchat.app" />
 
   <!-- Preconnect para recursos críticos -->
@@ -31,8 +31,14 @@
   <link rel="dns-prefetch" href="https://pjrhfbhqdbyoljactdkj.supabase.co" />
   <link rel="dns-prefetch" href="https://text.pollinations.ai" />
 
-  <!-- Google Fonts: un solo request, cargado como <link> (no @import) para no bloquear el render -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Bebas+Neue&family=Playfair+Display:ital@1&family=Montserrat:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" />
+  <!-- Google Fonts: un solo request, cargado async (no bloquea el render) y con
+       display=optional para que la fuente nunca "salte" (evita layout shift):
+       si no está lista al momento de pintar, se usa el fallback y listo. -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Bebas+Neue&family=Playfair+Display:ital@1&family=Montserrat:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=optional"
+        media="print" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Bebas+Neue&family=Playfair+Display:ital@1&family=Montserrat:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=optional" />
+  </noscript>
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
