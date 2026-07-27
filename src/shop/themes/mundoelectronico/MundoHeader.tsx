@@ -97,6 +97,7 @@ export interface MundoHeaderProps {
     onChatClick: () => void;
     onCartClick: () => void;
     hideChatButton?: boolean;
+    isMorfiEmpresas?: boolean;
 }
 
 export function MundoHeader({

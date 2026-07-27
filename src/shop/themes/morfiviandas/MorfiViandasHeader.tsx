@@ -1,4 +1,4 @@
-import { Search, Instagram, Facebook, ShoppingCart, Calendar, MessageCircle, Truck } from "lucide-react";
+import { Search, Instagram, Facebook, ShoppingCart, Calendar, MessageCircle, Truck, Building2 } from "lucide-react";
 import { getSocialLink } from "../../../utils/format";
 import { MV_BG, MV_SURFACE, MV_TEXT, MV_TITLE, MV_CTA, MV_BADGE_BG, MV_HIGHLIGHT } from "./morfiViandasColors";
 
@@ -26,11 +26,12 @@ interface MorfiViandasHeaderProps {
     onCartClick: () => void;
     onPerrosClick?: () => void;
     hideChatButton?: boolean;
+    isMorfiEmpresas?: boolean;
 }
 
 export function MorfiViandasHeader({
     name, banner, description, whatsapp, instagram, facebook,
-    totalItems, onSearch, onChatClick, onCartClick, hideChatButton
+    totalItems, onSearch, onChatClick, onCartClick, hideChatButton, isMorfiEmpresas
 }: MorfiViandasHeaderProps) {
     const scrollTo = (id: string) => (e: React.MouseEvent) => {
         e.preventDefault();
@@ -71,6 +72,14 @@ export function MorfiViandasHeader({
                             style={{ backgroundColor: MV_BADGE_BG, color: MV_CTA }}>
                             <MessageCircle className="w-5 h-5" />
                         </button>
+                    )}
+                    {whatsapp && hideChatButton && (
+                        <a href={`https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hola, tengo una consulta')}`} target="_blank" rel="noreferrer"
+                            className="h-10 px-3.5 flex items-center gap-1.5 rounded-full text-xs font-bold transition-all hover:opacity-80"
+                            style={{ backgroundColor: MV_BADGE_BG, color: MV_CTA }}>
+                            <MessageCircle className="w-4 h-4" />
+                            <span className="hidden md:inline">¿Dudas? Escribinos</span>
+                        </a>
                     )}
                     {instagram && (
                         <a href={getSocialLink(instagram, 'instagram')} target="_blank" rel="noreferrer" className="w-10 h-10 hidden sm:flex items-center justify-center rounded-full hover:opacity-70" style={{ color: MV_TEXT }}>
@@ -146,11 +155,15 @@ export function MorfiViandasHeader({
             {/* Cómo Funciona */}
             <section id="como-funciona" className="py-12 md:py-14 px-4 md:px-8" style={{ backgroundColor: MV_SURFACE }}>
                 <div className="max-w-[1440px] mx-auto flex gap-8 flex-wrap justify-between">
-                    {[
+                    {(isMorfiEmpresas ? [
+                        { icon: Calendar, title: '1. Elegís los platos de cada día', body: 'Armá el menú de la semana para tu empresa.' },
+                        { icon: Building2, title: '2. Confirmás con el nombre de tu empresa', body: 'Completamos los datos junto con tu pedido.' },
+                        { icon: Truck, title: '3. Coordinamos la entrega semanal', body: 'Entrega fresca coordinada por WhatsApp.' },
+                    ] : [
                         { icon: Calendar, title: '1. Elegís tu pack', body: 'Semanal, quincenal o mensual.' },
                         { icon: MessageCircle, title: '2. Coordinás por WhatsApp', body: 'Confirmamos menú, días y dirección.' },
                         { icon: Truck, title: '3. Recibís en tu casa', body: 'Entrega fresca coordinada por WhatsApp.' },
-                    ].map(({ icon: Icon, title, body }) => (
+                    ]).map(({ icon: Icon, title, body }) => (
                         <div key={title} className="flex-1 min-w-[220px] flex gap-3.5 items-start">
                             <div className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: MV_BADGE_BG }}>
                                 <Icon className="w-5 h-5" style={{ color: MV_CTA }} />

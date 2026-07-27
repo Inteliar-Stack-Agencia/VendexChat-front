@@ -343,6 +343,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
                 onChatClick={hasBotAccess ? () => openChat() : () => {}}
                 onCartClick={() => setIsCartOpen(true)}
                 hideChatButton={isMorfiEmpresas}
+                isMorfiEmpresas={isMorfiEmpresas}
                 onPerrosClick={isGaucho ? () => {
                     const perrosCat = data.categories.find((c: any) => c.name.toLowerCase().includes('perro'));
                     if (perrosCat) setActiveCategory(perrosCat.id);

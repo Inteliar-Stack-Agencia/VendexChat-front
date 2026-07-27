@@ -120,6 +120,7 @@ export interface GauchoHeaderProps {
     onCartClick: () => void;
     onPerrosClick?: () => void;
     hideChatButton?: boolean;
+    isMorfiEmpresas?: boolean;
 }
 
 function NavHighlight({ href, icon: Icon, label, onClick }: { href: string; icon: React.ElementType; label: string; onClick?: () => void }) {
