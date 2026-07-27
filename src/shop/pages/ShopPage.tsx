@@ -326,7 +326,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
         : [];
 
     return (
-        <div className={`min-h-screen ${isGaucho ? 'bg-[#F5F1EB]' : isMorfiViandas ? `pb-24 ${storeConfig.bgClass}` : 'pb-24 bg-white'}`}>
+        <div className={`min-h-screen ${isGaucho ? 'bg-[#F5F1EB]' : isMorfiViandas ? storeConfig.bgClass : 'pb-24 bg-white'}`}>
             {!isGaucho && !isMundoElectronico && !isMorfiViandas && <GlobalAnnouncement announcement={data.announcement} />}
             <ActiveHeader
                 name={data.store.name}
@@ -597,7 +597,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
             )}
 
             {/* Powered by */}
-            {!isGaucho && !isMundoElectronico && (
+            {!isGaucho && !isMundoElectronico && !isMorfiViandas && (
             <div className="py-4 text-center">
                 <a
                     href="https://vendexchat.app"
