@@ -441,6 +441,7 @@ const ModuleDemosSection = () => {
               <button
                 type="submit"
                 disabled={isTyping || !userInput.trim()}
+                aria-label="Enviar"
                 className="w-10 h-10 rounded-xl bg-violet-600 text-white flex items-center justify-center hover:bg-violet-500 active:scale-95 transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-lg shadow-violet-600/20"
               >
                 <Send className="w-4 h-4" />
