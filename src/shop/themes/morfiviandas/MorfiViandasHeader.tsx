@@ -1,4 +1,4 @@
-import { Search, Instagram, Facebook, ShoppingCart, Calendar, MessageCircle, Truck, Building2 } from "lucide-react";
+import { Search, Instagram, Facebook, ShoppingCart, Calendar, MessageCircle, Truck } from "lucide-react";
 import { getSocialLink } from "../../../utils/format";
 import { MV_BG, MV_SURFACE, MV_TEXT, MV_TITLE, MV_CTA, MV_BADGE_BG, MV_HIGHLIGHT } from "./morfiViandasColors";
 
@@ -49,8 +49,8 @@ export function MorfiViandasHeader({
 
                 <div className="hidden lg:flex items-center gap-6 mx-auto">
                     <a href="#productos" onClick={scrollTo('productos')} className="text-sm font-semibold hover:opacity-70" style={{ color: MV_TEXT }}>Menú Semanal</a>
-                    <a href="#como-funciona" onClick={scrollTo('como-funciona')} className="text-sm font-semibold hover:opacity-70" style={{ color: MV_TEXT }}>Cómo Funciona</a>
-                    <a href="#planes" onClick={scrollTo('planes')} className="text-sm font-semibold hover:opacity-70" style={{ color: MV_TEXT }}>Planes</a>
+                    {!isMorfiEmpresas && <a href="#como-funciona" onClick={scrollTo('como-funciona')} className="text-sm font-semibold hover:opacity-70" style={{ color: MV_TEXT }}>Cómo Funciona</a>}
+                    {!isMorfiEmpresas && <a href="#planes" onClick={scrollTo('planes')} className="text-sm font-semibold hover:opacity-70" style={{ color: MV_TEXT }}>Planes</a>}
                     <a href="#contacto" onClick={scrollTo('contacto')} className="text-sm font-semibold hover:opacity-70" style={{ color: MV_TEXT }}>Contacto</a>
                 </div>
 
@@ -114,32 +114,40 @@ export function MorfiViandasHeader({
             {/* Hero */}
             <section id="hero" className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center max-w-[1440px] mx-auto px-4 md:px-8 py-10 md:py-16">
                 <div>
-                    <span className="inline-block px-3.5 py-1.5 rounded-full text-xs font-bold mb-5" style={{ backgroundColor: MV_HIGHLIGHT, color: MV_TITLE }}>
-                        Comida real, hecha en casa
-                    </span>
+                    {!isMorfiEmpresas && (
+                        <span className="inline-block px-3.5 py-1.5 rounded-full text-xs font-bold mb-5" style={{ backgroundColor: MV_HIGHLIGHT, color: MV_TITLE }}>
+                            Comida real, hecha en casa
+                        </span>
+                    )}
                     <h1 className="morfiviandas-title font-semibold text-3xl md:text-5xl leading-[1.1] mb-5" style={{ color: MV_TITLE }}>
-                        Comida casera y natural, todos los días
+                        {isMorfiEmpresas ? 'Hacé tu pedido de la semana' : 'Comida casera y natural, todos los días'}
                     </h1>
-                    <p className="text-base md:text-lg leading-relaxed mb-7 max-w-md" style={{ color: MV_TEXT }}>
-                        {description || 'Viandas preparadas con ingredientes reales, entregadas frescas en tu puerta.'}
-                    </p>
+                    {!isMorfiEmpresas && (
+                        <p className="text-base md:text-lg leading-relaxed mb-7 max-w-md" style={{ color: MV_TEXT }}>
+                            {description || 'Viandas preparadas con ingredientes reales, entregadas frescas en tu puerta.'}
+                        </p>
+                    )}
                     <div className="flex gap-3 flex-wrap mb-6">
                         <a href="#productos" onClick={scrollTo('productos')} className="px-7 py-3.5 rounded-full font-bold text-sm text-white transition-all hover:opacity-90"
                             style={{ backgroundColor: MV_CTA }}>
                             Ver Menú
                         </a>
-                        <a href="#como-funciona" onClick={scrollTo('como-funciona')} className="px-7 py-3.5 rounded-full font-bold text-sm transition-all hover:opacity-80"
-                            style={{ border: `2px solid ${MV_CTA}`, color: MV_CTA }}>
-                            Cómo Funciona
-                        </a>
+                        {!isMorfiEmpresas && (
+                            <a href="#como-funciona" onClick={scrollTo('como-funciona')} className="px-7 py-3.5 rounded-full font-bold text-sm transition-all hover:opacity-80"
+                                style={{ border: `2px solid ${MV_CTA}`, color: MV_CTA }}>
+                                Cómo Funciona
+                            </a>
+                        )}
                     </div>
-                    <div className="flex gap-2.5 flex-wrap">
-                        {['100% Natural', 'Casero', 'Entrega a domicilio'].map(b => (
-                            <span key={b} className="px-4 py-2 rounded-full text-xs font-bold" style={{ backgroundColor: MV_BADGE_BG, color: MV_CTA }}>
-                                {b}
-                            </span>
-                        ))}
-                    </div>
+                    {!isMorfiEmpresas && (
+                        <div className="flex gap-2.5 flex-wrap">
+                            {['100% Natural', 'Casero', 'Entrega a domicilio'].map(b => (
+                                <span key={b} className="px-4 py-2 rounded-full text-xs font-bold" style={{ backgroundColor: MV_BADGE_BG, color: MV_CTA }}>
+                                    {b}
+                                </span>
+                            ))}
+                        </div>
+                    )}
                 </div>
                 <div className="relative w-full h-64 md:h-[440px] rounded-3xl overflow-hidden" style={{ backgroundColor: MV_SURFACE }}>
                     {banner ? (
@@ -153,29 +161,27 @@ export function MorfiViandasHeader({
             </section>
 
             {/* Cómo Funciona */}
-            <section id="como-funciona" className="py-12 md:py-14 px-4 md:px-8" style={{ backgroundColor: MV_SURFACE }}>
-                <div className="max-w-[1440px] mx-auto flex gap-8 flex-wrap justify-between">
-                    {(isMorfiEmpresas ? [
-                        { icon: Calendar, title: '1. Elegís los platos de cada día', body: 'Armá el menú de la semana para tu empresa.' },
-                        { icon: Building2, title: '2. Confirmás con el nombre de tu empresa', body: 'Completamos los datos junto con tu pedido.' },
-                        { icon: Truck, title: '3. Coordinamos la entrega semanal', body: 'Entrega fresca coordinada por WhatsApp.' },
-                    ] : [
-                        { icon: Calendar, title: '1. Elegís tu pack', body: 'Semanal, quincenal o mensual.' },
-                        { icon: MessageCircle, title: '2. Coordinás por WhatsApp', body: 'Confirmamos menú, días y dirección.' },
-                        { icon: Truck, title: '3. Recibís en tu casa', body: 'Entrega fresca coordinada por WhatsApp.' },
-                    ]).map(({ icon: Icon, title, body }) => (
-                        <div key={title} className="flex-1 min-w-[220px] flex gap-3.5 items-start">
-                            <div className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: MV_BADGE_BG }}>
-                                <Icon className="w-5 h-5" style={{ color: MV_CTA }} />
+            {!isMorfiEmpresas && (
+                <section id="como-funciona" className="py-12 md:py-14 px-4 md:px-8" style={{ backgroundColor: MV_SURFACE }}>
+                    <div className="max-w-[1440px] mx-auto flex gap-8 flex-wrap justify-between">
+                        {[
+                            { icon: Calendar, title: '1. Elegís tu pack', body: 'Semanal, quincenal o mensual.' },
+                            { icon: MessageCircle, title: '2. Coordinás por WhatsApp', body: 'Confirmamos menú, días y dirección.' },
+                            { icon: Truck, title: '3. Recibís en tu casa', body: 'Entrega fresca coordinada por WhatsApp.' },
+                        ].map(({ icon: Icon, title, body }) => (
+                            <div key={title} className="flex-1 min-w-[220px] flex gap-3.5 items-start">
+                                <div className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: MV_BADGE_BG }}>
+                                    <Icon className="w-5 h-5" style={{ color: MV_CTA }} />
+                                </div>
+                                <div>
+                                    <h3 className="font-bold text-base mb-1" style={{ color: MV_TITLE }}>{title}</h3>
+                                    <p className="text-sm" style={{ color: MV_TEXT }}>{body}</p>
+                                </div>
                             </div>
-                            <div>
-                                <h3 className="font-bold text-base mb-1" style={{ color: MV_TITLE }}>{title}</h3>
-                                <p className="text-sm" style={{ color: MV_TEXT }}>{body}</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
+                        ))}
+                    </div>
+                </section>
+            )}
         </header>
     );
 }

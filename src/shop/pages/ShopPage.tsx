@@ -148,7 +148,12 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
         const title = `${store.name} | Tienda Online`;
         const description = store.description || `Comprá en ${store.name}. Pedidos por WhatsApp, envíos y más.`;
         const image = store.logo_url || store.banner_url || '';
-        const url = store.custom_domain ? `https://${store.custom_domain}` : window.location.href;
+        // Preserva el path actual (ej. /caba, /laplata) al armar la URL canónica:
+        // varias tiendas pueden compartir el mismo custom_domain con distintas sub-rutas.
+        const pathname = window.location.pathname;
+        const url = store.custom_domain
+            ? `https://${store.custom_domain}${pathname === '/' ? '' : pathname}`
+            : window.location.href;
 
         document.title = title;
         const setMeta = (sel: string, val: string) => {
@@ -561,7 +566,9 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
 
             {isMorfiViandas && (
                 <>
-                    <MorfiViandasInfoSections whatsapp={data.store.whatsapp || data.store.phone || ""} deliveryZoneText={storeConfig.deliveryZoneText} paymentMethodsText={storeConfig.paymentMethodsText} />
+                    {!isMorfiEmpresas && (
+                        <MorfiViandasInfoSections whatsapp={data.store.whatsapp || data.store.phone || ""} deliveryZoneText={storeConfig.deliveryZoneText} paymentMethodsText={storeConfig.paymentMethodsText} />
+                    )}
                     <MorfiViandasFooter
                         name={data.store.name}
                         address={data.store.address}
