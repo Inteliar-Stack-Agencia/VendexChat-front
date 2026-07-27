@@ -560,7 +560,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
 
             {isMorfiViandas && (
                 <>
-                    <MorfiViandasInfoSections whatsapp={data.store.whatsapp || data.store.phone || ""} />
+                    <MorfiViandasInfoSections whatsapp={data.store.whatsapp || data.store.phone || ""} deliveryZoneText={storeConfig.deliveryZoneText} paymentMethodsText={storeConfig.paymentMethodsText} />
                     <MorfiViandasFooter
                         name={data.store.name}
                         address={data.store.address}
