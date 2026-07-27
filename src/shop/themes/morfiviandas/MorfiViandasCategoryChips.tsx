@@ -4,6 +4,7 @@ import { MV_BG, MV_SURFACE, MV_TEXT, MV_CTA } from "./morfiViandasColors";
 interface Category {
     id: string | number;
     name: string;
+    sort_order?: number;
 }
 
 interface MorfiViandasCategoryChipsProps {
@@ -14,7 +15,7 @@ interface MorfiViandasCategoryChipsProps {
 }
 
 export function MorfiViandasCategoryChips({ categories, activeId, onSelect, onMenuClick }: MorfiViandasCategoryChipsProps) {
-    const sorted = [...categories].sort((a, b) => a.name.localeCompare(b.name));
+    const sorted = [...categories].sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
     const showMenu = sorted.length > 6;
     const displayCategories = showMenu ? sorted.slice(0, 5) : sorted;
 

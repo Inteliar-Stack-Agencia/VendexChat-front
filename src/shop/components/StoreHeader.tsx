@@ -25,6 +25,7 @@ interface StoreHeaderProps {
     onChatClick: () => void;
     onCartClick: () => void;
     hideChatButton?: boolean;
+    isMorfiEmpresas?: boolean;
 }
 
 export function StoreHeader({
