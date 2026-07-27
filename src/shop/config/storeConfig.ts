@@ -29,6 +29,10 @@ export interface StoreConfig {
   requiresDeliveryDay: boolean;
   /** Campo "Empresa" obligatorio en el carrito */
   requiresCompany: boolean;
+  /** Texto real de zona de entrega para el FAQ del theme morfiviandas */
+  deliveryZoneText?: string;
+  /** Texto real de medios de pago para el FAQ del theme morfiviandas */
+  paymentMethodsText?: string;
 }
 
 const DEFAULT_CONFIG: StoreConfig = {
@@ -67,6 +71,8 @@ const STORE_CONFIGS: Record<string, Partial<StoreConfig>> = {
   'caba': {                              // morfiviandas.com.ar/caba
     theme: 'morfiviandas',
     bgClass: 'bg-[#F9F4F2]',
+    deliveryZoneText: 'Entregamos en CABA y alrededores. Consultanos tu zona por WhatsApp para confirmar si está dentro de la cobertura.',
+    paymentMethodsText: 'Aceptamos efectivo, transferencia bancaria y tarjetas de crédito (con recargo).',
   },
   'laplata': {                           // morfiviandas.com.ar/laplata
     theme: 'morfiviandas',

@@ -4,6 +4,8 @@ import { MV_BG, MV_SURFACE, MV_TEXT, MV_TITLE, MV_CTA, MV_BADGE_BG, MV_HIGHLIGHT
 
 interface MorfiViandasInfoSectionsProps {
     whatsapp?: string;
+    deliveryZoneText?: string;
+    paymentMethodsText?: string;
 }
 
 const PLANS = [
@@ -34,32 +36,28 @@ const BENEFITS = [
     { icon: CalendarCheck, title: 'Ideal para toda la semana', body: 'Resolvé tus comidas sin cocinar todos los días.' },
 ];
 
-function faqAnswers(whatsapp?: string) {
+function faqAnswers(whatsapp?: string, deliveryZoneText?: string, paymentMethodsText?: string) {
     const waLink = whatsapp ? `https://wa.me/${whatsapp.replace(/\D/g, '')}` : undefined;
     return [
         {
             q: '¿En qué zonas hacen entregas?',
-            a: waLink
-                ? <>Coordinamos la zona y el costo de envío por <a href={waLink} target="_blank" rel="noreferrer" className="font-bold underline" style={{ color: MV_CTA }}>WhatsApp</a> antes de confirmar tu pedido.</>
-                : 'Coordinamos la zona y el costo de envío antes de confirmar tu pedido.',
+            a: deliveryZoneText
+                ? deliveryZoneText
+                : waLink
+                    ? <>Coordinamos la zona y el costo de envío por <a href={waLink} target="_blank" rel="noreferrer" className="font-bold underline" style={{ color: MV_CTA }}>WhatsApp</a> antes de confirmar tu pedido.</>
+                    : 'Coordinamos la zona y el costo de envío antes de confirmar tu pedido.',
         },
         {
             q: '¿Qué medios de pago aceptan?',
-            a: 'El medio de pago se coordina junto con tu pedido, al momento de confirmarlo.',
+            a: paymentMethodsText || 'El medio de pago se coordina junto con tu pedido, al momento de confirmarlo.',
         },
         {
             q: '¿Cómo se coordina el día y horario de entrega?',
             a: 'Una vez hecho tu pedido en la web, coordinamos el día y horario de entrega por WhatsApp.',
         },
         {
-            q: '¿Puedo cambiar o cancelar un pedido ya hecho?',
-            a: waLink
-                ? <>Sí, escribinos por <a href={waLink} target="_blank" rel="noreferrer" className="font-bold underline" style={{ color: MV_CTA }}>WhatsApp</a> y te ayudamos con el cambio o la cancelación.</>
-                : 'Sí, escribinos y te ayudamos con el cambio o la cancelación.',
-        },
-        {
             q: '¿Cómo se conservan las viandas?',
-            a: 'Consultanos por WhatsApp las recomendaciones de conservación según cada plato.',
+            a: 'Las viandas van termoselladas según su categoría, lo que permite conservarlas en la heladera hasta 5 días sin necesidad de congelar.',
         },
     ];
 }
@@ -80,7 +78,7 @@ function FaqItem({ q, a }: { q: string; a: React.ReactNode }) {
     );
 }
 
-export function MorfiViandasInfoSections({ whatsapp }: MorfiViandasInfoSectionsProps) {
+export function MorfiViandasInfoSections({ whatsapp, deliveryZoneText, paymentMethodsText }: MorfiViandasInfoSectionsProps) {
     const waLink = whatsapp ? `https://wa.me/${whatsapp.replace(/\D/g, '')}` : undefined;
 
     return (
@@ -143,7 +141,7 @@ export function MorfiViandasInfoSections({ whatsapp }: MorfiViandasInfoSectionsP
                 <div className="max-w-2xl mx-auto">
                     <h2 className="morfiviandas-title font-semibold text-2xl md:text-3xl mb-8" style={{ color: MV_TITLE }}>Preguntas Frecuentes</h2>
                     <div className="flex flex-col gap-3">
-                        {faqAnswers(whatsapp).map(({ q, a }) => <FaqItem key={q} q={q} a={a} />)}
+                        {faqAnswers(whatsapp, deliveryZoneText, paymentMethodsText).map(({ q, a }) => <FaqItem key={q} q={q} a={a} />)}
                     </div>
                     {waLink && (
                         <p className="mt-7 text-sm" style={{ color: MV_TEXT }}>
