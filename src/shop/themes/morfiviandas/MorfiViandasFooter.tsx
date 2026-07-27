@@ -1,6 +1,6 @@
-import { Instagram, Facebook, MapPin, Clock } from "lucide-react";
+import { Instagram, Facebook, MapPin, Clock, MessageCircle } from "lucide-react";
 import { getSocialLink } from "../../../utils/format";
-import { MV_TITLE, MV_HIGHLIGHT } from "./morfiViandasColors";
+import { MV_CTA } from "./morfiViandasColors";
 
 interface MorfiViandasFooterProps {
     name: string;
@@ -50,48 +50,47 @@ export function MorfiViandasFooter({ name, address, whatsapp, instagram, faceboo
     const scheduleText = summarizeSchedule(schedule);
 
     return (
-        <footer id="contacto" className="morfiviandas-body px-4 md:px-8 py-12" style={{ backgroundColor: MV_TITLE, color: '#f5f5f5' }}>
-            <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <footer id="contacto" className="morfiviandas-body px-4 md:px-8 py-7" style={{ backgroundColor: MV_CTA, color: '#ffffff' }}>
+            <div className="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
                 <div>
-                    <div className="morfiviandas-title font-semibold text-xl text-white mb-3">{name}</div>
-                    <p className="text-sm opacity-80">Comida casera y natural, entregada en tu puerta.</p>
+                    <div className="morfiviandas-title font-semibold text-lg text-white">{name}</div>
+                    <p className="text-xs opacity-80">Comida casera y natural, entregada en tu puerta.</p>
                 </div>
-                <div className="space-y-2.5">
-                    <h3 className="text-xs uppercase tracking-widest font-bold text-white mb-1">Contacto</h3>
+
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs">
                     {address && (
-                        <div className="flex items-start gap-2 text-sm opacity-85">
-                            <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                            <span>{address}</span>
-                        </div>
-                    )}
-                    {whatsapp && (
-                        <a href={`https://wa.me/${whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noreferrer"
-                            className="block text-sm font-bold" style={{ color: MV_HIGHLIGHT }}>
-                            WhatsApp: {whatsapp}
-                        </a>
+                        <span className="flex items-center gap-1.5 opacity-90">
+                            <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+                            {address}
+                        </span>
                     )}
                     {scheduleText && (
-                        <div className="flex items-start gap-2 text-sm opacity-85">
-                            <Clock className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                            <span>{scheduleText}</span>
-                        </div>
+                        <span className="flex items-center gap-1.5 opacity-90">
+                            <Clock className="w-3.5 h-3.5 flex-shrink-0" />
+                            {scheduleText}
+                        </span>
+                    )}
+                    {whatsapp && (
+                        <a href={`https://wa.me/${whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 font-bold hover:opacity-80">
+                            <MessageCircle className="w-3.5 h-3.5 flex-shrink-0" /> {whatsapp}
+                        </a>
                     )}
                 </div>
-                <div className="space-y-2.5">
-                    <h3 className="text-xs uppercase tracking-widest font-bold text-white mb-1">Redes</h3>
+
+                <div className="flex items-center gap-3">
                     {instagram && (
-                        <a href={getSocialLink(instagram, 'instagram')} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-bold" style={{ color: MV_HIGHLIGHT }}>
-                            <Instagram className="w-4 h-4" /> Instagram
+                        <a href={getSocialLink(instagram, 'instagram')} target="_blank" rel="noreferrer" aria-label="Instagram" className="hover:opacity-70">
+                            <Instagram className="w-4 h-4" />
                         </a>
                     )}
                     {facebook && (
-                        <a href={getSocialLink(facebook, 'facebook')} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-bold" style={{ color: MV_HIGHLIGHT }}>
-                            <Facebook className="w-4 h-4" /> Facebook
+                        <a href={getSocialLink(facebook, 'facebook')} target="_blank" rel="noreferrer" aria-label="Facebook" className="hover:opacity-70">
+                            <Facebook className="w-4 h-4" />
                         </a>
                     )}
                 </div>
             </div>
-            <div className="max-w-[1440px] mx-auto border-t pt-5 text-xs opacity-60" style={{ borderColor: 'rgba(255,255,255,0.15)' }}>
+            <div className="max-w-[1440px] mx-auto mt-4 pt-3 border-t text-[11px] opacity-70" style={{ borderColor: 'rgba(255,255,255,0.2)' }}>
                 © {new Date().getFullYear()} {name}. Todos los derechos reservados.
             </div>
         </footer>
