@@ -85,12 +85,12 @@ export function MorfiViandasHeader({
                         </a>
                     )}
                     {instagram && (
-                        <a href={getSocialLink(instagram, 'instagram')} target="_blank" rel="noreferrer" className="w-10 h-10 hidden sm:flex items-center justify-center rounded-full hover:opacity-70" style={{ color: MV_TEXT }}>
+                        <a href={getSocialLink(instagram, 'instagram')} target="_blank" rel="noreferrer" aria-label="Instagram" className="w-10 h-10 hidden sm:flex items-center justify-center rounded-full hover:opacity-70" style={{ color: MV_TEXT }}>
                             <Instagram className="w-5 h-5" />
                         </a>
                     )}
                     {facebook && (
-                        <a href={getSocialLink(facebook, 'facebook')} target="_blank" rel="noreferrer" className="w-10 h-10 hidden sm:flex items-center justify-center rounded-full hover:opacity-70" style={{ color: MV_TEXT }}>
+                        <a href={getSocialLink(facebook, 'facebook')} target="_blank" rel="noreferrer" aria-label="Facebook" className="w-10 h-10 hidden sm:flex items-center justify-center rounded-full hover:opacity-70" style={{ color: MV_TEXT }}>
                             <Facebook className="w-5 h-5" />
                         </a>
                     )}
@@ -116,19 +116,19 @@ export function MorfiViandasHeader({
 
             {/* Hero */}
             {isMorfiEmpresas ? (
-                <section id="hero" className="max-w-[1440px] mx-auto px-4 md:px-8 py-10 md:py-14">
-                    <div className="relative w-full h-56 md:h-80 rounded-3xl overflow-hidden flex items-center"
+                <section id="hero" className="max-w-[1440px] mx-auto px-4 md:px-8 py-5 md:py-6">
+                    <div className="relative w-full h-32 md:h-40 rounded-2xl overflow-hidden flex items-center"
                         style={banner
                             ? { backgroundImage: `url(${banner})`, backgroundSize: 'cover', backgroundPosition: 'center' }
                             : { background: `linear-gradient(120deg, ${MV_CTA} 0%, ${MV_BADGE_BG} 100%)` }}>
                         {banner && (
                             <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 55%, transparent 100%)' }} />
                         )}
-                        <div className="relative z-10 px-8 md:px-14">
-                            <h1 className="morfiviandas-title font-semibold text-2xl md:text-4xl leading-tight mb-5 text-white">
+                        <div className="relative z-10 px-6 md:px-10 flex items-center gap-5 flex-wrap">
+                            <h1 className="morfiviandas-title font-semibold text-xl md:text-2xl leading-tight text-white">
                                 Hacé tu pedido de la semana
                             </h1>
-                            <a href="#productos" onClick={scrollTo('productos')} className="inline-block px-7 py-3.5 rounded-full font-bold text-sm transition-all hover:opacity-90"
+                            <a href="#productos" onClick={scrollTo('productos')} className="inline-block px-5 py-2.5 rounded-full font-bold text-sm transition-all hover:opacity-90"
                                 style={{ backgroundColor: MV_TITLE, color: '#fff' }}>
                                 Ver Menú
                             </a>
@@ -191,7 +191,7 @@ export function MorfiViandasHeader({
                                     <Icon className="w-5 h-5" style={{ color: MV_CTA }} />
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-base mb-1" style={{ color: MV_TITLE }}>{title}</h3>
+                                    <h2 className="font-bold text-base mb-1" style={{ color: MV_TITLE }}>{title}</h2>
                                     <p className="text-sm" style={{ color: MV_TEXT }}>{body}</p>
                                 </div>
                             </div>
