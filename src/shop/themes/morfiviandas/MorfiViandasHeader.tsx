@@ -75,6 +75,7 @@ export function MorfiViandasHeader({
                     )}
                     {whatsapp && hideChatButton && (
                         <a href={`https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hola, tengo una consulta')}`} target="_blank" rel="noreferrer"
+                            aria-label="¿Dudas? Escribinos por WhatsApp"
                             className="h-10 px-3.5 flex items-center gap-1.5 rounded-full text-xs font-bold transition-all hover:opacity-80"
                             style={{ backgroundColor: MV_BADGE_BG, color: MV_CTA }}>
                             <MessageCircle className="w-4 h-4" />
@@ -97,7 +98,7 @@ export function MorfiViandasHeader({
                             <WhatsAppIcon className="w-5 h-5" />
                         </a>
                     )}
-                    <button onClick={onCartClick} className="relative h-10 px-4 flex items-center gap-2 rounded-full font-bold text-sm text-white transition-all hover:opacity-90"
+                    <button onClick={onCartClick} aria-label="Pedir Ahora" className="relative h-10 px-4 flex items-center gap-2 rounded-full font-bold text-sm text-white transition-all hover:opacity-90"
                         style={{ backgroundColor: MV_CTA }}>
                         <ShoppingCart className="w-4 h-4" />
                         <span className="hidden md:inline">Pedir Ahora</span>
