@@ -47,12 +47,14 @@ export function MorfiViandasHeader({
                     {name}
                 </span>
 
-                <div className="hidden lg:flex items-center gap-6 mx-auto">
-                    <a href="#productos" onClick={scrollTo('productos')} className="text-sm font-semibold hover:opacity-70" style={{ color: MV_TEXT }}>Menú Semanal</a>
-                    {!isMorfiEmpresas && <a href="#como-funciona" onClick={scrollTo('como-funciona')} className="text-sm font-semibold hover:opacity-70" style={{ color: MV_TEXT }}>Cómo Funciona</a>}
-                    {!isMorfiEmpresas && <a href="#planes" onClick={scrollTo('planes')} className="text-sm font-semibold hover:opacity-70" style={{ color: MV_TEXT }}>Planes</a>}
-                    <a href="#contacto" onClick={scrollTo('contacto')} className="text-sm font-semibold hover:opacity-70" style={{ color: MV_TEXT }}>Contacto</a>
-                </div>
+                {!isMorfiEmpresas && (
+                    <div className="hidden lg:flex items-center gap-6 mx-auto">
+                        <a href="#productos" onClick={scrollTo('productos')} className="text-sm font-semibold hover:opacity-70" style={{ color: MV_TEXT }}>Menú Semanal</a>
+                        <a href="#como-funciona" onClick={scrollTo('como-funciona')} className="text-sm font-semibold hover:opacity-70" style={{ color: MV_TEXT }}>Cómo Funciona</a>
+                        <a href="#planes" onClick={scrollTo('planes')} className="text-sm font-semibold hover:opacity-70" style={{ color: MV_TEXT }}>Planes</a>
+                        <a href="#contacto" onClick={scrollTo('contacto')} className="text-sm font-semibold hover:opacity-70" style={{ color: MV_TEXT }}>Contacto</a>
+                    </div>
+                )}
 
                 <div className="relative flex-1 max-w-[180px] md:max-w-xs">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 opacity-50" style={{ color: MV_TEXT }} />
@@ -113,34 +115,48 @@ export function MorfiViandasHeader({
             </nav>
 
             {/* Hero */}
-            <section id="hero" className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center max-w-[1440px] mx-auto px-4 md:px-8 py-10 md:py-16">
-                <div>
-                    {!isMorfiEmpresas && (
+            {isMorfiEmpresas ? (
+                <section id="hero" className="max-w-[1440px] mx-auto px-4 md:px-8 py-10 md:py-14">
+                    <div className="relative w-full h-56 md:h-80 rounded-3xl overflow-hidden flex items-center"
+                        style={banner
+                            ? { backgroundImage: `url(${banner})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+                            : { background: `linear-gradient(120deg, ${MV_CTA} 0%, ${MV_BADGE_BG} 100%)` }}>
+                        {banner && (
+                            <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 55%, transparent 100%)' }} />
+                        )}
+                        <div className="relative z-10 px-8 md:px-14">
+                            <h1 className="morfiviandas-title font-semibold text-2xl md:text-4xl leading-tight mb-5 text-white">
+                                Hacé tu pedido de la semana
+                            </h1>
+                            <a href="#productos" onClick={scrollTo('productos')} className="inline-block px-7 py-3.5 rounded-full font-bold text-sm transition-all hover:opacity-90"
+                                style={{ backgroundColor: MV_TITLE, color: '#fff' }}>
+                                Ver Menú
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            ) : (
+                <section id="hero" className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center max-w-[1440px] mx-auto px-4 md:px-8 py-10 md:py-16">
+                    <div>
                         <span className="inline-block px-3.5 py-1.5 rounded-full text-xs font-bold mb-5" style={{ backgroundColor: MV_HIGHLIGHT, color: MV_TITLE }}>
                             Comida real, hecha en casa
                         </span>
-                    )}
-                    <h1 className="morfiviandas-title font-semibold text-3xl md:text-5xl leading-[1.1] mb-5" style={{ color: MV_TITLE }}>
-                        {isMorfiEmpresas ? 'Hacé tu pedido de la semana' : 'Comida casera y natural, todos los días'}
-                    </h1>
-                    {!isMorfiEmpresas && (
+                        <h1 className="morfiviandas-title font-semibold text-3xl md:text-5xl leading-[1.1] mb-5" style={{ color: MV_TITLE }}>
+                            Comida casera y natural, todos los días
+                        </h1>
                         <p className="text-base md:text-lg leading-relaxed mb-7 max-w-md" style={{ color: MV_TEXT }}>
                             {description || 'Viandas preparadas con ingredientes reales, entregadas frescas en tu puerta.'}
                         </p>
-                    )}
-                    <div className="flex gap-3 flex-wrap mb-6">
-                        <a href="#productos" onClick={scrollTo('productos')} className="px-7 py-3.5 rounded-full font-bold text-sm text-white transition-all hover:opacity-90"
-                            style={{ backgroundColor: MV_CTA }}>
-                            Ver Menú
-                        </a>
-                        {!isMorfiEmpresas && (
+                        <div className="flex gap-3 flex-wrap mb-6">
+                            <a href="#productos" onClick={scrollTo('productos')} className="px-7 py-3.5 rounded-full font-bold text-sm text-white transition-all hover:opacity-90"
+                                style={{ backgroundColor: MV_CTA }}>
+                                Ver Menú
+                            </a>
                             <a href="#como-funciona" onClick={scrollTo('como-funciona')} className="px-7 py-3.5 rounded-full font-bold text-sm transition-all hover:opacity-80"
                                 style={{ border: `2px solid ${MV_CTA}`, color: MV_CTA }}>
                                 Cómo Funciona
                             </a>
-                        )}
-                    </div>
-                    {!isMorfiEmpresas && (
+                        </div>
                         <div className="flex gap-2.5 flex-wrap">
                             {['100% Natural', 'Casero', 'Entrega a domicilio'].map(b => (
                                 <span key={b} className="px-4 py-2 rounded-full text-xs font-bold" style={{ backgroundColor: MV_BADGE_BG, color: MV_CTA }}>
@@ -148,18 +164,18 @@ export function MorfiViandasHeader({
                                 </span>
                             ))}
                         </div>
-                    )}
-                </div>
-                <div className="relative w-full h-64 md:h-[440px] rounded-3xl overflow-hidden" style={{ backgroundColor: MV_SURFACE }}>
-                    {banner ? (
-                        <img src={banner} alt={name} className="w-full h-full object-cover" loading="eager" decoding="async" fetchPriority="high" />
-                    ) : (
-                        <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: MV_BADGE_BG }}>
-                            <span className="morfiviandas-title text-4xl opacity-40" style={{ color: MV_CTA }}>{name}</span>
-                        </div>
-                    )}
-                </div>
-            </section>
+                    </div>
+                    <div className="relative w-full h-64 md:h-[440px] rounded-3xl overflow-hidden" style={{ backgroundColor: MV_SURFACE }}>
+                        {banner ? (
+                            <img src={banner} alt={name} className="w-full h-full object-cover" loading="eager" decoding="async" fetchPriority="high" />
+                        ) : (
+                            <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: MV_BADGE_BG }}>
+                                <span className="morfiviandas-title text-4xl opacity-40" style={{ color: MV_CTA }}>{name}</span>
+                            </div>
+                        )}
+                    </div>
+                </section>
+            )}
 
             {/* Cómo Funciona */}
             {!isMorfiEmpresas && (
