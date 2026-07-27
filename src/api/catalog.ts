@@ -147,7 +147,7 @@ export async function fetchStorePreview(identifier: string): Promise<import("../
     const { data, error } = await supabase
       .from("stores")
       .select("id,name,slug,logo_url,banner_url,description,whatsapp,phone,address,instagram,primary_color,metadata,custom_domain,delivery_cost,coupons_enabled,delivery_info,schedule,physical_schedule,online_schedule,facebook,ai_prompt,welcome_message,footer_message,popups")
-      .or(`slug.eq.${identifier},custom_domain.eq.${identifier}`)
+      .or(`slug.eq."${identifier}",custom_domain.eq."${identifier}"`)
       .limit(1)
       .single();
     if (error || !data) return null;

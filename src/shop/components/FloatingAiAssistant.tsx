@@ -43,6 +43,7 @@ export default function FloatingAiAssistant({ onClick, isOpen, isCartOpen, assis
                 <div className="bg-white px-4 py-3 rounded-2xl shadow-xl border border-primary-dynamic/20 animate-in slide-in-from-right-4 fade-in duration-500 pointer-events-auto relative">
                     <button
                         onClick={() => setShowBubble(false)}
+                        aria-label="Cerrar"
                         className="absolute -top-2 -left-2 bg-white rounded-full p-0.5 shadow-md border border-slate-100 text-slate-400 hover:text-slate-600"
                     >
                         <X className="w-3 h-3" />

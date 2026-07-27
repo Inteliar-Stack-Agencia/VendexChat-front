@@ -33,6 +33,8 @@ export interface StoreConfig {
   deliveryZoneText?: string;
   /** Texto real de medios de pago para el FAQ del theme morfiviandas */
   paymentMethodsText?: string;
+  /** Meta description para SEO (title/description/OG). Si no está seteada, se usa store.description */
+  seoDescription?: string;
 }
 
 const DEFAULT_CONFIG: StoreConfig = {
@@ -59,6 +61,7 @@ const MORFI_EMPRESAS_CONFIG: Partial<StoreConfig> = {
   alwaysOpenModal: true,
   requiresDeliveryDay: true,
   requiresCompany: true,
+  seoDescription: 'Viandas para empresas en CABA y La Plata. Pedidos semanales para tu equipo de trabajo, coordinados por WhatsApp.',
 };
 
 const STORE_CONFIGS: Record<string, Partial<StoreConfig>> = {
@@ -75,10 +78,12 @@ const STORE_CONFIGS: Record<string, Partial<StoreConfig>> = {
     bgClass: 'bg-[#F9F4F2]',
     deliveryZoneText: 'Entregamos en CABA y alrededores. Consultanos tu zona por WhatsApp para confirmar si está dentro de la cobertura.',
     paymentMethodsText: 'Aceptamos efectivo, transferencia bancaria y tarjetas de crédito (con recargo).',
+    seoDescription: 'Viandas caseras y naturales en CABA. Menú semanal variado, packs semanales y mensuales, entrega a domicilio. Pedidos simples por WhatsApp.',
   },
   'laplata': {                           // morfiviandas.com.ar/laplata
     theme: 'morfiviandas',
     bgClass: 'bg-[#F9F4F2]',
+    seoDescription: 'Viandas caseras y naturales en La Plata. Menú semanal variado, packs semanales y mensuales, entrega a domicilio. Pedidos simples por WhatsApp.',
   },
 };
 

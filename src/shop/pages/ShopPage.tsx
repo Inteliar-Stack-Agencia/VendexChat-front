@@ -150,7 +150,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
         if (!data?.store) return;
         const store = data.store;
         const title = `${store.name} | Tienda Online`;
-        const description = store.description || `Comprá en ${store.name}. Pedidos por WhatsApp, envíos y más.`;
+        const description = storeConfig.seoDescription || store.description || `Comprá en ${store.name}. Pedidos por WhatsApp, envíos y más.`;
         const image = store.logo_url || store.banner_url || '';
         // Preserva el path actual (ej. /caba, /laplata) al armar la URL canónica:
         // varias tiendas pueden compartir el mismo custom_domain con distintas sub-rutas.
@@ -195,7 +195,7 @@ export default function ShopPage({ isDemo }: { isDemo?: boolean }) {
             "address": store.address ? { "@type": "PostalAddress", "streetAddress": store.address } : undefined,
         });
         document.head.appendChild(script);
-    }, [data]);
+    }, [data, storeConfig.seoDescription]);
 
     if (loading) {
         // Si ya tenemos info de la tienda, mostramos el header real con skeleton de productos

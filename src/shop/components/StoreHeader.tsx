@@ -74,12 +74,12 @@ export function StoreHeader({
                             </button>
                         )}
                         {instagram && (
-                            <a href={getSocialLink(instagram, 'instagram')} target="_blank" rel="noreferrer" className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-pink-500 hover:bg-pink-50 rounded-xl transition-all">
+                            <a href={getSocialLink(instagram, 'instagram')} target="_blank" rel="noreferrer" aria-label="Instagram" className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-pink-500 hover:bg-pink-50 rounded-xl transition-all">
                                 <Instagram className="w-5 h-5" />
                             </a>
                         )}
                         {facebook && (
-                            <a href={getSocialLink(facebook, 'facebook')} target="_blank" rel="noreferrer" className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-blue-500 hover:bg-blue-50 rounded-xl transition-all">
+                            <a href={getSocialLink(facebook, 'facebook')} target="_blank" rel="noreferrer" aria-label="Facebook" className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-blue-500 hover:bg-blue-50 rounded-xl transition-all">
                                 <Facebook className="w-5 h-5" />
                             </a>
                         )}

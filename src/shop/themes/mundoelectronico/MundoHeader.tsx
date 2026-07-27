@@ -137,7 +137,7 @@ export function MundoHeader({
                             </button>
                         )}
                         {instagram && (
-                            <a href={getSocialLink(instagram, 'instagram')} target="_blank" rel="noreferrer"
+                            <a href={getSocialLink(instagram, 'instagram')} target="_blank" rel="noreferrer" aria-label="Instagram"
                                 className="w-9 h-9 flex items-center justify-center rounded-full hover:opacity-60 transition-opacity"
                                 style={{ color: 'rgba(255,255,255,0.7)' }}>
                                 <Instagram className="w-4 h-4" />
