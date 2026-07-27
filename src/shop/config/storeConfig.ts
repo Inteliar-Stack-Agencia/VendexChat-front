@@ -51,6 +51,8 @@ const DEFAULT_CONFIG: StoreConfig = {
  * Slug = valor exacto de la columna `slug` en la tabla `stores` de Supabase.
  */
 const MORFI_EMPRESAS_CONFIG: Partial<StoreConfig> = {
+  theme: 'morfiviandas',
+  bgClass: 'bg-[#F9F4F2]',
   hidePrice: true,
   hideChatButton: true,
   hideAI: true,
